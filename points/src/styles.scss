@@ -1,0 +1,140 @@
+.bold {
+  font-weight: 700;
+}
+.active-link {
+  border-left: 8px solid var(--ion-color-secondary);
+}
+
+.progress-wrapper {
+  height: 4px;
+}
+
+.input-error {
+  font-size: 12px;
+  padding-left: 16px;
+}
+
+.logo {
+  &_signin {
+    width: 100%;
+    margin: auto;
+    display: block;
+  }
+}
+
+.choose-players {
+  &__list {
+    margin-bottom: 20px !important;
+  }
+
+  &__btn-block {
+    margin-bottom: 20px;
+  }
+}
+
+.players-list {
+  display: flex;
+  flex-flow: row nowrap;
+  width: 100%;
+  &__name {
+    flex: 1 1 100%;
+  }
+  &__color {
+    flex: 0 0 49px;
+    padding: 10px;
+  }
+}
+
+.select-color {
+  border: 0;
+  border-radius: 5px;
+  height: 100%;
+  width: 100%;
+}
+
+.select-color {
+  display: flex;
+  flex-flow: row nowrap;
+  &__item {
+    flex: 0 1 auto;
+    width: 40px;
+    height: 40px;
+    margin: 0 15px;
+    cursor: pointer;
+    border-radius: 3px;
+  }
+  &__container {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.round-subtitle {
+  display: flex;
+  align-items: center;
+  &__icon {
+    padding-right: 10px;
+    min-width: 20px;
+    // vertical-align: middle;
+  }
+  &__text {
+    white-space: nowrap;
+  }
+  &__blank {
+    flex: 1 1 100%;
+  }
+  &__score {
+  }
+}
+
+.active-player {
+  color: red;
+  font-weight: 800;
+}
+
+.uno-round-img {
+  padding: 0.25rem 0.5rem;
+}
+.round {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  ion-chip {
+    flex: 1 1 25%;
+    display: flex;
+    justify-content: center;
+  }
+  &_tools {
+    margin-top: 15px;
+    margin-bottom: 20px;
+    min-height: 40px;
+    &__score {
+      flex: 1 1 30%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    &__btn {
+      flex: 1 1 70%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+  &_result {
+    justify-content: space-around;
+    min-height: 40px;
+  }
+}
+
+.incDecBtn {
+  display: flex;
+  flex-flow: row nowrap;
+  &__caption {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
+  }
+}
