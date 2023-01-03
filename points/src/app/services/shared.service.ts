@@ -370,7 +370,7 @@ export class SharedService {
       }),
     };
     return this.http.post<string>(
-      this.host + '/api/app/log-error-to-db',
+      this.host + '/api/logger/log-error-to-db',
       { message },
       httpOptions,
     );
