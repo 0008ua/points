@@ -6,6 +6,8 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "frontend:build": "cd points && npm install && npm run build",
+    "backend:build": "npm install && nest build",
     "prebuild": "rimraf backend_dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
