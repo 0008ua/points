@@ -1,6 +1,6 @@
 # compiled output
 /frontend_dist
-/backend_dist
+# /backend_dist
 /node_modules
 /security
 .env
