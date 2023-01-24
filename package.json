@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "x": "npm run build:deploy -- --m 'test message'",
+    "x": "npm run build:deploy -- --m 'test_message'",
     "build:all": "npm install && nest build && cd points && npm install && npm run build",
     "build:deploy": "npm run build:back && npm run build:front && npm run build:git",
     "build:front": "cd points && npm install && npm run build",
