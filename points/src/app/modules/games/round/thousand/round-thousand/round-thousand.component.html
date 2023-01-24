@@ -4,7 +4,7 @@
       <ion-col size="12">
         <ion-button (click)="storeRoundScores()" expand="block"> Submit </ion-button>
       </ion-col>
-      <ion-col *ngFor="let roundMember of roundMembers$ | async; let i = index" size="3">
+      <ion-col *ngFor="let roundMember of roundMembers$ | async; let i = index" [size]="12 / qtyOfPlayers">
         <div
           [ngClass]="
             roundMember._id === activeRoundMemberId
@@ -50,7 +50,7 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col *ngFor="let roundMember of addTotals(roundMembers$ | async)" size="3">
+      <ion-col *ngFor="let roundMember of addTotals(roundMembers$ | async)" [size]="12 / qtyOfPlayers">
         <ion-item
           [lines]="(i + 1) % qtyOfPlayers === 0 ? 'full' : 'none'"
           *ngFor="let score of roundMember.namedScoresLine.slice().reverse(); let i = index"
@@ -76,7 +76,6 @@
           >
         </ion-item>
       </ion-col>
-      <ion-col size="1"></ion-col>
     </ion-row>
   </ng-container>
 </ion-card-content>
