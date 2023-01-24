@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1674569562673,
+  "timestamp": 1674570360401,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -232,7 +232,7 @@
     "/src_app_modules_games_game_game_module_ts.js": "2fe8a332256b07248c3e224fbb560691f25fc189",
     "/src_app_modules_games_games_module_ts.js": "183068a74d22622cd5be0af382210f60db77e3f3",
     "/src_app_tabs_tabs_module_ts.js": "fbd7716c80b085563f46a59295df2ff50bcd06d0",
-    "/styles.css": "55354bb54e26fff2cbaf7173bfdeac34ad93752e",
+    "/styles.css": "a4b226b961dce878770c92436ba895bc241a6e0a",
     "/vendor.js": "b3578cf8b460b2b6f9f5a331264b32f0c19072c7"
   },
   "navigationUrls": [

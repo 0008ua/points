@@ -1499,7 +1499,7 @@ input[type=number] {
   font-size: 0.8rem;
 }
 .thousand-score-input {
-  padding: 0 16px;
+  padding: 0 10px;
 }
 .thousand_total {
   font-weight: 600;
