@@ -1,37 +1,82 @@
 <ion-card-content>
-  <!-- <ion-row class="round round_tools">
-    <ion-col *ngFor="let roundsScore of roundsScoresEnv">
-      <ion-chip (click)="addToNamedScoresLine({value: roundsScore.value, name: roundsScore.name })">
-        <ion-label>{{roundsScore.value }}</ion-label>
-      </ion-chip>
-    </ion-col>
-  </ion-row> -->
-  <ng-container *ngFor="let round of (rounds$ | async)" class="round round_result">
+  <ng-container class="round round_result">
     <ion-row>
-      <ion-col *ngFor="let roundMemberId of round.roundMembers; let i=index">
-        <ion-item lines="none"
-          *ngFor="let score of (sharedService.getRoundMemberById$(roundMemberId) | async).namedScoresLine">
-          {{score.name}}
+      <ion-col size="12">
+        <ion-button (click)="storeRoundScores()" expand="block"> Submit </ion-button>
+      </ion-col>
+      <ion-col *ngFor="let roundMember of roundMembers$ | async; let i = index" size="3">
+        <div
+          [ngClass]="
+            roundMember._id === activeRoundMemberId
+              ? { 'active-item': true }
+              : { 'regular-item': true }
+          "
+        ></div>
+        <div class="round-btn-block">
+          <ion-button
+            class="round-btn-block__item"
+            size="small"
+            (click)="changeScoresState(roundMember._id, 'r')"
+            color="primary"
+            [fill]="scores[roundMember._id]?.name !== 'r' ? 'outline' : 'default'"
+            [disabled]="
+              scores[roundMember._id]?.disabled.includes('r') ||
+              scores[roundMember._id].barrel > 0 ||
+              (roundMember._id === activeRoundMemberId && qtyOfPlayers === 4)
+            "
+            >R</ion-button
+          >
+          <ion-button
+            class="round-btn-block__item"
+            size="small"
+            (click)="changeScoresState(roundMember._id, 's')"
+            color="primary"
+            [fill]="scores[roundMember._id]?.name !== 's' ? 'outline' : 'default'"
+            [disabled]="
+              scores[roundMember._id]?.disabled.includes('s') ||
+              scores[roundMember._id].barrel > 0 ||
+              (roundMember._id === activeRoundMemberId && qtyOfPlayers === 4)
+            "
+            >S</ion-button
+          >
+        </div>
+        <ion-item class="thousand-score-input">
+          <ion-input
+            type="number"
+            placeholder="0"
+            [(ngModel)]="scores[roundMember._id].value"
+          ></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col *ngFor="let roundMember of addTotals(roundMembers$ | async)" size="3">
+        <ion-item
+          [lines]="(i + 1) % qtyOfPlayers === 0 ? 'full' : 'none'"
+          *ngFor="let score of roundMember.namedScoresLine.slice().reverse(); let i = index"
+        >
+          <ion-text
+            class="thousand_score"
+            [color]="i <= 1 && scores[roundMember._id].doubleZero ? 'danger' : ''"
+            >{{ score.value }}</ion-text
+          >
+          <div style="width: 100%"></div>
+          <ion-text
+            class="thousand_total"
+            [ngClass]="{ thousand_total_last: i === 0 }"
+            [color]="
+              score.total >= 900 &&
+              score.total < 1000 &&
+              scores[roundMember._id].barrel &&
+              i < qtyOfPlayers
+                ? 'danger'
+                : ''
+            "
+            >{{ score.total }}</ion-text
+          >
         </ion-item>
       </ion-col>
       <ion-col size="1"></ion-col>
     </ion-row>
-    <ion-row>
-      <ion-col *ngFor="let roundMemberId of round.roundMembers; let i=index">
-        <ion-item>
-          <ion-input type="number" placeholder="0" [(ngModel)]="scores[roundMemberId]"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col size="1">
-        <ion-chip (click)="addAllScores()">
-          <ion-label>add</ion-label>
-        </ion-chip>
-      </ion-col>
-    </ion-row>
   </ng-container>
-
-
-
-
-
 </ion-card-content>

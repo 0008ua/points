@@ -8,39 +8,22 @@ import { RoundBaseDirective } from '../../round.directive';
   selector: 'app-round-stations',
   templateUrl: './round-stations.component.html',
   styleUrls: ['./round-stations.component.scss'],
-  providers: [{
-    provide: ROUND_COMPONENT,
-    useExisting: RoundStationsComponent,
-  }]
+  providers: [
+    {
+      provide: ROUND_COMPONENT,
+      useExisting: RoundStationsComponent,
+    },
+  ],
 })
-export class RoundStationsComponent
-extends RoundBaseDirective
-implements OnInit {
+export class RoundStationsComponent extends RoundBaseDirective implements OnInit {
   // @Input() playerId: UID;
   // @Input() roundId: string;
 
-  constructor(
-    injector: Injector,
-  ) {
+  constructor(injector: Injector) {
     super(injector);
   }
 
-  ngOnInit() {
-  }
-
-  addToScoresLine(score: number): void {
-    this.sharedService.addToScoresLine(score, this.playerId, this.roundId);
-  }
-
-  removeFromScoresLine(score: number): void {
-    this.sharedService.removeFromScoresLine(score, this.playerId, this.roundId);
-  }
-
-  // getMemberByPlayerId(): RoundMember {
-  //   console.log('getMemberByPlayerId', this)
-  //   return super.getMemberByPlayerId()
-  //   // return this.sharedService.getMemberByPlayerId(this.playerId, this.roundId);
-  // }
+  ngOnInit() {}
 
   calcScores(): number {
     return this.getMemberByPlayerId().scoresLine.reduce((prev, cur) => prev + cur, 0);

@@ -19,31 +19,35 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(fromAnalyticsActions.getRatingSuccess,
+  on(
+    fromAnalyticsActions.getRatingSuccess,
     (state, { analytics }): State => ({
       ...state,
       analytics,
       error: null,
-    })
+    }),
   ),
-  on(fromAnalyticsActions.addMany,
+  on(
+    fromAnalyticsActions.addMany,
     (state, { analytics }): State => ({
       ...state,
       analytics: [...state.analytics, ...analytics],
       error: null,
-    })
+    }),
   ),
-  on(fromAnalyticsActions.error,
+  on(
+    fromAnalyticsActions.error,
     (state, { error }): State => ({
       ...state,
       error,
-    })
+    }),
   ),
-  on(fromAnalyticsActions.loading,
+  on(
+    fromAnalyticsActions.loading,
     (state, { loading }): State => ({
       ...state,
-      loading
-    })
+      loading,
+    }),
   ),
 );
 

@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType, OnInitEffects } from '@ngrx/effects';
 import { Action, Store } from '@ngrx/store';
-import { distinctUntilChanged, map, mergeMap, switchMap, tap, withLatestFrom } from 'rxjs/operators';
+import {
+  distinctUntilChanged,
+  map,
+  mergeMap,
+  switchMap,
+  tap,
+  withLatestFrom,
+} from 'rxjs/operators';
 import { State } from '../reducers';
 import * as fromPlayerReducer from '../reducers/player.reducer';
 import * as fromRoundMemberReducer from '../reducers/round-member.reducer';
@@ -36,14 +43,13 @@ export class PersistStoreEffects {
         this.store.select(fromPlayerReducer.selectAllPlayers),
       ]),
       map(([_, gameType, players]) => {
-        console.log('_', _);
-        console.log('gameType', gameType);
-        console.log('players', players);
         if (!gameType) {
           return fromAppActions.nop();
         }
-        return fromPersistStoreActions.upsertPersistStore({ persistStore: { _id: gameType, players } });
-      })
+        return fromPersistStoreActions.upsertPersistStore({
+          persistStore: { _id: gameType, players },
+        });
+      }),
     );
   });
 
@@ -51,14 +57,16 @@ export class PersistStoreEffects {
     return this.actions$.pipe(
       ofType(fromAppActions.clearGame),
       concatLatestFrom(() => this.store.select(fromAppReducer.selectGameType)),
-      concatLatestFrom(([action, gameType]) => this.store.select(fromPersistStoreReducer.selectByIdPersistStore(gameType))),
+      concatLatestFrom(([action, gameType]) =>
+        this.store.select(fromPersistStoreReducer.selectByIdPersistStore(gameType)),
+      ),
       map(([action, persistStore]) => {
         if (persistStore && persistStore.players) {
           return fromPlayerActions.loadPlayers({ players: persistStore.players });
         } else {
           return fromPlayerActions.clearPlayers();
         }
-      })
+      }),
     );
   });
 
@@ -66,6 +74,5 @@ export class PersistStoreEffects {
     private actions$: Actions,
     private store: Store,
     private sharedService: SharedService,
-  ) { }
-
+  ) {}
 }

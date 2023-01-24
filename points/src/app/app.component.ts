@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { signin, storeUserFromToken } from './store/actions/auth.actions';
+import { signin, storeUserFromToken, signup } from './store/actions/auth.actions';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from './modules/auth/auth.service';
 import jwtDecode from 'jwt-decode';
 import { NavigationEnd, NavigationError, NavigationStart, Router, Event } from '@angular/router';
+import { SharedService } from './services/shared.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -18,6 +19,7 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     private authService: AuthService,
     private router: Router,
+    private sharedService: SharedService,
   ) {
     // static translation initialization
     // this language will be used as a fallback when a translation isn't found in the current language
@@ -35,7 +37,11 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.store.dispatch(storeUserFromToken());
+    // this.sharedService.getTokenAndDecode().subscribe(
+    //   (res) => console.log('res', res),
+    //   (error) => console.log('error==', error.message),
+    // );
+    // this.store.dispatch(signup({}));
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         // console.log('NavigationStart', event);

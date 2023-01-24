@@ -1,7 +1,13 @@
 import { NgModule } from '@angular/core';
 import { DefaultDataServiceConfig, EntityDataModule, EntityDataService } from '@ngrx/data';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { ActionReducer, MetaReducer, META_REDUCERS, StoreModule, USER_PROVIDED_META_REDUCERS } from '@ngrx/store';
+import {
+  ActionReducer,
+  MetaReducer,
+  META_REDUCERS,
+  StoreModule,
+  USER_PROVIDED_META_REDUCERS,
+} from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
 import { reducers, metaReducers } from './reducers';
@@ -12,7 +18,6 @@ import { entityMetadata } from './entity-metadata';
 import { environment } from 'src/environments/environment';
 import { AuthEffects } from './effects/auth.effects';
 import { HttpClientModule } from '@angular/common/http';
-;
 import { InjectionToken } from '@angular/core';
 import { AuthService } from '../modules/auth/auth.service';
 import { SharedService } from '../services/shared.service';
@@ -42,12 +47,10 @@ export const defaultDataServiceConfig: DefaultDataServiceConfig = {
   },
 };
 
-
 @NgModule({
   imports: [
     HttpClientModule,
-    StoreModule.forRoot(
-      reducers, {
+    StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
         strictStateImmutability: true,
@@ -77,8 +80,6 @@ export const defaultDataServiceConfig: DefaultDataServiceConfig = {
     { provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig },
   ],
 })
-
-
 export class AppStoreModule {
   constructor(
     entityDataService: EntityDataService,
@@ -91,4 +92,3 @@ export class AppStoreModule {
     entityDataService.registerService('Gamer', gamerDataService);
   }
 }
-

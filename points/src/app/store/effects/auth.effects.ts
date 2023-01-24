@@ -7,6 +7,7 @@ import { map, switchMap, catchError, tap, mergeMap, filter, withLatestFrom } fro
 import * as fromAuthActions from '../actions/auth.actions';
 import * as fromRoundActions from '../actions/round.actions';
 import * as fromPlayerActions from '../actions/player.actions';
+import * as fromAppActions from '../actions/app.actions';
 
 import { AuthService } from '../../modules/auth/auth.service';
 import { IUser } from 'src/app/interfaces';
@@ -20,165 +21,220 @@ import { nop } from '../actions/app.actions';
 
 @Injectable()
 export class AuthEffects implements OnInitEffects {
-    setLoading = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.signin, fromAuthActions.signup, fromAuthActions.logout),
-            map((_) => fromAuthActions.loading({ loading: true })),
-        );
-    });
+  setLoading = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.signin, fromAuthActions.signup, fromAuthActions.logout),
+      map((_) => fromAuthActions.loading({ loading: true })),
+    );
+  });
 
-    cancelLoading = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.storeUserFromTokenSuccess, fromAuthActions.error),
-            filter((action) =>
-                // ignore error cancelling (null) actions
-                action.type !== fromAuthActions.AuthActionTypes.errorType ||
-                (action.type === fromAuthActions.AuthActionTypes.errorType && !!(action.error))
-            ),
-            map((_) => fromAuthActions.loading({ loading: false })),
-        );
-    });
+  cancelLoading = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.storeUserFromTokenSuccess, fromAuthActions.error),
+      filter(
+        (action) =>
+          // ignore error cancelling (null) actions
+          action.type !== fromAuthActions.AuthActionTypes.errorType ||
+          (action.type === fromAuthActions.AuthActionTypes.errorType && !!action.error),
+      ),
+      map((_) => fromAuthActions.loading({ loading: false })),
+    );
+  });
 
-    // signin, signup, logout -> clearRounds
-    // signup, logout -> clearPlayers
-    // signin, signup, logout -> storeToken -> storeUserFromToken -> storeUserFromTokenSuccess
+  // signin, signup, logout -> clearRounds
+  // signup, logout -> clearPlayers
+  // signin, signup, logout -> storeToken -> storeUserFromToken -> storeUserFromTokenSuccess
 
-    signin = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.signin),
-            map((action) => action.user),
-            switchMap((user) => this.authService.signin(user).pipe(
-                map((token) => fromAuthActions.storeToken({ token })),
-                catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
-            ))
-        );
-    });
+  signin = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.signin),
+      map((action) => action.user),
+      switchMap((user) =>
+        this.authService.signin(user).pipe(
+          map((token) => fromAuthActions.storeToken({ token })),
+          catchError((error) =>
+            of(fromAuthActions.error({ error: error.error.message || 'error' })),
+          ),
+        ),
+      ),
+    );
+  });
 
-    signup = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.signup, fromAuthActions.logout),
-            map((action = null) => {
-                if ('user' in action) {
-                    return action.user;
-                }
-                return null;
-            }),
-            switchMap((user) => this.authService.signup(user).pipe(
-                map((token) => fromAuthActions.storeToken({ token })),
-                catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
-            ))
-        );
-    });
+  signup = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.signup, fromAuthActions.logout),
+      map((action = null) => {
+        if ('user' in action) {
+          return action.user;
+        }
+        return null;
+      }),
+      switchMap((user) =>
+        this.authService.signup(user).pipe(
+          map((token) => fromAuthActions.storeToken({ token })),
+          catchError((error) =>
+            of(fromAuthActions.error({ error: error.error.message || 'error' })),
+          ),
+        ),
+      ),
+    );
+  });
 
-    clearRounds = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.signup, fromAuthActions.signin, fromAuthActions.logout),
-            map(() => fromRoundActions.clearRounds()),
-            catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
-        );
-    });
+  clearRounds = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.signup, fromAuthActions.signin, fromAuthActions.logout),
+      map(() => fromRoundActions.clearRounds()),
+      catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
+    );
+  });
 
-    clearPlayers = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.signup, fromAuthActions.logout),
-            map(() => fromPlayerActions.clearPlayers()),
-            catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
-        );
-    });
+  clearPlayers = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.signup, fromAuthActions.logout),
+      map(() => fromPlayerActions.clearPlayers()),
+      catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
+    );
+  });
 
-    storeToken = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.storeToken),
-            map((action) => action.token),
-            switchMap((token) => this.sharedService.setToken(token)),
-            map(() => fromAuthActions.storeUserFromToken()),
-            catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
-        );
-    });
+  storeToken = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.storeToken),
+      map((action) => action.token),
+      switchMap((token) => this.sharedService.setToken(token)),
+      map(() => fromAuthActions.storeUserFromToken()),
+      catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
+    );
+  });
 
-    storeUserFromToken = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.storeUserFromToken),
-            switchMap(() => of('_').pipe(
-                switchMap(() => this.sharedService.decodeToken().pipe(
-                    // catch decodeToken error and throw up
-                    // this part of stream finishes
-                    catchError((error) => {
-                        return of(fromAuthActions.signup({}));
-                    }),
-                    // catch without throw keep running stream
-                    // if no error store user
-                    map((user) => fromAuthActions.storeUserFromTokenSuccess({ user })),
-                )),
-                // get decode token error
-                // stream stay alive
-                // store error
-                catchError((error) => of(fromAuthActions.error({ error: error.message || error.error.message || 'error' })))
-            ))
-        );
-    });
+  storeUserFromToken = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.storeUserFromToken),
+      switchMap(() =>
+        this.sharedService.getTokenAndDecode().pipe(
+          map((user) => fromAuthActions.storeUserFromTokenSuccess({ user })),
+          catchError((error) => {
+            console.log('storeUserFromToken err', error);
+            return of(fromAuthActions.signup({}));
+          }),
+        ),
+      ),
+      catchError((error) => of(fromAuthActions.error({ error: error.message }))),
+    );
+  });
+  //   // !!!!!!!!!!!!!!!!!!!!!!!!!
+  //   storeUserFromToken = createEffect(() => {
+  //     return this.actions$.pipe(
+  //       ofType(fromAuthActions.storeUserFromToken),
+  //       switchMap(() =>
+  //         of('_').pipe(
+  //           switchMap(() =>
+  //             this.sharedService.getTokenAndDecode().pipe(
+  //               // catch decodeToken error and throw up
+  //               // this part of stream finishes
 
-    redirectAfterSignin = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.storeUserFromTokenSuccess),
-            map((payload) => {
-                if (payload.user?.role === 'member') {
-                    return fromAuthActions.redirection({ redirectionUrl: '/' });
-                }
-                return nop();
-            }));
-    });
+  //               catchError((error) => {
+  //                 return of(fromAuthActions.signup({}));
+  //               }),
+  //               // catch without throw keep running stream
+  //               // if no error store user
+  //               tap((user) => console.log('token user', user)),
 
+  //               map((user) => {
+  //                 // if (user.type === 'auth/signup') {
+  //                 //   return fromAuthActions.error({ error: 'Not authorized' });
+  //                 // }
+  //                 return fromAuthActions.storeUserFromTokenSuccess({ user });
+  //               }),
+  //             ),
+  //           ),
+  //           // get decode token error
+  //           // stream stay alive
+  //           // store error
+  //           catchError((error) =>
+  //             of(fromAuthActions.error({ error: error.message || error.error.message || 'error' })),
+  //           ),
+  //         ),
+  //       ),
+  //     );
+  //   });
 
-    // storeUserFromTokenSuccess = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(fromAuthActions.storeUserFromTokenSuccess),
-    //         concatLatestFrom(() => this.store),
-    //         // !!!! get url from storage
-    //         map(([action, state]) => {
-    //             console.log('state auth', state)
-    //             return fromAuthActions.redirection({ redirectionUrl: '/games/' + (state as State).app.gameType });
-    //         })
-    //     );
-    // });
+  redirectAfterSignin = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.storeUserFromTokenSuccess),
+      map((payload) => {
+        if (payload.user?.role === 'member') {
+          return fromAuthActions.redirection({ redirectionUrl: '/' });
+        }
+        return nop();
+      }),
+    );
+  });
 
-    getGamers = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.storeUserFromTokenSuccess),
-            map((_) => this.entityActionFactory.create(
-                'gamer', EntityOp.QUERY_LOAD, null, { tag: 'gamer/on storeUserFromToken', })),
-            catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
-        );
-    });
+  // storeUserFromTokenSuccess = createEffect(() => {
+  //     return this.actions$.pipe(
+  //         ofType(fromAuthActions.storeUserFromTokenSuccess),
+  //         concatLatestFrom(() => this.store),
+  //         // !!!! get url from storage
+  //         map(([action, state]) => {
+  //             console.log('state auth', state)
+  //             return fromAuthActions.redirection({ redirectionUrl: '/games/' + (state as State).app.gameType });
+  //         })
+  //     );
+  // });
 
-    getGames = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.storeUserFromTokenSuccess),
-            map((_) => this.entityActionFactory.create(
-                'game', EntityOp.QUERY_LOAD, null, { tag: 'game/on storeUserFromToken', })),
-            catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
-        );
-    });
+  getGamers = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.storeUserFromTokenSuccess),
+      map((_) =>
+        this.entityActionFactory.create(
+          'gamer',
+          EntityOp.QUERY_LOAD,
+          null,
 
-    removeAllRecentPlayers = createEffect(() => {
-        return this.actions$.pipe(
-            ofType(fromAuthActions.signinSuccess),
-            map((action) => action.token),
-            map((token) => fromAuthActions.storeToken({ token })),
-            catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
-        );
-    });
+          {
+            tag: 'gamer/on storeUserFromToken Success',
+          },
+        ),
+      ),
+      catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
+    );
+  });
 
-    constructor(
-        private actions$: Actions<fromAuthActions.CoreActionsUnion>,
-        private store: Store,
-        private authService: AuthService,
-        private sharedService: SharedService,
-        private entityActionFactory: EntityActionFactory,
-    ) { }
+  // getGames = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofType(fromAuthActions.storeUserFromTokenSuccess),
+  //     map((_) => {
+  //       console.log('_', _);
 
+  //       return this.entityActionFactory.create('game', EntityOp.QUERY_LOAD, null, {
+  //         tag: 'game/on storeUserFromToken Success',
+  //       });
+  //     }),
+  //     catchError((error) => {
+  //       console.log('error', error);
+  //       return of(fromAuthActions.error({ error: error.error.message || 'error' }));
+  //     }),
+  //   );
+  // });
 
-    ngrxOnInitEffects(): Action {
-        return fromAuthActions.storeUserFromToken();
-    }
+  removeAllRecentPlayers = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.signinSuccess),
+      map((action) => action.token),
+      map((token) => fromAuthActions.storeToken({ token })),
+      catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
+    );
+  });
+
+  constructor(
+    private actions$: Actions<fromAuthActions.CoreActionsUnion>,
+    private store: Store,
+    private authService: AuthService,
+    private sharedService: SharedService,
+    private entityActionFactory: EntityActionFactory,
+  ) {}
+
+  ngrxOnInitEffects(): Action {
+    return fromAuthActions.storeUserFromToken();
+  }
 }

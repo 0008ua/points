@@ -5,8 +5,8 @@ import { Game, GameModel } from 'src/game/entities/game.entity';
 @Injectable()
 export class AnalyticsService {
   constructor(@InjectModel(Game.name) readonly gameModel: GameModel) {}
-  getWins(userId: string) {
-    this.gameModel
+  async getWins(userId: string) {
+    return this.gameModel
       .aggregate([
         {
           $match: {
@@ -93,8 +93,8 @@ export class AnalyticsService {
       .catch((error: any) => new HttpException(error.message, HttpStatus.BAD_REQUEST));
   }
 
-  getWinsToGames(userId: string) {
-    this.gameModel
+  async getWinsToGames(userId: string) {
+    return this.gameModel
       .aggregate([
         {
           $match: {
@@ -256,7 +256,7 @@ export class AnalyticsService {
   }
 
   getRating(userId: string) {
-    this.gameModel
+    return this.gameModel
       .aggregate([
         {
           $match: {

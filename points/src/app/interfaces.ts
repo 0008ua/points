@@ -2,6 +2,8 @@ import { environment } from '../environments/environment';
 
 type UserRoles = 'member' | 'guest';
 export type UID = string;
+export type UUID = string;
+export type RoundMemberUUID = string;
 export type Colors = 'red' | 'green' | 'blue' | 'black' | 'yellow';
 export type GameType = keyof typeof environment.games;
 
@@ -13,7 +15,6 @@ export interface IUser {
   createdAt?: string;
   updatedAt?: string;
 }
-
 
 export interface IGamer {
   _id?: UID;
@@ -43,20 +44,19 @@ export interface IGame {
   updatedAt?: string;
 }
 
-export type ClientGame  = Pick<IGame, '_id' | 'type'>;
+export type ClientGame = Pick<IGame, '_id' | 'type'>;
 
 export interface Round {
   _id: string;
-  roundMembers: UID[]; // RoundMember
+  roundMembers: RoundMemberUUID[]; // RoundMember
   clientGame?: ClientGame;
   icon?: string;
   name: string;
   namePostfix: string;
 }
 
-
 export interface RoundMember {
-  _id: UID;
+  _id: RoundMemberUUID;
   player: UID; // Player
   scoresLine: number[];
   namedScoresLine?: NamedScore[];
@@ -85,6 +85,22 @@ export interface NamedScore {
   name: string;
   value: number;
   picture?: string;
+  total?: number;
 }
 
+export type RoundScoresNameType = 'r' | 's' | 'score';
+export type RoundScoresOptionsType = 'r' | 's';
+export type RoundScoresDisabledType = RoundScoresOptionsType[];
+export type RoundScoresType = {
+  [key: RoundMemberUUID]: {
+    name: RoundScoresNameType;
+    value: number;
+    disabled: RoundScoresDisabledType;
+    doubleZero: boolean;
+    barrel: number;
+  };
+};
 
+export interface RoundScores {
+  [key: RoundMemberUUID]: number | string; // TODO: only number
+}

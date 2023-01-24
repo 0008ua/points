@@ -93,7 +93,7 @@ export const environment = {
           initialScoresLine: [],
           initialNamedScoresLine: [],
         },
-      ]
+      ],
     },
     thousand: {
       name: 'Thousand - 1000',
@@ -101,11 +101,6 @@ export const environment = {
       maxPlayersQty: 4,
       minPlayersQty: 2,
       playersColors: ['black'],
-      roundsScores: [
-        { name: 'Score', value: 0, },
-        { name: 'S', value: -100, },
-        { name: 'R', value: 0, },
-      ],
       rounds: [
         {
           _id: 'start',
@@ -121,7 +116,7 @@ export const environment = {
           initialScoresLine: [],
           initialNamedScoresLine: [],
         },
-      ]
+      ],
     },
     train: {
       name: 'Ticket to ride',
@@ -140,7 +135,7 @@ export const environment = {
         { name: '12', value: 12 },
         { name: '13', value: 13 },
         { name: '20', value: 20 },
-        { name: '21', value: 21 }
+        { name: '21', value: 21 },
       ],
       longestRouteScore: 10,
       carsScores: [
@@ -149,7 +144,7 @@ export const environment = {
         { name: 3, value: 4 },
         { name: 4, value: 7 },
         { name: 6, value: 15 },
-        { name: 8, value: 21 }
+        { name: 8, value: 21 },
       ],
       stats: [
         {
@@ -161,7 +156,7 @@ export const environment = {
           _id: 'getRatingByWinsToGames',
           icon: 'podium-outline',
           name: 'byWinsToGames',
-        }
+        },
       ],
       rounds: [
         {
@@ -199,11 +194,10 @@ export const environment = {
           initialScoresLine: [],
           initialNamedScoresLine: [],
         },
-      ]
-    }
-  }
+      ],
+    },
+  },
 };
-
 
 /*
  * For easier debugging in development mode, you can import the following file

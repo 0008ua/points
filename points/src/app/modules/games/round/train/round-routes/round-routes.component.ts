@@ -9,14 +9,14 @@ import { ROUND_COMPONENT } from '../../round-interfaces';
   selector: 'app-round-routes',
   templateUrl: './round-routes.component.html',
   styleUrls: ['./round-routes.component.scss'],
-  providers: [{
-    provide: ROUND_COMPONENT,
-    useExisting: RoundRoutesComponent,
-  }]
+  providers: [
+    {
+      provide: ROUND_COMPONENT,
+      useExisting: RoundRoutesComponent,
+    },
+  ],
 })
-export class RoundRoutesComponent
-  extends RoundScoresLineDirective
-  implements OnInit, RoundRoutes {
+export class RoundRoutesComponent extends RoundScoresLineDirective implements OnInit, RoundRoutes {
   @Input() playerId: UID;
   @Input() roundId: string;
 
@@ -24,16 +24,13 @@ export class RoundRoutesComponent
   inverse: Inverse = 1;
   numberFn = Number;
 
-  constructor(
-    injector: Injector,
-  ) {
+  constructor(injector: Injector) {
     super(injector);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   inverseScore() {
-    this.inverse = this.inverse * -1 as Inverse;
+    this.inverse = (this.inverse * -1) as Inverse;
   }
 }

@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { IGamer, NamedScore, Round, RoundMember, UID } from 'src/app/interfaces';
 import { SharedService } from 'src/app/services/shared.service';
+import { GamesService } from '../games.service';
 
 export const ROUND_COMPONENT = new InjectionToken<RoundBase>('roundComponent');
 
@@ -10,6 +11,7 @@ export interface RoundBase {
   playerId: UID;
   roundId: string;
   sharedService: SharedService;
+  gamesService: GamesService;
   getMemberByPlayerId: (playerId: string) => RoundMember;
 }
 

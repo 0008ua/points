@@ -19,9 +19,7 @@ export class RoundComponent implements OnInit {
   rounds$: Observable<Round[]>;
   // gameType$: Observable<GameType>;
 
-  constructor(
-    private store: Store,
-  ) { }
+  constructor(private store: Store) {}
 
   ngOnInit() {
     this.rounds$ = this.store.select(selectAllRounds);

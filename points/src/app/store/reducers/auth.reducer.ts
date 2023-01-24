@@ -21,33 +21,36 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(fromAuthActions.storeUserFromTokenSuccess,
+  on(
+    fromAuthActions.storeUserFromTokenSuccess,
     (state, { user }): State => ({
       ...state,
       user,
       error: null,
-    })
+    }),
   ),
-  on(fromAuthActions.error,
+  on(
+    fromAuthActions.error,
     (state, { error }): State => ({
       ...state,
       error,
-    })
+    }),
   ),
-  on(fromAuthActions.loading,
+  on(
+    fromAuthActions.loading,
     (state, { loading }): State => ({
       ...state,
       loading,
-    })
+    }),
   ),
-  on(fromAuthActions.redirection,
+  on(
+    fromAuthActions.redirection,
     (state, { redirectionUrl }): State => ({
       ...state,
       redirectionUrl,
-    })
+    }),
   ),
 );
-
 
 const selectFeature = createFeatureSelector<State>(authFeatureKey);
 

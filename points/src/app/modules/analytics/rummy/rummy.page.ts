@@ -37,33 +37,16 @@ export class RummyPage implements OnInit {
   }
 
   ngOnInit() {
-    console.log('init')
-
     this.games$ = this.gameService.entities$;
-    this.games$
-      .subscribe(() =>
-        this.store.dispatch(fromAnalyticsActions[this.stat._id]({ gameType: 'rummy' }))
-      );
+    this.games$.subscribe(() =>
+      this.store.dispatch(fromAnalyticsActions[this.stat._id]({ gameType: 'rummy' })),
+    );
 
     this.gamers$ = this.gamerService.entities$;
-    this.gamers$.subscribe((x) => console.log('gamers', x))
+    this.gamers$.subscribe((x) => console.log('gamers', x));
 
-
-    console.log('[this.stats[0]._id', this.stats[0]._id);
     this.analytics$ = this.store.select(selectRating);
-    // this.analytics$.pipe(
-    //   withLatestFrom(this.gamers$),
-    //   map((x) => {
-    //     this.store.dispatch(fromAnalyticsActions.addMany({analytics: x[1]}))
-    //     console.log('an0', x)
-    //   })
-    // )
-    //   .subscribe((x) => console.log('an', x))
 
     this.loading$ = this.store.select(selectLoading);
-
   }
-
-
-
 }

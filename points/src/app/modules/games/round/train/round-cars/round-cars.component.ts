@@ -9,20 +9,19 @@ import { RoundScoresLineDirective } from '../../round.directive';
   selector: 'app-round-cars',
   templateUrl: './round-cars.component.html',
   styleUrls: ['./round-cars.component.scss'],
-  providers: [{
-    provide: ROUND_COMPONENT,
-    useExisting: RoundCarsComponent,
-  }]
+  providers: [
+    {
+      provide: ROUND_COMPONENT,
+      useExisting: RoundCarsComponent,
+    },
+  ],
 })
-export class RoundCarsComponent extends RoundScoresLineDirective
-implements OnInit, RoundCars {
+export class RoundCarsComponent extends RoundScoresLineDirective implements OnInit, RoundCars {
   // @Input() playerId: UID;
   // @Input() roundId: string;
 
   carsScoresEnv = environment.games.train.carsScores;
-  constructor(
-    injector: Injector,
-  ) {
+  constructor(injector: Injector) {
     super(injector);
   }
 

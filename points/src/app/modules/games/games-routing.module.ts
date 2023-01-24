@@ -10,7 +10,7 @@ const routes: Routes = [
     children: [
       {
         path: ':id',
-        loadChildren: () => import('./game/game.module').then(m => m.GamePageModule)
+        loadChildren: () => import('./game/game.module').then((m) => m.GamePageModule),
       },
       // {
       //   path: 'train',
@@ -68,4 +68,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class GamesPageRoutingModule { }
+export class GamesPageRoutingModule {}

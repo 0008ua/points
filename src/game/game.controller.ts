@@ -35,6 +35,7 @@ export class GameController {
   @UseGuards(AuthGuard('jwt'))
   @Get()
   getWithQuery(@Query() query: any, @Req() { user }: Request) {
+    console.log('query', query)
     if (Object.keys(query).length === 0) {
       return this.gameService.getAll(user._id);
     }

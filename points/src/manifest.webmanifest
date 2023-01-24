@@ -1,6 +1,6 @@
 {
-  "name": "Scores",
-  "short_name": "Scores",
+  "name": "Points",
+  "short_name": "Points",
   "theme_color": "#4171c3",
   "background_color": "#e2e1f0",
   "display": "standalone",

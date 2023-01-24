@@ -1,4 +1,10 @@
-import { ActionReducer, ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store';
+import {
+  ActionReducer,
+  ActionReducerMap,
+  createFeatureSelector,
+  createSelector,
+  MetaReducer,
+} from '@ngrx/store';
 import { AuthService } from 'src/app/modules/auth/auth.service';
 
 import { environment } from '../../../environments/environment';
@@ -21,7 +27,7 @@ export interface State {
   analytics: fromAnalytics.State;
   app: fromApp.State;
   persistStore: fromPersistStore.State;
-  router: RouterReducerState<any>;// typeof routerReducer;
+  router: RouterReducerState<any>; // typeof routerReducer;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -35,7 +41,9 @@ export const reducers: ActionReducerMap<State> = {
   persistStore: fromPersistStore.reducer,
 };
 
-export const metaReducers: MetaReducer<State>[] = !environment.production ? [hydrationMetaReducer] : [hydrationMetaReducer];
+export const metaReducers: MetaReducer<State>[] = !environment.production
+  ? [hydrationMetaReducer]
+  : [hydrationMetaReducer];
 
 export const {
   selectCurrentRoute, // select the current route
@@ -49,12 +57,10 @@ export const {
 } = getSelectors();
 
 export const selectFeature = createFeatureSelector<RouterReducerState<any>>('router');
-export const selectUrlRouter = createSelector((state: State) => state, value => value.router.state.url);
+export const selectUrlRouter = createSelector(
+  (state: State) => state,
+  (value) => value.router.state.url,
+);
 // export const selectUrlRouter = createSelector((state: State) => state.ngrxRouter, selectUrl);
 // export const selectUrlRouter = createSelector(selectFeature, selectUrl);
 // export const selectFragmentRouter = createSelector(selectFeature, selectFragment);
-
-
-
-
-

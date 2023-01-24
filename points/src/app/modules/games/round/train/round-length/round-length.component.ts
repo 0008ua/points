@@ -6,30 +6,27 @@ import { RoundLongest } from '../../round-interfaces';
 import { ROUND_COMPONENT } from '../../round-interfaces';
 import { RoundBaseDirective } from '../../round.directive';
 
-
 @Component({
   selector: 'app-round-length',
   templateUrl: './round-length.component.html',
   styleUrls: ['./round-length.component.scss'],
-  providers: [{
-    provide: ROUND_COMPONENT,
-    useExisting: RoundLengthComponent,
-  }]
+  providers: [
+    {
+      provide: ROUND_COMPONENT,
+      useExisting: RoundLengthComponent,
+    },
+  ],
 })
-export class RoundLengthComponent extends RoundBaseDirective
-  implements OnInit, RoundLongest {
+export class RoundLengthComponent extends RoundBaseDirective implements OnInit, RoundLongest {
   // @Input() playerId: UID;
   // @Input() roundId: string;
 
   longestRouteScoreEnv = environment.games.train.longestRouteScore;
-  constructor(
-    injector: Injector,
-  ) {
+  constructor(injector: Injector) {
     super(injector);
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   // getMemberByPlayerId(): RoundMember {
   //   return super.sharedService.getMemberByPlayerId(this.playerId, this.roundId);
@@ -38,10 +35,9 @@ export class RoundLengthComponent extends RoundBaseDirective
   onMarkLongestHandler(e: any) {
     const checked = e.target.checked;
     if (checked) {
-      this.sharedService.setScoresLine([this.longestRouteScoreEnv], this.playerId, this.roundId);
+      this.setScoresLine([this.longestRouteScoreEnv], this.playerId, this.roundId);
     } else {
-      this.sharedService.setScoresLine([], this.playerId, this.roundId);
+      this.setScoresLine([], this.playerId, this.roundId);
     }
   }
-
 }

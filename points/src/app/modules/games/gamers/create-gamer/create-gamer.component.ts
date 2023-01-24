@@ -13,13 +13,9 @@ export class CreateGamerComponent implements OnInit {
   playersColors = environment.games.train.playersColors as Colors[];
   color: Colors = this.playersColors[0];
   name: string;
-  constructor(
-    public popoverController: PopoverController,
+  constructor(public popoverController: PopoverController) {}
 
-  ) { }
-
-
-  ngOnInit() { }
+  ngOnInit() {}
   async presentPopover(event: Event, component: any, data: any): Promise<any> {
     const popover = await this.popoverController.create({
       component,
@@ -33,7 +29,9 @@ export class CreateGamerComponent implements OnInit {
   }
 
   async showSelectColorPopup(event: Event) {
-    const { data } = await this.presentPopover(event, SelectColorComponent, { colors: this.playersColors });
+    const { data } = await this.presentPopover(event, SelectColorComponent, {
+      colors: this.playersColors,
+    });
     if (data) {
       const { color } = data;
       this.color = color;
@@ -48,8 +46,8 @@ export class CreateGamerComponent implements OnInit {
     this.dismiss({
       gamer: {
         color: this.color,
-        name: this.name
-      }
+        name: this.name,
+      },
     });
   }
 }

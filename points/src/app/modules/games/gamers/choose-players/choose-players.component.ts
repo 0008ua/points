@@ -16,10 +16,11 @@ import { v4 as uuidv4 } from 'uuid';
 import { GameService } from 'src/app/store/game-data.service';
 import { addRound, loadRounds } from 'src/app/store/actions/round.actions';
 import { loadPlayers } from 'src/app/store/actions/player.actions';
-import * as fromPlayersReducer from '../../../../store/reducers/player.reducer';
+import * as fromPlayerReducer from '../../../../store/reducers/player.reducer';
 import * as fromAppReducer from '../../../../store/reducers/app.reducer';
 
-import * as fromPlayersActions from '../../../../store/actions/player.actions';
+import * as fromPlayerActions from '../../../../store/actions/player.actions';
+import * as fromAppActions from '../../../../store/actions/app.actions';
 import { SharedService } from 'src/app/services/shared.service';
 import { environment } from 'src/environments/environment';
 
@@ -55,7 +56,7 @@ export class ChoosePlayersComponent implements OnInit {
     public popoverController: PopoverController,
     public alertController: AlertController,
     private sharedService: SharedService,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.gameType$ = this.store.select(fromAppReducer.selectGameType);
@@ -65,12 +66,11 @@ export class ChoosePlayersComponent implements OnInit {
       this.filtredColors = environment.games[gameType]?.playersColors as Colors[];
     });
 
-    this.players$ = this.store.select(fromPlayersReducer.selectAllPlayers);
+    this.players$ = this.store.select(fromPlayerReducer.selectAllPlayers);
     this.players$.subscribe((players) => {
       this.players = players;
       this.filter();
     });
-
 
     this.gamers$ = this.gamerService.entities$;
     this.gamers$.subscribe((gamers) => {
@@ -80,7 +80,8 @@ export class ChoosePlayersComponent implements OnInit {
   }
 
   startGameHandler() {
-    this.sharedService.createRounds(this.gameType);
+    this.store.dispatch(fromAppActions.createRounds());
+    // this.sharedService.createRounds(this.gameType);
   }
 
   async presentPopover(event: Event, component: any, data: any): Promise<any> {
@@ -96,7 +97,9 @@ export class ChoosePlayersComponent implements OnInit {
   }
 
   async showSelectColorPopup(event: Event, index: number) {
-    const { data } = await this.presentPopover(event, SelectColorComponent, { colors: this.filtredColors });
+    const { data } = await this.presentPopover(event, SelectColorComponent, {
+      colors: this.filtredColors,
+    });
     if (data) {
       const { color } = data;
       this.chooseColorHandler(color, index);
@@ -144,7 +147,7 @@ export class ChoosePlayersComponent implements OnInit {
       }
       return player;
     });
-    this.store.dispatch(fromPlayersActions.loadPlayers({players}));
+    this.store.dispatch(fromPlayerActions.loadPlayers({ players }));
   }
 
   chooseColorHandler(color: Colors, index: number) {
@@ -158,7 +161,7 @@ export class ChoosePlayersComponent implements OnInit {
   }
 
   removePlayerHandler(_id: string) {
-    this.store.dispatch(fromPlayersActions.deletePlayer({ id: _id }));
+    this.store.dispatch(fromPlayerActions.deletePlayer({ id: _id }));
     // this.players = this.players.filter((player, idx) => idx !== index);
     // console.log('this.players', this.players);
     // this.store.dispatch(loadPlayers({ players: [...this.players] }));
@@ -167,13 +170,12 @@ export class ChoosePlayersComponent implements OnInit {
   }
 
   removeAllPlayersHandler() {
-    this.store.dispatch(fromPlayersActions.clearPlayers());
+    this.store.dispatch(fromPlayerActions.clearPlayers());
 
     // this.players = [];
     // this.filter();
     // this.addPlayerHandler();
   }
-
 
   addPlayerHandler(firstEl = true) {
     if (!this.filtredGamers.length) {
@@ -185,17 +187,18 @@ export class ChoosePlayersComponent implements OnInit {
     }
     const preferredColor = candidate.color;
     if (this.filtredColors.includes(preferredColor)) {
-      this.store.dispatch(fromPlayersActions.addPlayer({ player: { ...candidate } }));
+      this.store.dispatch(fromPlayerActions.addPlayer({ player: { ...candidate } }));
     } else {
-      this.store.dispatch(fromPlayersActions.addPlayer({ player: { ...candidate, color: this.filtredColors[0] } }));
+      this.store.dispatch(
+        fromPlayerActions.addPlayer({ player: { ...candidate, color: this.filtredColors[0] } }),
+      );
     }
     // this.filter();
   }
 
   createGamerHandler(gamer: IGamer) {
-    this.gamerService.add(gamer)
-      .subscribe((result) => {
-        console.log(result);
-      });
+    this.gamerService.add(gamer).subscribe((result) => {
+      // console.log(result);
+    });
   }
 }

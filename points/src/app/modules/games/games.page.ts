@@ -23,7 +23,7 @@ export class GamesPage implements OnInit {
     private store: Store,
     public translate: TranslateService,
     private menuController: MenuController,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.userRole$ = this.store.select(selectUserRole);

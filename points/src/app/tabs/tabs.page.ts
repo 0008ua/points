@@ -8,15 +8,13 @@ import { selectUser, selectUserRole } from '../store/reducers/auth.reducer';
 @Component({
   selector: 'app-tabs',
   templateUrl: 'tabs.page.html',
-  styleUrls: ['tabs.page.scss']
+  styleUrls: ['tabs.page.scss'],
 })
 export class TabsPage implements OnInit {
   user$: Observable<IUser | null>;
   userRole$: Observable<string>;
   loading$: Observable<boolean>;
-  constructor(
-    private store: Store,
-  ) { }
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     this.user$ = this.store.select(selectUser);

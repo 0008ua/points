@@ -1,7 +1,13 @@
 import { Injectable } from '@angular/core';
 import {
-  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest,
-  HttpResponse, HttpErrorResponse, HttpClient, HttpHeaders,
+  HttpEvent,
+  HttpInterceptor,
+  HttpHandler,
+  HttpRequest,
+  HttpResponse,
+  HttpErrorResponse,
+  HttpClient,
+  HttpHeaders,
 } from '@angular/common/http';
 
 import { Observable, of, throwError } from 'rxjs';
@@ -16,7 +22,6 @@ import { SharedService } from './shared.service';
 @Injectable({
   providedIn: 'root',
 })
-
 export class HttpInterceptorService implements HttpInterceptor {
   host = environment.host;
   refreshInProgress = false;
@@ -26,11 +31,10 @@ export class HttpInterceptorService implements HttpInterceptor {
     private http: HttpClient,
     private authService: AuthService,
     private sharedService: SharedService,
-  ) { }
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return this.sharedService.getToken().pipe(
-
       switchMap((token) => {
         if (token) {
           req = req.clone({
@@ -49,11 +53,7 @@ export class HttpInterceptorService implements HttpInterceptor {
               'Content-Type': 'application/json',
             }),
           };
-          return this.http.post<string>(
-            this.host + '/api/auth/signup',
-            null,
-            httpOptions,
-          ).pipe(
+          return this.http.post<string>(this.host + '/api/auth/signup', null, httpOptions).pipe(
             catchError((getTokenError: HttpErrorResponse) => {
               // error get valid guest token
               // forward error
@@ -68,11 +68,11 @@ export class HttpInterceptorService implements HttpInterceptor {
               });
               // second try to get protected resource
               return next.handle(req);
-            })
+            }),
           );
         }
         return throwError(error);
-      })
+      }),
     );
   }
 }

@@ -21,7 +21,7 @@ export class AnalyticsPage implements OnInit {
     private store: Store,
     public translate: TranslateService,
     private menuController: MenuController,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.userRole$ = this.store.select(selectUserRole);
@@ -29,7 +29,6 @@ export class AnalyticsPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    console.log('analytics ionViewWillEnter')
     this.menuController.enable(true, 'analytics-menu');
   }
 
@@ -41,5 +40,4 @@ export class AnalyticsPage implements OnInit {
     this.lang = this.lang === 'en' ? 'uk' : 'en';
     this.translate.use(this.lang);
   }
-
 }

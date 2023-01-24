@@ -19,6 +19,7 @@ import { StoreModule } from '@ngrx/store';
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
+import { JwtDecodeFactory, JWT_DECODE } from './config/jwt.config';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,18 +32,18 @@ export function createTranslateLoader(http: HttpClient) {
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
+        useFactory: createTranslateLoader,
+        deps: [HttpClient],
+      },
     }),
     AppStoreModule,
     // StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
-
   ],
   providers: [
+    { provide: JWT_DECODE, useFactory: JwtDecodeFactory, deps: [] },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

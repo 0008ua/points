@@ -13,19 +13,19 @@ export class AuthController {
   @Post('signin')
   async signin(@Req() { user }: Request) {
     const token = await this.authService.createJwt(user);
-    return token;
+    return JSON.stringify(token);
   }
 
   @Post('signup')
   async signup(@Body() dto: SignupDto) {
     const newUser: UserDataDto = await this.authService.createUser(dto);
     const token = await this.authService.createJwt(newUser);
-    return token;
+    return JSON.stringify(token);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Post('protected')
   protected(@Req() req: Request) {
-    return { user: req.user };
+    return null;
   }
 }

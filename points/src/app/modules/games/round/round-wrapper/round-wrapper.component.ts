@@ -11,7 +11,6 @@ import { Observable } from 'rxjs';
   templateUrl: './round-wrapper.component.html',
   styleUrls: ['./round-wrapper.component.scss'],
 })
-
 export class RoundWrapperComponent implements OnInit, RoundBaseWrapper {
   @ContentChild(ROUND_COMPONENT, { static: true })
   roundComponent: RoundBase;
@@ -21,15 +20,12 @@ export class RoundWrapperComponent implements OnInit, RoundBaseWrapper {
   loading$: Observable<boolean>;
   gameType: GameType;
 
-  constructor(
-    public sharedService: SharedService,
-    private store: Store,
-  ) { }
+  constructor(public sharedService: SharedService, private store: Store) {}
 
   ngOnInit() {
     this.loading$ = this.store.select(selectLoading);
     this.gameType$ = this.store.select(selectGameType);
-    this.gameType$.subscribe((gameType) => this.gameType = gameType);
+    this.gameType$.subscribe((gameType) => (this.gameType = gameType));
   }
 
   getRoundById(): Round {

@@ -21,30 +21,21 @@ export class StoreErrorService {
     actions$
       .pipe(
         ofEntityOp(),
-        filter(
-          (ea: EntityAction) => ea.payload.entityOp.endsWith(OP_ERROR),
-        ),
+        filter((ea: EntityAction) => ea.payload.entityOp.endsWith(OP_ERROR)),
       )
       .subscribe((action) => {
-        console.log('ofEntityOp error', action)
-        this.store.dispatch(fromAuthActions.error({ error: action.payload.data.error.message }))
-      }
-
-      );
-
-    actions$
-      .pipe(ofType(EntityCacheAction.SAVE_ENTITIES_ERROR))
-      .subscribe((action) => {
-        console.log('entity save toast error', action);
-        this.toastService.presentToast(`Error SAVE_ENTITIES_ERROR`);
+        console.log('ofEntityOp error', action);
+        this.store.dispatch(fromAuthActions.error({ error: action.payload.data.error.message }));
       });
+
+    actions$.pipe(ofType(EntityCacheAction.SAVE_ENTITIES_ERROR)).subscribe((action) => {
+      console.log('entity save toast error', action);
+      this.toastService.presentToast(`Error SAVE_ENTITIES_ERROR`);
+    });
 
     actions$
       .pipe(
-        ofType(
-          fromAnalyticsActions.error,
-          fromAuthActions.error
-        ),
+        ofType(fromAnalyticsActions.error, fromAuthActions.error),
         filter((action) => action.error !== null),
         switchMap((action) => {
           switch (action.type) {
@@ -59,14 +50,15 @@ export class StoreErrorService {
             default:
           }
           return this.sharedService.logErrorToDB(action.error);
-        }))
-      .subscribe((result) => {
-        console.log('Error successefuly logged to db');
-      }, (error) => {
-        console.log('Fail to log error', error);
-      }
+        }),
+      )
+      .subscribe(
+        (result) => {
+          console.log('Error successefuly logged to db');
+        },
+        (error) => {
+          console.log('Fail to log error', error);
+        },
       );
-
-
   }
 }

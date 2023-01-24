@@ -18,7 +18,7 @@ export class GameService {
   }
 
   async getAll(owner: string): Promise<GameDocument[]> {
-    return this.gameModel.find({ owner });
+    return await this.gameModel.find({ owner });
   }
 
   async findOne(_id: string, owner: string): Promise<GameDocument> {
