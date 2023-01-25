@@ -4,7 +4,10 @@
       <ion-col size="12">
         <ion-button (click)="storeRoundScores()" expand="block"> Submit </ion-button>
       </ion-col>
-      <ion-col *ngFor="let roundMember of roundMembers$ | async; let i = index" [size]="12 / qtyOfPlayers">
+      <ion-col
+        *ngFor="let roundMember of roundMembers$ | async; let i = index"
+        [size]="12 / qtyOfPlayers"
+      >
         <div
           [ngClass]="
             roundMember._id === activeRoundMemberId
@@ -50,20 +53,24 @@
       </ion-col>
     </ion-row>
     <ion-row>
-      <ion-col *ngFor="let roundMember of addTotals(roundMembers$ | async)" [size]="12 / qtyOfPlayers">
+      <ion-col
+        *ngFor="let roundMember of addTotals(roundMembers$ | async)"
+        [size]="12 / qtyOfPlayers"
+      >
         <ion-item
-          [lines]="(i + 1) % qtyOfPlayers === 0 ? 'full' : 'none'"
+          class="thousand-score__wrapper"
+          [lines]="(roundMember.namedScoresLine.length - i - 1) % qtyOfPlayers === 0 ? 'full' : 'none'"
           *ngFor="let score of roundMember.namedScoresLine.slice().reverse(); let i = index"
         >
           <ion-text
-            class="thousand_score"
+            class="thousand-score-__current"
             [color]="i <= 1 && scores[roundMember._id].doubleZero ? 'danger' : ''"
             >{{ score.value }}</ion-text
           >
           <div style="width: 100%"></div>
           <ion-text
-            class="thousand_total"
-            [ngClass]="{ thousand_total_last: i === 0 }"
+            class="thousand-score__total"
+            [ngClass]="{ 'thousand-score__total_last': i === 0 }"
             [color]="
               score.total >= 900 &&
               score.total < 1000 &&

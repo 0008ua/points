@@ -1495,18 +1495,24 @@ input[type=number] {
   align-items: center;
   padding: 0 10px;
 }
-.thousand_score {
-  font-size: 0.8rem;
-}
 .thousand-score-input {
   padding: 0 10px;
 }
-.thousand_total {
-  font-weight: 600;
-  font-size: 1.1rem;
+.thousand-score__current {
+  font-size: 0.8rem;
 }
-.thousand_total_last {
-  font-size: 1.3rem;
+.thousand-score__total {
+  font-weight: 600;
+  font-size: 0.8rem;
+}
+@media (min-width: 576px) {
+  .thousand-score__total {
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+  .thousand-score__total_last {
+    font-size: 1.3rem;
+  }
 }
 .round-btn-block {
   display: flex;

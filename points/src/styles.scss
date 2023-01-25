@@ -158,19 +158,29 @@ input[type='number'] {
   }
 }
 
-.thousand_score {
-    font-size: .8rem;
-}
-
 .thousand-score-input {
   padding: 0 10px;
 }
 
-.thousand_total {
-  font-weight: 600;
-  font-size: 1.1rem;
-  &_last {
-    font-size: 1.3rem;
+.thousand-score {
+  &__current {
+    font-size: 0.8rem;
+  }
+  &__total {
+    font-weight: 600;
+    font-size: 0.8rem;
+  }
+  @media (min-width: 576px) {
+    &__wrapper {
+      // margin: 0 10px;
+    }
+    &__total {
+      font-weight: 600;
+      font-size: 1.1rem;
+      &_last {
+        font-size: 1.3rem;
+      }
+    }
   }
 }
 
@@ -180,7 +190,6 @@ input[type='number'] {
   width: 100%;
   padding: 0 5px;
   &__item {
-      flex: 1 1 auto;
-
+    flex: 1 1 auto;
   }
 }

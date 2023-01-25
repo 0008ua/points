@@ -1351,7 +1351,6 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
             .filter((key) => key !== roundMemberId)
             .forEach((key) => {
             this.scores[key] = Object.assign(Object.assign({}, this.initialScores[key]), { value: option === 'r' ? 60 : 0 });
-            // }
         });
     }
     resetScores() {
@@ -1379,7 +1378,7 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
             let acc = 0;
             roundMember.namedScoresLine.map((namedScore) => {
                 acc = namedScore.value + acc;
-                if (acc >= 900) {
+                if (acc >= 900 && acc < 1000) {
                     this.scores[roundMember._id].barrel += 1;
                 }
                 else {
@@ -1409,14 +1408,16 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
     }
     checkOnBarrelTimes() {
         Object.keys(this.scores).forEach((key) => {
-            if (this.scores[key].barrel >= this.qtyOfPlayers) {
+            if (this.scores[key].barrel >= this.qtyOfPlayers || this.scores[key].barrel >= 3) {
                 let acc = 0;
                 this.roundMembers
                     .find((roundMember) => roundMember._id === key)
                     .namedScoresLine.map((namedScore) => {
                     acc = namedScore.value + acc;
                 });
-                this.scores[key].value = this.customRoundNumber(acc) - 100 - acc;
+                if (acc + this.scores[key].value < 1000) {
+                    this.scores[key].value = this.customRoundNumber(acc) - 100 - acc;
+                }
             }
         });
     }
@@ -1448,12 +1449,27 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
             }
         });
     }
+    checkOnWinner() {
+        Object.keys(this.scores).forEach((key) => {
+            let acc = 0;
+            this.roundMembers
+                .find((roundMember) => roundMember._id === key)
+                .namedScoresLine.map((namedScore) => {
+                acc = namedScore.value + acc;
+            });
+            acc = acc + this.scores[key].value;
+            if (acc >= 1000) {
+                this.scores[key].value = this.scores[key].value - (acc - 1000);
+            }
+        });
+    }
     storeRoundScores() {
         this.checkOnValueIsNumber();
         this.checkOnTrippleZero();
         this.checkOnBarrelTimes();
         this.checkGetOnBarrel();
         this.checkOnRoundedValue();
+        this.checkOnWinner();
         this.gamesService.storeRoundScores(this.scores);
     }
     customRoundNumber(n) {
@@ -1844,7 +1860,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-card>\r\n  <ion-card-header [ngStyle]=\"{'border-bottom': '2px solid ' + getPlayerColor()}\">\r\n    <!-- <ion-card-subtitle>\r\n      <span class=\"round-subtitle\">\r\n        <ion-icon class=\"round-subtitle__icon\" color=\"primary\" [name]=getRoundById()?.icon></ion-icon>\r\n        <span class=\"ion-text-capitalize round-subtitle__text\">\r\n          {{'games.' + (gameType$ | async) + '.' + getRoundById()?.name | translate}} {{getRoundById()?.namePostfix}}\r\n        </span>\r\n        <span class=\"round-subtitle__blank\"></span>\r\n        <span>{{calcScores()}}</span>\r\n      </span>\r\n    </ion-card-subtitle> -->\r\n    <ion-card-title class=\"ion-text-center\">\r\n      <ion-row>\r\n        <ion-col *ngFor=\"let player of (players$ | async)\">\r\n         <ion-text>{{player.name}}</ion-text>\r\n        </ion-col>\r\n        <ion-col size=\"1\"></ion-col>\r\n\r\n      </ion-row>\r\n\r\n    </ion-card-title>\r\n  </ion-card-header>\r\n  <ng-content></ng-content>\r\n</ion-card>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-card>\r\n  <ion-card-header [ngStyle]=\"{'border-bottom': '2px solid ' + getPlayerColor()}\">\r\n    <!-- <ion-card-subtitle>\r\n      <span class=\"round-subtitle\">\r\n        <ion-icon class=\"round-subtitle__icon\" color=\"primary\" [name]=getRoundById()?.icon></ion-icon>\r\n        <span class=\"ion-text-capitalize round-subtitle__text\">\r\n          {{'games.' + (gameType$ | async) + '.' + getRoundById()?.name | translate}} {{getRoundById()?.namePostfix}}\r\n        </span>\r\n        <span class=\"round-subtitle__blank\"></span>\r\n        <span>{{calcScores()}}</span>\r\n      </span>\r\n    </ion-card-subtitle> -->\r\n    <ion-card-title class=\"ion-text-center\">\r\n      <ion-row>\r\n        <ion-col *ngFor=\"let player of (players$ | async)\">\r\n         <ion-text>{{player.name}}</ion-text>\r\n        </ion-col>\r\n\r\n      </ion-row>\r\n\r\n    </ion-card-title>\r\n  </ion-card-header>\r\n  <ng-content></ng-content>\r\n</ion-card>");
 
 /***/ }),
 
@@ -1900,7 +1916,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-card-content>\r\n  <ng-container class=\"round round_result\">\r\n    <ion-row>\r\n      <ion-col size=\"12\">\r\n        <ion-button (click)=\"storeRoundScores()\" expand=\"block\"> Submit </ion-button>\r\n      </ion-col>\r\n      <ion-col *ngFor=\"let roundMember of roundMembers$ | async; let i = index\" [size]=\"12 / qtyOfPlayers\">\r\n        <div\r\n          [ngClass]=\"\r\n            roundMember._id === activeRoundMemberId\r\n              ? { 'active-item': true }\r\n              : { 'regular-item': true }\r\n          \"\r\n        ></div>\r\n        <div class=\"round-btn-block\">\r\n          <ion-button\r\n            class=\"round-btn-block__item\"\r\n            size=\"small\"\r\n            (click)=\"changeScoresState(roundMember._id, 'r')\"\r\n            color=\"primary\"\r\n            [fill]=\"scores[roundMember._id]?.name !== 'r' ? 'outline' : 'default'\"\r\n            [disabled]=\"\r\n              scores[roundMember._id]?.disabled.includes('r') ||\r\n              scores[roundMember._id].barrel > 0 ||\r\n              (roundMember._id === activeRoundMemberId && qtyOfPlayers === 4)\r\n            \"\r\n            >R</ion-button\r\n          >\r\n          <ion-button\r\n            class=\"round-btn-block__item\"\r\n            size=\"small\"\r\n            (click)=\"changeScoresState(roundMember._id, 's')\"\r\n            color=\"primary\"\r\n            [fill]=\"scores[roundMember._id]?.name !== 's' ? 'outline' : 'default'\"\r\n            [disabled]=\"\r\n              scores[roundMember._id]?.disabled.includes('s') ||\r\n              scores[roundMember._id].barrel > 0 ||\r\n              (roundMember._id === activeRoundMemberId && qtyOfPlayers === 4)\r\n            \"\r\n            >S</ion-button\r\n          >\r\n        </div>\r\n        <ion-item class=\"thousand-score-input\">\r\n          <ion-input\r\n            type=\"number\"\r\n            placeholder=\"0\"\r\n            [(ngModel)]=\"scores[roundMember._id].value\"\r\n          ></ion-input>\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n    <ion-row>\r\n      <ion-col *ngFor=\"let roundMember of addTotals(roundMembers$ | async)\" [size]=\"12 / qtyOfPlayers\">\r\n        <ion-item\r\n          [lines]=\"(i + 1) % qtyOfPlayers === 0 ? 'full' : 'none'\"\r\n          *ngFor=\"let score of roundMember.namedScoresLine.slice().reverse(); let i = index\"\r\n        >\r\n          <ion-text\r\n            class=\"thousand_score\"\r\n            [color]=\"i <= 1 && scores[roundMember._id].doubleZero ? 'danger' : ''\"\r\n            >{{ score.value }}</ion-text\r\n          >\r\n          <div style=\"width: 100%\"></div>\r\n          <ion-text\r\n            class=\"thousand_total\"\r\n            [ngClass]=\"{ thousand_total_last: i === 0 }\"\r\n            [color]=\"\r\n              score.total >= 900 &&\r\n              score.total < 1000 &&\r\n              scores[roundMember._id].barrel &&\r\n              i < qtyOfPlayers\r\n                ? 'danger'\r\n                : ''\r\n            \"\r\n            >{{ score.total }}</ion-text\r\n          >\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ng-container>\r\n</ion-card-content>\r\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-card-content>\r\n  <ng-container class=\"round round_result\">\r\n    <ion-row>\r\n      <ion-col size=\"12\">\r\n        <ion-button (click)=\"storeRoundScores()\" expand=\"block\"> Submit </ion-button>\r\n      </ion-col>\r\n      <ion-col\r\n        *ngFor=\"let roundMember of roundMembers$ | async; let i = index\"\r\n        [size]=\"12 / qtyOfPlayers\"\r\n      >\r\n        <div\r\n          [ngClass]=\"\r\n            roundMember._id === activeRoundMemberId\r\n              ? { 'active-item': true }\r\n              : { 'regular-item': true }\r\n          \"\r\n        ></div>\r\n        <div class=\"round-btn-block\">\r\n          <ion-button\r\n            class=\"round-btn-block__item\"\r\n            size=\"small\"\r\n            (click)=\"changeScoresState(roundMember._id, 'r')\"\r\n            color=\"primary\"\r\n            [fill]=\"scores[roundMember._id]?.name !== 'r' ? 'outline' : 'default'\"\r\n            [disabled]=\"\r\n              scores[roundMember._id]?.disabled.includes('r') ||\r\n              scores[roundMember._id].barrel > 0 ||\r\n              (roundMember._id === activeRoundMemberId && qtyOfPlayers === 4)\r\n            \"\r\n            >R</ion-button\r\n          >\r\n          <ion-button\r\n            class=\"round-btn-block__item\"\r\n            size=\"small\"\r\n            (click)=\"changeScoresState(roundMember._id, 's')\"\r\n            color=\"primary\"\r\n            [fill]=\"scores[roundMember._id]?.name !== 's' ? 'outline' : 'default'\"\r\n            [disabled]=\"\r\n              scores[roundMember._id]?.disabled.includes('s') ||\r\n              scores[roundMember._id].barrel > 0 ||\r\n              (roundMember._id === activeRoundMemberId && qtyOfPlayers === 4)\r\n            \"\r\n            >S</ion-button\r\n          >\r\n        </div>\r\n        <ion-item class=\"thousand-score-input\">\r\n          <ion-input\r\n            type=\"number\"\r\n            placeholder=\"0\"\r\n            [(ngModel)]=\"scores[roundMember._id].value\"\r\n          ></ion-input>\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n    <ion-row>\r\n      <ion-col\r\n        *ngFor=\"let roundMember of addTotals(roundMembers$ | async)\"\r\n        [size]=\"12 / qtyOfPlayers\"\r\n      >\r\n        <ion-item\r\n          class=\"thousand-score__wrapper\"\r\n          [lines]=\"(roundMember.namedScoresLine.length - i - 1) % qtyOfPlayers === 0 ? 'full' : 'none'\"\r\n          *ngFor=\"let score of roundMember.namedScoresLine.slice().reverse(); let i = index\"\r\n        >\r\n          <ion-text\r\n            class=\"thousand-score-__current\"\r\n            [color]=\"i <= 1 && scores[roundMember._id].doubleZero ? 'danger' : ''\"\r\n            >{{ score.value }}</ion-text\r\n          >\r\n          <div style=\"width: 100%\"></div>\r\n          <ion-text\r\n            class=\"thousand-score__total\"\r\n            [ngClass]=\"{ 'thousand-score__total_last': i === 0 }\"\r\n            [color]=\"\r\n              score.total >= 900 &&\r\n              score.total < 1000 &&\r\n              scores[roundMember._id].barrel &&\r\n              i < qtyOfPlayers\r\n                ? 'danger'\r\n                : ''\r\n            \"\r\n            >{{ score.total }}</ion-text\r\n          >\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ng-container>\r\n</ion-card-content>\r\n");
 
 /***/ }),
 

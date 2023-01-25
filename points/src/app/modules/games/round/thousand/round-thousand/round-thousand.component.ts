@@ -49,7 +49,6 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
   ngOnInit(): void {
     this.roundMembers$.subscribe((roundMembers) => {
       this.qtyOfPlayers = roundMembers.length;
-
       this.roundMembers = roundMembers;
       this.resetScores();
     });
@@ -93,7 +92,6 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
           ...this.initialScores[key],
           value: option === 'r' ? 60 : 0,
         };
-        // }
       });
   }
 
@@ -126,7 +124,7 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
       let acc = 0;
       roundMember.namedScoresLine.map((namedScore: NamedScore) => {
         acc = namedScore.value + acc;
-        if (acc >= 900) {
+        if (acc >= 900 && acc < 1000) {
           this.scores[roundMember._id].barrel += 1;
         } else {
           this.scores[roundMember._id].barrel = 0;
@@ -159,14 +157,17 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
 
   checkOnBarrelTimes() {
     Object.keys(this.scores).forEach((key) => {
-      if (this.scores[key].barrel >= this.qtyOfPlayers) {
+      if (this.scores[key].barrel >= this.qtyOfPlayers || this.scores[key].barrel >= 3) {
         let acc = 0;
         this.roundMembers
           .find((roundMember) => roundMember._id === key)
           .namedScoresLine.map((namedScore: NamedScore) => {
             acc = namedScore.value + acc;
           });
-        this.scores[key].value = this.customRoundNumber(acc) - 100 - acc;
+
+        if (acc + this.scores[key].value < 1000) {
+          this.scores[key].value = this.customRoundNumber(acc) - 100 - acc;
+        }
       }
     });
   }
@@ -202,12 +203,28 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
     });
   }
 
+  checkOnWinner() {
+    Object.keys(this.scores).forEach((key) => {
+      let acc = 0;
+      this.roundMembers
+        .find((roundMember) => roundMember._id === key)
+        .namedScoresLine.map((namedScore: NamedScore) => {
+          acc = namedScore.value + acc;
+        });
+      acc = acc + this.scores[key].value;
+      if (acc >= 1000) {
+        this.scores[key].value = this.scores[key].value - (acc - 1000);
+      }
+    });
+  }
+
   storeRoundScores(): void {
     this.checkOnValueIsNumber();
     this.checkOnTrippleZero();
     this.checkOnBarrelTimes();
     this.checkGetOnBarrel();
     this.checkOnRoundedValue();
+    this.checkOnWinner();
     this.gamesService.storeRoundScores(this.scores);
   }
 
