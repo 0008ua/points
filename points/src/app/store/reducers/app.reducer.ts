@@ -22,29 +22,40 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(fromAppActions.loading,
+  on(
+    fromAppActions.loading,
     (state, { loading }): State => ({
       ...state,
       loading,
-    })
+    }),
   ),
-  on(fromAppActions.gameType,
+  on(
+    fromAppActions.finishGame,
+    (state, _): State => ({
+      ...state,
+      loading: true,
+    }),
+  ),
+  on(
+    fromAppActions.gameType,
     (state, { gameType }): State => ({
       ...state,
       gameType,
-    })
+    }),
   ),
-  on(fromAppActions.gameTypeAndClearGame,
+  on(
+    fromAppActions.gameTypeAndClearGame,
     (state, { gameType }): State => ({
       ...state,
       gameType,
-    })
+    }),
   ),
-  on(fromAppActions.redirection,
+  on(
+    fromAppActions.redirection,
     (state, { redirectionUrl }): State => ({
       ...state,
       redirectionUrl,
-    })
+    }),
   ),
 );
 

@@ -221,51 +221,7 @@ let GamePage = class GamePage {
         this.activeRoundId$.next(e.target.value);
     }
     onFinishGameHandler() {
-        this.store.dispatch(src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__.loading({ loading: true }));
-        const clientRoundsWithTotal = this.rounds.map((round) => {
-            const players = round.roundMembers.map((memberId) => {
-                const member = this.roundMembers.find((roundMember) => roundMember._id === memberId);
-                return {
-                    _id: member.player,
-                    score: member.scoresLine.reduce((prev, cur) => prev + cur, 0),
-                };
-            });
-            return { _id: round._id, players };
-        });
-        let result;
-        if (this.gameType !== 'rummy') {
-            result = {
-                _id: 'result',
-                players: this.players.map((player) => ({
-                    _id: player._id,
-                    score: this.getPlayerTotalScores(player._id),
-                })),
-            };
-        }
-        else {
-            let acc = 0;
-            result = {
-                _id: 'result',
-                players: this.players
-                    .map((player) => {
-                    const score = this.getPlayerTotalScores(player._id);
-                    acc += score;
-                    return {
-                        _id: player._id,
-                        score,
-                    };
-                })
-                    .map((player) => (Object.assign(Object.assign({}, player), { score: player.score || acc * -1 }))),
-            };
-        }
-        const game = {
-            type: this.rounds[0].clientGame.type,
-            rounds: [...clientRoundsWithTotal, result],
-        };
-        //save to db
-        this.gameService.add(game).subscribe((_) => {
-            this.onCancelGameHandler();
-        }, (err) => this.store.dispatch(src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__.loading({ loading: false })));
+        this.store.dispatch(src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__.finishGame());
     }
     onCancelGameHandler() {
         this.store.dispatch(src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__.clearGame());
@@ -1297,13 +1253,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundThousandComponent": () => (/* binding */ RoundThousandComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 8806);
 /* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_thousand_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-thousand.component.html */ 3580);
 /* harmony import */ var _round_thousand_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-thousand.component.scss */ 1074);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/effects */ 2251);
 /* harmony import */ var _round_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../round-interfaces */ 6737);
 /* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round.directive */ 4743);
+/* harmony import */ var _store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../store/actions/app.actions */ 8717);
 var RoundThousandComponent_1;
+
+
 
 
 
@@ -1320,8 +1280,12 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
         this.roundMembers$.subscribe((roundMembers) => {
             this.qtyOfPlayers = roundMembers.length;
             this.roundMembers = roundMembers;
-            this.resetScores();
+            if (this.roundMembers.length) {
+                this.resetScores();
+            }
         });
+        // cancel prev game
+        this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_5__.ofType)(_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__.clearGame)).subscribe((_) => (this.scores = {}));
     }
     addTotals(roundMembers) {
         return roundMembers.map((roundMember) => {
@@ -1354,6 +1318,10 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
         });
     }
     resetScores() {
+        console.log('this.scores', this.scores);
+        if (this.checkOnFinishGame()) {
+            return this.store.dispatch(_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__.finishGame());
+        }
         const activeRoundMemberPosition = this.roundMembers.length
             ? (this.roundMembers[0].namedScoresLine.length + this.qtyOfPlayers) % this.qtyOfPlayers
             : 0;
@@ -1421,7 +1389,22 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
             }
         });
     }
-    checkGetOnBarrel() {
+    checkOnFinishGame() {
+        let isFinishGame = false;
+        Object.keys(this.scores).forEach((key) => {
+            let acc = 0;
+            this.roundMembers
+                .find((roundMember) => roundMember._id === key)
+                .namedScoresLine.map((namedScore) => {
+                acc = namedScore.value + acc;
+            });
+            if (acc >= 1000) {
+                isFinishGame = true;
+            }
+        });
+        return isFinishGame;
+    }
+    checkGetOnBarrelOrWin() {
         Object.keys(this.scores).forEach((key) => {
             let acc = 0;
             this.roundMembers
@@ -1432,6 +1415,9 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
             acc = acc + this.scores[key].value;
             if (acc > 900 && acc < 1000 && !this.scores[key].barrel) {
                 this.scores[key].value = this.scores[key].value - (acc - 900);
+            }
+            if (acc >= 1000) {
+                this.scores[key].value = this.scores[key].value - (acc - 1000);
             }
         });
     }
@@ -1449,27 +1435,12 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
             }
         });
     }
-    checkOnWinner() {
-        Object.keys(this.scores).forEach((key) => {
-            let acc = 0;
-            this.roundMembers
-                .find((roundMember) => roundMember._id === key)
-                .namedScoresLine.map((namedScore) => {
-                acc = namedScore.value + acc;
-            });
-            acc = acc + this.scores[key].value;
-            if (acc >= 1000) {
-                this.scores[key].value = this.scores[key].value - (acc - 1000);
-            }
-        });
-    }
     storeRoundScores() {
         this.checkOnValueIsNumber();
         this.checkOnTrippleZero();
         this.checkOnBarrelTimes();
-        this.checkGetOnBarrel();
+        this.checkGetOnBarrelOrWin();
         this.checkOnRoundedValue();
-        this.checkOnWinner();
         this.gamesService.storeRoundScores(this.scores);
     }
     customRoundNumber(n) {
@@ -1478,10 +1449,10 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
     }
 };
 RoundThousandComponent.ctorParameters = () => [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_4__.Injector }
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Injector }
 ];
-RoundThousandComponent = RoundThousandComponent_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+RoundThousandComponent = RoundThousandComponent_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Component)({
         selector: 'app-round-thousand',
         template: _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_thousand_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         providers: [
@@ -1804,7 +1775,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-menu-button menu=\"games-menu\"></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-segment *ngIf=\"showToolbarMenu\" scrollable [value]=\"(activeRoundId$ | async)\"\r\n      (ionChange)=\"onMenuClickHandler($event)\">\r\n      <ion-segment-button *ngFor=\"let round of roundsCfg; let idx = index\" [value]=\"round._id\" [disabled]=\"(round._id === 'start' && (rounds$ | async).length) ||\r\n                    (round._id !== 'start' && (rounds$ | async).length === 0)\">\r\n        <ion-icon [name]=\"round.icon\"></ion-icon>\r\n      </ion-segment-button>\r\n    </ion-segment>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\r\n    <ion-row>\r\n      <ion-col size-lg=\"6\" size-md=\"8\" size-sm=\"10\" offset-lg=\"3\" offset-md=\"2\" offset-sm=\"1\">\r\n        <ion-card *ngIf=\"(rounds$ | async).length !== 0\">\r\n          <ion-card-header>\r\n            <ion-card-title class=\"ion-text-center\">{{environment.games[gameType]?.name}}</ion-card-title>\r\n          </ion-card-header>\r\n          <ion-card-content>\r\n            <ion-list>\r\n              <ion-item *ngFor=\"let player of playersWithTotal\" (click)=\"selectPlayer(player._id)\"\r\n                [ngClass]=\"{'active-player': player._id === (activePlayerId$ | async) && gameType !== 'thousand'}\">\r\n                <ion-label [ngStyle]=\"{\r\n                  'border-left': '6px solid ' + player.color,\r\n                  'padding-left': '10px'\r\n                }\">\r\n                  {{player.name}}\r\n                </ion-label>\r\n                <div slot=\"end\" [ngStyle]=\"{\r\n                  'border-right': '6px solid ' + player.color,\r\n                  'padding-right': '10px'\r\n                }\">\r\n                  {{getPlayerTotalScores(player._id)}}\r\n                </div>\r\n              </ion-item>\r\n            </ion-list>\r\n            <ion-row class=\"ion-justify-content-around\">\r\n              <ion-button fill=\"outline\" size=\"small\" (click)=\"onFinishGameHandler()\" [disabled]=\"(rounds$ | async).length === 0 || (loading$ | async) ||\r\n              (gameType === 'rummy' && finishGameDisabled(playersWithTotal))\">\r\n                {{'elements.button.finishGame' | translate}}\r\n              </ion-button>\r\n              <ion-button fill=\"outline\" size=\"small\" [disabled]=\"(rounds$ | async).length === 0 || (loading$ | async)\"\r\n                (click)=\"onCancelGameHandler()\">\r\n                {{'elements.button.cancelGame' | translate}}\r\n              </ion-button>\r\n              <ion-button *ngIf=\"gameType === 'uno'\" fill=\"outline\" size=\"small\" (click)=\"openNextRound()\">\r\n                {{'elements.button.nextRound' | translate}}\r\n              </ion-button>\r\n            </ion-row>\r\n          </ion-card-content>\r\n        </ion-card>\r\n      </ion-col>\r\n    </ion-row>\r\n    <ion-row *ngIf=\"(activeRoundId$ | async) === 'start' || ((activeRoundId$ | async) && (activePlayerId$ | async))\">\r\n      <ion-col size-lg=\"8\" size-md=\"10\" size-sm=\"12\" offset-lg=\"2\" offset-md=\"1\" offset-sm=\"0\">\r\n        <app-round [activeRoundId$]=\"activeRoundId$\" [activePlayerId$]=\"activePlayerId$\" [gameType$]=\"gameType$\"\r\n          [players$]=\"players$\"></app-round>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-grid>\r\n</ion-content>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-menu-button menu=\"games-menu\"></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-segment\r\n      *ngIf=\"showToolbarMenu\"\r\n      scrollable\r\n      [value]=\"(activeRoundId$ | async)\"\r\n      (ionChange)=\"onMenuClickHandler($event)\"\r\n    >\r\n      <ion-segment-button\r\n        *ngFor=\"let round of roundsCfg; let idx = index\"\r\n        [value]=\"round._id\"\r\n        [disabled]=\"(round._id === 'start' && (rounds$ | async).length) ||\r\n                    (round._id !== 'start' && (rounds$ | async).length === 0)\"\r\n      >\r\n        <ion-icon [name]=\"round.icon\"></ion-icon>\r\n      </ion-segment-button>\r\n    </ion-segment>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\r\n    <ion-row>\r\n      <ion-col size-lg=\"6\" size-md=\"8\" size-sm=\"10\" offset-lg=\"3\" offset-md=\"2\" offset-sm=\"1\">\r\n        <ion-card *ngIf=\"(rounds$ | async).length !== 0\">\r\n          <ion-card-header>\r\n            <ion-card-title class=\"ion-text-center\"\r\n              >{{environment.games[gameType]?.name}}</ion-card-title\r\n            >\r\n          </ion-card-header>\r\n          <ion-card-content>\r\n            <ion-list>\r\n              <ion-item\r\n                *ngFor=\"let player of playersWithTotal\"\r\n                (click)=\"selectPlayer(player._id)\"\r\n                [ngClass]=\"{'active-player': player._id === (activePlayerId$ | async) && gameType !== 'thousand'}\"\r\n              >\r\n                <ion-label\r\n                  [ngStyle]=\"{\r\n                  'border-left': '6px solid ' + player.color,\r\n                  'padding-left': '10px'\r\n                }\"\r\n                >\r\n                  {{player.name}}\r\n                </ion-label>\r\n                <div\r\n                  slot=\"end\"\r\n                  [ngStyle]=\"{\r\n                  'border-right': '6px solid ' + player.color,\r\n                  'padding-right': '10px'\r\n                }\"\r\n                >\r\n                  {{getPlayerTotalScores(player._id)}}\r\n                </div>\r\n              </ion-item>\r\n            </ion-list>\r\n            <ion-row class=\"ion-justify-content-around\">\r\n              <ion-button\r\n                *ngIf=\"gameType !== 'thousand'\"\r\n                fill=\"outline\"\r\n                size=\"small\"\r\n                (click)=\"onFinishGameHandler()\"\r\n                [disabled]=\"(rounds$ | async).length === 0 || (loading$ | async) ||\r\n              (gameType === 'rummy' && finishGameDisabled(playersWithTotal))\"\r\n              >\r\n                {{'elements.button.finishGame' | translate}}\r\n              </ion-button>\r\n              <ion-button\r\n                fill=\"outline\"\r\n                size=\"small\"\r\n                [disabled]=\"(rounds$ | async).length === 0 || (loading$ | async)\"\r\n                (click)=\"onCancelGameHandler()\"\r\n              >\r\n                {{'elements.button.cancelGame' | translate}}\r\n              </ion-button>\r\n              <ion-button\r\n                *ngIf=\"gameType === 'uno'\"\r\n                fill=\"outline\"\r\n                size=\"small\"\r\n                (click)=\"openNextRound()\"\r\n              >\r\n                {{'elements.button.nextRound' | translate}}\r\n              </ion-button>\r\n            </ion-row>\r\n          </ion-card-content>\r\n        </ion-card>\r\n      </ion-col>\r\n    </ion-row>\r\n    <ion-row\r\n      *ngIf=\"(activeRoundId$ | async) === 'start' || ((activeRoundId$ | async) && (activePlayerId$ | async))\"\r\n    >\r\n      <ion-col size-lg=\"8\" size-md=\"10\" size-sm=\"12\" offset-lg=\"2\" offset-md=\"1\" offset-sm=\"0\">\r\n        <app-round\r\n          [activeRoundId$]=\"activeRoundId$\"\r\n          [activePlayerId$]=\"activePlayerId$\"\r\n          [gameType$]=\"gameType$\"\r\n          [players$]=\"players$\"\r\n        ></app-round>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-grid>\r\n</ion-content>\r\n");
 
 /***/ }),
 
@@ -1916,7 +1887,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-card-content>\r\n  <ng-container class=\"round round_result\">\r\n    <ion-row>\r\n      <ion-col size=\"12\">\r\n        <ion-button (click)=\"storeRoundScores()\" expand=\"block\"> Submit </ion-button>\r\n      </ion-col>\r\n      <ion-col\r\n        *ngFor=\"let roundMember of roundMembers$ | async; let i = index\"\r\n        [size]=\"12 / qtyOfPlayers\"\r\n      >\r\n        <div\r\n          [ngClass]=\"\r\n            roundMember._id === activeRoundMemberId\r\n              ? { 'active-item': true }\r\n              : { 'regular-item': true }\r\n          \"\r\n        ></div>\r\n        <div class=\"round-btn-block\">\r\n          <ion-button\r\n            class=\"round-btn-block__item\"\r\n            size=\"small\"\r\n            (click)=\"changeScoresState(roundMember._id, 'r')\"\r\n            color=\"primary\"\r\n            [fill]=\"scores[roundMember._id]?.name !== 'r' ? 'outline' : 'default'\"\r\n            [disabled]=\"\r\n              scores[roundMember._id]?.disabled.includes('r') ||\r\n              scores[roundMember._id].barrel > 0 ||\r\n              (roundMember._id === activeRoundMemberId && qtyOfPlayers === 4)\r\n            \"\r\n            >R</ion-button\r\n          >\r\n          <ion-button\r\n            class=\"round-btn-block__item\"\r\n            size=\"small\"\r\n            (click)=\"changeScoresState(roundMember._id, 's')\"\r\n            color=\"primary\"\r\n            [fill]=\"scores[roundMember._id]?.name !== 's' ? 'outline' : 'default'\"\r\n            [disabled]=\"\r\n              scores[roundMember._id]?.disabled.includes('s') ||\r\n              scores[roundMember._id].barrel > 0 ||\r\n              (roundMember._id === activeRoundMemberId && qtyOfPlayers === 4)\r\n            \"\r\n            >S</ion-button\r\n          >\r\n        </div>\r\n        <ion-item class=\"thousand-score-input\">\r\n          <ion-input\r\n            type=\"number\"\r\n            placeholder=\"0\"\r\n            [(ngModel)]=\"scores[roundMember._id].value\"\r\n          ></ion-input>\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n    <ion-row>\r\n      <ion-col\r\n        *ngFor=\"let roundMember of addTotals(roundMembers$ | async)\"\r\n        [size]=\"12 / qtyOfPlayers\"\r\n      >\r\n        <ion-item\r\n          class=\"thousand-score__wrapper\"\r\n          [lines]=\"(roundMember.namedScoresLine.length - i - 1) % qtyOfPlayers === 0 ? 'full' : 'none'\"\r\n          *ngFor=\"let score of roundMember.namedScoresLine.slice().reverse(); let i = index\"\r\n        >\r\n          <ion-text\r\n            class=\"thousand-score-__current\"\r\n            [color]=\"i <= 1 && scores[roundMember._id].doubleZero ? 'danger' : ''\"\r\n            >{{ score.value }}</ion-text\r\n          >\r\n          <div style=\"width: 100%\"></div>\r\n          <ion-text\r\n            class=\"thousand-score__total\"\r\n            [ngClass]=\"{ 'thousand-score__total_last': i === 0 }\"\r\n            [color]=\"\r\n              score.total >= 900 &&\r\n              score.total < 1000 &&\r\n              scores[roundMember._id].barrel &&\r\n              i < qtyOfPlayers\r\n                ? 'danger'\r\n                : ''\r\n            \"\r\n            >{{ score.total }}</ion-text\r\n          >\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ng-container>\r\n</ion-card-content>\r\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-card-content>\r\n  <ng-container class=\"round round_result\">\r\n    <ion-row>\r\n      <ion-col size=\"12\">\r\n        <ion-button (click)=\"storeRoundScores()\" expand=\"block\"> Submit </ion-button>\r\n      </ion-col>\r\n      <ion-col\r\n        *ngFor=\"let roundMember of roundMembers$ | async; let i = index\"\r\n        [size]=\"12 / qtyOfPlayers\"\r\n      >\r\n        <div\r\n          [ngClass]=\"\r\n            roundMember._id === activeRoundMemberId\r\n              ? { 'active-item': true }\r\n              : { 'regular-item': true }\r\n          \"\r\n        ></div>\r\n        <div class=\"round-btn-block\">\r\n          <ion-button\r\n            class=\"round-btn-block__item\"\r\n            size=\"small\"\r\n            (click)=\"changeScoresState(roundMember._id, 'r')\"\r\n            color=\"secondary\"\r\n            [fill]=\"scores[roundMember._id]?.name !== 'r' ? 'solid' : 'outline'\"\r\n            [disabled]=\"\r\n              scores[roundMember._id]?.disabled.includes('r') ||\r\n              scores[roundMember._id].barrel > 0 ||\r\n              (roundMember._id === activeRoundMemberId && qtyOfPlayers === 4)\r\n            \"\r\n            >R</ion-button\r\n          >\r\n          <ion-button\r\n            class=\"round-btn-block__item\"\r\n            size=\"small\"\r\n            (click)=\"changeScoresState(roundMember._id, 's')\"\r\n            color=\"secondary\"\r\n            [fill]=\"scores[roundMember._id]?.name !== 's' ? 'solid' : 'outline'\"\r\n            [disabled]=\"\r\n              scores[roundMember._id]?.disabled.includes('s') ||\r\n              scores[roundMember._id].barrel > 0 ||\r\n              (roundMember._id === activeRoundMemberId && qtyOfPlayers === 4)\r\n            \"\r\n            >S</ion-button\r\n          >\r\n        </div>\r\n        <ion-item class=\"thousand-score-input\">\r\n          <ion-input\r\n            type=\"number\"\r\n            placeholder=\"0\"\r\n            [(ngModel)]=\"scores[roundMember._id].value\"\r\n          ></ion-input>\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n    <ion-row>\r\n      <ion-col\r\n        *ngFor=\"let roundMember of addTotals(roundMembers$ | async)\"\r\n        [size]=\"12 / qtyOfPlayers\"\r\n      >\r\n        <ion-item\r\n          class=\"thousand-score__wrapper\"\r\n          [lines]=\"\r\n            (roundMember.namedScoresLine.length - i - 1) % qtyOfPlayers === 0 ? 'full' : 'none'\r\n          \"\r\n          *ngFor=\"let score of roundMember.namedScoresLine.slice().reverse(); let i = index\"\r\n        >\r\n          <ion-text\r\n            class=\"thousand-score__current\"\r\n            [color]=\"i <= 1 && scores[roundMember._id].doubleZero ? 'danger' : ''\"\r\n            >{{ score.value }}</ion-text\r\n          >\r\n          <div style=\"width: 100%\"></div>\r\n          <ion-text\r\n            class=\"thousand-score__total\"\r\n            [ngClass]=\"{ 'thousand-score__total_last': i === 0 }\"\r\n            [color]=\"\r\n              score.total >= 900 &&\r\n              score.total < 1000 &&\r\n              scores[roundMember._id].barrel &&\r\n              i < qtyOfPlayers\r\n                ? 'danger'\r\n                : ''\r\n            \"\r\n            >{{ score.total }}</ion-text\r\n          >\r\n        </ion-item>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ng-container>\r\n</ion-card-content>\r\n");
 
 /***/ }),
 

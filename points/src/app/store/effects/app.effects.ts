@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { filter, map, tap } from 'rxjs/operators';
+import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
 
 import * as fromAnalyticsActions from '../actions/analytics.actions';
 import * as fromAuthActions from '../actions/auth.actions';
@@ -16,11 +16,13 @@ import * as fromAppReducer from '../reducers/app.reducer';
 import * as fromPlayerReducer from '../reducers/player.reducer';
 import * as fromPersistStoreReducer from '../reducers/persist-store.reducer';
 
-import { GameType, Round, RoundCfg } from 'src/app/interfaces';
+import { GameType, IGame, Round, RoundCfg } from 'src/app/interfaces';
 import { combineLatest, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from 'src/environments/environment';
+import { SharedService } from 'src/app/services/shared.service';
+import { GameService } from '../game-data.service';
 
 @Injectable()
 export class AppEffects {
@@ -35,6 +37,20 @@ export class AppEffects {
     return this.actions$.pipe(
       ofType(fromRoundActions.clearRounds),
       map((_) => fromAppActions.loading({ loading: false })),
+    );
+  });
+
+  finishGame = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAppActions.finishGame),
+      switchMap(() => {
+        const game: IGame = this.sharedService.createResultOfGame();
+        //save to db
+        return this.gameService.add(game).pipe(
+          map(() => fromAppActions.clearGame()),
+          catchError((error) => [fromAppActions.loading({ loading: false })]),
+        );
+      }),
     );
   });
 
@@ -76,6 +92,7 @@ export class AppEffects {
       map((_) => fromRoundActions.clearRounds()),
     );
   });
+  
   clearRoundMembers = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromAppActions.clearGame),
@@ -189,5 +206,10 @@ export class AppEffects {
   });
 
   environment = environment;
-  constructor(private actions$: Actions<fromAppActions.CoreActionsUnion>, private store: Store) {}
+  constructor(
+    private actions$: Actions<fromAppActions.CoreActionsUnion>,
+    private store: Store,
+    private sharedService: SharedService,
+    private gameService: GameService,
+  ) {}
 }

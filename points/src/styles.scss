@@ -159,7 +159,7 @@ input[type='number'] {
 }
 
 .thousand-score-input {
-  padding: 0 10px;
+    padding: 0 10px;
 }
 
 .thousand-score {
@@ -169,11 +169,15 @@ input[type='number'] {
   &__total {
     font-weight: 600;
     font-size: 0.8rem;
+    &_last {
+      font-size: 0.8rem;
+    }
   }
   @media (min-width: 576px) {
     &__wrapper {
       // margin: 0 10px;
     }
+
     &__total {
       font-weight: 600;
       font-size: 1.1rem;
@@ -190,6 +194,6 @@ input[type='number'] {
   width: 100%;
   padding: 0 5px;
   &__item {
-    flex: 1 1 auto;
+    // flex: 1 1 auto;
   }
 }

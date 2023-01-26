@@ -20,8 +20,8 @@
             class="round-btn-block__item"
             size="small"
             (click)="changeScoresState(roundMember._id, 'r')"
-            color="primary"
-            [fill]="scores[roundMember._id]?.name !== 'r' ? 'outline' : 'default'"
+            color="secondary"
+            [fill]="scores[roundMember._id]?.name !== 'r' ? 'solid' : 'outline'"
             [disabled]="
               scores[roundMember._id]?.disabled.includes('r') ||
               scores[roundMember._id].barrel > 0 ||
@@ -33,8 +33,8 @@
             class="round-btn-block__item"
             size="small"
             (click)="changeScoresState(roundMember._id, 's')"
-            color="primary"
-            [fill]="scores[roundMember._id]?.name !== 's' ? 'outline' : 'default'"
+            color="secondary"
+            [fill]="scores[roundMember._id]?.name !== 's' ? 'solid' : 'outline'"
             [disabled]="
               scores[roundMember._id]?.disabled.includes('s') ||
               scores[roundMember._id].barrel > 0 ||
@@ -59,11 +59,13 @@
       >
         <ion-item
           class="thousand-score__wrapper"
-          [lines]="(roundMember.namedScoresLine.length - i - 1) % qtyOfPlayers === 0 ? 'full' : 'none'"
+          [lines]="
+            (roundMember.namedScoresLine.length - i - 1) % qtyOfPlayers === 0 ? 'full' : 'none'
+          "
           *ngFor="let score of roundMember.namedScoresLine.slice().reverse(); let i = index"
         >
           <ion-text
-            class="thousand-score-__current"
+            class="thousand-score__current"
             [color]="i <= 1 && scores[roundMember._id].doubleZero ? 'danger' : ''"
             >{{ score.value }}</ion-text
           >

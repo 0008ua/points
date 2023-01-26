@@ -2,7 +2,19 @@ import { Inject, Injectable } from '@angular/core';
 import { from, Observable, of, throwError } from 'rxjs';
 import { Storage } from '@capacitor/storage';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { IGamer, IUser, NamedScore, Round, RoundCfg, RoundMember, UID } from '../interfaces';
+import {
+  GameType,
+  IGame,
+  IGamer,
+  IUser,
+  NamedScore,
+  ResultRoundWithTotal,
+  Round,
+  RoundCfg,
+  RoundMember,
+  RoundWithTotal,
+  UID,
+} from '../interfaces';
 import { Store } from '@ngrx/store';
 import { selectAllPlayers } from '../store/reducers/player.reducer';
 import { v4 as uuidv4 } from 'uuid';
@@ -14,7 +26,7 @@ import {
   selectByIdRoundMember,
 } from '../store/reducers/round-member.reducer';
 import * as fromAppActions from '../store/actions/app.actions';
-import { selectRedirectionUrl } from '../store/reducers/app.reducer';
+import { selectRedirectionUrl, selectGameType } from '../store/reducers/app.reducer';
 import { Router } from '@angular/router';
 import { redirection } from '../store/actions/app.actions';
 import * as fromRoundMembersActions from '../store/actions/round-member.actions';
@@ -27,6 +39,9 @@ import { JWT_DECODE, JwtDecode } from '../config/jwt.config';
 export class SharedService {
   players: IGamer[] = [];
   players$: Observable<IGamer[]>;
+
+  gameType: GameType;
+  gameType$: Observable<GameType>;
 
   rounds: Round[] = [];
   rounds$: Observable<Round[]>;
@@ -54,6 +69,11 @@ export class SharedService {
     this.players$ = this.store.select(selectAllPlayers);
     this.players$.subscribe((players) => {
       this.players = players;
+    });
+
+    this.gameType$ = this.store.select(selectGameType);
+    this.gameType$.subscribe((gameType) => {
+      this.gameType = gameType;
     });
 
     this.rounds$ = this.store.select(selectAllRounds);
@@ -143,6 +163,52 @@ export class SharedService {
       }
     });
     return sum;
+  }
+
+  createClientRoundsWithTotal(): RoundWithTotal[] {
+    return this.rounds.map((round) => {
+      const players = round.roundMembers.map((memberId) => {
+        const member = this.roundMembers.find((roundMember) => roundMember._id === memberId);
+        return {
+          _id: member.player,
+          score: member.scoresLine.reduce((prev, cur) => prev + cur, 0),
+        };
+      });
+      return { _id: round._id, players };
+    });
+  }
+
+  createResultRoundWithTotal(): ResultRoundWithTotal {
+    if (this.gameType !== 'rummy') {
+      return {
+        _id: 'result',
+        players: this.players.map((player) => ({
+          _id: player._id,
+          score: this.getPlayerTotalScores(player._id),
+        })),
+      };
+    }
+    let acc = 0;
+    return {
+      _id: 'result',
+      players: this.players
+        .map((player) => {
+          const score = this.getPlayerTotalScores(player._id);
+          acc += score;
+          return {
+            _id: player._id,
+            score,
+          };
+        })
+        .map((player) => ({ ...player, score: player.score || acc * -1 })),
+    };
+  }
+
+  createResultOfGame(): IGame {
+    return {
+      type: this.gameType,
+      rounds: [...this.createClientRoundsWithTotal(), this.createResultRoundWithTotal()],
+    };
   }
 
   calcQtyOfArrItems(item: string | number, playerId: string, roundId: string): number {

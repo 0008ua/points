@@ -7,6 +7,7 @@ export enum AppActionTypes {
   loadGameType = 'app/loadGame',
   gameTypeType = 'app/gameType',
   gameTypeAndClearGameType = 'app/gameTypeAndClearGame',
+  finishGameType = 'app/finish game',
   openNextRoundType = 'app/open next round',
   createRoundsType = 'app/create rounds',
   redirectionType = 'app/redirection',
@@ -29,6 +30,8 @@ export const gameTypeAndClearGame = createAction(
   props<{ gameType: GameType }>(),
 );
 
+export const finishGame = createAction(AppActionTypes.finishGameType);
+
 export const openNextRound = createAction(AppActionTypes.openNextRoundType);
 
 export const createRounds = createAction(AppActionTypes.createRoundsType);
@@ -46,6 +49,7 @@ const all = union({
   loadGame,
   createRounds,
   openNextRound,
+  finishGame,
   gameType,
   gameTypeAndClearGame,
   redirection,

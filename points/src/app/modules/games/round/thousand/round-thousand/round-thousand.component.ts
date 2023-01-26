@@ -1,28 +1,14 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { Actions, ofType } from '@ngrx/effects';
-import { Action, Store } from '@ngrx/store';
-import { Observable, ReplaySubject } from 'rxjs';
-import { first, tap } from 'rxjs/operators';
+import { ofType } from '@ngrx/effects';
 import {
   NamedScore,
-  Round,
   RoundMember,
-  RoundMemberUUID,
   RoundScoresOptionsType,
   RoundScoresType,
-  // RoundScores,
-  UID,
 } from 'src/app/interfaces';
-import { SharedService } from 'src/app/services/shared.service';
-import { selectByIdRoundMember } from 'src/app/store/reducers/round-member.reducer';
-import { selectAllRounds } from 'src/app/store/reducers/round.reducer';
-import { environment } from 'src/environments/environment';
 import { ROUND_COMPONENT } from '../../round-interfaces';
-import { RoundScoresLineDirective, RoundTBaseDirective } from '../../round.directive';
+import { RoundTBaseDirective } from '../../round.directive';
 import * as fromAppActions from '../../../../../store/actions/app.actions';
-import * as fromRoundMemberActions from '../../../../../store/actions/round-member.actions';
-import { Update } from '@ngrx/entity';
-import { stringify } from 'querystring';
 
 @Component({
   selector: 'app-round-thousand',
@@ -50,8 +36,13 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
     this.roundMembers$.subscribe((roundMembers) => {
       this.qtyOfPlayers = roundMembers.length;
       this.roundMembers = roundMembers;
-      this.resetScores();
+      if (this.roundMembers.length) {
+        this.resetScores();
+      }
     });
+
+    // cancel prev game
+    this.actions$.pipe(ofType(fromAppActions.clearGame)).subscribe((_) => (this.scores = {}));
   }
 
   addTotals(roundMembers: RoundMember[]): RoundMember[] {
@@ -96,6 +87,10 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
   }
 
   resetScores(): void {
+    console.log('this.scores', this.scores);
+    if (this.checkOnFinishGame()) {
+      return this.store.dispatch(fromAppActions.finishGame());
+    }
     const activeRoundMemberPosition = this.roundMembers.length
       ? (this.roundMembers[0].namedScoresLine.length + this.qtyOfPlayers) % this.qtyOfPlayers
       : 0;
@@ -140,11 +135,10 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
         this.scores[roundMember._id].disabled.push('s');
       }
     });
-
     this.initialScores = JSON.parse(JSON.stringify(this.scores));
   }
 
-  checkOnTrippleZero() {
+  checkOnTrippleZero(): void {
     Object.keys(this.scores).forEach((key) => {
       if (this.scores[key].barrel > 0) {
         return;
@@ -155,7 +149,7 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
     });
   }
 
-  checkOnBarrelTimes() {
+  checkOnBarrelTimes(): void {
     Object.keys(this.scores).forEach((key) => {
       if (this.scores[key].barrel >= this.qtyOfPlayers || this.scores[key].barrel >= 3) {
         let acc = 0;
@@ -172,7 +166,23 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
     });
   }
 
-  checkGetOnBarrel() {
+  checkOnFinishGame(): boolean {
+    let isFinishGame = false;
+    Object.keys(this.scores).forEach((key) => {
+      let acc = 0;
+      this.roundMembers
+        .find((roundMember) => roundMember._id === key)
+        .namedScoresLine.map((namedScore: NamedScore) => {
+          acc = namedScore.value + acc;
+        });
+      if (acc >= 1000) {
+        isFinishGame = true;
+      }
+    });
+    return isFinishGame;
+  }
+
+  checkGetOnBarrelOrWin(): void {
     Object.keys(this.scores).forEach((key) => {
       let acc = 0;
       this.roundMembers
@@ -183,6 +193,9 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
       acc = acc + this.scores[key].value;
       if (acc > 900 && acc < 1000 && !this.scores[key].barrel) {
         this.scores[key].value = this.scores[key].value - (acc - 900);
+      }
+      if (acc >= 1000) {
+        this.scores[key].value = this.scores[key].value - (acc - 1000);
       }
     });
   }
@@ -203,28 +216,12 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
     });
   }
 
-  checkOnWinner() {
-    Object.keys(this.scores).forEach((key) => {
-      let acc = 0;
-      this.roundMembers
-        .find((roundMember) => roundMember._id === key)
-        .namedScoresLine.map((namedScore: NamedScore) => {
-          acc = namedScore.value + acc;
-        });
-      acc = acc + this.scores[key].value;
-      if (acc >= 1000) {
-        this.scores[key].value = this.scores[key].value - (acc - 1000);
-      }
-    });
-  }
-
   storeRoundScores(): void {
     this.checkOnValueIsNumber();
     this.checkOnTrippleZero();
     this.checkOnBarrelTimes();
-    this.checkGetOnBarrel();
+    this.checkGetOnBarrelOrWin();
     this.checkOnRoundedValue();
-    this.checkOnWinner();
     this.gamesService.storeRoundScores(this.scores);
   }
 

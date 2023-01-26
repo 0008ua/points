@@ -55,6 +55,18 @@ export interface Round {
   namePostfix: string;
 }
 
+export interface RoundWithTotal {
+  _id: string;
+  players: {
+    _id: UID;
+    score: number;
+  }[];
+}
+
+export interface ResultRoundWithTotal extends RoundWithTotal {
+  _id: 'result';
+}
+
 export interface RoundMember {
   _id: RoundMemberUUID;
   player: UID; // Player
@@ -73,12 +85,6 @@ export interface RoundCfg {
 export type PersistStore = {
   _id: GameType;
   players: IGamer[];
-
-  // [key in GameType]: IGamer[];
-  // gameType: string | null;
-  // games: {
-  //   [key in GameType]: IGamer[];
-  // } | null;
 };
 
 export interface NamedScore {

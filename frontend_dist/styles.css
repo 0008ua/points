@@ -1505,6 +1505,9 @@ input[type=number] {
   font-weight: 600;
   font-size: 0.8rem;
 }
+.thousand-score__total_last {
+  font-size: 0.8rem;
+}
 @media (min-width: 576px) {
   .thousand-score__total {
     font-weight: 600;
@@ -1519,9 +1522,6 @@ input[type=number] {
   justify-content: space-around;
   width: 100%;
   padding: 0 5px;
-}
-.round-btn-block__item {
-  flex: 1 1 auto;
 }
 
 /*# sourceMappingURL=styles.css.map*/

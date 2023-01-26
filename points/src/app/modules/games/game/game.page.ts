@@ -152,58 +152,7 @@ export class GamePage implements OnInit {
   }
 
   onFinishGameHandler() {
-    this.store.dispatch(fromAppActions.loading({ loading: true }));
-
-    const clientRoundsWithTotal = this.rounds.map((round) => {
-      const players = round.roundMembers.map((memberId) => {
-        const member = this.roundMembers.find((roundMember) => roundMember._id === memberId);
-        return {
-          _id: member.player,
-          score: member.scoresLine.reduce((prev, cur) => prev + cur, 0),
-        };
-      });
-      return { _id: round._id, players };
-    });
-
-    let result: any;
-
-    if (this.gameType !== 'rummy') {
-      result = {
-        _id: 'result',
-        players: this.players.map((player) => ({
-          _id: player._id,
-          score: this.getPlayerTotalScores(player._id),
-        })),
-      };
-    } else {
-      let acc = 0;
-      result = {
-        _id: 'result',
-        players: this.players
-          .map((player) => {
-            const score = this.getPlayerTotalScores(player._id);
-            acc += score;
-            return {
-              _id: player._id,
-              score,
-            };
-          })
-          .map((player) => ({ ...player, score: player.score || acc * -1 })),
-      };
-    }
-
-    const game: IGame = {
-      type: this.rounds[0].clientGame.type,
-      rounds: [...clientRoundsWithTotal, result],
-    };
-
-    //save to db
-    this.gameService.add(game).subscribe(
-      (_) => {
-        this.onCancelGameHandler();
-      },
-      (err) => this.store.dispatch(fromAppActions.loading({ loading: false })),
-    );
+    this.store.dispatch(fromAppActions.finishGame());
   }
 
   onCancelGameHandler() {

@@ -502,6 +502,10 @@ let SharedService = class SharedService {
         this.players$.subscribe((players) => {
             this.players = players;
         });
+        this.gameType$ = this.store.select(_store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_5__.selectGameType);
+        this.gameType$.subscribe((gameType) => {
+            this.gameType = gameType;
+        });
         this.rounds$ = this.store.select(_store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_3__.selectAllRounds);
         this.rounds$.subscribe((rounds) => {
             this.rounds = rounds;
@@ -575,6 +579,49 @@ let SharedService = class SharedService {
             }
         });
         return sum;
+    }
+    createClientRoundsWithTotal() {
+        return this.rounds.map((round) => {
+            const players = round.roundMembers.map((memberId) => {
+                const member = this.roundMembers.find((roundMember) => roundMember._id === memberId);
+                return {
+                    _id: member.player,
+                    score: member.scoresLine.reduce((prev, cur) => prev + cur, 0),
+                };
+            });
+            return { _id: round._id, players };
+        });
+    }
+    createResultRoundWithTotal() {
+        if (this.gameType !== 'rummy') {
+            return {
+                _id: 'result',
+                players: this.players.map((player) => ({
+                    _id: player._id,
+                    score: this.getPlayerTotalScores(player._id),
+                })),
+            };
+        }
+        let acc = 0;
+        return {
+            _id: 'result',
+            players: this.players
+                .map((player) => {
+                const score = this.getPlayerTotalScores(player._id);
+                acc += score;
+                return {
+                    _id: player._id,
+                    score,
+                };
+            })
+                .map((player) => (Object.assign(Object.assign({}, player), { score: player.score || acc * -1 }))),
+        };
+    }
+    createResultOfGame() {
+        return {
+            type: this.gameType,
+            rounds: [...this.createClientRoundsWithTotal(), this.createResultRoundWithTotal()],
+        };
     }
     calcQtyOfArrItems(item, playerId, roundId) {
         let count = 0;
@@ -757,6 +804,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "loadGame": () => (/* binding */ loadGame),
 /* harmony export */   "gameType": () => (/* binding */ gameType),
 /* harmony export */   "gameTypeAndClearGame": () => (/* binding */ gameTypeAndClearGame),
+/* harmony export */   "finishGame": () => (/* binding */ finishGame),
 /* harmony export */   "openNextRound": () => (/* binding */ openNextRound),
 /* harmony export */   "createRounds": () => (/* binding */ createRounds),
 /* harmony export */   "redirection": () => (/* binding */ redirection),
@@ -771,6 +819,7 @@ var AppActionTypes;
     AppActionTypes["loadGameType"] = "app/loadGame";
     AppActionTypes["gameTypeType"] = "app/gameType";
     AppActionTypes["gameTypeAndClearGameType"] = "app/gameTypeAndClearGame";
+    AppActionTypes["finishGameType"] = "app/finish game";
     AppActionTypes["openNextRoundType"] = "app/open next round";
     AppActionTypes["createRoundsType"] = "app/create rounds";
     AppActionTypes["redirectionType"] = "app/redirection";
@@ -781,6 +830,7 @@ const clearGame = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)(AppA
 const loadGame = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)(AppActionTypes.loadGameType, (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());
 const gameType = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)(AppActionTypes.gameTypeType, (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());
 const gameTypeAndClearGame = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)(AppActionTypes.gameTypeAndClearGameType, (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());
+const finishGame = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)(AppActionTypes.finishGameType);
 const openNextRound = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)(AppActionTypes.openNextRoundType);
 const createRounds = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)(AppActionTypes.createRoundsType);
 const redirection = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.createAction)(AppActionTypes.redirectionType, (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.props)());
@@ -791,6 +841,7 @@ const all = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_0__.union)({
     loadGame,
     createRounds,
     openNextRound,
+    finishGame,
     gameType,
     gameTypeAndClearGame,
     redirection,
@@ -1167,11 +1218,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppEffects": () => (/* binding */ AppEffects)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ngrx/effects */ 2251);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 8377);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 8027);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ngrx/effects */ 2251);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 8377);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! rxjs/operators */ 9026);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! rxjs/operators */ 592);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! rxjs/operators */ 8027);
 /* harmony import */ var _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/analytics.actions */ 4368);
 /* harmony import */ var _actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/auth.actions */ 18);
 /* harmony import */ var _actions_round_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/round.actions */ 3783);
@@ -1179,12 +1232,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../reducers/round-member.reducer */ 7539);
 /* harmony import */ var _reducers_round_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../reducers/round.reducer */ 8761);
 /* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/app.actions */ 8717);
-/* harmony import */ var _ngrx_router_store__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ngrx/router-store */ 6100);
+/* harmony import */ var _ngrx_router_store__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ngrx/router-store */ 6100);
 /* harmony import */ var _reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../reducers/app.reducer */ 5305);
 /* harmony import */ var _reducers_player_reducer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../reducers/player.reducer */ 3051);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! uuid */ 9232);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @ngrx/store */ 9407);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! uuid */ 9232);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/environments/environment */ 8260);
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
+/* harmony import */ var _game_data_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../game-data.service */ 3093);
+
+
 
 
 
@@ -1203,17 +1260,26 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AppEffects = class AppEffects {
-    constructor(actions$, store) {
+    constructor(actions$, store, sharedService, gameService) {
         this.actions$ = actions$;
         this.store = store;
-        this.setLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_0__.loading, _actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__.loading), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)((action) => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: action.loading })));
+        this.sharedService = sharedService;
+        this.gameService = gameService;
+        this.setLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_0__.loading, _actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__.loading), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)((action) => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: action.loading })));
         });
-        this.cancelLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.clearRounds), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)((_) => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })));
+        this.cancelLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.clearRounds), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)((_) => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })));
         });
-        this.gameType = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_ngrx_router_store__WEBPACK_IMPORTED_MODULE_12__.routerNavigatedAction), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.concatLatestFrom)(() => this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)(([{ payload }, gameType]) => {
+        this.finishGame = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.finishGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.switchMap)(() => {
+                const game = this.sharedService.createResultOfGame();
+                //save to db
+                return this.gameService.add(game).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(() => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame()), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_15__.catchError)((error) => [_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })]));
+            }));
+        });
+        this.gameType = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_ngrx_router_store__WEBPACK_IMPORTED_MODULE_16__.routerNavigatedAction), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.concatLatestFrom)(() => this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(([{ payload }, gameType]) => {
                 const { urlAfterRedirects } = payload.event;
                 const payloadGameType = urlAfterRedirects.split('/');
                 if (payloadGameType[1] === 'games' || payloadGameType[1] === 'analytics') {
@@ -1232,24 +1298,24 @@ let AppEffects = class AppEffects {
                 return _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.nop();
             }));
         });
-        this.clearGame = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.gameTypeAndClearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)(() => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame()));
+        this.clearGame = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.gameTypeAndClearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(() => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame()));
         });
-        this.clearRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)((_) => _actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.clearRounds()));
+        this.clearRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)((_) => _actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.clearRounds()));
         });
-        this.clearRoundMembers = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)((_) => _actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.clearRoundMembers()));
+        this.clearRoundMembers = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)((_) => _actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.clearRoundMembers()));
         });
-        this.addRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)(({ rounds }) => _actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.addRounds({ rounds })));
+        this.addRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(({ rounds }) => _actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.addRounds({ rounds })));
         });
-        this.addRoundMembers = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)(({ roundMembers }) => _actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.addRoundMembers({ roundMembers })));
+        this.addRoundMembers = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(({ roundMembers }) => _actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.addRoundMembers({ roundMembers })));
         });
-        this.checkOpenNextRound = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.updateRoundMembersSuccess), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.concatLatestFrom)(() => this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.filter)(([action, gameType]) => false), // gameType === 'thousand'),
-            (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.concatLatestFrom)(() => this.store.select(_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__.selectAllRoundMembers)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)(([action, roundMembers]) => {
+        this.checkOpenNextRound = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.updateRoundMembersSuccess), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.concatLatestFrom)(() => this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_17__.filter)(([action, gameType]) => false), // gameType === 'thousand'),
+            (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.concatLatestFrom)(() => this.store.select(_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__.selectAllRoundMembers)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(([action, roundMembers]) => {
                 const qtyOfPlayedSubrounds = roundMembers[roundMembers.length - 1].namedScoresLine.length;
                 const qtyOfPlayers = new Set(roundMembers.map((roundMember) => roundMember.player)).size;
                 if (qtyOfPlayedSubrounds >= qtyOfPlayers) {
@@ -1259,15 +1325,15 @@ let AppEffects = class AppEffects {
                 return _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.nop();
             }));
         });
-        this.openNextRound = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.openNextRound), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.concatLatestFrom)(() => [
+        this.openNextRound = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.openNextRound), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.concatLatestFrom)(() => [
                 this.store.select(_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_5__.selectAllRounds),
                 this.store.select(_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_8__.selectAllPlayers),
                 this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType),
-            ]), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)(([action, rounds, players, gameType]) => {
+            ]), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(([action, rounds, players, gameType]) => {
                 const nextRound = src_environments_environment__WEBPACK_IMPORTED_MODULE_9__.environment.games[gameType].rounds[1];
                 const members = players.map((player) => ({
-                    _id: (0,uuid__WEBPACK_IMPORTED_MODULE_14__["default"])(),
+                    _id: (0,uuid__WEBPACK_IMPORTED_MODULE_18__["default"])(),
                     player: player._id,
                     scoresLine: nextRound.initialScoresLine,
                     namedScoresLine: nextRound.initialNamedScoresLine,
@@ -1286,13 +1352,13 @@ let AppEffects = class AppEffects {
                 return _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame({ roundMembers: newRoundMembers, rounds: newRounds });
             }));
         });
-        this.createRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.createRounds), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.concatLatestFrom)(() => [
+        this.createRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.createRounds), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.concatLatestFrom)(() => [
                 this.store.select(_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_8__.selectAllPlayers),
                 this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType),
-            ]), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)(([action, players, gameType]) => {
+            ]), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(([action, players, gameType]) => {
                 const clientGame = {
-                    _id: (0,uuid__WEBPACK_IMPORTED_MODULE_14__["default"])(),
+                    _id: (0,uuid__WEBPACK_IMPORTED_MODULE_18__["default"])(),
                     type: gameType,
                 };
                 const roundsCfg = src_environments_environment__WEBPACK_IMPORTED_MODULE_9__.environment.games[gameType].rounds;
@@ -1301,7 +1367,7 @@ let AppEffects = class AppEffects {
                     .filter((roundCfg) => roundCfg._id !== 'start')
                     .map((roundCfg) => {
                     const members = players.map((player) => ({
-                        _id: (0,uuid__WEBPACK_IMPORTED_MODULE_14__["default"])(),
+                        _id: (0,uuid__WEBPACK_IMPORTED_MODULE_18__["default"])(),
                         player: player._id,
                         scoresLine: roundCfg.initialScoresLine,
                         namedScoresLine: roundCfg.initialNamedScoresLine,
@@ -1323,11 +1389,13 @@ let AppEffects = class AppEffects {
     }
 };
 AppEffects.ctorParameters = () => [
-    { type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_10__.Actions },
-    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_15__.Store }
+    { type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.Actions },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_19__.Store },
+    { type: src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_10__.SharedService },
+    { type: _game_data_service__WEBPACK_IMPORTED_MODULE_11__.GameService }
 ];
-AppEffects = (0,tslib__WEBPACK_IMPORTED_MODULE_16__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_17__.Injectable)()
+AppEffects = (0,tslib__WEBPACK_IMPORTED_MODULE_20__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_21__.Injectable)()
 ], AppEffects);
 
 
@@ -2024,7 +2092,7 @@ const initialState = {
     redirectionUrl: null,
     error: null,
 };
-const reducer = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.createReducer)(initialState, (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.on)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_0__.loading, (state, { loading }) => (Object.assign(Object.assign({}, state), { loading }))), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.on)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_0__.gameType, (state, { gameType }) => (Object.assign(Object.assign({}, state), { gameType }))), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.on)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_0__.gameTypeAndClearGame, (state, { gameType }) => (Object.assign(Object.assign({}, state), { gameType }))), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.on)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_0__.redirection, (state, { redirectionUrl }) => (Object.assign(Object.assign({}, state), { redirectionUrl }))));
+const reducer = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.createReducer)(initialState, (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.on)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_0__.loading, (state, { loading }) => (Object.assign(Object.assign({}, state), { loading }))), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.on)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_0__.finishGame, (state, _) => (Object.assign(Object.assign({}, state), { loading: true }))), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.on)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_0__.gameType, (state, { gameType }) => (Object.assign(Object.assign({}, state), { gameType }))), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.on)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_0__.gameTypeAndClearGame, (state, { gameType }) => (Object.assign(Object.assign({}, state), { gameType }))), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.on)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_0__.redirection, (state, { redirectionUrl }) => (Object.assign(Object.assign({}, state), { redirectionUrl }))));
 const selectFeature = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.createFeatureSelector)(appFeatureKey);
 const selectLoading = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.createSelector)(selectFeature, (state) => state.loading);
 const selectGameType = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_1__.createSelector)(selectFeature, (state) => state.gameType);
