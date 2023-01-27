@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1674741763804,
+  "timestamp": 1674812678830,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -162,7 +162,7 @@
     "/assets/shapes.svg": "638f87e27e6fc7ddfd6e6b262ea70d690f6c7011",
     "/common.js": "10cfbdad857d09b2b20486f57436529c39dbacb1",
     "/index.html": "baf2b380b52b271289db044b4e48034638b79e73",
-    "/main.js": "8dc659542413d1194a50f5083792285ebb5e769f",
+    "/main.js": "29749f0c5ff7b0c2775dc400cc98cd54cd42d8eb",
     "/manifest.webmanifest": "f1605e4014f5495d762b54521c52b46960701b4c",
     "/node_modules_capacitor_storage_dist_esm_web_js.js": "21564e3325c82b129c2d1a0a949b4b3e0c572e44",
     "/node_modules_ionic_core_dist_esm_input-shims-fef4a5fa_js.js": "81d44cf5db4c6c60abecaafe42d0ce32cd66cb32",
@@ -229,7 +229,7 @@
     "/src_app_modules_auth_profile_profile_module_ts.js": "c1220e37cb384c7b1e31eddf62d15665c1183be0",
     "/src_app_modules_auth_signin_signin_module_ts.js": "63e101fa579f642aecb321f0a6068956cd29df1d",
     "/src_app_modules_auth_signup_signup_module_ts.js": "aa812fd453836860f06c29f31cf569a8a0f61354",
-    "/src_app_modules_games_game_game_module_ts.js": "d154db99ccd3d5b96188f080a0f8e9053dc3960b",
+    "/src_app_modules_games_game_game_module_ts.js": "ee3434607725e03823e7d55dee027f340cb44a01",
     "/src_app_modules_games_games_module_ts.js": "183068a74d22622cd5be0af382210f60db77e3f3",
     "/src_app_tabs_tabs_module_ts.js": "fbd7716c80b085563f46a59295df2ff50bcd06d0",
     "/styles.css": "3541ded1c5eae6717e8a46b78bbfd923e8b8e24b",

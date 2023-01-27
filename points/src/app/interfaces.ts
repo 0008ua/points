@@ -29,16 +29,18 @@ export interface IGamer {
 
 export type IGamerTotal = IGamer & { totalScore: number };
 
+export interface PlayersResult {
+  _id: UID;
+  score: number;
+}
+
 export interface IGame {
   _id?: UID;
   type: GameType;
   owner?: UID;
   rounds: {
     _id?: UID;
-    players: {
-      _id?: UID;
-      score: number;
-    }[];
+    players: PlayersResult[];
   }[];
   createdAt?: string;
   updatedAt?: string;
@@ -57,10 +59,7 @@ export interface Round {
 
 export interface RoundWithTotal {
   _id: string;
-  players: {
-    _id: UID;
-    score: number;
-  }[];
+  players: PlayersResult[];
 }
 
 export interface ResultRoundWithTotal extends RoundWithTotal {

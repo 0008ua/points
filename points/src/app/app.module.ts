@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AppStoreModule } from './store/store.module';
@@ -12,8 +10,7 @@ import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpInterceptorService } from './services/http-interceptor.service';
-import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
-import { StoreModule } from '@ngrx/store';
+
 // AoT requires an exported function for factories
 // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
 export function createTranslateLoader(http: HttpClient) {
@@ -37,7 +34,6 @@ import { JwtDecodeFactory, JWT_DECODE } from './config/jwt.config';
       },
     }),
     AppStoreModule,
-    // StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
   ],
   providers: [
     { provide: JWT_DECODE, useFactory: JwtDecodeFactory, deps: [] },

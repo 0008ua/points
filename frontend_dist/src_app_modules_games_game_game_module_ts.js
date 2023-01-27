@@ -48,16 +48,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GamePageModule": () => (/* binding */ GamePageModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 8267);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ 8346);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ionic/angular */ 2650);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ 8267);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ 8346);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 2650);
 /* harmony import */ var _game_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game-routing.module */ 2926);
 /* harmony import */ var _game_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.page */ 9123);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ngx-translate/core */ 466);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ngx-translate/core */ 466);
 /* harmony import */ var _round_round_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../round/round.module */ 740);
 /* harmony import */ var _gamers_gamers_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../gamers/gamers.module */ 6932);
+/* harmony import */ var _game_result_game_result_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./game-result/game-result.component */ 8339);
+
 
 
 
@@ -70,22 +72,20 @@ __webpack_require__.r(__webpack_exports__);
 
 let GamePageModule = class GamePageModule {
 };
-GamePageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.NgModule)({
+GamePageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.NgModule)({
         imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_6__.CommonModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_7__.FormsModule,
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_8__.IonicModule,
+            _angular_common__WEBPACK_IMPORTED_MODULE_7__.CommonModule,
+            _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormsModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicModule,
             _game_routing_module__WEBPACK_IMPORTED_MODULE_0__.GamePageRoutingModule,
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_9__.TranslateModule.forChild({
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__.TranslateModule.forChild({
                 extend: true,
             }),
             _round_round_module__WEBPACK_IMPORTED_MODULE_2__.RoundModule,
             _gamers_gamers_module__WEBPACK_IMPORTED_MODULE_3__.GamersModule,
         ],
-        declarations: [
-            _game_page__WEBPACK_IMPORTED_MODULE_1__.GamePage,
-        ]
+        declarations: [_game_page__WEBPACK_IMPORTED_MODULE_1__.GamePage, _game_result_game_result_component__WEBPACK_IMPORTED_MODULE_4__.GameResultComponent],
     })
 ], GamePageModule);
 
@@ -103,24 +103,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GamePage": () => (/* binding */ GamePage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! tslib */ 8806);
 /* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_game_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./game.page.html */ 4464);
 /* harmony import */ var _game_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.page.scss */ 7728);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ 563);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ 2890);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ngrx/store */ 9407);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ 563);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ 2890);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 8260);
 /* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../store/reducers/app.reducer */ 5305);
 /* harmony import */ var _store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../store/reducers/round.reducer */ 8761);
 /* harmony import */ var _store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../store/reducers/player.reducer */ 3051);
 /* harmony import */ var _store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../store/reducers/round-member.reducer */ 7539);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs/operators */ 9026);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 9026);
 /* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/router */ 3252);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/router */ 3252);
 /* harmony import */ var src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/store/actions/app.actions */ 8717);
-/* harmony import */ var src_app_store_game_data_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/store/game-data.service */ 3093);
-
 
 
 
@@ -137,21 +135,20 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let GamePage = class GamePage {
-    constructor(store, sharedService, route, gameService) {
+    constructor(store, sharedService, route) {
         this.store = store;
         this.sharedService = sharedService;
         this.route = route;
-        this.gameService = gameService;
         this.environment = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment;
         this.showToolbarMenu = false;
-        this.activeRoundId$ = new rxjs__WEBPACK_IMPORTED_MODULE_10__.ReplaySubject(1);
-        this.activePlayerId$ = new rxjs__WEBPACK_IMPORTED_MODULE_10__.ReplaySubject(1);
+        this.activeRoundId$ = new rxjs__WEBPACK_IMPORTED_MODULE_9__.ReplaySubject(1);
+        this.activePlayerId$ = new rxjs__WEBPACK_IMPORTED_MODULE_9__.ReplaySubject(1);
     }
     ngOnInit() {
         this.loading$ = this.store.select(_store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_3__.selectLoading);
         this.gameType$ = this.store.select(_store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_3__.selectGameType);
         this.rounds$ = this.store.select(_store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_4__.selectAllRounds);
-        (0,rxjs__WEBPACK_IMPORTED_MODULE_11__.combineLatest)([this.gameType$, this.rounds$]).subscribe(([gameType, rounds]) => {
+        (0,rxjs__WEBPACK_IMPORTED_MODULE_10__.combineLatest)([this.gameType$, this.rounds$]).subscribe(([gameType, rounds]) => {
             if (!gameType) {
                 return;
             }
@@ -188,7 +185,7 @@ let GamePage = class GamePage {
             }
         });
         this.players$
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_12__.switchMap)((players) => {
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.switchMap)((players) => {
             this.players = players;
             return this.roundMembers$;
         }))
@@ -238,13 +235,12 @@ let GamePage = class GamePage {
     }
 };
 GamePage.ctorParameters = () => [
-    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_13__.Store },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_12__.Store },
     { type: src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_7__.SharedService },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_14__.ActivatedRoute },
-    { type: src_app_store_game_data_service__WEBPACK_IMPORTED_MODULE_9__.GameService }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_13__.ActivatedRoute }
 ];
-GamePage = (0,tslib__WEBPACK_IMPORTED_MODULE_15__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_16__.Component)({
+GamePage = (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_15__.Component)({
         selector: 'app-game',
         template: _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_game_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_game_page_scss__WEBPACK_IMPORTED_MODULE_1__]
@@ -583,11 +579,7 @@ let GamersModule = class GamersModule {
 };
 GamersModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.NgModule)({
-        declarations: [
-            _choose_players_choose_players_component__WEBPACK_IMPORTED_MODULE_0__.ChoosePlayersComponent,
-            _select_color_select_color_component__WEBPACK_IMPORTED_MODULE_1__.SelectColorComponent,
-            _create_gamer_create_gamer_component__WEBPACK_IMPORTED_MODULE_2__.CreateGamerComponent,
-        ],
+        declarations: [_choose_players_choose_players_component__WEBPACK_IMPORTED_MODULE_0__.ChoosePlayersComponent, _select_color_select_color_component__WEBPACK_IMPORTED_MODULE_1__.SelectColorComponent, _create_gamer_create_gamer_component__WEBPACK_IMPORTED_MODULE_2__.CreateGamerComponent],
         imports: [
             _angular_forms__WEBPACK_IMPORTED_MODULE_5__.FormsModule,
             _angular_common__WEBPACK_IMPORTED_MODULE_6__.CommonModule,
@@ -596,9 +588,7 @@ GamersModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
                 extend: true,
             }),
         ],
-        exports: [
-            _choose_players_choose_players_component__WEBPACK_IMPORTED_MODULE_0__.ChoosePlayersComponent,
-        ]
+        exports: [_choose_players_choose_players_component__WEBPACK_IMPORTED_MODULE_0__.ChoosePlayersComponent],
     })
 ], GamersModule);
 
@@ -636,7 +626,7 @@ let SelectColorComponent = class SelectColorComponent {
     }
     onSelect(color) {
         this.dismiss({
-            color
+            color,
         });
     }
 };

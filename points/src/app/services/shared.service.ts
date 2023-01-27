@@ -32,6 +32,8 @@ import { redirection } from '../store/actions/app.actions';
 import * as fromRoundMembersActions from '../store/actions/round-member.actions';
 import { JwtDecodeOptions } from 'jwt-decode';
 import { JWT_DECODE, JwtDecode } from '../config/jwt.config';
+import { ModalService } from './modal.service';
+import { GameResultComponent } from '../modules/games/game/game-result/game-result.component';
 
 @Injectable({
   providedIn: 'root',
@@ -56,6 +58,7 @@ export class SharedService {
     private store: Store,
     private http: HttpClient,
     private router: Router,
+    protected modalService: ModalService,
     @Inject(JWT_DECODE) private jwtDecode: JwtDecode,
   ) {
     this.url$ = this.store.select(selectRedirectionUrl);
@@ -209,6 +212,15 @@ export class SharedService {
       type: this.gameType,
       rounds: [...this.createClientRoundsWithTotal(), this.createResultRoundWithTotal()],
     };
+  }
+
+  async presentModalFinishGame(game: IGame) {
+    let order = -1; //desc
+    if (game.type === 'uno' || game.type === 'rummy') {
+      order = 1;
+    }
+    const results = game.rounds.find((round) => round._id === 'result').players;
+    return this.modalService.presentModal(GameResultComponent, { results, order });
   }
 
   calcQtyOfArrItems(item: string | number, playerId: string, roundId: string): number {

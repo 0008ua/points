@@ -7,14 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { CreateGamerComponent } from './create-gamer/create-gamer.component';
 import { FormsModule } from '@angular/forms';
 
-
-
 @NgModule({
-  declarations: [
-    ChoosePlayersComponent,
-    SelectColorComponent,
-    CreateGamerComponent,
-  ],
+  declarations: [ChoosePlayersComponent, SelectColorComponent, CreateGamerComponent],
   imports: [
     FormsModule,
     CommonModule,
@@ -23,8 +17,6 @@ import { FormsModule } from '@angular/forms';
       extend: true,
     }),
   ],
-  exports: [
-    ChoosePlayersComponent,
-  ]
+  exports: [ChoosePlayersComponent],
 })
-export class GamersModule { }
+export class GamersModule {}

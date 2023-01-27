@@ -30,7 +30,7 @@ export class StoreErrorService {
 
     actions$.pipe(ofType(EntityCacheAction.SAVE_ENTITIES_ERROR)).subscribe((action) => {
       console.log('entity save toast error', action);
-      this.toastService.presentToast(`Error SAVE_ENTITIES_ERROR`);
+      this.toastService.presentErrorToast(`Error SAVE_ENTITIES_ERROR`);
     });
 
     actions$
@@ -40,11 +40,11 @@ export class StoreErrorService {
         switchMap((action) => {
           switch (action.type) {
             case fromAnalyticsActions.AnalyticsActionTypes.errorType:
-              this.toastService.presentToast(`${action.error}`, fromAnalyticsActions.error);
+              this.toastService.presentErrorToast(`${action.error}`, fromAnalyticsActions.error);
               console.log('entity toast error AnalyticsActionTypes', action);
               break;
             case fromAuthActions.AuthActionTypes.errorType:
-              this.toastService.presentToast(`${action.error}`, fromAuthActions.error);
+              this.toastService.presentErrorToast(`${action.error}`, fromAuthActions.error);
               console.log('entity toast error AuthActionTypes', action);
               break;
             default:

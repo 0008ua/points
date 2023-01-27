@@ -23,6 +23,8 @@ import * as fromRoundMemberActions from 'src/app/store/actions/round-member.acti
 import { ActivatedRoute, Router } from '@angular/router';
 import * as fromAppActions from 'src/app/store/actions/app.actions';
 import { GameService } from 'src/app/store/game-data.service';
+import { ModalService } from 'src/app/services/modal.service';
+import { GameResultComponent } from './game-result/game-result.component';
 
 @Component({
   selector: 'app-game',
@@ -57,7 +59,6 @@ export class GamePage implements OnInit {
     private store: Store,
     private sharedService: SharedService,
     private route: ActivatedRoute,
-    private gameService: GameService,
   ) {}
 
   ngOnInit() {

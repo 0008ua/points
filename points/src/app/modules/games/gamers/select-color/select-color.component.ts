@@ -10,12 +10,9 @@ import { Colors } from 'src/app/interfaces';
 export class SelectColorComponent implements OnInit {
   @Input() colors: Colors[];
 
-  constructor(
-    public popoverController: PopoverController,
+  constructor(public popoverController: PopoverController) {}
 
-  ) { }
-
-  ngOnInit() { }
+  ngOnInit() {}
 
   dismiss(data?: any): void {
     this.popoverController.dismiss(data);
@@ -23,7 +20,7 @@ export class SelectColorComponent implements OnInit {
 
   onSelect(color: Colors) {
     this.dismiss({
-      color
+      color,
     });
   }
 }

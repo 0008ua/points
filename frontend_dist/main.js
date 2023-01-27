@@ -197,7 +197,6 @@ AppModule = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
                 },
             }),
             _store_store_module__WEBPACK_IMPORTED_MODULE_2__.AppStoreModule,
-            // StoreRouterConnectingModule.forRoot({stateKey: 'router'}),
         ],
         providers: [
             { provide: _config_jwt_config__WEBPACK_IMPORTED_MODULE_5__.JWT_DECODE, useFactory: _config_jwt_config__WEBPACK_IMPORTED_MODULE_5__.JwtDecodeFactory, deps: [] },
@@ -344,6 +343,70 @@ AuthService = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
 
 /***/ }),
 
+/***/ 8339:
+/*!*************************************************************************!*\
+  !*** ./src/app/modules/games/game/game-result/game-result.component.ts ***!
+  \*************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "GameResultComponent": () => (/* binding */ GameResultComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_game_result_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./game-result.component.html */ 5007);
+/* harmony import */ var _game_result_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game-result.component.scss */ 5986);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ionic/angular */ 2650);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/store */ 9407);
+/* harmony import */ var src_app_store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/reducers/player.reducer */ 3051);
+
+
+
+
+
+
+
+let GameResultComponent = class GameResultComponent {
+    constructor(modalController, store) {
+        this.modalController = modalController;
+        this.store = store;
+    }
+    ngOnInit() {
+        this.players$ = this.store.select(src_app_store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_2__.selectAllPlayers);
+        this.players$.subscribe((players) => {
+            this.resultWithNames = this.results.map((result) => {
+                const player = players.find((pl) => pl._id === result._id);
+                return Object.assign(Object.assign({}, result), { name: player === null || player === void 0 ? void 0 : player.name, color: player === null || player === void 0 ? void 0 : player.color });
+            });
+            this.resultWithNames.sort((a, b) => (a.score - b.score) * this.order);
+        });
+    }
+    confirm() {
+        return this.modalController.dismiss(null, 'confirm');
+    }
+};
+GameResultComponent.ctorParameters = () => [
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_3__.ModalController },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_4__.Store }
+];
+GameResultComponent.propDecorators = {
+    results: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input }],
+    order: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input }]
+};
+GameResultComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+        selector: 'app-game-result',
+        template: _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_game_result_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
+        styles: [_game_result_component_scss__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], GameResultComponent);
+
+
+
+/***/ }),
+
 /***/ 7229:
 /*!******************************************************!*\
   !*** ./src/app/services/http-interceptor.service.ts ***!
@@ -438,6 +501,59 @@ HttpInterceptorService = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
 
 /***/ }),
 
+/***/ 9853:
+/*!*******************************************!*\
+  !*** ./src/app/services/modal.service.ts ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ModalService": () => (/* binding */ ModalService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ 2650);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ngrx/store */ 9407);
+
+
+
+
+/** Report ngrx-data success/error actions as toast messages **/
+let ModalService = class ModalService {
+    constructor(store, modalController) {
+        this.store = store;
+        this.modalController = modalController;
+    }
+    // const modal = await this.modalCtrl.create({
+    //   component: ModalExampleComponent,
+    // });
+    // modal.present();
+    // const { data, role } = await modal.onWillDismiss();
+    presentModal(component, data) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
+            const modal = yield this.modalController.create({
+                component,
+                componentProps: data,
+            });
+            modal.present();
+            return modal.onWillDismiss();
+        });
+    }
+};
+ModalService.ctorParameters = () => [
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_1__.Store },
+    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.ModalController }
+];
+ModalService = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({ providedIn: 'root' })
+], ModalService);
+
+
+
+/***/ }),
+
 /***/ 4718:
 /*!********************************************!*\
   !*** ./src/app/services/shared.service.ts ***!
@@ -449,23 +565,27 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SharedService": () => (/* binding */ SharedService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ 4126);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs */ 9500);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ 4126);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! rxjs */ 9500);
 /* harmony import */ var _capacitor_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @capacitor/storage */ 872);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ 8377);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 592);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngrx/store */ 9407);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 8377);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 592);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ngrx/store */ 9407);
 /* harmony import */ var _store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store/reducers/player.reducer */ 3051);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 8260);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common/http */ 3981);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common/http */ 3981);
 /* harmony import */ var _store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/reducers/round.reducer */ 8761);
 /* harmony import */ var _store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/reducers/round-member.reducer */ 7539);
 /* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/reducers/app.reducer */ 5305);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/router */ 3252);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/router */ 3252);
 /* harmony import */ var _store_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../store/actions/app.actions */ 8717);
 /* harmony import */ var _config_jwt_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../config/jwt.config */ 9185);
+/* harmony import */ var _modal_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modal.service */ 9853);
+/* harmony import */ var _modules_games_game_game_result_game_result_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../modules/games/game/game-result/game-result.component */ 8339);
+
+
 
 
 
@@ -482,10 +602,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let SharedService = class SharedService {
-    constructor(store, http, router, jwtDecode) {
+    constructor(store, http, router, modalService, jwtDecode) {
         this.store = store;
         this.http = http;
         this.router = router;
+        this.modalService = modalService;
         this.jwtDecode = jwtDecode;
         this.players = [];
         this.rounds = [];
@@ -516,60 +637,60 @@ let SharedService = class SharedService {
         });
     }
     setToStorage(key, value) {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_8__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.set({ key, value }));
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_10__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.set({ key, value }));
     }
     setToken(token) {
         return this.setToStorage('token', token);
     }
     getFromStorage(key) {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_8__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.get({ key })).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.map)((getResult) => getResult.value));
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_10__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.get({ key })).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)((getResult) => getResult.value));
     }
     getToken() {
         return this.getFromStorage('token');
     }
     getTokenAndDecode() {
-        return this.getToken().pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.map)((token) => {
+        return this.getToken().pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)((token) => {
             return this.jwtDecode(token);
         }));
     }
     removeFromStorage(key) {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_8__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.remove({ key }));
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_10__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.remove({ key }));
     }
     removeToken() {
         return this.removeFromStorage('token');
     }
     getRating() {
         const httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_10__.HttpHeaders({
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpHeaders({
                 // eslint-disable-next-line  @typescript-eslint/naming-convention
                 'Content-Type': 'application/json',
             }),
         };
         return this.http
             .get(src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.host + 'api/analytics/get-rating/', httpOptions)
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.catchError)((err) => (0,rxjs__WEBPACK_IMPORTED_MODULE_12__.throwError)(err)));
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.catchError)((err) => (0,rxjs__WEBPACK_IMPORTED_MODULE_14__.throwError)(err)));
     }
     getRatingByWins() {
         const httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_10__.HttpHeaders({
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpHeaders({
                 // eslint-disable-next-line  @typescript-eslint/naming-convention
                 'Content-Type': 'application/json',
             }),
         };
         return this.http
             .get(src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.host + 'api/analytics/get-wins/', httpOptions)
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.catchError)((err) => (0,rxjs__WEBPACK_IMPORTED_MODULE_12__.throwError)(err)));
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.catchError)((err) => (0,rxjs__WEBPACK_IMPORTED_MODULE_14__.throwError)(err)));
     }
     getRatingByWinsToGames() {
         const httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_10__.HttpHeaders({
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpHeaders({
                 // eslint-disable-next-line  @typescript-eslint/naming-convention
                 'Content-Type': 'application/json',
             }),
         };
         return this.http
             .get(src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.host + 'api/analytics/get-wins-to-games/', httpOptions)
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.catchError)((err) => (0,rxjs__WEBPACK_IMPORTED_MODULE_12__.throwError)(err)));
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.catchError)((err) => (0,rxjs__WEBPACK_IMPORTED_MODULE_14__.throwError)(err)));
     }
     getPlayerTotalScores(player) {
         let sum = 0;
@@ -623,6 +744,16 @@ let SharedService = class SharedService {
             rounds: [...this.createClientRoundsWithTotal(), this.createResultRoundWithTotal()],
         };
     }
+    presentModalFinishGame(game) {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_15__.__awaiter)(this, void 0, void 0, function* () {
+            let order = -1; //desc
+            if (game.type === 'uno' || game.type === 'rummy') {
+                order = 1;
+            }
+            const results = game.rounds.find((round) => round._id === 'result').players;
+            return this.modalService.presentModal(_modules_games_game_game_result_game_result_component__WEBPACK_IMPORTED_MODULE_9__.GameResultComponent, { results, order });
+        });
+    }
     calcQtyOfArrItems(item, playerId, roundId) {
         let count = 0;
         this.getMemberByPlayerId(playerId, roundId).scoresLine.forEach((arrItem) => {
@@ -655,7 +786,7 @@ let SharedService = class SharedService {
         console.log('logErrorToDB', message);
         // return of(error);
         const httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_10__.HttpHeaders({
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpHeaders({
                 // eslint-disable-next-line  @typescript-eslint/naming-convention
                 'Content-Type': 'application/json',
             }),
@@ -664,13 +795,14 @@ let SharedService = class SharedService {
     }
 };
 SharedService.ctorParameters = () => [
-    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_13__.Store },
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_10__.HttpClient },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_14__.Router },
-    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_15__.Inject, args: [_config_jwt_config__WEBPACK_IMPORTED_MODULE_7__.JWT_DECODE,] }] }
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_16__.Store },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpClient },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_17__.Router },
+    { type: _modal_service__WEBPACK_IMPORTED_MODULE_8__.ModalService },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_18__.Inject, args: [_config_jwt_config__WEBPACK_IMPORTED_MODULE_7__.JWT_DECODE,] }] }
 ];
-SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_16__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_15__.Injectable)({
+SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_15__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_18__.Injectable)({
         providedIn: 'root',
     })
 ], SharedService);
@@ -704,7 +836,7 @@ let ToastService = class ToastService {
         this.store = store;
         this.toastController = toastController;
     }
-    presentToast(message = 'Error', action) {
+    presentErrorToast(message = 'Error', action) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
             const toast = yield this.toastController.create({
                 header: 'Error',
@@ -712,13 +844,15 @@ let ToastService = class ToastService {
                 icon: 'bug-outline',
                 position: 'top',
                 duration: 4000,
-                buttons: [{
+                buttons: [
+                    {
                         text: 'Ok',
                         role: 'cancel',
                         handler: () => {
                             // console.log('Cancel clicked');
-                        }
-                    }]
+                        },
+                    },
+                ],
             });
             yield toast.present();
             const _a = yield toast.onDidDismiss(), { role } = _a, rest = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__rest)(_a, ["role"]);
@@ -1275,7 +1409,7 @@ let AppEffects = class AppEffects {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.finishGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.switchMap)(() => {
                 const game = this.sharedService.createResultOfGame();
                 //save to db
-                return this.gameService.add(game).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(() => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame()), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_15__.catchError)((error) => [_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })]));
+                return this.gameService.add(game).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.switchMap)((_) => this.sharedService.presentModalFinishGame(game)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(() => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame()), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_15__.catchError)((error) => [_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })]));
             }));
         });
         this.gameType = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
@@ -2471,17 +2605,17 @@ let StoreErrorService = class StoreErrorService {
         });
         actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_6__.ofType)(_ngrx_data__WEBPACK_IMPORTED_MODULE_4__.EntityCacheAction.SAVE_ENTITIES_ERROR)).subscribe((action) => {
             console.log('entity save toast error', action);
-            this.toastService.presentToast(`Error SAVE_ENTITIES_ERROR`);
+            this.toastService.presentErrorToast(`Error SAVE_ENTITIES_ERROR`);
         });
         actions$
             .pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_6__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_0__.error, _actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__.error), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.filter)((action) => action.error !== null), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.switchMap)((action) => {
             switch (action.type) {
                 case _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_0__.AnalyticsActionTypes.errorType:
-                    this.toastService.presentToast(`${action.error}`, _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_0__.error);
+                    this.toastService.presentErrorToast(`${action.error}`, _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_0__.error);
                     console.log('entity toast error AnalyticsActionTypes', action);
                     break;
                 case _actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__.AuthActionTypes.errorType:
-                    this.toastService.presentToast(`${action.error}`, _actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__.error);
+                    this.toastService.presentErrorToast(`${action.error}`, _actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__.error);
                     console.log('entity toast error AuthActionTypes', action);
                     break;
                 default:
@@ -3110,6 +3244,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ 5007:
+/*!******************************************************************************************************************************************!*\
+  !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/game/game-result/game-result.component.html ***!
+  \******************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\n  <ion-toolbar>\n    <ion-title class=\"ion-text-center\">Game results</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content class=\"ion-padding\">\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\n    <ion-row>\n      <ion-col size-lg=\"6\" size-md=\"8\" size-sm=\"10\" offset-lg=\"3\" offset-md=\"2\" offset-sm=\"1\">\n        <ion-card>\n          <ion-card-content>\n            <ion-item lines=\"none\">\n              <ion-buttons slot=\"end\">\n                <ion-button (click)=\"confirm()\">Ok</ion-button>\n              </ion-buttons>\n            </ion-item>\n            <ion-list>\n              <ion-item *ngFor=\"let result of resultWithNames; let idx = index\">\n                <div\n                  slot=\"start\"\n                  [ngStyle]=\"{\n                    'border-right': '6px solid ' + result.color,\n                    'padding-right': '10px'\n                  }\"\n                >\n                  {{ idx + 1 }}\n                </div>\n                <ion-label>\n                  {{ result.name }}\n                </ion-label>\n                <ion-text slot=\"end\" color=\"primary\">\n                  {{ result.score }}\n                </ion-text>\n              </ion-item>\n            </ion-list>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
+
+/***/ }),
+
 /***/ 836:
 /*!************************************!*\
   !*** ./src/app/app.component.scss ***!
@@ -3118,6 +3267,17 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhcHAuY29tcG9uZW50LnNjc3MifQ== */";
+
+/***/ }),
+
+/***/ 5986:
+/*!***************************************************************************!*\
+  !*** ./src/app/modules/games/game/game-result/game-result.component.scss ***!
+  \***************************************************************************/
+/***/ ((module) => {
+
+"use strict";
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJnYW1lLXJlc3VsdC5jb21wb25lbnQuc2NzcyJ9 */";
 
 /***/ }),
 

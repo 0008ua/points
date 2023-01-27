@@ -14,28 +14,27 @@ import { OperatorFunction } from 'rxjs';
 /** Report ngrx-data success/error actions as toast messages **/
 @Injectable({ providedIn: 'root' })
 export class ToastService {
-  constructor(
-    private store: Store,
-    public toastController: ToastController
-  ) { }
+  constructor(private store: Store, public toastController: ToastController) {}
 
-  async presentToast(
+  async presentErrorToast(
     message = 'Error',
-    action?: typeof fromAnalyticsActions.error
-      | typeof fromAuthActions.error) {
+    action?: typeof fromAnalyticsActions.error | typeof fromAuthActions.error,
+  ) {
     const toast = await this.toastController.create({
       header: 'Error',
       message,
       icon: 'bug-outline',
       position: 'top',
       duration: 4000,
-      buttons: [{
-        text: 'Ok',
-        role: 'cancel',
-        handler: () => {
-          // console.log('Cancel clicked');
-        }
-      }]
+      buttons: [
+        {
+          text: 'Ok',
+          role: 'cancel',
+          handler: () => {
+            // console.log('Cancel clicked');
+          },
+        },
+      ],
     });
     await toast.present();
 

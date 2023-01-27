@@ -10,6 +10,7 @@ import { GamePage } from './game.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { RoundModule } from '../round/round.module';
 import { GamersModule } from '../gamers/gamers.module';
+import { GameResultComponent } from './game-result/game-result.component';
 
 @NgModule({
   imports: [
@@ -23,8 +24,6 @@ import { GamersModule } from '../gamers/gamers.module';
     RoundModule,
     GamersModule,
   ],
-  declarations: [
-    GamePage,
-  ]
+  declarations: [GamePage, GameResultComponent],
 })
-export class GamePageModule { }
+export class GamePageModule {}

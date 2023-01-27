@@ -47,6 +47,7 @@ export class AppEffects {
         const game: IGame = this.sharedService.createResultOfGame();
         //save to db
         return this.gameService.add(game).pipe(
+          switchMap((_) => this.sharedService.presentModalFinishGame(game)),
           map(() => fromAppActions.clearGame()),
           catchError((error) => [fromAppActions.loading({ loading: false })]),
         );
@@ -92,7 +93,7 @@ export class AppEffects {
       map((_) => fromRoundActions.clearRounds()),
     );
   });
-  
+
   clearRoundMembers = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromAppActions.clearGame),
