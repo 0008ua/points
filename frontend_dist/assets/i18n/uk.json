@@ -2,7 +2,7 @@
   "language": "Switch to English",
   "games": {
     "train": {
-      "title": "Ticket to the ride",
+      "title": "Ticket to ride",
       "routes": "Завершені маршрути",
       "length": "Найдовший маршрут",
       "cars": "Потяги",
@@ -11,7 +11,14 @@
       "stationsShort": "Станції"
     },
     "uno": {
+      "title": "Уно",
       "round": "Раунд"
+    },
+    "thousand": {
+      "title": "Тисяча - 1000"
+    },
+    "rummy": {
+      "title": "Румі"
     }
   },
   "modules": {
@@ -33,7 +40,8 @@
       "addPlayers": "Додати гравців",
       "color": "Колір",
       "player": "Гравець",
-      "round": "Раунд"
+      "round": "Раунд",
+      "results": "Результати"
     },
     "user": {
       "signin": "Вхід",

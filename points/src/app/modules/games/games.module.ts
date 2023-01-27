@@ -20,6 +20,5 @@ import { TranslateModule } from '@ngx-translate/core';
     }),
   ],
   declarations: [GamesPage],
-
 })
 export class GamesPageModule {}

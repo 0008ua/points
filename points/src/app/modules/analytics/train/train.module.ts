@@ -19,6 +19,6 @@ import { TranslateModule } from '@ngx-translate/core';
       extend: true,
     }),
   ],
-  declarations: [TrainPage]
+  declarations: [TrainPage],
 })
 export class TrainPageModule {}

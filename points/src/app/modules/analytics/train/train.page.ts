@@ -33,35 +33,22 @@ export class TrainPage implements OnInit {
     private gameService: GameService,
     private gamerService: GamerService,
     private entityActionFactory: EntityActionFactory,
-  ) { }
+  ) {}
 
   ionViewWillEnter() {
-    console.log('view')
     this.store.dispatch(fromAnalyticsActions[this.stats[0]._id]({ gameType: 'train' }));
   }
 
   ngOnInit() {
     this.games$ = this.gameService.entities$;
-    this.games$
-      .subscribe(() =>
-        this.store.dispatch(fromAnalyticsActions[this.stat._id]({ gameType: 'train' }))
-      );
+    this.games$.subscribe(() =>
+      this.store.dispatch(fromAnalyticsActions[this.stat._id]({ gameType: 'train' })),
+    );
 
     this.gamers$ = this.gamerService.entities$;
-    this.gamers$.subscribe((x) => console.log('gamers', x))
+    this.gamers$.subscribe((_) => _);
 
-
-    console.log('[this.stats[0]._id', this.stats[0]._id);
-    // this.store.dispatch(fromAnalyticsActions[this.stats[0]._id]({ gameType: 'train' }));
     this.analytics$ = this.store.select(selectRating);
-    // this.analytics$.pipe(
-    //   withLatestFrom(this.gamers$),
-    //   map((x) => {
-    //     this.store.dispatch(fromAnalyticsActions.addMany({analytics: x[1]}))
-    //     console.log('an0', x)
-    //   })
-    // )
-    //   .subscribe((x) => console.log('an', x))
 
     this.loading$ = this.store.select(selectLoading);
   }

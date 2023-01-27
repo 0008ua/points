@@ -8,32 +8,30 @@ const routes: Routes = [
     path: '',
     component: AnalyticsPage,
     children: [
-
       {
         path: 'train',
-        loadChildren: () => import('./train/train.module').then(m => m.TrainPageModule)
+        loadChildren: () => import('./train/train.module').then((m) => m.TrainPageModule),
       },
       {
         path: 'rummy',
-        loadChildren: () => import('./rummy/rummy.module').then(m => m.RummyPageModule)
+        loadChildren: () => import('./rummy/rummy.module').then((m) => m.RummyPageModule),
       },
       {
         path: '',
         redirectTo: 'rummy',
         pathMatch: 'full',
       },
-    ]
+    ],
   },
   {
     path: '**',
     redirectTo: '',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'rummy',
-    loadChildren: () => import('./rummy/rummy.module').then( m => m.RummyPageModule)
+    loadChildren: () => import('./rummy/rummy.module').then((m) => m.RummyPageModule),
   },
-
 ];
 
 @NgModule({

@@ -22,8 +22,8 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: '',
-        component: _signup_page__WEBPACK_IMPORTED_MODULE_0__.SignupPage
-    }
+        component: _signup_page__WEBPACK_IMPORTED_MODULE_0__.SignupPage,
+    },
 ];
 let SignupPageRoutingModule = class SignupPageRoutingModule {
 };
@@ -79,9 +79,9 @@ SignupPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
             _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__.TranslateModule.forChild({
                 extend: true,
             }),
-            _signup_routing_module__WEBPACK_IMPORTED_MODULE_0__.SignupPageRoutingModule
+            _signup_routing_module__WEBPACK_IMPORTED_MODULE_0__.SignupPageRoutingModule,
         ],
-        declarations: [_signup_page__WEBPACK_IMPORTED_MODULE_1__.SignupPage]
+        declarations: [_signup_page__WEBPACK_IMPORTED_MODULE_1__.SignupPage],
     })
 ], SignupPageModule);
 

@@ -26,27 +26,27 @@ const routes = [
         children: [
             {
                 path: 'train',
-                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_analytics_train_train_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./train/train.module */ 4677)).then(m => m.TrainPageModule)
+                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_analytics_train_train_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./train/train.module */ 4677)).then((m) => m.TrainPageModule),
             },
             {
                 path: 'rummy',
-                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_analytics_rummy_rummy_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./rummy/rummy.module */ 8999)).then(m => m.RummyPageModule)
+                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_analytics_rummy_rummy_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./rummy/rummy.module */ 8999)).then((m) => m.RummyPageModule),
             },
             {
                 path: '',
                 redirectTo: 'rummy',
                 pathMatch: 'full',
             },
-        ]
+        ],
     },
     {
         path: '**',
         redirectTo: '',
-        pathMatch: 'full'
+        pathMatch: 'full',
     },
     {
         path: 'rummy',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_analytics_rummy_rummy_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./rummy/rummy.module */ 8999)).then(m => m.RummyPageModule)
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_analytics_rummy_rummy_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./rummy/rummy.module */ 8999)).then((m) => m.RummyPageModule),
     },
 ];
 let AnalyticsPageRoutingModule = class AnalyticsPageRoutingModule {
@@ -101,7 +101,7 @@ AnalyticsPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
                 extend: true,
             }),
         ],
-        declarations: [_analytics_page__WEBPACK_IMPORTED_MODULE_1__.AnalyticsPage]
+        declarations: [_analytics_page__WEBPACK_IMPORTED_MODULE_1__.AnalyticsPage],
     })
 ], AnalyticsPageModule);
 
@@ -185,7 +185,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-menu menuId=\"analytics-menu\" side=\"end\" contentId=\"analytics-content\">\r\n  <ion-header>\r\n    <ion-toolbar color=\"secondary\">\r\n      <ion-title>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'member'\">{{(user$ | async).name }}</h2>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'guest'\">Guest</h2>\r\n      </ion-title>\r\n    </ion-toolbar>\r\n  </ion-header>\r\n  <ion-content>\r\n    <ion-list lines=\"none\">\r\n      <ion-menu-toggle auto-hide=\"false\" menu=\"analytics-menu\">\r\n        <ion-item routerLink=\"/analytics/train\" routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"train-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>Ticket to ride</ion-label>\r\n        </ion-item>\r\n        <ion-item routerLink=\"/analytics/rummy\" routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"journal-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>Rummy</ion-label>\r\n        </ion-item>\r\n\r\n        <ion-item-divider></ion-item-divider>\r\n        <ion-item button (click)=\"switchLanguage()\">\r\n          <ion-icon name=\"earth-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'language' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item *ngIf=\"(userRole$ | async) === 'member'\" button (click)=\"onLogout()\">\r\n          <ion-icon name=\"exit\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.logout' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item *ngIf=\"(userRole$ | async) === 'guest'\" routerLink=\"/auth/signin\" routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"log-in\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.signin' | translate}}</ion-label>\r\n        </ion-item>\r\n\r\n      </ion-menu-toggle>\r\n    </ion-list>\r\n  </ion-content>\r\n</ion-menu>\r\n<ion-router-outlet id=\"analytics-content\"></ion-router-outlet>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-menu menuId=\"analytics-menu\" side=\"end\" contentId=\"analytics-content\">\r\n  <ion-header>\r\n    <ion-toolbar color=\"secondary\">\r\n      <ion-title>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'member'\">{{(user$ | async).name }}</h2>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'guest'\">Guest</h2>\r\n      </ion-title>\r\n    </ion-toolbar>\r\n  </ion-header>\r\n  <ion-content>\r\n    <ion-list lines=\"none\">\r\n      <ion-menu-toggle auto-hide=\"false\" menu=\"analytics-menu\">\r\n        <ion-item routerLink=\"/analytics/train\" routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"train-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'games.train.title' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item routerLink=\"/analytics/rummy\" routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"journal-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'games.rummy.title' | translate}}</ion-label>\r\n        </ion-item>\r\n\r\n        <ion-item-divider></ion-item-divider>\r\n        <ion-item button (click)=\"switchLanguage()\">\r\n          <ion-icon name=\"earth-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'language' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item *ngIf=\"(userRole$ | async) === 'member'\" button (click)=\"onLogout()\">\r\n          <ion-icon name=\"exit\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.logout' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item *ngIf=\"(userRole$ | async) === 'guest'\" routerLink=\"/auth/signin\" routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"log-in\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.signin' | translate}}</ion-label>\r\n        </ion-item>\r\n\r\n      </ion-menu-toggle>\r\n    </ion-list>\r\n  </ion-content>\r\n</ion-menu>\r\n<ion-router-outlet id=\"analytics-content\"></ion-router-outlet>");
 
 /***/ }),
 

@@ -22,8 +22,8 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: '',
-        component: _signin_page__WEBPACK_IMPORTED_MODULE_0__.SigninPage
-    }
+        component: _signin_page__WEBPACK_IMPORTED_MODULE_0__.SigninPage,
+    },
 ];
 let SigninPageRoutingModule = class SigninPageRoutingModule {
 };
@@ -81,7 +81,7 @@ SigninPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
                 extend: true,
             }),
         ],
-        declarations: [_signin_page__WEBPACK_IMPORTED_MODULE_1__.SigninPage]
+        declarations: [_signin_page__WEBPACK_IMPORTED_MODULE_1__.SigninPage],
     })
 ], SigninPageModule);
 
@@ -141,9 +141,7 @@ let SigninPage = class SigninPage {
             }),
             password: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__.FormControl('', {
                 updateOn: 'change',
-                validators: [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required,
-                ],
+                validators: [_angular_forms__WEBPACK_IMPORTED_MODULE_4__.Validators.required],
             }),
         });
     }

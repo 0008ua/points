@@ -28,7 +28,6 @@ let AnalyticsController = class AnalyticsController {
     }
     async getRating(req) {
         const rating = await this.analyticsService.getRating(req.user._id);
-        console.log(rating);
         return rating;
     }
 };

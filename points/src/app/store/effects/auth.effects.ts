@@ -113,7 +113,6 @@ export class AuthEffects implements OnInitEffects {
         this.sharedService.getTokenAndDecode().pipe(
           map((user) => fromAuthActions.storeUserFromTokenSuccess({ user })),
           catchError((error) => {
-            console.log('storeUserFromToken err', error);
             return of(fromAuthActions.signup({}));
           }),
         ),
@@ -121,42 +120,6 @@ export class AuthEffects implements OnInitEffects {
       catchError((error) => of(fromAuthActions.error({ error: error.message }))),
     );
   });
-  //   // !!!!!!!!!!!!!!!!!!!!!!!!!
-  //   storeUserFromToken = createEffect(() => {
-  //     return this.actions$.pipe(
-  //       ofType(fromAuthActions.storeUserFromToken),
-  //       switchMap(() =>
-  //         of('_').pipe(
-  //           switchMap(() =>
-  //             this.sharedService.getTokenAndDecode().pipe(
-  //               // catch decodeToken error and throw up
-  //               // this part of stream finishes
-
-  //               catchError((error) => {
-  //                 return of(fromAuthActions.signup({}));
-  //               }),
-  //               // catch without throw keep running stream
-  //               // if no error store user
-  //               tap((user) => console.log('token user', user)),
-
-  //               map((user) => {
-  //                 // if (user.type === 'auth/signup') {
-  //                 //   return fromAuthActions.error({ error: 'Not authorized' });
-  //                 // }
-  //                 return fromAuthActions.storeUserFromTokenSuccess({ user });
-  //               }),
-  //             ),
-  //           ),
-  //           // get decode token error
-  //           // stream stay alive
-  //           // store error
-  //           catchError((error) =>
-  //             of(fromAuthActions.error({ error: error.message || error.error.message || 'error' })),
-  //           ),
-  //         ),
-  //       ),
-  //     );
-  //   });
 
   redirectAfterSignin = createEffect(() => {
     return this.actions$.pipe(
@@ -169,18 +132,6 @@ export class AuthEffects implements OnInitEffects {
       }),
     );
   });
-
-  // storeUserFromTokenSuccess = createEffect(() => {
-  //     return this.actions$.pipe(
-  //         ofType(fromAuthActions.storeUserFromTokenSuccess),
-  //         concatLatestFrom(() => this.store),
-  //         // !!!! get url from storage
-  //         map(([action, state]) => {
-  //             console.log('state auth', state)
-  //             return fromAuthActions.redirection({ redirectionUrl: '/games/' + (state as State).app.gameType });
-  //         })
-  //     );
-  // });
 
   getGamers = createEffect(() => {
     return this.actions$.pipe(
@@ -199,23 +150,6 @@ export class AuthEffects implements OnInitEffects {
       catchError((error) => of(fromAuthActions.error({ error: error.error.message || 'error' }))),
     );
   });
-
-  // getGames = createEffect(() => {
-  //   return this.actions$.pipe(
-  //     ofType(fromAuthActions.storeUserFromTokenSuccess),
-  //     map((_) => {
-  //       console.log('_', _);
-
-  //       return this.entityActionFactory.create('game', EntityOp.QUERY_LOAD, null, {
-  //         tag: 'game/on storeUserFromToken Success',
-  //       });
-  //     }),
-  //     catchError((error) => {
-  //       console.log('error', error);
-  //       return of(fromAuthActions.error({ error: error.error.message || 'error' }));
-  //     }),
-  //   );
-  // });
 
   removeAllRecentPlayers = createEffect(() => {
     return this.actions$.pipe(

@@ -12,7 +12,6 @@
     "build:back": "npm install && nest build",
     "git": "git add . && git commit -m",
     "postgit": "git push",
-
     "prebuild": "rimraf backend_dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",

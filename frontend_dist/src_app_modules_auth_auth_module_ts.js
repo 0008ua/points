@@ -24,19 +24,19 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: 'profile',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_auth_profile_profile_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./profile/profile.module */ 1157)).then(m => m.ProfilePageModule),
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_auth_profile_profile_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./profile/profile.module */ 1157)).then((m) => m.ProfilePageModule),
         canLoad: [_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AuthGuard],
         canActivate: [_auth_guard__WEBPACK_IMPORTED_MODULE_0__.AuthGuard],
     },
     {
         path: 'signin',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_modules_auth_signin_signin_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./signin/signin.module */ 8474)).then(m => m.SigninPageModule),
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_modules_auth_signin_signin_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./signin/signin.module */ 8474)).then((m) => m.SigninPageModule),
         canLoad: [_no_auth_guard__WEBPACK_IMPORTED_MODULE_1__.NoAuthGuard],
         canActivate: [_no_auth_guard__WEBPACK_IMPORTED_MODULE_1__.NoAuthGuard],
     },
     {
         path: 'signup',
-        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_modules_auth_signup_signup_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./signup/signup.module */ 1690)).then(m => m.SignupPageModule),
+        loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_modules_auth_signup_signup_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./signup/signup.module */ 1690)).then((m) => m.SignupPageModule),
         canLoad: [_no_auth_guard__WEBPACK_IMPORTED_MODULE_1__.NoAuthGuard],
         canActivate: [_no_auth_guard__WEBPACK_IMPORTED_MODULE_1__.NoAuthGuard],
     },
@@ -95,7 +95,10 @@ let AuthGuard = class AuthGuard {
         this.router = router;
         this.store = store;
         this.userRole$ = this.store.select(src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_1__.selectUserRole);
-        this.store.select(src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_1__.selectUserRole).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.tap)((role) => console.log('role change guard', role))).subscribe((_) => _);
+        this.store
+            .select(src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_1__.selectUserRole)
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.tap)((role) => console.log('role change guard', role)))
+            .subscribe((_) => _);
     }
     // Prevents fetching lazy loading modules
     canLoad(route, segments) {
@@ -117,11 +120,8 @@ let AuthGuard = class AuthGuard {
             }
             return true;
         }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.catchError)((e) => {
-            console.log('err guard', e);
             return (0,rxjs__WEBPACK_IMPORTED_MODULE_6__.throwError)(e);
-        })
-        // take(1),
-        );
+        }));
     }
 };
 AuthGuard.ctorParameters = () => [
@@ -162,10 +162,7 @@ let AuthModule = class AuthModule {
 AuthModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
         declarations: [],
-        imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_3__.CommonModule,
-            _auth_routing_module__WEBPACK_IMPORTED_MODULE_0__.AuthRoutingModule,
-        ]
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_3__.CommonModule, _auth_routing_module__WEBPACK_IMPORTED_MODULE_0__.AuthRoutingModule],
     })
 ], AuthModule);
 
@@ -201,9 +198,6 @@ let NoAuthGuard = class NoAuthGuard {
         this.router = router;
         this.store = store;
         this.userRole$ = this.store.select(src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_0__.selectUserRole);
-        // this.userRole$ = this.store.select(selectUserRole);
-        // console.log('sdfsdfadfadf')
-        // this.store.select(selectUserRole).subscribe((_) => _);
     }
     // Prevents fetching lazy loading modules
     canLoad(route, segments) {

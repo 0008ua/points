@@ -36,10 +36,7 @@ import { RoundRummyComponent } from './rummy/round-rummy/round-rummy.component';
       extend: true,
     }),
     GamersModule,
-
   ],
-  exports: [
-    RoundComponent,
-  ]
+  exports: [RoundComponent],
 })
-export class RoundModule { }
+export class RoundModule {}

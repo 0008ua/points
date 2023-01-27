@@ -22,7 +22,6 @@ export class AnalyticsController {
   @Get('get-rating')
   async getRating(@Req() req: Request) {
     const rating = await this.analyticsService.getRating(req.user._id);
-    console.log(rating);
     return rating;
   }
 }

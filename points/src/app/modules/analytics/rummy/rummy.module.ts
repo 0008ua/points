@@ -19,6 +19,6 @@ import { TranslateModule } from '@ngx-translate/core';
       extend: true,
     }),
   ],
-  declarations: [RummyPage]
+  declarations: [RummyPage],
 })
 export class RummyPageModule {}

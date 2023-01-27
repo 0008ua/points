@@ -9,8 +9,8 @@ describe('RummyPage', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RummyPage ],
-      imports: [IonicModule.forRoot()]
+      declarations: [RummyPage],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RummyPage);

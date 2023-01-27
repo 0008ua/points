@@ -22,8 +22,8 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: '',
-        component: _rummy_page__WEBPACK_IMPORTED_MODULE_0__.RummyPage
-    }
+        component: _rummy_page__WEBPACK_IMPORTED_MODULE_0__.RummyPage,
+    },
 ];
 let RummyPageRoutingModule = class RummyPageRoutingModule {
 };
@@ -77,7 +77,7 @@ RummyPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
                 extend: true,
             }),
         ],
-        declarations: [_rummy_page__WEBPACK_IMPORTED_MODULE_1__.RummyPage]
+        declarations: [_rummy_page__WEBPACK_IMPORTED_MODULE_1__.RummyPage],
     })
 ], RummyPageModule);
 
@@ -126,14 +126,13 @@ let RummyPage = class RummyPage {
         this.array = Array;
     }
     ionViewWillEnter() {
-        // console.log('view')
         this.store.dispatch(src_app_store_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_5__[this.stats[0]._id]({ gameType: 'rummy' }));
     }
     ngOnInit() {
         this.games$ = this.gameService.entities$;
         this.games$.subscribe(() => this.store.dispatch(src_app_store_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_5__[this.stat._id]({ gameType: 'rummy' })));
         this.gamers$ = this.gamerService.entities$;
-        this.gamers$.subscribe((x) => console.log('gamers', x));
+        this.gamers$.subscribe((_) => _);
         this.analytics$ = this.store.select(src_app_store_reducers_analytics_reducer__WEBPACK_IMPORTED_MODULE_6__.selectRating);
         this.loading$ = this.store.select(src_app_store_reducers_analytics_reducer__WEBPACK_IMPORTED_MODULE_6__.selectLoading);
     }
@@ -165,7 +164,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <!-- <ion-title>Train analytics</ion-title> -->\r\n\r\n    <ion-buttons slot=\"end\">\r\n      <ion-menu-button menu=\"analytics-menu\"></ion-menu-button>\r\n    </ion-buttons>\r\n    <!-- <ion-segment [value]=\"stats[0]\" (ionChange)=\"onMenuClickHandler($event)\">\r\n      <ion-segment-button *ngFor=\"let stat of stats; let idx = index\" [value]=\"stat\">\r\n        <ion-icon [name]=\"stat.icon\"></ion-icon>\r\n      </ion-segment-button>\r\n    </ion-segment> -->\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\r\n    <ion-row>\r\n      <ion-col size-lg=\"6\" size-md=\"8\" size-sm=\"10\" offset-lg=\"3\" offset-md=\"2\" offset-sm=\"1\">\r\n        <ion-card>\r\n          <ion-card-header>\r\n            <ion-card-title class=\"ion-text-center\">Rummy</ion-card-title>\r\n            <ion-card-subtitle class=\"ion-text-center\">{{'modules.analytics.' + stat.name | translate}}\r\n            </ion-card-subtitle>\r\n          </ion-card-header>\r\n          <ion-card-content>\r\n            <ion-list *ngIf=\"(loading$ | async) === true\">\r\n              <ion-item lines=\"none\" *ngFor=\"let x of array(5).fill('')\">\r\n                <ion-skeleton-text slot=\"start\" animated style=\"width: 60%\">\r\n                </ion-skeleton-text>\r\n                <ion-skeleton-text slot=\"end\" animated>\r\n                </ion-skeleton-text>\r\n              </ion-item>\r\n\r\n            </ion-list>\r\n\r\n            <ion-list *ngIf=\"(loading$ | async) === false\">\r\n              <ion-item *ngFor=\"let player of (analytics$ | async); let idx = index\">\r\n                <div slot=\"start\" [ngStyle]=\"{\r\n                  'border-right': '6px solid ' + player.color,\r\n                  'padding-right': '10px'\r\n                }\">{{idx+1}}</div>\r\n                <ion-label>\r\n                  {{player.name}}\r\n                </ion-label>\r\n\r\n                <ion-text slot=\"end\" color=\"primary\">\r\n                  <ion-text class=\"bold\" [color]=\"player.rating.scores < 0 ? 'danger' : 'success'\"> {{player.rating.scores}}</ion-text>\r\n                  / {{player.rating.totalGames}} / {{player.rating.wins}}\r\n                </ion-text>\r\n                <!-- <ion-text *ngIf=\"stat._id === 'getRatingByWinsToGames'\" slot=\"end\" color=\"primary\">\r\n                  {{player.rating.wins}}/{{player.rating.gamesCount}} ({{player.rating.wins ?\r\n                  math.floor(player.rating.winsToGames * 100) : 0}}%)\r\n                </ion-text> -->\r\n              </ion-item>\r\n            </ion-list>\r\n            <!-- <ion-row class=\"ion-justify-content-around\">\r\n              <ion-button fill=\"outline\" size=\"small\" [disabled]=\"(rounds$ | async).length === 0\"\r\n                (click)=\"onFinishGameHandler()\">\r\n                {{'elements.button.finishGame' | translate}}\r\n              </ion-button>\r\n              <ion-button fill=\"outline\" size=\"small\" [disabled]=\"(rounds$ | async).length === 0\"\r\n                (click)=\"onCancelGameHandler()\">\r\n                {{'elements.button.cancelGame' | translate}}\r\n              </ion-button> -->\r\n          </ion-card-content>\r\n        </ion-card>\r\n\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-grid>\r\n</ion-content>");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <!-- <ion-title>Train analytics</ion-title> -->\r\n\r\n    <ion-buttons slot=\"end\">\r\n      <ion-menu-button menu=\"analytics-menu\"></ion-menu-button>\r\n    </ion-buttons>\r\n    <!-- <ion-segment [value]=\"stats[0]\" (ionChange)=\"onMenuClickHandler($event)\">\r\n      <ion-segment-button *ngFor=\"let stat of stats; let idx = index\" [value]=\"stat\">\r\n        <ion-icon [name]=\"stat.icon\"></ion-icon>\r\n      </ion-segment-button>\r\n    </ion-segment> -->\r\n\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\r\n    <ion-row>\r\n      <ion-col size-lg=\"6\" size-md=\"8\" size-sm=\"10\" offset-lg=\"3\" offset-md=\"2\" offset-sm=\"1\">\r\n        <ion-card>\r\n          <ion-card-header>\r\n            <ion-card-title class=\"ion-text-center\">{{'games.rummy.title' | translate}}</ion-card-title>\r\n            <ion-card-subtitle class=\"ion-text-center\">{{'modules.analytics.' + stat.name | translate}}\r\n            </ion-card-subtitle>\r\n          </ion-card-header>\r\n          <ion-card-content>\r\n            <ion-list *ngIf=\"(loading$ | async) === true\">\r\n              <ion-item lines=\"none\" *ngFor=\"let x of array(5).fill('')\">\r\n                <ion-skeleton-text slot=\"start\" animated style=\"width: 60%\">\r\n                </ion-skeleton-text>\r\n                <ion-skeleton-text slot=\"end\" animated>\r\n                </ion-skeleton-text>\r\n              </ion-item>\r\n\r\n            </ion-list>\r\n\r\n            <ion-list *ngIf=\"(loading$ | async) === false\">\r\n              <ion-item *ngFor=\"let player of (analytics$ | async); let idx = index\">\r\n                <div slot=\"start\" [ngStyle]=\"{\r\n                  'border-right': '6px solid ' + player.color,\r\n                  'padding-right': '10px'\r\n                }\">{{idx+1}}</div>\r\n                <ion-label>\r\n                  {{player.name}}\r\n                </ion-label>\r\n\r\n                <ion-text slot=\"end\" color=\"primary\">\r\n                  <ion-text class=\"bold\" [color]=\"player.rating.scores < 0 ? 'danger' : 'success'\"> {{player.rating.scores}}</ion-text>\r\n                  / {{player.rating.totalGames}} / {{player.rating.wins}}\r\n                </ion-text>\r\n                <!-- <ion-text *ngIf=\"stat._id === 'getRatingByWinsToGames'\" slot=\"end\" color=\"primary\">\r\n                  {{player.rating.wins}}/{{player.rating.gamesCount}} ({{player.rating.wins ?\r\n                  math.floor(player.rating.winsToGames * 100) : 0}}%)\r\n                </ion-text> -->\r\n              </ion-item>\r\n            </ion-list>\r\n            <!-- <ion-row class=\"ion-justify-content-around\">\r\n              <ion-button fill=\"outline\" size=\"small\" [disabled]=\"(rounds$ | async).length === 0\"\r\n                (click)=\"onFinishGameHandler()\">\r\n                {{'elements.button.finishGame' | translate}}\r\n              </ion-button>\r\n              <ion-button fill=\"outline\" size=\"small\" [disabled]=\"(rounds$ | async).length === 0\"\r\n                (click)=\"onCancelGameHandler()\">\r\n                {{'elements.button.cancelGame' | translate}}\r\n              </ion-button> -->\r\n          </ion-card-content>\r\n        </ion-card>\r\n\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-grid>\r\n</ion-content>");
 
 /***/ }),
 

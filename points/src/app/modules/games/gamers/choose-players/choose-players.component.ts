@@ -110,7 +110,6 @@ export class ChoosePlayersComponent implements OnInit {
     const { data } = await this.presentPopover(event, CreateGamerComponent, null);
     if (data) {
       const { gamer } = data;
-      console.log('gamer', data);
       this.createGamerHandler(gamer);
     }
   }
@@ -162,19 +161,10 @@ export class ChoosePlayersComponent implements OnInit {
 
   removePlayerHandler(_id: string) {
     this.store.dispatch(fromPlayerActions.deletePlayer({ id: _id }));
-    // this.players = this.players.filter((player, idx) => idx !== index);
-    // console.log('this.players', this.players);
-    // this.store.dispatch(loadPlayers({ players: [...this.players] }));
-
-    // this.filter();
   }
 
   removeAllPlayersHandler() {
     this.store.dispatch(fromPlayerActions.clearPlayers());
-
-    // this.players = [];
-    // this.filter();
-    // this.addPlayerHandler();
   }
 
   addPlayerHandler(firstEl = true) {

@@ -12,7 +12,6 @@ import { selectAllPlayers } from 'src/app/store/reducers/player.reducer';
   templateUrl: './round-t-wrapper.component.html',
   styleUrls: ['./round-t-wrapper.component.scss'],
 })
-
 export class RoundTWrapperComponent implements OnInit, RoundBaseWrapper {
   @ContentChild(ROUND_COMPONENT, { static: true })
   roundComponent: RoundBase;
@@ -25,16 +24,13 @@ export class RoundTWrapperComponent implements OnInit, RoundBaseWrapper {
   loading$: Observable<boolean>;
   gameType: GameType;
 
-  constructor(
-    public sharedService: SharedService,
-    private store: Store,
-  ) { }
+  constructor(public sharedService: SharedService, private store: Store) {}
 
   ngOnInit() {
     this.loading$ = this.store.select(selectLoading);
     this.gameType$ = this.store.select(selectGameType);
     this.players$ = this.store.select(selectAllPlayers);
-    this.gameType$.subscribe((gameType) => this.gameType = gameType);
+    this.gameType$.subscribe((gameType) => (this.gameType = gameType));
   }
 
   getRoundById(): Round {

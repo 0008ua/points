@@ -20,53 +20,34 @@ export enum AuthActionTypes {
   loadingType = 'auth/loading',
 }
 
-export const storeToken = createAction(
-  AuthActionTypes.storeTokenType,
-  props<{ token: string }>()
-);
+export const storeToken = createAction(AuthActionTypes.storeTokenType, props<{ token: string }>());
 
-export const storeUserFromToken = createAction(
-  AuthActionTypes.storeUserFromTokenType,
-);
+export const storeUserFromToken = createAction(AuthActionTypes.storeUserFromTokenType);
 
 export const storeUserFromTokenSuccess = createAction(
   AuthActionTypes.storeUserFromTokenSuccessType,
-  props<{ user: IUser }>()
+  props<{ user: IUser }>(),
 );
 
-export const signin = createAction(
-  AuthActionTypes.signinType,
-  props<{ user: IUser }>()
-);
+export const signin = createAction(AuthActionTypes.signinType, props<{ user: IUser }>());
 
 export const signinSuccess = createAction(
   AuthActionTypes.signinSuccessType,
-  props<{ token: string }>()
+  props<{ token: string }>(),
 );
 
-export const signup = createAction(
-  AuthActionTypes.signupType,
-  props<{ user?: IUser }>()
-);
+export const signup = createAction(AuthActionTypes.signupType, props<{ user?: IUser }>());
 
-export const logout = createAction(
-  AuthActionTypes.logoutType,
-);
+export const logout = createAction(AuthActionTypes.logoutType);
 
 export const redirection = createAction(
   AuthActionTypes.redirectionType,
-  props<{ redirectionUrl: string | null }>()
+  props<{ redirectionUrl: string | null }>(),
 );
 
-export const error = createAction(
-  AuthActionTypes.errorType,
-  props<{ error: string }>()
-);
+export const error = createAction(AuthActionTypes.errorType, props<{ error: string }>());
 
-export const loading = createAction(
-  AuthActionTypes.loadingType,
-  props<{ loading: boolean }>()
-);
+export const loading = createAction(AuthActionTypes.loadingType, props<{ loading: boolean }>());
 
 const all = union({
   storeToken,

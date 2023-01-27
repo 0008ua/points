@@ -25,32 +25,25 @@ export class SigninPage implements OnInit {
     private router: Router,
     private store: Store,
     public translate: TranslateService,
-
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.lang = this.translate.currentLang;
 
     this.signinForm = new FormGroup({
-      name: new FormControl(
-        '',
-        {
-          updateOn: 'change',
-          validators: [
-            // Validators.pattern('^[a-zA-Z0-9_-]+$'),
-            Validators.minLength(2),
-            // Validators.maxLength(60),
-            Validators.required,
-          ],
-        }),
-      password: new FormControl(
-        '',
-        {
-          updateOn: 'change',
-          validators: [
-            Validators.required,
-          ],
-        }),
+      name: new FormControl('', {
+        updateOn: 'change',
+        validators: [
+          // Validators.pattern('^[a-zA-Z0-9_-]+$'),
+          Validators.minLength(2),
+          // Validators.maxLength(60),
+          Validators.required,
+        ],
+      }),
+      password: new FormControl('', {
+        updateOn: 'change',
+        validators: [Validators.required],
+      }),
     });
   }
 

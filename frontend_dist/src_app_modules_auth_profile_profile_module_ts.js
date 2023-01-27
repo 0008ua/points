@@ -22,8 +22,8 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: '',
-        component: _profile_page__WEBPACK_IMPORTED_MODULE_0__.ProfilePage
-    }
+        component: _profile_page__WEBPACK_IMPORTED_MODULE_0__.ProfilePage,
+    },
 ];
 let ProfilePageRoutingModule = class ProfilePageRoutingModule {
 };
@@ -77,7 +77,7 @@ ProfilePageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
                 extend: true,
             }),
         ],
-        declarations: [_profile_page__WEBPACK_IMPORTED_MODULE_1__.ProfilePage]
+        declarations: [_profile_page__WEBPACK_IMPORTED_MODULE_1__.ProfilePage],
     })
 ], ProfilePageModule);
 
@@ -114,8 +114,7 @@ let ProfilePage = class ProfilePage {
         this.store = store;
         this.translate = translate;
     }
-    ngOnInit() {
-    }
+    ngOnInit() { }
     logout() {
         this.store.dispatch((0,src_app_store_actions_auth_actions__WEBPACK_IMPORTED_MODULE_2__.logout)());
     }

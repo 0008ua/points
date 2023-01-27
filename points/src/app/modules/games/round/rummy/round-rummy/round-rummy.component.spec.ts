@@ -9,8 +9,8 @@ describe('RoundUnoComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [RoundRummyComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [RoundRummyComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoundRummyComponent);

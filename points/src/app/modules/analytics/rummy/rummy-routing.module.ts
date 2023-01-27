@@ -6,8 +6,8 @@ import { RummyPage } from './rummy.page';
 const routes: Routes = [
   {
     path: '',
-    component: RummyPage
-  }
+    component: RummyPage,
+  },
 ];
 
 @NgModule({

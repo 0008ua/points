@@ -9,8 +9,8 @@ describe('SelectColorComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SelectColorComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [SelectColorComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(SelectColorComponent);

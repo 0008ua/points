@@ -17,7 +17,7 @@ export const getRatingByWins = createAction(
   props<{
     gameType: string;
     query?: any;
-  }>()
+  }>(),
 );
 
 export const getRatingByWinsToGames = createAction(
@@ -25,7 +25,7 @@ export const getRatingByWinsToGames = createAction(
   props<{
     gameType: string;
     query?: any;
-  }>()
+  }>(),
 );
 
 export const getRating = createAction(
@@ -33,27 +33,27 @@ export const getRating = createAction(
   props<{
     gameType: string;
     query?: any;
-  }>()
+  }>(),
 );
 
 export const getRatingSuccess = createAction(
   AnalyticsActionTypes.getRatingSuccessType,
-  props<{ analytics: IGamer[] }>()
+  props<{ analytics: IGamer[] }>(),
 );
 
 export const addMany = createAction(
   AnalyticsActionTypes.addManyType,
-  props<{ analytics: IGamer[] }>()
+  props<{ analytics: IGamer[] }>(),
 );
 
 export const error = createAction(
   AnalyticsActionTypes.errorType,
-  props<{ error: string | null}>()
+  props<{ error: string | null }>(),
 );
 
 export const loading = createAction(
   AnalyticsActionTypes.loadingType,
-  props<{ loading: boolean }>()
+  props<{ loading: boolean }>(),
 );
 
 const all = union({

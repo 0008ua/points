@@ -27,15 +27,14 @@ export class SignupPage implements OnInit {
     private router: Router,
     public translate: TranslateService,
     private store: Store,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.lang = this.translate.currentLang;
 
-    this.signupForm = new FormGroup({
-      name: new FormControl(
-        '',
-        {
+    this.signupForm = new FormGroup(
+      {
+        name: new FormControl('', {
           updateOn: 'change',
           validators: [
             Validators.pattern('^[a-zA-Z0-9_\\-]+$'),
@@ -47,9 +46,7 @@ export class SignupPage implements OnInit {
           //   this.userService.checkLoginUnique(),
           // ],
         }),
-      password: new FormControl(
-        '',
-        {
+        password: new FormControl('', {
           updateOn: 'change',
           validators: [
             Validators.pattern('^[a-zA-Z0-9_\\-]+$'),
@@ -58,9 +55,7 @@ export class SignupPage implements OnInit {
             Validators.required,
           ],
         }),
-      passwordConfirm: new FormControl(
-        '',
-        {
+        passwordConfirm: new FormControl('', {
           updateOn: 'change',
           validators: [
             Validators.pattern('^[a-zA-Z0-9_\\-]+$'),
@@ -69,20 +64,20 @@ export class SignupPage implements OnInit {
             Validators.required,
           ],
         }),
-      // email: new FormControl(
-      //   '',
-      //   {
-      //     updateOn: 'change',
-      //     validators: [
-      //       Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
-      //       Validators.required,
-      //     ],
-      //     // asyncValidators: [
-      //     //   this.userService.checkEmailUnique(),
-      //     // ],
-      //   }),
-
-    }, this.authService.matchPassword,
+        // email: new FormControl(
+        //   '',
+        //   {
+        //     updateOn: 'change',
+        //     validators: [
+        //       Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+        //       Validators.required,
+        //     ],
+        //     // asyncValidators: [
+        //     //   this.userService.checkEmailUnique(),
+        //     // ],
+        //   }),
+      },
+      this.authService.matchPassword,
     );
 
     // prevent form submit before async validator completes
@@ -115,7 +110,7 @@ export class SignupPage implements OnInit {
       password: this.signupForm.get('password').value,
     };
 
-    this.store.dispatch(signup({user}));
+    this.store.dispatch(signup({ user }));
     this.resetForm();
   }
 

@@ -31,7 +31,6 @@ export class ToastService {
           text: 'Ok',
           role: 'cancel',
           handler: () => {
-            // console.log('Cancel clicked');
           },
         },
       ],

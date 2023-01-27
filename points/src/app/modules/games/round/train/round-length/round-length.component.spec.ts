@@ -9,8 +9,8 @@ describe('RoundLengthComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RoundLengthComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [RoundLengthComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoundLengthComponent);

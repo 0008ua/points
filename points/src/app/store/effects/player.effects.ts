@@ -9,9 +9,8 @@ import { Store } from '@ngrx/store';
 
 @Injectable()
 export class PlayerEffects {
-
-    constructor(
-        private actions$: Actions<fromPlayerActions.CoreActionsUnion>,
-        private store: Store,
-    ) { }
+  constructor(
+    private actions$: Actions<fromPlayerActions.CoreActionsUnion>,
+    private store: Store,
+  ) {}
 }

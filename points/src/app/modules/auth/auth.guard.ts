@@ -1,5 +1,14 @@
 import { Injectable, OnInit } from '@angular/core';
-import { CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, CanActivate } from '@angular/router';
+import {
+  CanLoad,
+  Route,
+  UrlSegment,
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+  Router,
+  CanActivate,
+} from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 
 import { select, Store } from '@ngrx/store';
@@ -15,22 +24,17 @@ import { IUser } from 'src/app/interfaces';
 export class AuthGuard implements CanLoad, CanActivate {
   userRole$: Observable<string> = this.store.select(selectUserRole);
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private store: Store,
-
-  ) {
+  constructor(private authService: AuthService, private router: Router, private store: Store) {
     // this.userRole$ = this.store.select(selectUserRole);
 
-    this.store.select(selectUserRole).pipe(
-      tap((role) => console.log('role change guard', role))
-    ).subscribe((_) => _);
+    this.store
+      .select(selectUserRole)
+      .pipe(tap((role) => console.log('role change guard', role)))
+      .subscribe((_) => _);
   }
 
   // Prevents fetching lazy loading modules
-  canLoad(route: Route, segments: UrlSegment[]):
-    Observable<boolean> | Promise<boolean> | boolean {
+  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
     return this.userRole$.pipe(
       map((role) => {
         if (role === 'guest') {
@@ -45,8 +49,10 @@ export class AuthGuard implements CanLoad, CanActivate {
 
   // If lazy loadnig module already fetched and user logged out
   // this guard prevents to activate module
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-    Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     return this.userRole$.pipe(
       map((role) => {
         if (role === 'guest') {
@@ -56,9 +62,8 @@ export class AuthGuard implements CanLoad, CanActivate {
         return true;
       }),
       catchError((e) => {
-        console.log('err guard', e);
         return throwError(e);
-      })
+      }),
       // take(1),
     );
   }

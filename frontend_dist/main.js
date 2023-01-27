@@ -20,7 +20,7 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: '',
-        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_tabs_tabs_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./tabs/tabs.module */ 9483)).then(m => m.TabsPageModule),
+        loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_tabs_tabs_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ./tabs/tabs.module */ 9483)).then((m) => m.TabsPageModule),
         // pathMatch: 'full'
     },
     {
@@ -36,9 +36,9 @@ AppRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__decorate)([
             _angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule.forRoot(routes, {
                 preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_2__.PreloadAllModules,
                 // paramsInheritanceStrategy: 'always'
-            })
+            }),
         ],
-        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule]
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_2__.RouterModule],
     })
 ], AppRoutingModule);
 
@@ -95,11 +95,6 @@ let AppComponent = class AppComponent {
         // this.store.dispatch(new LoadLang());
     }
     ngOnInit() {
-        // this.sharedService.getTokenAndDecode().subscribe(
-        //   (res) => console.log('res', res),
-        //   (error) => console.log('error==', error.message),
-        // );
-        // this.store.dispatch(signup({}));
         this.router.events.subscribe((event) => {
             if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__.NavigationStart) {
                 // console.log('NavigationStart', event);
@@ -110,7 +105,7 @@ let AppComponent = class AppComponent {
             if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_4__.NavigationError) {
                 // Hide loading indicator
                 // Present error to user
-                console.log('NavigationError', event.error);
+                // console.log('NavigationError', event.error);
             }
         });
     }
@@ -269,8 +264,7 @@ let AuthService = class AuthService {
         this.router = router;
         this.host = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.host;
         this.url$ = this.store.select(_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_2__.selectRedirectionUrl);
-        this.url$
-            .subscribe((url) => {
+        this.url$.subscribe((url) => {
             if (url) {
                 this.router.navigateByUrl(url);
                 this.store.dispatch((0,src_app_store_actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__.redirection)({ redirectionUrl: null }));
@@ -335,7 +329,7 @@ AuthService.ctorParameters = () => [
 ];
 AuthService = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Injectable)({
-        providedIn: 'root'
+        providedIn: 'root',
     })
 ], AuthService);
 
@@ -783,7 +777,6 @@ let SharedService = class SharedService {
         return this.store.select((0,_store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__.selectByIdRoundMember)(roundMemberId));
     }
     logErrorToDB(message) {
-        console.log('logErrorToDB', message);
         // return of(error);
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpHeaders({
@@ -849,7 +842,6 @@ let ToastService = class ToastService {
                         text: 'Ok',
                         role: 'cancel',
                         handler: () => {
-                            // console.log('Cancel clicked');
                         },
                     },
                 ],
@@ -1300,7 +1292,7 @@ let AnalyticsEffects = class AnalyticsEffects {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingSuccess, _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.error), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.filter)((action) => 
             // ignore error cancelling (null) actions
             action.type !== _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.AnalyticsActionTypes.errorType ||
-                (action.type === _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.AnalyticsActionTypes.errorType && !!(action.error))), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((_) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.loading({ loading: false })));
+                (action.type === _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.AnalyticsActionTypes.errorType && !!action.error)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((_) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.loading({ loading: false })));
         });
         this.getRatingByWins = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.createEffect)(() => {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingByWins), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.switchMap)(() => this.sharedService.getRatingByWins().pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.switchMap)((result) => this.addLoosers((0,rxjs__WEBPACK_IMPORTED_MODULE_7__.of)(result))), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((analytics) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingSuccess({ analytics })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.catchError)((error) => (0,rxjs__WEBPACK_IMPORTED_MODULE_7__.of)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.error({ error: error.error.message || 'error' }))))));
@@ -1321,7 +1313,7 @@ let AnalyticsEffects = class AnalyticsEffects {
                 _id,
                 name,
                 color,
-                rating: { wins: 0 }
+                rating: { wins: 0 },
             }));
             const fullList = analytics.concat(losers);
             return fullList;
@@ -1617,44 +1609,9 @@ let AuthEffects = class AuthEffects {
         });
         this.storeUserFromToken = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_6__.createEffect)(() => {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_6__.ofType)(_actions_auth_actions__WEBPACK_IMPORTED_MODULE_0__.storeUserFromToken), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.switchMap)(() => this.sharedService.getTokenAndDecode().pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.map)((user) => _actions_auth_actions__WEBPACK_IMPORTED_MODULE_0__.storeUserFromTokenSuccess({ user })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.catchError)((error) => {
-                console.log('storeUserFromToken err', error);
                 return (0,rxjs__WEBPACK_IMPORTED_MODULE_11__.of)(_actions_auth_actions__WEBPACK_IMPORTED_MODULE_0__.signup({}));
             }))), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.catchError)((error) => (0,rxjs__WEBPACK_IMPORTED_MODULE_11__.of)(_actions_auth_actions__WEBPACK_IMPORTED_MODULE_0__.error({ error: error.message }))));
         });
-        //   // !!!!!!!!!!!!!!!!!!!!!!!!!
-        //   storeUserFromToken = createEffect(() => {
-        //     return this.actions$.pipe(
-        //       ofType(fromAuthActions.storeUserFromToken),
-        //       switchMap(() =>
-        //         of('_').pipe(
-        //           switchMap(() =>
-        //             this.sharedService.getTokenAndDecode().pipe(
-        //               // catch decodeToken error and throw up
-        //               // this part of stream finishes
-        //               catchError((error) => {
-        //                 return of(fromAuthActions.signup({}));
-        //               }),
-        //               // catch without throw keep running stream
-        //               // if no error store user
-        //               tap((user) => console.log('token user', user)),
-        //               map((user) => {
-        //                 // if (user.type === 'auth/signup') {
-        //                 //   return fromAuthActions.error({ error: 'Not authorized' });
-        //                 // }
-        //                 return fromAuthActions.storeUserFromTokenSuccess({ user });
-        //               }),
-        //             ),
-        //           ),
-        //           // get decode token error
-        //           // stream stay alive
-        //           // store error
-        //           catchError((error) =>
-        //             of(fromAuthActions.error({ error: error.message || error.error.message || 'error' })),
-        //           ),
-        //         ),
-        //       ),
-        //     );
-        //   });
         this.redirectAfterSignin = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_6__.createEffect)(() => {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_6__.ofType)(_actions_auth_actions__WEBPACK_IMPORTED_MODULE_0__.storeUserFromTokenSuccess), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.map)((payload) => {
                 var _a;
@@ -1664,37 +1621,11 @@ let AuthEffects = class AuthEffects {
                 return (0,_actions_app_actions__WEBPACK_IMPORTED_MODULE_5__.nop)();
             }));
         });
-        // storeUserFromTokenSuccess = createEffect(() => {
-        //     return this.actions$.pipe(
-        //         ofType(fromAuthActions.storeUserFromTokenSuccess),
-        //         concatLatestFrom(() => this.store),
-        //         // !!!! get url from storage
-        //         map(([action, state]) => {
-        //             console.log('state auth', state)
-        //             return fromAuthActions.redirection({ redirectionUrl: '/games/' + (state as State).app.gameType });
-        //         })
-        //     );
-        // });
         this.getGamers = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_6__.createEffect)(() => {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_6__.ofType)(_actions_auth_actions__WEBPACK_IMPORTED_MODULE_0__.storeUserFromTokenSuccess), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.map)((_) => this.entityActionFactory.create('gamer', _ngrx_data__WEBPACK_IMPORTED_MODULE_12__.EntityOp.QUERY_LOAD, null, {
                 tag: 'gamer/on storeUserFromToken Success',
             })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.catchError)((error) => (0,rxjs__WEBPACK_IMPORTED_MODULE_11__.of)(_actions_auth_actions__WEBPACK_IMPORTED_MODULE_0__.error({ error: error.error.message || 'error' }))));
         });
-        // getGames = createEffect(() => {
-        //   return this.actions$.pipe(
-        //     ofType(fromAuthActions.storeUserFromTokenSuccess),
-        //     map((_) => {
-        //       console.log('_', _);
-        //       return this.entityActionFactory.create('game', EntityOp.QUERY_LOAD, null, {
-        //         tag: 'game/on storeUserFromToken Success',
-        //       });
-        //     }),
-        //     catchError((error) => {
-        //       console.log('error', error);
-        //       return of(fromAuthActions.error({ error: error.error.message || 'error' }));
-        //     }),
-        //   );
-        // });
         this.removeAllRecentPlayers = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_6__.createEffect)(() => {
             return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_6__.ofType)(_actions_auth_actions__WEBPACK_IMPORTED_MODULE_0__.signinSuccess), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.map)((action) => action.token), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.map)((token) => _actions_auth_actions__WEBPACK_IMPORTED_MODULE_0__.storeToken({ token })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.catchError)((error) => (0,rxjs__WEBPACK_IMPORTED_MODULE_11__.of)(_actions_auth_actions__WEBPACK_IMPORTED_MODULE_0__.error({ error: error.error.message || 'error' }))));
         });
@@ -2458,8 +2389,8 @@ const adapter = (0,_ngrx_entity__WEBPACK_IMPORTED_MODULE_1__.createEntityAdapter
 const initialState = adapter.getInitialState({
 // additional entity state properties
 });
-const reducer = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.createReducer)(initialState, (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.addPlayer, (state, action) => adapter.addOne(action.player, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.upsertPlayer, (state, action) => adapter.upsertOne(action.player, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.addPlayers, (state, action) => adapter.addMany(action.players, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.upsertPlayers, (state, action) => adapter.upsertMany(action.players, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.updatePlayer, (state, action) => adapter.updateOne(action.player, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.updatePlayers, (state, action) => adapter.updateMany(action.players, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.deletePlayer, (state, action) => adapter.removeOne(action.id, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.deletePlayers, (state, action) => adapter.removeMany(action.ids, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.loadPlayers, (state, action) => adapter.setAll(action.players, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.clearPlayers, state => adapter.removeAll(state)));
-const { selectIds, selectEntities, selectAll, selectTotal, } = adapter.getSelectors();
+const reducer = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.createReducer)(initialState, (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.addPlayer, (state, action) => adapter.addOne(action.player, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.upsertPlayer, (state, action) => adapter.upsertOne(action.player, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.addPlayers, (state, action) => adapter.addMany(action.players, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.upsertPlayers, (state, action) => adapter.upsertMany(action.players, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.updatePlayer, (state, action) => adapter.updateOne(action.player, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.updatePlayers, (state, action) => adapter.updateMany(action.players, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.deletePlayer, (state, action) => adapter.removeOne(action.id, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.deletePlayers, (state, action) => adapter.removeMany(action.ids, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.loadPlayers, (state, action) => adapter.setAll(action.players, state)), (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.on)(_actions_player_actions__WEBPACK_IMPORTED_MODULE_0__.clearPlayers, (state) => adapter.removeAll(state)));
+const { selectIds, selectEntities, selectAll, selectTotal } = adapter.getSelectors();
 const selectFeature = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.createFeatureSelector)(playersFeatureKey);
 const selectAllPlayers = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.createSelector)(selectFeature, selectAll);
 const selectEntitiesPlayers = (0,_ngrx_store__WEBPACK_IMPORTED_MODULE_2__.createSelector)(selectFeature, selectEntities);
@@ -3004,8 +2935,9 @@ __webpack_require__.r(__webpack_exports__);
 if (_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.production) {
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.enableProdMode)();
 }
-(0,_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_3__.platformBrowserDynamic)().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_0__.AppModule)
-    .catch(err => console.log(err));
+(0,_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_3__.platformBrowserDynamic)()
+    .bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_0__.AppModule)
+    .catch((err) => console.log(err));
 
 
 /***/ }),
@@ -3255,7 +3187,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\n  <ion-toolbar>\n    <ion-title class=\"ion-text-center\">Game results</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content class=\"ion-padding\">\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\n    <ion-row>\n      <ion-col size-lg=\"6\" size-md=\"8\" size-sm=\"10\" offset-lg=\"3\" offset-md=\"2\" offset-sm=\"1\">\n        <ion-card>\n          <ion-card-content>\n            <ion-item lines=\"none\">\n              <ion-buttons slot=\"end\">\n                <ion-button (click)=\"confirm()\">Ok</ion-button>\n              </ion-buttons>\n            </ion-item>\n            <ion-list>\n              <ion-item *ngFor=\"let result of resultWithNames; let idx = index\">\n                <div\n                  slot=\"start\"\n                  [ngStyle]=\"{\n                    'border-right': '6px solid ' + result.color,\n                    'padding-right': '10px'\n                  }\"\n                >\n                  {{ idx + 1 }}\n                </div>\n                <ion-label>\n                  {{ result.name }}\n                </ion-label>\n                <ion-text slot=\"end\" color=\"primary\">\n                  {{ result.score }}\n                </ion-text>\n              </ion-item>\n            </ion-list>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\n  <ion-toolbar>\n    <ion-title class=\"ion-text-center\">{{'modules.games.results' | translate}}</ion-title>\n  </ion-toolbar>\n</ion-header>\n<ion-content class=\"ion-padding\">\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\n    <ion-row>\n      <ion-col size-lg=\"6\" size-md=\"8\" size-sm=\"10\" offset-lg=\"3\" offset-md=\"2\" offset-sm=\"1\">\n        <ion-card>\n          <ion-card-content>\n            <ion-item lines=\"none\">\n              <ion-buttons slot=\"end\">\n                <ion-button (click)=\"confirm()\">Ok</ion-button>\n              </ion-buttons>\n            </ion-item>\n            <ion-list>\n              <ion-item *ngFor=\"let result of resultWithNames; let idx = index\">\n                <div\n                  slot=\"start\"\n                  [ngStyle]=\"{\n                    'border-right': '6px solid ' + result.color,\n                    'padding-right': '10px'\n                  }\"\n                >\n                  {{ idx + 1 }}\n                </div>\n                <ion-label>\n                  {{ result.name }}\n                </ion-label>\n                <ion-text slot=\"end\" color=\"primary\">\n                  {{ result.score }}\n                </ion-text>\n              </ion-item>\n            </ion-list>\n          </ion-card-content>\n        </ion-card>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
 
 /***/ }),
 
@@ -3288,7 +3220,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"points","version":"0.0.4","scripts":{"ng":"ng","start":"ng serve","build":"ng build","test":"ng test","lint":"ng lint","e2e":"ng e2e"},"private":true,"dependencies":{"@angular/common":"~13.0.0","@angular/core":"~13.0.0","@angular/forms":"~13.0.0","@angular/platform-browser":"~13.0.0","@angular/platform-browser-dynamic":"~13.0.0","@angular/router":"~13.0.0","@angular/service-worker":"~13.0.0","@capacitor/app":"1.0.7","@capacitor/core":"3.3.4","@capacitor/haptics":"1.1.3","@capacitor/keyboard":"1.2.0","@capacitor/status-bar":"1.0.6","@capacitor/storage":"^1.2.3","@ionic/angular":"^6.0.0","@ngrx/data":"^13.0.2","@ngrx/effects":"^13.0.2","@ngrx/entity":"^13.0.2","@ngrx/router-store":"^13.0.2","@ngrx/store":"^13.0.2","@ngrx/store-devtools":"^13.0.2","@ngx-translate/core":"^14.0.0","@ngx-translate/http-loader":"^7.0.0","eslint-plugin-ngrx":"^2.0.0","jwt-decode":"^3.1.2","normalizr":"^3.6.1","rxjs":"~6.6.0","tslib":"^2.2.0","uuid":"^8.3.2","zone.js":"~0.11.4"},"devDependencies":{"@angular-devkit/build-angular":"~13.0.1","@angular-eslint/builder":"~13.0.1","@angular-eslint/eslint-plugin":"~13.0.1","@angular-eslint/eslint-plugin-template":"~13.0.1","@angular-eslint/template-parser":"~13.0.1","@angular/cli":"~13.0.1","@angular/compiler":"~13.0.0","@angular/compiler-cli":"~13.0.0","@angular/language-service":"~13.0.0","@capacitor/cli":"3.3.4","@ionic/angular-toolkit":"^5.0.0","@ngrx/schematics":"^13.0.2","@types/jasmine":"~3.6.0","@types/jasminewd2":"~2.0.3","@types/node":"^12.20.41","@typescript-eslint/eslint-plugin":"5.3.0","@typescript-eslint/parser":"5.3.0","eslint":"^7.6.0","eslint-plugin-import":"2.22.1","eslint-plugin-jsdoc":"30.7.6","eslint-plugin-prefer-arrow":"1.2.2","jasmine-core":"~3.8.0","jasmine-spec-reporter":"~5.0.0","karma":"~6.3.2","karma-chrome-launcher":"~3.1.0","karma-coverage":"~2.0.3","karma-coverage-istanbul-reporter":"~3.0.2","karma-jasmine":"~4.0.0","karma-jasmine-html-reporter":"^1.5.0","protractor":"~7.0.0","ts-node":"~8.3.0","typescript":"~4.4.4"},"description":"An Ionic project"}');
+module.exports = JSON.parse('{"name":"points","version":"0.0.4","scripts":{"ng":"ng","start":"ng serve","build":"ng build","test":"ng test","lint":"ng lint","e2e":"ng e2e","format":"prettier --write \\"src/**/*.ts\\" \\"test/**/*.ts\\""},"private":true,"dependencies":{"@angular/common":"~13.0.0","@angular/core":"~13.0.0","@angular/forms":"~13.0.0","@angular/platform-browser":"~13.0.0","@angular/platform-browser-dynamic":"~13.0.0","@angular/router":"~13.0.0","@angular/service-worker":"~13.0.0","@capacitor/app":"1.0.7","@capacitor/core":"3.3.4","@capacitor/haptics":"1.1.3","@capacitor/keyboard":"1.2.0","@capacitor/status-bar":"1.0.6","@capacitor/storage":"^1.2.3","@ionic/angular":"^6.0.0","@ngrx/data":"^13.0.2","@ngrx/effects":"^13.0.2","@ngrx/entity":"^13.0.2","@ngrx/router-store":"^13.0.2","@ngrx/store":"^13.0.2","@ngrx/store-devtools":"^13.0.2","@ngx-translate/core":"^14.0.0","@ngx-translate/http-loader":"^7.0.0","eslint-plugin-ngrx":"^2.0.0","jwt-decode":"^3.1.2","normalizr":"^3.6.1","rxjs":"~6.6.0","tslib":"^2.2.0","uuid":"^8.3.2","zone.js":"~0.11.4"},"devDependencies":{"@angular-devkit/build-angular":"~13.0.1","@angular-eslint/builder":"~13.0.1","@angular-eslint/eslint-plugin":"~13.0.1","@angular-eslint/eslint-plugin-template":"~13.0.1","@angular-eslint/template-parser":"~13.0.1","@angular/cli":"~13.0.1","@angular/compiler":"~13.0.0","@angular/compiler-cli":"~13.0.0","@angular/language-service":"~13.0.0","@capacitor/cli":"3.3.4","@ionic/angular-toolkit":"^5.0.0","@ngrx/schematics":"^13.0.2","@types/jasmine":"~3.6.0","@types/jasminewd2":"~2.0.3","@types/node":"^12.20.41","@typescript-eslint/eslint-plugin":"5.3.0","@typescript-eslint/parser":"5.3.0","eslint":"^7.6.0","eslint-plugin-import":"2.22.1","eslint-plugin-jsdoc":"30.7.6","eslint-plugin-prefer-arrow":"1.2.2","jasmine-core":"~3.8.0","jasmine-spec-reporter":"~5.0.0","karma":"~6.3.2","karma-chrome-launcher":"~3.1.0","karma-coverage":"~2.0.3","karma-coverage-istanbul-reporter":"~3.0.2","karma-jasmine":"~4.0.0","karma-jasmine-html-reporter":"^1.5.0","protractor":"~7.0.0","ts-node":"~8.3.0","typescript":"~4.4.4"},"description":"An Ionic project"}');
 
 /***/ })
 

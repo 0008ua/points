@@ -10,22 +10,19 @@ import { Store } from '@ngrx/store';
 
 @Injectable()
 export class RoundEffects {
-    // clearGame = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(fromAppActions.clearGame),
-    //         map((_) => fromRoundActions.clearRounds()),
-    //     );
-    // });
+  // clearGame = createEffect(() => {
+  //     return this.actions$.pipe(
+  //         ofType(fromAppActions.clearGame),
+  //         map((_) => fromRoundActions.clearRounds()),
+  //     );
+  // });
 
-    // loadGame = createEffect(() => {
-    //     return this.actions$.pipe(
-    //         ofType(fromAppActions.loadGame),
-    //         map(({ rounds }) => fromRoundActions.loadRounds({ rounds })),
-    //     );
-    // });
+  // loadGame = createEffect(() => {
+  //     return this.actions$.pipe(
+  //         ofType(fromAppActions.loadGame),
+  //         map(({ rounds }) => fromRoundActions.loadRounds({ rounds })),
+  //     );
+  // });
 
-    constructor(
-        private actions$: Actions<fromRoundActions.CoreActionsUnion>,
-        private store: Store,
-    ) { }
+  constructor(private actions$: Actions<fromRoundActions.CoreActionsUnion>, private store: Store) {}
 }

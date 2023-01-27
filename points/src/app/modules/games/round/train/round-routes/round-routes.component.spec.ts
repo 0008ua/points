@@ -9,8 +9,8 @@ describe('RoundRoutesComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RoundRoutesComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [RoundRoutesComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoundRoutesComponent);

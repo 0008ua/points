@@ -1,5 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, CanActivate, Route, UrlSegment } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  RouterStateSnapshot,
+  UrlTree,
+  Router,
+  CanActivate,
+  Route,
+  UrlSegment,
+} from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { Store } from '@ngrx/store';
@@ -13,15 +21,7 @@ import { IUser } from 'src/app/interfaces';
 })
 export class NoAuthGuard implements CanActivate {
   userRole$: Observable<string> = this.store.select(selectUserRole);
-  constructor(
-    private router: Router,
-    private store: Store,
-
-  ) {
-    // this.userRole$ = this.store.select(selectUserRole);
-    // console.log('sdfsdfadfadf')
-    // this.store.select(selectUserRole).subscribe((_) => _);
-  }
+  constructor(private router: Router, private store: Store) {}
 
   // Prevents fetching lazy loading modules
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
@@ -39,19 +39,20 @@ export class NoAuthGuard implements CanActivate {
     );
   }
 
-
-  canActivate( route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
-  Observable<boolean | UrlTree>| Promise<boolean | UrlTree>| boolean | UrlTree {
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot,
+  ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     // const userRole$ = this.store.select(selectUserRole);
     return this.userRole$.pipe(
       map((userRole) => {
-          if (userRole === 'member') {
-            this.router.navigateByUrl('/auth/profile');
-            return false;
-          }
-          return true;
-        }),
-        // take(1),
+        if (userRole === 'member') {
+          this.router.navigateByUrl('/auth/profile');
+          return false;
+        }
+        return true;
+      }),
+      // take(1),
     );
   }
 }

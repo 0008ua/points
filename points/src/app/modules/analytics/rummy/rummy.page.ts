@@ -32,7 +32,6 @@ export class RummyPage implements OnInit {
   ) {}
 
   ionViewWillEnter() {
-    // console.log('view')
     this.store.dispatch(fromAnalyticsActions[this.stats[0]._id]({ gameType: 'rummy' }));
   }
 
@@ -43,7 +42,7 @@ export class RummyPage implements OnInit {
     );
 
     this.gamers$ = this.gamerService.entities$;
-    this.gamers$.subscribe((x) => console.log('gamers', x));
+    this.gamers$.subscribe((_) => _);
 
     this.analytics$ = this.store.select(selectRating);
 

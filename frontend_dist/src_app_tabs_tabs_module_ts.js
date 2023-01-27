@@ -110,7 +110,7 @@ TabsPageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
                 extend: true,
             }),
         ],
-        declarations: [_tabs_page__WEBPACK_IMPORTED_MODULE_1__.TabsPage]
+        declarations: [_tabs_page__WEBPACK_IMPORTED_MODULE_1__.TabsPage],
     })
 ], TabsPageModule);
 

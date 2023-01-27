@@ -21,7 +21,7 @@ export class HydrationEffects implements OnInitEffects {
           return HydrationActions.hydrateSuccess({ state });
         }
         return HydrationActions.hydrateFailure();
-      })
+      }),
     );
   });
 
@@ -31,28 +31,31 @@ export class HydrationEffects implements OnInitEffects {
       concatLatestFrom(() => this.store.select(selectUrlRouter)),
       map(([action, url]) => {
         return redirection({ redirectionUrl: url });
-      })
+      }),
     );
   });
 
-  serialize$ = createEffect(() => {
-    return this.action$.pipe(
-      ofType(HydrationActions.hydrateSuccess, HydrationActions.hydrateFailure),
-      switchMap(() => this.store),
-      distinctUntilChanged(),
-      switchMap((store: State) => {
-        return this.sharedService.setToStorage('appState', JSON.stringify({
-          players: store.players,
-          rounds: store.rounds,
-          roundMembers: store.roundMembers,
-          persistStore: store.persistStore,
-          router: store.router,
-        })
-        );
-      }),
-    );
-  },
-    { dispatch: false }
+  serialize$ = createEffect(
+    () => {
+      return this.action$.pipe(
+        ofType(HydrationActions.hydrateSuccess, HydrationActions.hydrateFailure),
+        switchMap(() => this.store),
+        distinctUntilChanged(),
+        switchMap((store: State) => {
+          return this.sharedService.setToStorage(
+            'appState',
+            JSON.stringify({
+              players: store.players,
+              rounds: store.rounds,
+              roundMembers: store.roundMembers,
+              persistStore: store.persistStore,
+              router: store.router,
+            }),
+          );
+        }),
+      );
+    },
+    { dispatch: false },
   );
 
   constructor(
@@ -60,7 +63,7 @@ export class HydrationEffects implements OnInitEffects {
     private store: Store,
     private sharedService: SharedService,
     private router: Router,
-  ) { }
+  ) {}
 
   ngrxOnInitEffects(): Action {
     return HydrationActions.hydrate();

@@ -37,11 +37,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.sharedService.getTokenAndDecode().subscribe(
-    //   (res) => console.log('res', res),
-    //   (error) => console.log('error==', error.message),
-    // );
-    // this.store.dispatch(signup({}));
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationStart) {
         // console.log('NavigationStart', event);
@@ -53,9 +48,8 @@ export class AppComponent implements OnInit {
 
       if (event instanceof NavigationError) {
         // Hide loading indicator
-
         // Present error to user
-        console.log('NavigationError', event.error);
+        // console.log('NavigationError', event.error);
       }
     });
   }

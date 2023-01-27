@@ -27,7 +27,6 @@ let GameController = class GameController {
         return this.gameService.create(newGame);
     }
     getWithQuery(query, { user }) {
-        console.log('query', query);
         if (Object.keys(query).length === 0) {
             return this.gameService.getAll(user._id);
         }

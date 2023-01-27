@@ -19,6 +19,6 @@ import { TranslateModule } from '@ngx-translate/core';
       extend: true,
     }),
   ],
-  declarations: [AnalyticsPage]
+  declarations: [AnalyticsPage],
 })
 export class AnalyticsPageModule {}

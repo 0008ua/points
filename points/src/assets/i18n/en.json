@@ -2,7 +2,7 @@
   "language": "Перейти на Українську",
   "games": {
     "train": {
-      "title": "Ticket to the ride",
+      "title": "Ticket to ride",
       "routes": "Completed routes",
       "length": "Longest route",
       "cars": "Trains",
@@ -11,7 +11,14 @@
       "stationsShort": "Stations"
     },
     "uno": {
+      "title": "Uno",
       "round": "Round"
+    },
+    "thousand": {
+      "title": "Thousand - 1000"
+    },
+    "rummy": {
+      "title": "Rummy"
     }
   },
   "modules": {
@@ -33,7 +40,8 @@
       "addPlayers": "Add players",
       "color": "Color",
       "player": "Player",
-      "round": "Round"
+      "round": "Round",
+      "results": "Results"
     },
     "user": {
       "signin": "Sign in",

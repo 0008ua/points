@@ -10,7 +10,6 @@ import { SigninPage } from './signin.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 
-
 @NgModule({
   imports: [
     CommonModule,
@@ -23,6 +22,6 @@ import { PipesModule } from 'src/app/pipes/pipes.module';
       extend: true,
     }),
   ],
-  declarations: [SigninPage]
+  declarations: [SigninPage],
 })
 export class SigninPageModule {}

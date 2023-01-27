@@ -9,8 +9,8 @@ describe('RoundWrapperComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ RoundWrapperComponent ],
-      imports: [IonicModule.forRoot()]
+      declarations: [RoundWrapperComponent],
+      imports: [IonicModule.forRoot()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(RoundWrapperComponent);

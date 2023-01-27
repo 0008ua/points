@@ -9,14 +9,9 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
+  constructor(private store: Store, public translate: TranslateService) {}
 
-  constructor(
-    private store: Store,
-    public translate: TranslateService,
-  ) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   logout() {
     this.store.dispatch(logout());

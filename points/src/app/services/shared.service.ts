@@ -265,7 +265,6 @@ export class SharedService {
   }
 
   logErrorToDB(message: string): Observable<string> {
-    console.log('logErrorToDB', message);
     // return of(error);
     const httpOptions = {
       headers: new HttpHeaders({

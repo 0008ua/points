@@ -130,7 +130,7 @@ __webpack_require__.r(__webpack_exports__);
 let ErrorExtractorPipe = class ErrorExtractorPipe {
     transform(value, ...args) {
         const keys = [];
-        if (typeof (value) === 'object') {
+        if (typeof value === 'object') {
             for (const key in value) {
                 if (Object.prototype.hasOwnProperty.call(value, key)) {
                     keys.push(key);
@@ -172,15 +172,9 @@ let PipesModule = class PipesModule {
 };
 PipesModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
-        declarations: [
-            _error_extractor_pipe__WEBPACK_IMPORTED_MODULE_0__.ErrorExtractorPipe,
-        ],
-        imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_3__.CommonModule,
-        ],
-        exports: [
-            _error_extractor_pipe__WEBPACK_IMPORTED_MODULE_0__.ErrorExtractorPipe,
-        ],
+        declarations: [_error_extractor_pipe__WEBPACK_IMPORTED_MODULE_0__.ErrorExtractorPipe],
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_3__.CommonModule],
+        exports: [_error_extractor_pipe__WEBPACK_IMPORTED_MODULE_0__.ErrorExtractorPipe],
     })
 ], PipesModule);
 

@@ -87,7 +87,6 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
   }
 
   resetScores(): void {
-    console.log('this.scores', this.scores);
     if (this.checkOnFinishGame()) {
       return this.store.dispatch(fromAppActions.finishGame());
     }
