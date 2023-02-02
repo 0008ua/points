@@ -1,12 +1,11 @@
 import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { UserModel, UserDocument, UserRoles, User } from './entities/user.entity';
-import { Model } from 'mongoose';
 import { JwtService } from '@nestjs/jwt';
 import { genSaltSync, hash, compare } from 'bcryptjs';
 import { SignupDto } from './dto/signup.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { INTERNAL_SERVER_ERROR } from 'src/common/error.constants';
+import { INTERNAL_SERVER_ERROR } from '../common/error.constants';
 import { UserDataDto } from './dto/userData.dto';
 
 @Injectable()

@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { GameType } from 'points/src/app/interfaces';
-import { IFront } from 'src/app.interfaces';
-import { Game, GameModel } from 'src/game/entities/game.entity';
+import { GameType, UID } from '../app.interfaces';
+import { Game, GameModel } from '../game/entities/game.entity';
+
 import { RatingRequest } from './dto/raitingRequest.dto';
 
 @Injectable()

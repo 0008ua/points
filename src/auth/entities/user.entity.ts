@@ -3,7 +3,7 @@ import { HttpException } from '@nestjs/common/exceptions';
 import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { compare } from 'bcryptjs';
 import { HydratedDocument, Model } from 'mongoose';
-import { NAME_EXIST, USER_NOT_FOUND, WRONG_PASSWORD } from 'src/common/error.constants';
+import { NAME_EXIST, USER_NOT_FOUND, WRONG_PASSWORD } from '../../common/error.constants';
 import { UserDataDto } from '../dto/userData.dto';
 
 export enum UserRoles {
