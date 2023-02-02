@@ -26,7 +26,7 @@ const routes = [
         children: [
             {
                 path: 'analytics',
-                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_analytics_analytics_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/analytics/analytics.module */ 7533)).then((m) => m.AnalyticsPageModule),
+                loadChildren: () => __webpack_require__.e(/*! import() */ "src_app_modules_analytics-tab_analytics-tab_module_ts").then(__webpack_require__.bind(__webpack_require__, /*! ../modules/analytics-tab/analytics-tab.module */ 3928)).then((m) => m.AnalyticsTabPageModule),
                 // canLoad: [NoAuthGuard],
                 // canActivate: [NoAuthGuard],
             },

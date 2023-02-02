@@ -520,11 +520,6 @@ let ModalService = class ModalService {
         this.store = store;
         this.modalController = modalController;
     }
-    // const modal = await this.modalCtrl.create({
-    //   component: ModalExampleComponent,
-    // });
-    // modal.present();
-    // const { data, role } = await modal.onWillDismiss();
     presentModal(component, data) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_0__.__awaiter)(this, void 0, void 0, function* () {
             const modal = yield this.modalController.create({
@@ -2800,6 +2795,7 @@ const environment = {
                     initialNamedScoresLine: [],
                 },
             ],
+            stats: [],
         },
         thousand: {
             name: 'Thousand - 1000',
@@ -2823,6 +2819,7 @@ const environment = {
                     initialNamedScoresLine: [],
                 },
             ],
+            stats: [],
         },
         train: {
             name: 'Ticket to ride',

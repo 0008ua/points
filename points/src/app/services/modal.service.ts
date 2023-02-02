@@ -15,12 +15,6 @@ import { OperatorFunction } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class ModalService {
   constructor(private store: Store, public modalController: ModalController) {}
-  // const modal = await this.modalCtrl.create({
-  //   component: ModalExampleComponent,
-  // });
-  // modal.present();
-
-  // const { data, role } = await modal.onWillDismiss();
   async presentModal(component: any, data: any) {
     const modal = await this.modalController.create({
       component,

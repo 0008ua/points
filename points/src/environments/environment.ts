@@ -94,6 +94,7 @@ export const environment = {
           initialNamedScoresLine: [],
         },
       ],
+      stats: [],
     },
     thousand: {
       name: 'Thousand - 1000',
@@ -117,6 +118,7 @@ export const environment = {
           initialNamedScoresLine: [],
         },
       ],
+      stats: [],
     },
     train: {
       name: 'Ticket to ride',

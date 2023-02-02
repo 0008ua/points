@@ -35,33 +35,6 @@ const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: 'game',
-  //   loadChildren: () => import('./game/game.module').then( m => m.GamePageModule)
-  // },
-
-  // {
-  //   path: '**',
-  //   redirectTo: '',
-  // },
-
-  // {
-  //   path: '**',
-  //   redirectTo: '',
-  //   pathMatch: 'full'
-  // },
-  // {
-  //   path: 'train-rounds',
-  //   loadChildren: () => import('./train/train-rounds/train-rounds.module').then( m => m.TrainRoundsPageModule)
-  // },
-  // {
-  //   path: 'choose-players',
-  //   loadChildren: () => import('./choose-players/choose-players.module').then( m => m.ChoosePlayersPageModule)
-  // },
-  // {
-  //   path: 'create-gamer',
-  //   loadChildren: () => import('./create-gamer/create-gamer.module').then( m => m.CreateGamerPageModule)
-  // },
 ];
 
 @NgModule({

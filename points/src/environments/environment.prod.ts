@@ -42,6 +42,7 @@ export const environment = {
           initialNamedScoresLine: [],
         },
       ],
+
       stats: [
         {
           _id: 'getRating',
@@ -95,12 +96,7 @@ export const environment = {
       showToolbarMenu: false,
       maxPlayersQty: 4,
       minPlayersQty: 2,
-      playersColors: ['red', 'green', 'blue', 'black'],
-      roundsScores: [
-        { name: 'Score', value: 0 },
-        { name: 'S', value: -100 },
-        { name: 'R', value: 0 },
-      ],
+      playersColors: ['black'],
       rounds: [
         {
           _id: 'start',

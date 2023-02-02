@@ -12,7 +12,9 @@ const routes: Routes = [
       {
         path: 'analytics',
         loadChildren: () =>
-          import('../modules/analytics/analytics.module').then((m) => m.AnalyticsPageModule),
+          import('../modules/analytics-tab/analytics-tab.module').then(
+            (m) => m.AnalyticsTabPageModule,
+          ),
         // canLoad: [NoAuthGuard],
         // canActivate: [NoAuthGuard],
       },

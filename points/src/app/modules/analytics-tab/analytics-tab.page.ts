@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ContentChild, OnInit } from '@angular/core';
 import { MenuController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -6,13 +6,14 @@ import { Observable } from 'rxjs';
 import { IUser } from 'src/app/interfaces';
 import { logout } from 'src/app/store/actions/auth.actions';
 import { selectUser, selectUserRole } from 'src/app/store/reducers/auth.reducer';
+import { StatBase, STAT_COMPONENT } from './stat/stat-interfaces';
 
 @Component({
-  selector: 'app-games',
-  templateUrl: './analytics.page.html',
-  styleUrls: ['./analytics.page.scss'],
+  selector: 'app-analytics-tab',
+  templateUrl: './analytics-tab.page.html',
+  styleUrls: ['./analytics-tab.page.scss'],
 })
-export class AnalyticsPage implements OnInit {
+export class AnalyticsTabPage implements OnInit {
   userRole$: Observable<IUser['role']>;
   user$: Observable<IUser>;
   lang: string;
