@@ -8,8 +8,8 @@ async function bootstrap() {
   let app: INestApplication;
   if (process.env.NODE_ENV === 'development') {
     const httpsOptions = {
-      key: fs.readFileSync(path.join(__dirname, '..', '..', 'security', 'cert.key')),
-      cert: fs.readFileSync(path.join(__dirname, '..', '..', 'security', 'cert.pem')),
+      key: fs.readFileSync(path.join(__dirname, '..', 'security', 'cert.key')),
+      cert: fs.readFileSync(path.join(__dirname, '..', 'security', 'cert.pem')),
     };
     app = await NestFactory.create(AppModule, { httpsOptions });
   } else {

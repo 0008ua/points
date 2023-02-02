@@ -15,7 +15,7 @@ import { LoggerModule } from './logger/logger.module';
 @Module({
   imports: [
     ServeStaticModule.forRoot({
-      rootPath: path.join(__dirname, '..', '..', 'frontend_dist'),
+      rootPath: path.join(__dirname, '..', 'frontend_dist'),
       exclude: ['/api*'],
     }),
     MongooseModule.forRootAsync({
