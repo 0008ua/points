@@ -1,5 +1,5 @@
 import { createAction, props, union } from '@ngrx/store';
-import { IGamer } from 'src/app/interfaces';
+import { GameType, IGamer } from 'src/app/interfaces';
 
 export enum AnalyticsActionTypes {
   getRatingByWinsType = 'analytics/ratingByWins',
@@ -15,7 +15,7 @@ export enum AnalyticsActionTypes {
 export const getRatingByWins = createAction(
   AnalyticsActionTypes.getRatingByWinsType,
   props<{
-    gameType: string;
+    gameType: GameType;
     query?: any;
   }>(),
 );
@@ -23,7 +23,7 @@ export const getRatingByWins = createAction(
 export const getRatingByWinsToGames = createAction(
   AnalyticsActionTypes.getRatingByWinsToGamesType,
   props<{
-    gameType: string;
+    gameType: GameType;
     query?: any;
   }>(),
 );
@@ -31,7 +31,7 @@ export const getRatingByWinsToGames = createAction(
 export const getRating = createAction(
   AnalyticsActionTypes.getRatingType,
   props<{
-    gameType: string;
+    gameType: GameType;
     query?: any;
   }>(),
 );

@@ -28,6 +28,7 @@ export class StatComponent implements OnInit {
       if (!this.stat) {
         this.stat = this.stats[0];
       }
+      console.log('gameType', this.gameType);
       this.store.dispatch(fromAnalyticsActions[this.stat._id]({ gameType: this.gameType }));
     });
     this.analytics$ = this.store.select(selectRating);

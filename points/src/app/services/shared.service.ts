@@ -122,42 +122,6 @@ export class SharedService {
     return this.removeFromStorage('token');
   }
 
-  getRating(): Observable<IGamer[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        // eslint-disable-next-line  @typescript-eslint/naming-convention
-        'Content-Type': 'application/json',
-      }),
-    };
-    return this.http
-      .get<IGamer[]>(environment.host + 'api/analytics/get-rating/', httpOptions)
-      .pipe(catchError((err) => throwError(err)));
-  }
-
-  getRatingByWins(): Observable<IGamer[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        // eslint-disable-next-line  @typescript-eslint/naming-convention
-        'Content-Type': 'application/json',
-      }),
-    };
-    return this.http
-      .get<IGamer[]>(environment.host + 'api/analytics/get-wins/', httpOptions)
-      .pipe(catchError((err) => throwError(err)));
-  }
-
-  getRatingByWinsToGames(): Observable<IGamer[]> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        // eslint-disable-next-line  @typescript-eslint/naming-convention
-        'Content-Type': 'application/json',
-      }),
-    };
-    return this.http
-      .get<IGamer[]>(environment.host + 'api/analytics/get-wins-to-games/', httpOptions)
-      .pipe(catchError((err) => throwError(err)));
-  }
-
   getPlayerTotalScores(player: string): number {
     let sum = 0;
     this.roundMembers.forEach((roundMember) => {

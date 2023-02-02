@@ -230,6 +230,82 @@ const JWT_DECODE = new _angular_core__WEBPACK_IMPORTED_MODULE_1__.InjectionToken
 
 /***/ }),
 
+/***/ 7837:
+/*!************************************************************!*\
+  !*** ./src/app/modules/analytics-tab/analytics.service.ts ***!
+  \************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "AnalyticsService": () => (/* binding */ AnalyticsService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ 3981);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ 8260);
+
+
+
+
+let AnalyticsService = class AnalyticsService {
+    constructor(http) {
+        this.http = http;
+    }
+    getRating(gameType) {
+        const httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
+                // eslint-disable-next-line  @typescript-eslint/naming-convention
+                'Content-Type': 'application/json',
+            }),
+            // params: {
+            //   query,
+            // },
+        };
+        return this.http.get(src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.host + 'api/analytics/get-rating/' + gameType, httpOptions);
+        // .pipe(catchError((err) => throwError(err)));
+    }
+    getRatingByWins(gameType) {
+        const httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
+                // eslint-disable-next-line  @typescript-eslint/naming-convention
+                'Content-Type': 'application/json',
+            }),
+            // params: {
+            //   gameType,
+            // },
+        };
+        return this.http.get(src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.host + 'api/analytics/get-wins/' + gameType, httpOptions);
+        // .pipe(catchError((err) => throwError(err)));
+    }
+    getRatingByWinsToGames(gameType) {
+        const httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
+                // eslint-disable-next-line  @typescript-eslint/naming-convention
+                'Content-Type': 'application/json',
+            }),
+            // params: {
+            //   gameType,
+            // },
+        };
+        return this.http.get(src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.host + 'api/analytics/get-wins-to-games/' + gameType, httpOptions);
+        // .pipe(catchError((err) => throwError(err)));
+    }
+};
+AnalyticsService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient }
+];
+AnalyticsService = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
+        providedIn: 'root',
+    })
+], AnalyticsService);
+
+
+
+/***/ }),
+
 /***/ 6006:
 /*!**********************************************!*\
   !*** ./src/app/modules/auth/auth.service.ts ***!
@@ -554,21 +630,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SharedService": () => (/* binding */ SharedService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/core */ 4001);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ 4126);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! rxjs */ 9500);
 /* harmony import */ var _capacitor_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @capacitor/storage */ 872);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 8377);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 592);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ngrx/store */ 9407);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ngrx/store */ 9407);
 /* harmony import */ var _store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store/reducers/player.reducer */ 3051);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 8260);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/common/http */ 3981);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common/http */ 3981);
 /* harmony import */ var _store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/reducers/round.reducer */ 8761);
 /* harmony import */ var _store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/reducers/round-member.reducer */ 7539);
 /* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/reducers/app.reducer */ 5305);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/router */ 3252);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/router */ 3252);
 /* harmony import */ var _store_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../store/actions/app.actions */ 8717);
 /* harmony import */ var _config_jwt_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../config/jwt.config */ 9185);
 /* harmony import */ var _modal_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modal.service */ 9853);
@@ -648,39 +722,6 @@ let SharedService = class SharedService {
     removeToken() {
         return this.removeFromStorage('token');
     }
-    getRating() {
-        const httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpHeaders({
-                // eslint-disable-next-line  @typescript-eslint/naming-convention
-                'Content-Type': 'application/json',
-            }),
-        };
-        return this.http
-            .get(src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.host + 'api/analytics/get-rating/', httpOptions)
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.catchError)((err) => (0,rxjs__WEBPACK_IMPORTED_MODULE_14__.throwError)(err)));
-    }
-    getRatingByWins() {
-        const httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpHeaders({
-                // eslint-disable-next-line  @typescript-eslint/naming-convention
-                'Content-Type': 'application/json',
-            }),
-        };
-        return this.http
-            .get(src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.host + 'api/analytics/get-wins/', httpOptions)
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.catchError)((err) => (0,rxjs__WEBPACK_IMPORTED_MODULE_14__.throwError)(err)));
-    }
-    getRatingByWinsToGames() {
-        const httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpHeaders({
-                // eslint-disable-next-line  @typescript-eslint/naming-convention
-                'Content-Type': 'application/json',
-            }),
-        };
-        return this.http
-            .get(src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment.host + 'api/analytics/get-wins-to-games/', httpOptions)
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.catchError)((err) => (0,rxjs__WEBPACK_IMPORTED_MODULE_14__.throwError)(err)));
-    }
     getPlayerTotalScores(player) {
         let sum = 0;
         this.roundMembers.forEach((roundMember) => {
@@ -734,7 +775,7 @@ let SharedService = class SharedService {
         };
     }
     presentModalFinishGame(game) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_15__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, function* () {
             let order = -1; //desc
             if (game.type === 'uno' || game.type === 'rummy') {
                 order = 1;
@@ -774,7 +815,7 @@ let SharedService = class SharedService {
     logErrorToDB(message) {
         // return of(error);
         const httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpHeaders({
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_13__.HttpHeaders({
                 // eslint-disable-next-line  @typescript-eslint/naming-convention
                 'Content-Type': 'application/json',
             }),
@@ -783,14 +824,14 @@ let SharedService = class SharedService {
     }
 };
 SharedService.ctorParameters = () => [
-    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_16__.Store },
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_12__.HttpClient },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_17__.Router },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_14__.Store },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_13__.HttpClient },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_15__.Router },
     { type: _modal_service__WEBPACK_IMPORTED_MODULE_8__.ModalService },
-    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_18__.Inject, args: [_config_jwt_config__WEBPACK_IMPORTED_MODULE_7__.JWT_DECODE,] }] }
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_16__.Inject, args: [_config_jwt_config__WEBPACK_IMPORTED_MODULE_7__.JWT_DECODE,] }] }
 ];
-SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_15__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_18__.Injectable)({
+SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_12__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_16__.Injectable)({
         providedIn: 'root',
     })
 ], SharedService);
@@ -1255,18 +1296,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AnalyticsEffects": () => (/* binding */ AnalyticsEffects)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/effects */ 2251);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ 8252);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 8377);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 8027);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 9026);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ 592);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ 7509);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/effects */ 2251);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ 8252);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 8377);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 8027);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ 9026);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ 592);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs/operators */ 7509);
 /* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
 /* harmony import */ var _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/analytics.actions */ 4368);
 /* harmony import */ var _gamer_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../gamer-data.service */ 9973);
+/* harmony import */ var src_app_modules_analytics_tab_analytics_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/modules/analytics-tab/analytics.service */ 7837);
+
 
 
 
@@ -1276,32 +1319,35 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AnalyticsEffects = class AnalyticsEffects {
-    constructor(actions$, sharedService, gamerService) {
+    constructor(actions$, sharedService, analyticsService, gamerService) {
         this.actions$ = actions$;
         this.sharedService = sharedService;
+        this.analyticsService = analyticsService;
         this.gamerService = gamerService;
-        this.setLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingByWins, _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingByWinsToGames, _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRating), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((_) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.loading({ loading: true })));
+        this.setLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingByWins, _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingByWinsToGames, _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRating), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)((_) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.loading({ loading: true })));
         });
-        this.cancelLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingSuccess, _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.error), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.filter)((action) => 
+        this.cancelLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingSuccess, _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.error), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.filter)((action) => 
             // ignore error cancelling (null) actions
             action.type !== _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.AnalyticsActionTypes.errorType ||
-                (action.type === _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.AnalyticsActionTypes.errorType && !!action.error)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((_) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.loading({ loading: false })));
+                (action.type === _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.AnalyticsActionTypes.errorType && !!action.error)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)((_) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.loading({ loading: false })));
         });
-        this.getRatingByWins = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingByWins), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.switchMap)(() => this.sharedService.getRatingByWins().pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.switchMap)((result) => this.addLoosers((0,rxjs__WEBPACK_IMPORTED_MODULE_7__.of)(result))), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((analytics) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingSuccess({ analytics })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.catchError)((error) => (0,rxjs__WEBPACK_IMPORTED_MODULE_7__.of)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.error({ error: error.error.message || 'error' }))))));
+        this.getRatingByWins = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingByWins), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.switchMap)(({ gameType }) => this.analyticsService.getRatingByWins(gameType).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.switchMap)((result) => this.addLoosers((0,rxjs__WEBPACK_IMPORTED_MODULE_8__.of)(result))), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)((analytics) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingSuccess({ analytics })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.catchError)((error) => (0,rxjs__WEBPACK_IMPORTED_MODULE_8__.of)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.error({ error: error.error.message || 'error' }))))));
         });
-        this.getRatingByWinsToGames = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingByWinsToGames), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.switchMap)(() => this.sharedService.getRatingByWinsToGames().pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((analytics) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingSuccess({ analytics })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.catchError)((error) => (0,rxjs__WEBPACK_IMPORTED_MODULE_7__.of)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.error({ error: error.error.message || 'error' }))))));
+        this.getRatingByWinsToGames = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingByWinsToGames), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.switchMap)(({ gameType }) => this.analyticsService.getRatingByWinsToGames(gameType).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)((analytics) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingSuccess({ analytics })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.catchError)((error) => (0,rxjs__WEBPACK_IMPORTED_MODULE_8__.of)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.error({ error: error.error.message || 'error' }))))));
         });
-        this.getRating = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRating), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.switchMap)(() => this.sharedService.getRating().pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)((analytics) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingSuccess({ analytics })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_8__.catchError)((error) => (0,rxjs__WEBPACK_IMPORTED_MODULE_7__.of)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.error({ error: error.error.message || 'error' }))))));
+        this.getRating = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRating), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_7__.switchMap)(({ gameType }) => {
+                return this.analyticsService.getRating(gameType).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)((analytics) => _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.getRatingSuccess({ analytics })), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.catchError)((error) => (0,rxjs__WEBPACK_IMPORTED_MODULE_8__.of)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_1__.error({ error: error.error.message || 'error' }))));
+            }));
         });
     }
     // append gamers which hasn't wins yet
     addLoosers(stream) {
-        return stream.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_9__.withLatestFrom)(this.gamerService.entities$), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.map)(([analytics, gamers]) => {
+        return stream.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.withLatestFrom)(this.gamerService.entities$), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)(([analytics, gamers]) => {
             const losers = gamers
                 .filter((gamer) => !analytics.some((winner) => winner._id === gamer._id))
                 .map(({ _id, name, color }) => ({
@@ -1316,12 +1362,13 @@ let AnalyticsEffects = class AnalyticsEffects {
     }
 };
 AnalyticsEffects.ctorParameters = () => [
-    { type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_3__.Actions },
+    { type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.Actions },
     { type: src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__.SharedService },
+    { type: src_app_modules_analytics_tab_analytics_service__WEBPACK_IMPORTED_MODULE_3__.AnalyticsService },
     { type: _gamer_data_service__WEBPACK_IMPORTED_MODULE_2__.GamerService }
 ];
-AnalyticsEffects = (0,tslib__WEBPACK_IMPORTED_MODULE_10__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_11__.Injectable)()
+AnalyticsEffects = (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_12__.Injectable)()
 ], AnalyticsEffects);
 
 
@@ -2819,7 +2866,18 @@ const environment = {
                     initialNamedScoresLine: [],
                 },
             ],
-            stats: [],
+            stats: [
+                {
+                    _id: 'getRatingByWins',
+                    icon: 'trophy-outline',
+                    name: 'byWins',
+                },
+                {
+                    _id: 'getRatingByWinsToGames',
+                    icon: 'podium-outline',
+                    name: 'byWinsToGames',
+                },
+            ],
         },
         train: {
             name: 'Ticket to ride',

@@ -1,17 +1,20 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { GameType } from 'points/src/app/interfaces';
+import { IFront } from 'src/app.interfaces';
 import { Game, GameModel } from 'src/game/entities/game.entity';
+import { RatingRequest } from './dto/raitingRequest.dto';
 
 @Injectable()
 export class AnalyticsService {
   constructor(@InjectModel(Game.name) readonly gameModel: GameModel) {}
-  async getWins(userId: string) {
+  async getWins({ userId, gameType }) {
     return this.gameModel
       .aggregate([
         {
           $match: {
             owner: userId,
-            type: 'train',
+            type: gameType,
           },
         },
         {
@@ -93,13 +96,13 @@ export class AnalyticsService {
       .catch((error: any) => new HttpException(error.message, HttpStatus.BAD_REQUEST));
   }
 
-  async getWinsToGames(userId: string) {
+  async getWinsToGames({ userId, gameType }) {
     return this.gameModel
       .aggregate([
         {
           $match: {
             owner: userId,
-            type: 'train',
+            type: gameType,
           },
         },
         {
@@ -255,13 +258,13 @@ export class AnalyticsService {
       .catch((error: any) => new HttpException(error.message, HttpStatus.BAD_REQUEST));
   }
 
-  getRating(userId: string) {
+  async getRating({ userId, gameType }: RatingRequest) {
     return this.gameModel
       .aggregate([
         {
           $match: {
             owner: userId,
-            type: 'rummy',
+            type: gameType,
           },
         },
         {

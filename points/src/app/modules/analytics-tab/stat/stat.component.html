@@ -8,7 +8,6 @@
         <ion-icon [name]="stat.icon"></ion-icon>
       </ion-segment-button>
     </ion-segment>
-
   </ion-toolbar>
 </ion-header>
 <ion-content>
@@ -20,6 +19,9 @@
         </app-stat-wrapper>
         <app-stat-wrapper *ngIf="gameType === 'rummy'" [gameType]="gameType" [stat]="stat">
           <app-rummy [gameType]="gameType" [analytics$]="analytics$" [stat]="stat"></app-rummy>
+        </app-stat-wrapper>
+        <app-stat-wrapper *ngIf="gameType === 'thousand'" [gameType]="gameType" [stat]="stat">
+          <app-thousand [gameType]="gameType" [analytics$]="analytics$" [stat]="stat"></app-thousand>
         </app-stat-wrapper>
       </ion-col>
     </ion-row>

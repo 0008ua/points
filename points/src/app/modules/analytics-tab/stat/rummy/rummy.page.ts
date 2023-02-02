@@ -6,12 +6,12 @@ import { StatBaseDirective } from '../stat.directive';
   selector: 'app-rummy',
   templateUrl: './rummy.page.html',
   styleUrls: ['./rummy.page.scss'],
-  // providers: [
-  //   {
-  //     provide: STAT_COMPONENT,
-  //     useExisting: RummyPage,
-  //   },
-  // ],
+  providers: [
+    {
+      provide: STAT_COMPONENT,
+      useExisting: RummyPage,
+    },
+  ],
 })
 export class RummyPage extends StatBaseDirective implements OnInit {
   constructor() {

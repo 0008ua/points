@@ -90,6 +90,7 @@ export const environment = {
           initialNamedScoresLine: [],
         },
       ],
+      stats: [],
     },
     thousand: {
       name: 'Thousand - 1000',
@@ -111,6 +112,18 @@ export const environment = {
           icon: 'trail-sign-outline',
           initialScoresLine: [],
           initialNamedScoresLine: [],
+        },
+      ],
+      stats: [
+        {
+          _id: 'getRatingByWins',
+          icon: 'trophy-outline',
+          name: 'byWins',
+        },
+        {
+          _id: 'getRatingByWinsToGames',
+          icon: 'podium-outline',
+          name: 'byWinsToGames',
         },
       ],
     },

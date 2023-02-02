@@ -11,27 +11,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RummyPage": () => (/* binding */ RummyPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
 /* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_rummy_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./rummy.page.html */ 6421);
 /* harmony import */ var _rummy_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rummy.page.scss */ 7666);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _stat_directive__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../stat.directive */ 4011);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _stat_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../stat-interfaces */ 8327);
+/* harmony import */ var _stat_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stat.directive */ 4011);
+var RummyPage_1;
 
 
 
 
 
-let RummyPage = class RummyPage extends _stat_directive__WEBPACK_IMPORTED_MODULE_2__.StatBaseDirective {
+
+let RummyPage = RummyPage_1 = class RummyPage extends _stat_directive__WEBPACK_IMPORTED_MODULE_3__.StatBaseDirective {
     constructor() {
         super();
     }
     ngOnInit() { }
 };
 RummyPage.ctorParameters = () => [];
-RummyPage = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+RummyPage = RummyPage_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
         selector: 'app-rummy',
         template: _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_rummy_page_html__WEBPACK_IMPORTED_MODULE_0__["default"],
+        providers: [
+            {
+                provide: _stat_interfaces__WEBPACK_IMPORTED_MODULE_2__.STAT_COMPONENT,
+                useExisting: RummyPage_1,
+            },
+        ],
         styles: [_rummy_page_scss__WEBPACK_IMPORTED_MODULE_1__]
     })
 ], RummyPage);
@@ -187,6 +196,7 @@ let StatComponent = class StatComponent {
             if (!this.stat) {
                 this.stat = this.stats[0];
             }
+            console.log('gameType', this.gameType);
             this.store.dispatch(src_app_store_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_2__[this.stat._id]({ gameType: this.gameType }));
         });
         this.analytics$ = this.store.select(src_app_store_reducers_analytics_reducer__WEBPACK_IMPORTED_MODULE_3__.selectRating);
@@ -227,31 +237,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let StatBaseDirective = class StatBaseDirective {
-    // array = Array;
-    // store: Store;
-    // gameService: GameService;
-    // gamerService: GamerService;
     constructor() {
-        // players: IGamer[];
-        // games$: Observable<IGame[]>;
-        // gamers$: Observable<IGamer[]>;
-        // analytics$: Observable<IGamer[]>;
-        // loading$: Observable<boolean>;
         this.math = Math;
-        // this.store = injector.get(Store);
-        // this.gameService = injector.get(GameService);
-        // this.gamerService = injector.get(GamerService);
     }
-    ngOnInit() {
-        // this.games$ = this.gameService.entities$;
-        // this.games$.subscribe(() =>
-        //   this.store.dispatch(fromAnalyticsActions[this.stat._id]({ gameType: 'rummy' })),
-        // );
-        // this.gamers$ = this.gamerService.entities$;
-        // this.gamers$.subscribe((_) => _);
-        // this.analytics$ = this.store.select(selectRating);
-        // this.loading$ = this.store.select(selectLoading);
-    }
+    ngOnInit() { }
 };
 StatBaseDirective.ctorParameters = () => [];
 StatBaseDirective.propDecorators = {
@@ -279,17 +268,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "StatModule": () => (/* binding */ StatModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/common */ 8267);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 8267);
 /* harmony import */ var _stat_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stat.component */ 8401);
 /* harmony import */ var _stat_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stat-routing.module */ 5174);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @ionic/angular */ 2650);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 2650);
 /* harmony import */ var _rummy_rummy_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./rummy/rummy.page */ 3115);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ngx-translate/core */ 466);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ngx-translate/core */ 466);
 /* harmony import */ var _train_train_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./train/train.page */ 8469);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ 8346);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 8346);
 /* harmony import */ var _stat_wrapper_stat_wrapper_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stat-wrapper/stat-wrapper.component */ 3005);
+/* harmony import */ var _thousand_thousand_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./thousand/thousand.component */ 3113);
+
 
 
 
@@ -303,21 +294,69 @@ __webpack_require__.r(__webpack_exports__);
 
 let StatModule = class StatModule {
 };
-StatModule = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.NgModule)({
-        declarations: [_stat_component__WEBPACK_IMPORTED_MODULE_0__.StatComponent, _stat_wrapper_stat_wrapper_component__WEBPACK_IMPORTED_MODULE_4__.StatWrapperComponent, _rummy_rummy_page__WEBPACK_IMPORTED_MODULE_2__.RummyPage, _train_train_page__WEBPACK_IMPORTED_MODULE_3__.TrainPage],
+StatModule = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.NgModule)({
+        declarations: [_stat_component__WEBPACK_IMPORTED_MODULE_0__.StatComponent, _stat_wrapper_stat_wrapper_component__WEBPACK_IMPORTED_MODULE_4__.StatWrapperComponent, _rummy_rummy_page__WEBPACK_IMPORTED_MODULE_2__.RummyPage, _train_train_page__WEBPACK_IMPORTED_MODULE_3__.TrainPage, _thousand_thousand_component__WEBPACK_IMPORTED_MODULE_5__.ThousandComponent],
         imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_7__.CommonModule,
+            _angular_common__WEBPACK_IMPORTED_MODULE_8__.CommonModule,
             _stat_routing_module__WEBPACK_IMPORTED_MODULE_1__.StatRoutingModule,
-            _angular_forms__WEBPACK_IMPORTED_MODULE_8__.FormsModule,
-            _ionic_angular__WEBPACK_IMPORTED_MODULE_9__.IonicModule,
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_10__.TranslateModule.forChild({
+            _angular_forms__WEBPACK_IMPORTED_MODULE_9__.FormsModule,
+            _ionic_angular__WEBPACK_IMPORTED_MODULE_10__.IonicModule,
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__.TranslateModule.forChild({
                 extend: true,
             }),
         ],
         // exports: [StatWrapperComponent, RummyPage, TrainPage],
     })
 ], StatModule);
+
+
+
+/***/ }),
+
+/***/ 3113:
+/*!***************************************************************************!*\
+  !*** ./src/app/modules/analytics-tab/stat/thousand/thousand.component.ts ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ThousandComponent": () => (/* binding */ ThousandComponent)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_thousand_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./thousand.component.html */ 9208);
+/* harmony import */ var _thousand_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./thousand.component.scss */ 5264);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _stat_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../stat-interfaces */ 8327);
+/* harmony import */ var _stat_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stat.directive */ 4011);
+var ThousandComponent_1;
+
+
+
+
+
+
+let ThousandComponent = ThousandComponent_1 = class ThousandComponent extends _stat_directive__WEBPACK_IMPORTED_MODULE_3__.StatBaseDirective {
+    constructor() {
+        super();
+    }
+    ngOnInit() { }
+};
+ThousandComponent.ctorParameters = () => [];
+ThousandComponent = ThousandComponent_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
+        selector: 'app-thousand',
+        template: _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_thousand_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
+        providers: [
+            {
+                provide: _stat_interfaces__WEBPACK_IMPORTED_MODULE_2__.STAT_COMPONENT,
+                useExisting: ThousandComponent_1,
+            },
+        ],
+        styles: [_thousand_component_scss__WEBPACK_IMPORTED_MODULE_1__]
+    })
+], ThousandComponent);
 
 
 
@@ -409,7 +448,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"end\">\n      <ion-menu-button menu=\"analytics-menu\"></ion-menu-button>\n    </ion-buttons>\n    <ion-segment *ngIf=\"stats?.length\" [value]=\"stats[0]\" (ionChange)=\"onMenuClickHandler($event)\">\n      <ion-segment-button *ngFor=\"let stat of stats; let idx = index\" [value]=\"stat\">\n        <ion-icon [name]=\"stat.icon\"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\n    <ion-row>\n      <ion-col size-lg=\"6\" size-md=\"8\" size-sm=\"10\" offset-lg=\"3\" offset-md=\"2\" offset-sm=\"1\">\n        <app-stat-wrapper *ngIf=\"gameType === 'train'\" [gameType]=\"gameType\" [stat]=\"stat\">\n          <app-train [gameType]=\"gameType\" [analytics$]=\"analytics$\" [stat]=\"stat\"></app-train>\n        </app-stat-wrapper>\n        <app-stat-wrapper *ngIf=\"gameType === 'rummy'\" [gameType]=\"gameType\" [stat]=\"stat\">\n          <app-rummy [gameType]=\"gameType\" [analytics$]=\"analytics$\" [stat]=\"stat\"></app-rummy>\n        </app-stat-wrapper>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\n  <ion-toolbar>\n    <ion-buttons slot=\"end\">\n      <ion-menu-button menu=\"analytics-menu\"></ion-menu-button>\n    </ion-buttons>\n    <ion-segment *ngIf=\"stats?.length\" [value]=\"stats[0]\" (ionChange)=\"onMenuClickHandler($event)\">\n      <ion-segment-button *ngFor=\"let stat of stats; let idx = index\" [value]=\"stat\">\n        <ion-icon [name]=\"stat.icon\"></ion-icon>\n      </ion-segment-button>\n    </ion-segment>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\n    <ion-row>\n      <ion-col size-lg=\"6\" size-md=\"8\" size-sm=\"10\" offset-lg=\"3\" offset-md=\"2\" offset-sm=\"1\">\n        <app-stat-wrapper *ngIf=\"gameType === 'train'\" [gameType]=\"gameType\" [stat]=\"stat\">\n          <app-train [gameType]=\"gameType\" [analytics$]=\"analytics$\" [stat]=\"stat\"></app-train>\n        </app-stat-wrapper>\n        <app-stat-wrapper *ngIf=\"gameType === 'rummy'\" [gameType]=\"gameType\" [stat]=\"stat\">\n          <app-rummy [gameType]=\"gameType\" [analytics$]=\"analytics$\" [stat]=\"stat\"></app-rummy>\n        </app-stat-wrapper>\n        <app-stat-wrapper *ngIf=\"gameType === 'thousand'\" [gameType]=\"gameType\" [stat]=\"stat\">\n          <app-thousand [gameType]=\"gameType\" [analytics$]=\"analytics$\" [stat]=\"stat\"></app-thousand>\n        </app-stat-wrapper>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n");
+
+/***/ }),
+
+/***/ 9208:
+/*!********************************************************************************************************************************************!*\
+  !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/analytics-tab/stat/thousand/thousand.component.html ***!
+  \********************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-item *ngFor=\"let player of (analytics$ | async); let idx = index\">\n  <div\n    slot=\"start\"\n    [ngStyle]=\"{\n                  'border-right': '6px solid ' + player.color,\n                  'padding-right': '10px'\n                }\"\n  >\n    {{idx+1}}\n  </div>\n  <ion-label> {{player.name}} </ion-label>\n  <ion-text *ngIf=\"stat?._id === 'getRatingByWins'\" slot=\"end\" color=\"primary\">\n    {{player.rating.wins}}\n  </ion-text>\n  <ion-text *ngIf=\"stat?._id === 'getRatingByWinsToGames'\" slot=\"end\" color=\"primary\">\n    {{player.rating.wins}} / {{player.rating.gamesCount}}\n    <ion-text class=\"bold\"\n      >( {{player.rating.wins ? math.floor(player.rating.winsToGames * 100) : 0}}% )\n    </ion-text>\n  </ion-text>\n</ion-item>");
 
 /***/ }),
 
@@ -454,6 +507,16 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /***/ ((module) => {
 
 module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzdGF0LmNvbXBvbmVudC5zY3NzIn0= */";
+
+/***/ }),
+
+/***/ 5264:
+/*!*****************************************************************************!*\
+  !*** ./src/app/modules/analytics-tab/stat/thousand/thousand.component.scss ***!
+  \*****************************************************************************/
+/***/ ((module) => {
+
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJ0aG91c2FuZC5jb21wb25lbnQuc2NzcyJ9 */";
 
 /***/ }),
 

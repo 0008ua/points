@@ -8,9 +8,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TrainPage } from './train/train.page';
 import { FormsModule } from '@angular/forms';
 import { StatWrapperComponent } from './stat-wrapper/stat-wrapper.component';
+import { ThousandComponent } from './thousand/thousand.component';
 
 @NgModule({
-  declarations: [StatComponent, StatWrapperComponent, RummyPage, TrainPage],
+  declarations: [StatComponent, StatWrapperComponent, RummyPage, TrainPage, ThousandComponent],
   imports: [
     CommonModule,
     StatRoutingModule,

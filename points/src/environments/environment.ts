@@ -118,7 +118,18 @@ export const environment = {
           initialNamedScoresLine: [],
         },
       ],
-      stats: [],
+      stats: [
+        {
+          _id: 'getRatingByWins',
+          icon: 'trophy-outline',
+          name: 'byWins',
+        },
+        {
+          _id: 'getRatingByWinsToGames',
+          icon: 'podium-outline',
+          name: 'byWinsToGames',
+        },
+      ],
     },
     train: {
       name: 'Ticket to ride',

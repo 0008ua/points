@@ -8,6 +8,7 @@ import * as fromAnalyticsActions from '../actions/analytics.actions';
 import { Store } from '@ngrx/store';
 import { GamerService } from '../gamer-data.service';
 import { IGamer } from 'src/app/interfaces';
+import { AnalyticsService } from 'src/app/modules/analytics-tab/analytics.service';
 
 @Injectable()
 export class AnalyticsEffects {
@@ -38,8 +39,8 @@ export class AnalyticsEffects {
   getRatingByWins = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromAnalyticsActions.getRatingByWins),
-      switchMap(() =>
-        this.sharedService.getRatingByWins().pipe(
+      switchMap(({ gameType }) =>
+        this.analyticsService.getRatingByWins(gameType).pipe(
           switchMap((result) => this.addLoosers(of(result))),
           map((analytics) => fromAnalyticsActions.getRatingSuccess({ analytics })),
           catchError((error) =>
@@ -53,8 +54,8 @@ export class AnalyticsEffects {
   getRatingByWinsToGames = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromAnalyticsActions.getRatingByWinsToGames),
-      switchMap(() =>
-        this.sharedService.getRatingByWinsToGames().pipe(
+      switchMap(({ gameType }) =>
+        this.analyticsService.getRatingByWinsToGames(gameType).pipe(
           map((analytics) => fromAnalyticsActions.getRatingSuccess({ analytics })),
           catchError((error) =>
             of(fromAnalyticsActions.error({ error: error.error.message || 'error' })),
@@ -67,20 +68,21 @@ export class AnalyticsEffects {
   getRating = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromAnalyticsActions.getRating),
-      switchMap(() =>
-        this.sharedService.getRating().pipe(
+      switchMap(({ gameType }) => {
+        return this.analyticsService.getRating(gameType).pipe(
           map((analytics) => fromAnalyticsActions.getRatingSuccess({ analytics })),
           catchError((error) =>
             of(fromAnalyticsActions.error({ error: error.error.message || 'error' })),
           ),
-        ),
-      ),
+        );
+      }),
     );
   });
 
   constructor(
     private actions$: Actions<fromAuthActions.CoreActionsUnion>,
     private sharedService: SharedService,
+    private analyticsService: AnalyticsService,
     private gamerService: GamerService,
   ) {}
 
