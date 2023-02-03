@@ -124,6 +124,11 @@ export const environment = {
           icon: 'trophy-outline',
           name: 'byWins',
         },
+        {
+          _id: 'getRatingByWinsToGames',
+          icon: 'podium-outline',
+          name: 'byWinsToGames',
+        },
       ],
     },
     train: {
