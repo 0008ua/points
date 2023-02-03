@@ -67,7 +67,7 @@
           <ion-text
             class="thousand-score__current"
             [color]="i <= 1 && scores[roundMember._id].doubleZero ? 'danger' : ''"
-            >{{ score.value }}</ion-text
+            >{{ score.name === 'r' || score.name === 's' ? score.name.toUpperCase() : score.value }}</ion-text
           >
           <div style="width: 100%"></div>
           <ion-text

@@ -8,10 +8,11 @@
   "scripts": {
     "x": "npm run build:deploy -- test_message",
     "build:deploy": "npm run build:back && npm run build:front && npm run git",
-    "build:front": "cd points && npm install && npm run build",
-    "build:back": "npm install && nest build",
+    "build:front": "cd points && npm run build",
+    "build:back": "nest build",
     "git": "git add . && git commit -m",
     "postgit": "git push",
+    
     "prebuild": "rimraf backend_dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
