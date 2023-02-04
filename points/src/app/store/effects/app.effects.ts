@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, filter, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, switchMap, take, tap } from 'rxjs/operators';
 
 import * as fromAnalyticsActions from '../actions/analytics.actions';
 import * as fromAuthActions from '../actions/auth.actions';
@@ -17,12 +17,14 @@ import * as fromPlayerReducer from '../reducers/player.reducer';
 import * as fromPersistStoreReducer from '../reducers/persist-store.reducer';
 
 import { GameType, IGame, Round, RoundCfg } from 'src/app/interfaces';
-import { combineLatest, of } from 'rxjs';
+import { combineLatest, of, OperatorFunction } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from 'src/environments/environment';
 import { SharedService } from 'src/app/services/shared.service';
 import { GameService } from '../game-data.service';
+import { EntityAction, EntityOp, ofEntityOp, ofEntityType } from '@ngrx/data';
+import { once } from 'events';
 
 @Injectable()
 export class AppEffects {
@@ -40,18 +42,30 @@ export class AppEffects {
     );
   });
 
-  finishGame = createEffect(() => {
+  finishGame = createEffect(
+    () => {
+      return this.actions$.pipe(
+        ofType(fromAppActions.finishGame),
+        mergeMap(() => {
+          const game: IGame = this.sharedService.createResultOfGame();
+          //save to db
+          return this.gameService.add(game).pipe(
+            switchMap((_) => this.sharedService.presentModalFinishGame(game)),
+            catchError((error) => [fromAppActions.loading({ loading: false })]),
+          );
+        }),
+      );
+    },
+    { dispatch: false },
+  );
+
+  gameStoredToDbSuccess = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromAppActions.finishGame),
-      switchMap(() => {
-        const game: IGame = this.sharedService.createResultOfGame();
-        //save to db
-        return this.gameService.add(game).pipe(
-          switchMap((_) => this.sharedService.presentModalFinishGame(game)),
-          map(() => fromAppActions.clearGame()),
-          catchError((error) => [fromAppActions.loading({ loading: false })]),
-        );
-      }),
+      ofEntityType(['game']),
+      ofEntityOp([EntityOp.SAVE_ADD_ONE_SUCCESS]),
+      tap((_) => console.log('gameStoredToDbSuccess', _)),
+      map(() => fromAppActions.clearGame()),
+      catchError((error) => [fromAppActions.loading({ loading: false })]),
     );
   });
 
@@ -208,7 +222,7 @@ export class AppEffects {
 
   environment = environment;
   constructor(
-    private actions$: Actions<fromAppActions.CoreActionsUnion>,
+    private actions$: Actions<fromAppActions.CoreActionsUnion | EntityAction<any>>,
     private store: Store,
     private sharedService: SharedService,
     private gameService: GameService,

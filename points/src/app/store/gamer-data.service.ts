@@ -17,10 +17,6 @@ export class GamerDataService extends DefaultDataService<IGamer> {
   constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
     super('gamer', http, httpUrlGenerator);
   }
-  // add(entity: IGamer): Observable<IGamer> {
-  //   console.log('add entity', entity);
-  //   return super.add(entity).pipe(tap((gamers) => console.log('gamers all', gamers)));
-  // }
 }
 
 @Injectable({

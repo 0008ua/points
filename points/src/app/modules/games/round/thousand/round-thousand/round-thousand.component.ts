@@ -1,4 +1,4 @@
-import { Component, Injector, Input, OnInit } from '@angular/core';
+import { Component, Injector, Input, OnDestroy, OnInit } from '@angular/core';
 import { ofType } from '@ngrx/effects';
 import {
   NamedScore,
@@ -9,6 +9,7 @@ import {
 import { ROUND_COMPONENT } from '../../round-interfaces';
 import { RoundTBaseDirective } from '../../round.directive';
 import * as fromAppActions from '../../../../../store/actions/app.actions';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-round-thousand',
@@ -28,6 +29,7 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
   qtyOfPlayers: number;
   roundMembers: RoundMember[];
   activeRoundMemberId: string;
+  isFinished = false;
   constructor(injector: Injector) {
     super(injector);
   }
@@ -36,6 +38,11 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
     this.roundMembers$.subscribe((roundMembers) => {
       this.qtyOfPlayers = roundMembers.length;
       this.roundMembers = roundMembers;
+
+      if (this.checkOnFinishGame() && !this.isFinished) {
+        this.isFinished = true;
+        return this.store.dispatch(fromAppActions.finishGame());
+      }
       if (this.roundMembers.length) {
         this.resetScores();
       }
@@ -87,9 +94,6 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
   }
 
   resetScores(): void {
-    if (this.checkOnFinishGame()) {
-      return this.store.dispatch(fromAppActions.finishGame());
-    }
     const activeRoundMemberPosition = this.roundMembers.length
       ? (this.roundMembers[0].namedScoresLine.length + this.qtyOfPlayers) % this.qtyOfPlayers
       : 0;

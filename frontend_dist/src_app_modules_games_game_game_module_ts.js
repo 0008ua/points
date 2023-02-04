@@ -1255,11 +1255,16 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
         super(injector);
         this.scores = {};
         this.initialScores = {};
+        this.isFinished = false;
     }
     ngOnInit() {
         this.roundMembers$.subscribe((roundMembers) => {
             this.qtyOfPlayers = roundMembers.length;
             this.roundMembers = roundMembers;
+            if (this.checkOnFinishGame() && !this.isFinished) {
+                this.isFinished = true;
+                return this.store.dispatch(_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__.finishGame());
+            }
             if (this.roundMembers.length) {
                 this.resetScores();
             }
@@ -1298,9 +1303,6 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
         });
     }
     resetScores() {
-        if (this.checkOnFinishGame()) {
-            return this.store.dispatch(_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__.finishGame());
-        }
         const activeRoundMemberPosition = this.roundMembers.length
             ? (this.roundMembers[0].namedScoresLine.length + this.qtyOfPlayers) % this.qtyOfPlayers
             : 0;

@@ -34,7 +34,7 @@ import { StoreErrorService } from './store-error.service';
 
 export const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: environment.host + 'api/store/',
-  timeout: 3000,
+  timeout: 5000,
   entityHttpResourceUrls: {
     game: {
       entityResourceUrl: environment.host + 'api/store/game/',

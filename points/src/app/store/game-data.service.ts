@@ -7,6 +7,7 @@ import {
   HttpUrlGenerator,
 } from '@ngrx/data';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { IGame } from '../interfaces';
 
 @Injectable()
@@ -14,17 +15,6 @@ export class GameDataService extends DefaultDataService<IGame> {
   constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
     super('game', http, httpUrlGenerator);
   }
-  // getAll(): Observable<IGame[]> {
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-language': 'en-US',
-  //     }),
-  //   };
-  //   const urlPath = this.httpUrlGenerator.collectionResource('Operator', '');
-  //   console.log('get all games');
-  //   console.log('urlPath', urlPath);
-  //   return this.http.get<IGame[]>(urlPath, httpOptions);
-  // }
 }
 
 @Injectable({
@@ -34,4 +24,9 @@ export class GameService extends EntityCollectionServiceBase<IGame> {
   constructor(serviceElementsFactory: EntityCollectionServiceElementsFactory) {
     super('game', serviceElementsFactory);
   }
+
+  // add(entity: IGame): Observable<IGame> {
+  //   console.log('game data service - add', entity);
+  //   return super.add(entity).pipe(tap((_) => console.log('tap - game data service - add', _)));
+  // }
 }

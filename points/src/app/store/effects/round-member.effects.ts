@@ -6,7 +6,6 @@ import * as fromRoundMemberActions from '../actions/round-member.actions';
 import * as fromAppActions from '../actions/app.actions';
 import * as fromRoundMemberReducer from '../reducers/round-member.reducer';
 import { Store } from '@ngrx/store';
-import { EntityOp, ofEntityOp, ofEntityType } from '@ngrx/data';
 
 @Injectable()
 export class RoundMemberEffects {

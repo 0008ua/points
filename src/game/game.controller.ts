@@ -28,6 +28,7 @@ export class GameController {
   @Post()
   create(@Body() dto: CreateGameDto, @Req() { user }: Request) {
     const newGame: Game = { ...dto, owner: user._id };
+    console.log('newGame', newGame);
     return this.gameService.create(newGame);
   }
 
