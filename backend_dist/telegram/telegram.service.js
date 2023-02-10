@@ -8,28 +8,27 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+var __param = (this && this.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppController = void 0;
+exports.TelegramService = void 0;
 const common_1 = require("@nestjs/common");
-const telegram_service_1 = require("./telegram/telegram.service");
-let AppController = class AppController {
-    constructor(telegramService) {
-        this.telegramService = telegramService;
+const nestjs_telegraf_1 = require("nestjs-telegraf");
+const telegraf_1 = require("telegraf");
+const telegram_constants_1 = require("./telegram.constants");
+let TelegramService = class TelegramService {
+    constructor(bot) {
+        this.bot = bot;
     }
-    chat() {
-        console.log('chat');
-        this.telegramService.sendMessage('hello', '1028538094');
+    async sendMessage(message, chatId) {
+        await this.bot.telegram.sendMessage(chatId, message);
     }
 };
-__decorate([
-    (0, common_1.Get)(),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], AppController.prototype, "chat", null);
-AppController = __decorate([
-    (0, common_1.Controller)(),
-    __metadata("design:paramtypes", [telegram_service_1.TelegramService])
-], AppController);
-exports.AppController = AppController;
-//# sourceMappingURL=app.controller.js.map
+TelegramService = __decorate([
+    (0, common_1.Injectable)(),
+    __param(0, (0, nestjs_telegraf_1.InjectBot)(telegram_constants_1.TELEGRAM_BOT_NAME)),
+    __metadata("design:paramtypes", [telegraf_1.Telegraf])
+], TelegramService);
+exports.TelegramService = TelegramService;
+//# sourceMappingURL=telegram.service.js.map

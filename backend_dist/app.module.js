@@ -20,6 +20,10 @@ const analytics_module_1 = require("./analytics/analytics.module");
 const gamer_module_1 = require("./gamer/gamer.module");
 const game_module_1 = require("./game/game.module");
 const logger_module_1 = require("./logger/logger.module");
+const telegram_config_1 = require("./common/config/telegram.config");
+const telegram_constants_1 = require("./telegram/telegram.constants");
+const telegram_module_1 = require("./telegram/telegram.module");
+const session_middleware_1 = require("./telegram/middlewares/session.middleware");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -33,6 +37,14 @@ AppModule = __decorate([
                 imports: [config_1.ConfigModule],
                 inject: [config_1.ConfigService],
                 useFactory: mongo_config_1.getMongoConfig,
+            }),
+            telegram_module_1.TelegramModule.forRootAsync({
+                botName: telegram_constants_1.TELEGRAM_BOT_NAME,
+                imports: [config_1.ConfigModule],
+                useFactory: telegram_config_1.getTelegramConfig,
+                inject: [config_1.ConfigService],
+                include: [],
+                middlewares: [session_middleware_1.sessionMiddleware],
             }),
             auth_module_1.AuthModule,
             config_1.ConfigModule.forRoot(),

@@ -11,6 +11,14 @@ import { AnalyticsModule } from './analytics/analytics.module';
 import { GamerModule } from './gamer/gamer.module';
 import { GameModule } from './game/game.module';
 import { LoggerModule } from './logger/logger.module';
+// import { TelegramModule } from './telegram/telegram.module';
+import { getTelegramConfig } from './common/config/telegram.config';
+import { TelegrafModule } from 'nestjs-telegraf';
+import { TELEGRAM_BOT_NAME } from './telegram/telegram.constants';
+import { TelegramService } from './telegram/telegram.service';
+import { TelegramModule } from './telegram/telegram.module';
+import { sessionMiddleware } from './telegram/middlewares/session.middleware';
+// import { TelegramModule } from './telegram/telegram.module';
 
 @Module({
   imports: [
@@ -22,6 +30,14 @@ import { LoggerModule } from './logger/logger.module';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: getMongoConfig,
+    }),
+    TelegramModule.forRootAsync({
+      botName: TELEGRAM_BOT_NAME,
+      imports: [ConfigModule],
+      useFactory: getTelegramConfig,
+      inject: [ConfigService],
+      include: [],
+      middlewares: [sessionMiddleware],
     }),
     AuthModule,
     ConfigModule.forRoot(),
