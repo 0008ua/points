@@ -1,6 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, combineLatest, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  of,
+  ReplaySubject,
+  Subject,
+} from 'rxjs';
 import {
   GameType,
   IGame,
@@ -66,39 +73,45 @@ export class GamePage implements OnInit {
     this.gameType$ = this.store.select(fromAppReducer.selectGameType);
     this.rounds$ = this.store.select(fromRoundsReducer.selectAllRounds);
 
-    combineLatest([this.gameType$, this.rounds$]).subscribe(([gameType, rounds]) => {
-      if (!gameType) {
-        return;
-      }
-      this.gameType = gameType;
-
-      this.showToolbarMenu = environment.games[gameType].showToolbarMenu;
-
-      this.roundsCfg = environment.games[gameType].rounds;
-      if (gameType === 'uno') {
-        this.nextRound = this.roundsCfg[1];
-      }
-      this.rounds = rounds;
-      if (!this.roundsCfg) {
-        return;
-      }
-      if (rounds.length) {
-        // game started and active menu 'start'
-        if (this.gameType === 'uno') {
-          this.activeRoundId$.next(
-            this.roundsCfg[1]._id +
-              (rounds.length === 1 ? this.roundsCfg[1].namePostfix : rounds.length),
-          );
-        } else {
-          this.activeRoundId$.next(this.roundsCfg[1]._id);
+    combineLatest([this.gameType$, this.rounds$]).subscribe(
+      ([gameType, rounds]) => {
+        if (!gameType) {
+          return;
         }
-      } else {
-        // game not started and active menu !'start'
-        this.activeRoundId$.next(this.roundsCfg[0]._id);
-      }
-    });
+        this.gameType = gameType;
 
-    this.roundMembers$ = this.store.select(fromRoundMembersReducer.selectAllRoundMembers);
+        this.showToolbarMenu = environment.games[gameType].showToolbarMenu;
+
+        this.roundsCfg = environment.games[gameType].rounds;
+        if (gameType === 'uno') {
+          this.nextRound = this.roundsCfg[1];
+        }
+        this.rounds = rounds;
+        if (!this.roundsCfg) {
+          return;
+        }
+        if (rounds.length) {
+          // game started and active menu 'start'
+          if (this.gameType === 'uno') {
+            this.activeRoundId$.next(
+              this.roundsCfg[1]._id +
+                (rounds.length === 1
+                  ? this.roundsCfg[1].namePostfix
+                  : rounds.length),
+            );
+          } else {
+            this.activeRoundId$.next(this.roundsCfg[1]._id);
+          }
+        } else {
+          // game not started and active menu !'start'
+          this.activeRoundId$.next(this.roundsCfg[0]._id);
+        }
+      },
+    );
+
+    this.roundMembers$ = this.store.select(
+      fromRoundMembersReducer.selectAllRoundMembers,
+    );
 
     this.players$ = this.store.select(fromPlayersReducer.selectAllPlayers);
     this.players$.subscribe((players) => {
@@ -126,7 +139,9 @@ export class GamePage implements OnInit {
           })
           .sort((a, b) => b.totalScore - a.totalScore);
       });
-    this.activePlayerId$.subscribe((activePlayerId) => (this.activePlayerId = activePlayerId));
+    this.activePlayerId$.subscribe(
+      (activePlayerId) => (this.activePlayerId = activePlayerId),
+    );
 
     this.route.params.subscribe((params) => {
       // this.gameType = params.id;

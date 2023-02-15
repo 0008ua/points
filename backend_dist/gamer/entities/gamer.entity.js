@@ -35,6 +35,18 @@ __decorate([
     __metadata("design:type", String)
 ], Gamer.prototype, "uniqueName", void 0);
 __decorate([
+    (0, mongoose_1.Prop)({ required: true, unique: true }),
+    __metadata("design:type", String)
+], Gamer.prototype, "telegramCheckCode", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Gamer.prototype, "telegramSubscriptionName", void 0);
+__decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Gamer.prototype, "telegramId", void 0);
+__decorate([
     (0, mongoose_1.Prop)({ enum: Colors }),
     __metadata("design:type", String)
 ], Gamer.prototype, "color", void 0);

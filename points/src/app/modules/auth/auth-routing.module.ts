@@ -6,19 +6,22 @@ import { NoAuthGuard } from './no-auth.guard';
 const routes: Routes = [
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then((m) => m.ProfilePageModule),
+    loadChildren: () =>
+      import('./profile/profile.module').then((m) => m.ProfilePageModule),
     canLoad: [AuthGuard],
     canActivate: [AuthGuard],
   },
   {
     path: 'signin',
-    loadChildren: () => import('./signin/signin.module').then((m) => m.SigninPageModule),
+    loadChildren: () =>
+      import('./signin/signin.module').then((m) => m.SigninPageModule),
     canLoad: [NoAuthGuard],
     canActivate: [NoAuthGuard],
   },
   {
     path: 'signup',
-    loadChildren: () => import('./signup/signup.module').then((m) => m.SignupPageModule),
+    loadChildren: () =>
+      import('./signup/signup.module').then((m) => m.SignupPageModule),
     canLoad: [NoAuthGuard],
     canActivate: [NoAuthGuard],
   },

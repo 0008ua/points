@@ -15,10 +15,33 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
+const gamer_service_1 = require("../gamer/gamer.service");
+const telegram_service_1 = require("../telegram/telegram.service");
 const game_entity_1 = require("./entities/game.entity");
 let GameService = class GameService {
-    constructor(gameModel) {
+    constructor(gameModel, telegramService, gamerService) {
         this.gameModel = gameModel;
+        this.telegramService = telegramService;
+        this.gamerService = gamerService;
+    }
+    async composeFinishGameMessage(dto) {
+        const game = dto.type;
+        const players = dto.rounds.find((round) => round._id === 'result').players;
+        let message = `<b>Game '${game}' has finished</b>\n`;
+        for (const player of players) {
+            const gamer = await this.gamerService.findOneAllData(player._id);
+            message = message + `<i>${gamer.name}</i> - ${player.score}\n`;
+        }
+        return message;
+    }
+    async broadcastFinishGameMessages(dto) {
+        const players = dto.rounds.find((round) => round._id === 'result').players;
+        for (const player of players) {
+            const gamer = await this.gamerService.findOneAllData(player._id);
+            if (gamer.telegramId) {
+                this.telegramService.sendMessage(gamer.telegramId, await this.composeFinishGameMessage(dto), 'HTML');
+            }
+        }
     }
     async create(newGame) {
         return await this.gameModel.createGame(newGame);
@@ -52,7 +75,8 @@ let GameService = class GameService {
 GameService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)(game_entity_1.Game.name)),
-    __metadata("design:paramtypes", [Object])
+    __metadata("design:paramtypes", [Object, telegram_service_1.TelegramService,
+        gamer_service_1.GamerService])
 ], GameService);
 exports.GameService = GameService;
 //# sourceMappingURL=game.service.js.map

@@ -9,4 +9,5 @@ export declare class AuthService {
     createUserData(user: UserDocument): UserDataDto;
     createUser(dto: SignupDto): Promise<UserDataDto>;
     createJwt(sub: any, prefix?: string, exp?: number): Promise<string>;
+    findById(userId: string): Promise<UserDataDto>;
 }

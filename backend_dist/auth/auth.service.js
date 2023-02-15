@@ -65,6 +65,14 @@ let AuthService = class AuthService {
         }
         return prefix + token;
     }
+    async findById(userId) {
+        try {
+            return this.createUserData(await this.userModel.findById(userId));
+        }
+        catch (error) {
+            throw new common_1.HttpException(...error_constants_1.DB_ERROR);
+        }
+    }
 };
 AuthService = __decorate([
     (0, common_1.Injectable)(),

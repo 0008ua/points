@@ -413,6 +413,89 @@ AuthService = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
 
 /***/ }),
 
+/***/ 153:
+/*!***********************************************************!*\
+  !*** ./src/app/modules/auth/telegram/telegram.service.ts ***!
+  \***********************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "TelegramService": () => (/* binding */ TelegramService)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common/http */ 3981);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngrx/store */ 9407);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 9500);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 592);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ 5029);
+/* harmony import */ var src_app_store_gamer_data_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/store/gamer-data.service */ 9973);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/environments/environment */ 8260);
+/* harmony import */ var _store_actions_auth_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../store/actions/auth.actions */ 18);
+
+
+
+
+
+
+
+
+
+let TelegramService = class TelegramService {
+    constructor(http, gamerService, store) {
+        this.http = http;
+        this.gamerService = gamerService;
+        this.store = store;
+        this.host = src_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.host;
+    }
+    unsubscibeFromBot(gamerId) {
+        const httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+        };
+        return this.http
+            .patch(this.host + '/api/tg/unsubscribe/' + gamerId, null, httpOptions)
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.catchError)((error) => {
+            this.store.dispatch(_store_actions_auth_actions__WEBPACK_IMPORTED_MODULE_2__.error({ error: error.error.message }));
+            return (0,rxjs__WEBPACK_IMPORTED_MODULE_5__.throwError)(error);
+        }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_6__.tap)(() => this.gamerService.load()));
+    }
+    sendMessages(messages) {
+        const httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+        };
+        return this.http.post(this.host + '/api/tg/messages', messages, httpOptions);
+        // .pipe(
+        //   catchError((error) => {
+        //     this.store.dispatch(
+        //       fromAuthActions.error({ error: error.error.message }),
+        //     );
+        //     return throwError(error);
+        //   }),
+        //   tap(() => this.gamerService.load()),
+        // );
+    }
+};
+TelegramService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpClient },
+    { type: src_app_store_gamer_data_service__WEBPACK_IMPORTED_MODULE_0__.GamerService },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_7__.Store }
+];
+TelegramService = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.Injectable)({
+        providedIn: 'root',
+    })
+], TelegramService);
+
+
+
+/***/ }),
+
 /***/ 8339:
 /*!*************************************************************************!*\
   !*** ./src/app/modules/games/game/game-result/game-result.component.ts ***!
@@ -536,7 +619,9 @@ let HttpInterceptorService = class HttpInterceptorService {
                         'Content-Type': 'application/json',
                     }),
                 };
-                return this.http.post(this.host + '/api/auth/signup', null, httpOptions).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.catchError)((getTokenError) => {
+                return this.http
+                    .post(this.host + '/api/auth/signup', null, httpOptions)
+                    .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.catchError)((getTokenError) => {
                     // error get valid guest token
                     // forward error
                     return (0,rxjs__WEBPACK_IMPORTED_MODULE_7__.throwError)(getTokenError);
@@ -1350,10 +1435,12 @@ let AnalyticsEffects = class AnalyticsEffects {
         return stream.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_10__.withLatestFrom)(this.gamerService.entities$), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.map)(([analytics, gamers]) => {
             const losers = gamers
                 .filter((gamer) => !analytics.some((winner) => winner._id === gamer._id))
-                .map(({ _id, name, color }) => ({
+                .map(({ _id, name, color, telegramCheckCode, telegramSubscriptionName, }) => ({
                 _id,
                 name,
                 color,
+                telegramCheckCode,
+                telegramSubscriptionName,
                 rating: { wins: 0 },
             }));
             const fullList = analytics.concat(losers);
@@ -1386,15 +1473,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AppEffects": () => (/* binding */ AppEffects)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ngrx/effects */ 2251);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 8377);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! rxjs/operators */ 758);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! rxjs/operators */ 9026);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! rxjs/operators */ 592);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! rxjs/operators */ 5029);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! rxjs/operators */ 8027);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngrx/effects */ 2251);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! rxjs/operators */ 8377);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! rxjs/operators */ 758);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! rxjs/operators */ 9026);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! rxjs/operators */ 592);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! rxjs/operators */ 5029);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! rxjs/operators */ 8027);
 /* harmony import */ var _actions_analytics_actions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/analytics.actions */ 4368);
 /* harmony import */ var _actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/auth.actions */ 18);
 /* harmony import */ var _actions_round_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../actions/round.actions */ 3783);
@@ -1402,15 +1489,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../reducers/round-member.reducer */ 7539);
 /* harmony import */ var _reducers_round_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../reducers/round.reducer */ 8761);
 /* harmony import */ var _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../actions/app.actions */ 8717);
-/* harmony import */ var _ngrx_router_store__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! @ngrx/router-store */ 6100);
+/* harmony import */ var _ngrx_router_store__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @ngrx/router-store */ 6100);
 /* harmony import */ var _reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../reducers/app.reducer */ 5305);
 /* harmony import */ var _reducers_player_reducer__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../reducers/player.reducer */ 3051);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! uuid */ 9232);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! @ngrx/store */ 9407);
+/* harmony import */ var uuid__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! uuid */ 9232);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/environments/environment */ 8260);
 /* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
 /* harmony import */ var _game_data_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../game-data.service */ 3093);
-/* harmony import */ var _ngrx_data__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @ngrx/data */ 7544);
+/* harmony import */ var _ngrx_data__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ngrx/data */ 7544);
+/* harmony import */ var src_app_modules_auth_telegram_telegram_service__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! src/app/modules/auth/telegram/telegram.service */ 153);
+
 
 
 
@@ -1432,35 +1521,39 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AppEffects = class AppEffects {
-    constructor(actions$, store, sharedService, gameService) {
+    constructor(actions$, store, sharedService, gameService, telegramService) {
         this.actions$ = actions$;
         this.store = store;
         this.sharedService = sharedService;
         this.gameService = gameService;
-        this.setLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_0__.loading, _actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__.loading), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)((action) => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: action.loading })));
+        this.telegramService = telegramService;
+        this.setLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_0__.loading, _actions_auth_actions__WEBPACK_IMPORTED_MODULE_1__.loading), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)((action) => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: action.loading })));
         });
-        this.cancelLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.clearRounds), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)((_) => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })));
+        this.cancelLoading = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.clearRounds), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)((_) => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })));
         });
-        this.finishGame = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.finishGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.mergeMap)(() => {
+        this.finishGame = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.finishGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_15__.mergeMap)(() => {
                 const game = this.sharedService.createResultOfGame();
                 //save to db
-                return this.gameService.add(game).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_15__.switchMap)((_) => this.sharedService.presentModalFinishGame(game)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_16__.catchError)((error) => [_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })]));
+                return this.gameService.add(game).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_16__.switchMap)((_) => this.sharedService.presentModalFinishGame(game)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_17__.catchError)((error) => [_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })]));
             }));
         }, { dispatch: false });
-        this.gameStoredToDbSuccess = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_data__WEBPACK_IMPORTED_MODULE_17__.ofEntityType)(['game']), (0,_ngrx_data__WEBPACK_IMPORTED_MODULE_17__.ofEntityOp)([_ngrx_data__WEBPACK_IMPORTED_MODULE_17__.EntityOp.SAVE_ADD_ONE_SUCCESS]), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_18__.tap)((_) => console.log('gameStoredToDbSuccess', _)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(() => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame()), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_16__.catchError)((error) => [_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })]));
+        this.gameStoredToDbSuccess = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_data__WEBPACK_IMPORTED_MODULE_18__.ofEntityType)(['game']), (0,_ngrx_data__WEBPACK_IMPORTED_MODULE_18__.ofEntityOp)([_ngrx_data__WEBPACK_IMPORTED_MODULE_18__.EntityOp.SAVE_ADD_ONE_SUCCESS]), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_19__.tap)((_) => console.log('gameStoredToDbSuccess', _)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)(() => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame()), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_17__.catchError)((error) => [_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loading({ loading: false })]));
         });
-        this.gameType = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_ngrx_router_store__WEBPACK_IMPORTED_MODULE_19__.routerNavigatedAction), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.concatLatestFrom)(() => this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(([{ payload }, gameType]) => {
+        this.gameType = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_ngrx_router_store__WEBPACK_IMPORTED_MODULE_20__.routerNavigatedAction), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.concatLatestFrom)(() => this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)(([{ payload }, gameType]) => {
                 const { urlAfterRedirects } = payload.event;
                 const payloadGameType = urlAfterRedirects.split('/');
-                if (payloadGameType[1] === 'games' || payloadGameType[1] === 'analytics') {
+                if (payloadGameType[1] === 'games' ||
+                    payloadGameType[1] === 'analytics') {
                     if (!gameType) {
                         // initial state, get gameType from url
-                        return _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.gameType({ gameType: payloadGameType[2] });
+                        return _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.gameType({
+                            gameType: payloadGameType[2],
+                        });
                     }
                     if (payloadGameType[2] !== gameType) {
                         // fire action only if game was changed
@@ -1473,24 +1566,24 @@ let AppEffects = class AppEffects {
                 return _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.nop();
             }));
         });
-        this.clearGame = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.gameTypeAndClearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(() => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame()));
+        this.clearGame = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.gameTypeAndClearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)(() => _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame()));
         });
-        this.clearRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)((_) => _actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.clearRounds()));
+        this.clearRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)((_) => _actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.clearRounds()));
         });
-        this.clearRoundMembers = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)((_) => _actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.clearRoundMembers()));
+        this.clearRoundMembers = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.clearGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)((_) => _actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.clearRoundMembers()));
         });
-        this.addRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(({ rounds }) => _actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.addRounds({ rounds })));
+        this.addRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)(({ rounds }) => _actions_round_actions__WEBPACK_IMPORTED_MODULE_2__.addRounds({ rounds })));
         });
-        this.addRoundMembers = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(({ roundMembers }) => _actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.addRoundMembers({ roundMembers })));
+        this.addRoundMembers = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)(({ roundMembers }) => _actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.addRoundMembers({ roundMembers })));
         });
-        this.checkOpenNextRound = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.updateRoundMembersSuccess), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.concatLatestFrom)(() => this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_20__.filter)(([action, gameType]) => false), // gameType === 'thousand'),
-            (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.concatLatestFrom)(() => this.store.select(_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__.selectAllRoundMembers)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(([action, roundMembers]) => {
+        this.checkOpenNextRound = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_round_member_actions__WEBPACK_IMPORTED_MODULE_3__.updateRoundMembersSuccess), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.concatLatestFrom)(() => this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_21__.filter)(([action, gameType]) => false), // gameType === 'thousand'),
+            (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.concatLatestFrom)(() => this.store.select(_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__.selectAllRoundMembers)), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)(([action, roundMembers]) => {
                 const qtyOfPlayedSubrounds = roundMembers[roundMembers.length - 1].namedScoresLine.length;
                 const qtyOfPlayers = new Set(roundMembers.map((roundMember) => roundMember.player)).size;
                 if (qtyOfPlayedSubrounds >= qtyOfPlayers) {
@@ -1500,15 +1593,15 @@ let AppEffects = class AppEffects {
                 return _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.nop();
             }));
         });
-        this.openNextRound = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.openNextRound), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.concatLatestFrom)(() => [
+        this.openNextRound = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.openNextRound), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.concatLatestFrom)(() => [
                 this.store.select(_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_5__.selectAllRounds),
                 this.store.select(_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_8__.selectAllPlayers),
                 this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType),
-            ]), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(([action, rounds, players, gameType]) => {
+            ]), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)(([action, rounds, players, gameType]) => {
                 const nextRound = src_environments_environment__WEBPACK_IMPORTED_MODULE_9__.environment.games[gameType].rounds[1];
                 const members = players.map((player) => ({
-                    _id: (0,uuid__WEBPACK_IMPORTED_MODULE_21__["default"])(),
+                    _id: (0,uuid__WEBPACK_IMPORTED_MODULE_22__["default"])(),
                     player: player._id,
                     scoresLine: nextRound.initialScoresLine,
                     namedScoresLine: nextRound.initialNamedScoresLine,
@@ -1524,16 +1617,19 @@ let AppEffects = class AppEffects {
                         namePostfix: rounds.length + 1 + '',
                     },
                 ];
-                return _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame({ roundMembers: newRoundMembers, rounds: newRounds });
+                return _actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.loadGame({
+                    roundMembers: newRoundMembers,
+                    rounds: newRounds,
+                });
             }));
         });
-        this.createRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.createEffect)(() => {
-            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.createRounds), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.concatLatestFrom)(() => [
+        this.createRounds = (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.createEffect)(() => {
+            return this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.ofType)(_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__.createRounds), (0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.concatLatestFrom)(() => [
                 this.store.select(_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_8__.selectAllPlayers),
                 this.store.select(_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_7__.selectGameType),
-            ]), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)(([action, players, gameType]) => {
+            ]), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_14__.map)(([action, players, gameType]) => {
                 const clientGame = {
-                    _id: (0,uuid__WEBPACK_IMPORTED_MODULE_21__["default"])(),
+                    _id: (0,uuid__WEBPACK_IMPORTED_MODULE_22__["default"])(),
                     type: gameType,
                 };
                 const roundsCfg = src_environments_environment__WEBPACK_IMPORTED_MODULE_9__.environment.games[gameType].rounds;
@@ -1542,7 +1638,7 @@ let AppEffects = class AppEffects {
                     .filter((roundCfg) => roundCfg._id !== 'start')
                     .map((roundCfg) => {
                     const members = players.map((player) => ({
-                        _id: (0,uuid__WEBPACK_IMPORTED_MODULE_21__["default"])(),
+                        _id: (0,uuid__WEBPACK_IMPORTED_MODULE_22__["default"])(),
                         player: player._id,
                         scoresLine: roundCfg.initialScoresLine,
                         namedScoresLine: roundCfg.initialNamedScoresLine,
@@ -1564,13 +1660,14 @@ let AppEffects = class AppEffects {
     }
 };
 AppEffects.ctorParameters = () => [
-    { type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_12__.Actions },
-    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_22__.Store },
+    { type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_13__.Actions },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_23__.Store },
     { type: src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_10__.SharedService },
-    { type: _game_data_service__WEBPACK_IMPORTED_MODULE_11__.GameService }
+    { type: _game_data_service__WEBPACK_IMPORTED_MODULE_11__.GameService },
+    { type: src_app_modules_auth_telegram_telegram_service__WEBPACK_IMPORTED_MODULE_12__.TelegramService }
 ];
-AppEffects = (0,tslib__WEBPACK_IMPORTED_MODULE_23__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_24__.Injectable)()
+AppEffects = (0,tslib__WEBPACK_IMPORTED_MODULE_24__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_25__.Injectable)()
 ], AppEffects);
 
 

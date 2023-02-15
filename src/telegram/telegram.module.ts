@@ -1,35 +1,73 @@
 import { DynamicModule, Global, Module, Provider } from '@nestjs/common';
-import { TelegrafModule, TelegrafModuleAsyncOptions, TelegrafModuleOptions } from 'nestjs-telegraf';
-import { TelegramModuleAsyncOptions, TelegramOptions } from './telegram.interface';
+import {
+  TelegrafModule,
+  TelegrafModuleAsyncOptions,
+  TelegrafModuleOptions,
+} from 'nestjs-telegraf';
+import {
+  TelegrafFactory,
+  TelegramModuleAsyncOptions,
+  TelegramOptions,
+} from './telegram.interface';
 import { TelegramService } from './telegram.service';
 import { TelegramUpdate } from './telegram.update';
 import { BindUserScene } from './scenes/bind-user';
-// @Global()
-@Module({
-  providers: [TelegramService, TelegramUpdate, BindUserScene],
-  exports: [TelegramService, TelegramUpdate, BindUserScene],
-})
+import { GamerService } from 'src/gamer/gamer.service';
+import { GamerModule } from 'src/gamer/gamer.module';
+import { getTelegramConfig } from 'src/common/config/telegram.config';
+import { TELEGRAM_BOT_NAME } from './telegram.constants';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { sessionMiddleware } from './middlewares/session.middleware';
+
+@Global()
+@Module({})
 export class TelegramModule {
   static forRootAsync(options: TelegramModuleAsyncOptions): DynamicModule {
-    const useFactory = this.extendFactory(options);
+    const useFactory = this.extendFactory(getTelegramConfig);
     return {
       module: TelegramModule,
+      providers: [...options.providers],
+      exports: [...options.exports],
+      controllers: [...options.controllers],
       imports: [
+        ...options.imports,
         TelegrafModule.forRootAsync({
-          botName: options.botName,
+          botName: TELEGRAM_BOT_NAME,
           useFactory,
-          inject: options.inject,
-          imports: options.imports,
+          inject: [ConfigService],
+          imports: [ConfigModule],
         }),
       ],
     };
   }
 
-  private static extendFactory(options: TelegramModuleAsyncOptions) {
+  private static extendFactory(factory: TelegrafFactory) {
     return (...args: any[]) => ({
-      ...options.useFactory(...args),
-      include: options.include || [],
-      middlewares: options.middlewares || [],
+      ...factory(...args),
+      include: [],
+      middlewares: [sessionMiddleware],
     });
   }
+  // static forRootAsync(options: TelegramModuleAsyncOptions): DynamicModule {
+  //   const useFactory = this.extendFactory(options);
+  //   return {
+  //     module: TelegramModule,
+  //     imports: [
+  //       TelegrafModule.forRootAsync({
+  //         botName: options.botName,
+  //         useFactory,
+  //         inject: options.inject,
+  //         imports: options.imports,
+  //       }),
+  //     ],
+  //   };
+  // }
+
+  // private static extendFactory(options: TelegramModuleAsyncOptions) {
+  //   return (...args: any[]) => ({
+  //     ...options.useFactory(...args),
+  //     include: options.include || [],
+  //     middlewares: options.middlewares || [],
+  //   });
+  // }
 }

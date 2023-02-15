@@ -12,13 +12,18 @@ const gamer_service_1 = require("./gamer.service");
 const gamer_controller_1 = require("./gamer.controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const gamer_entity_1 = require("./entities/gamer.entity");
+const common_module_1 = require("../common/common.module");
 let GamerModule = class GamerModule {
 };
 GamerModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: gamer_entity_1.Gamer.name, schema: gamer_entity_1.GamerSchema }])],
+        imports: [
+            mongoose_1.MongooseModule.forFeature([{ name: gamer_entity_1.Gamer.name, schema: gamer_entity_1.GamerSchema }]),
+            common_module_1.CommonModule,
+        ],
         controllers: [gamer_controller_1.GamerController],
         providers: [gamer_service_1.GamerService],
+        exports: [gamer_service_1.GamerService],
     })
 ], GamerModule);
 exports.GamerModule = GamerModule;

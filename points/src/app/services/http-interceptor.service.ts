@@ -33,7 +33,10 @@ export class HttpInterceptorService implements HttpInterceptor {
     private sharedService: SharedService,
   ) {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  intercept(
+    req: HttpRequest<any>,
+    next: HttpHandler,
+  ): Observable<HttpEvent<any>> {
     return this.sharedService.getToken().pipe(
       switchMap((token) => {
         if (token) {
@@ -53,23 +56,25 @@ export class HttpInterceptorService implements HttpInterceptor {
               'Content-Type': 'application/json',
             }),
           };
-          return this.http.post<string>(this.host + '/api/auth/signup', null, httpOptions).pipe(
-            catchError((getTokenError: HttpErrorResponse) => {
-              // error get valid guest token
-              // forward error
-              return throwError(getTokenError);
-            }),
-            switchMap((token: string) => {
-              // successeful get valid guest token
-              // save new token to store
-              this.store.dispatch(signinSuccess({ token }));
-              req = req.clone({
-                headers: req.headers.set('Authorization', token),
-              });
-              // second try to get protected resource
-              return next.handle(req);
-            }),
-          );
+          return this.http
+            .post<string>(this.host + '/api/auth/signup', null, httpOptions)
+            .pipe(
+              catchError((getTokenError: HttpErrorResponse) => {
+                // error get valid guest token
+                // forward error
+                return throwError(getTokenError);
+              }),
+              switchMap((token: string) => {
+                // successeful get valid guest token
+                // save new token to store
+                this.store.dispatch(signinSuccess({ token }));
+                req = req.clone({
+                  headers: req.headers.set('Authorization', token),
+                });
+                // second try to get protected resource
+                return next.handle(req);
+              }),
+            );
         }
         return throwError(error);
       }),

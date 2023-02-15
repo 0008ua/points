@@ -20,14 +20,18 @@ const routes: Routes = [
       },
       {
         path: 'games',
-        loadChildren: () => import('../modules/games/games.module').then((m) => m.GamesPageModule),
+        loadChildren: () =>
+          import('../modules/games/games.module').then(
+            (m) => m.GamesPageModule,
+          ),
         // canLoad: [AuthGuard],
         // canActivate: [AuthGuard],
       },
 
       {
         path: 'auth',
-        loadChildren: () => import('../modules/auth/auth.module').then((m) => m.AuthModule),
+        loadChildren: () =>
+          import('../modules/auth/auth.module').then((m) => m.AuthModule),
         // canLoad: [NoAuthGuard],
         // canActivate: [NoAuthGuard],
       },

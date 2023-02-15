@@ -1,12 +1,45 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { GamerService } from 'src/gamer/gamer.service';
+import { TelegramService } from 'src/telegram/telegram.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { Game, GameDocument, GameModel } from './entities/game.entity';
 
 @Injectable()
 export class GameService {
-  constructor(@InjectModel(Game.name) readonly gameModel: GameModel) {}
+  constructor(
+    @InjectModel(Game.name) readonly gameModel: GameModel,
+    private readonly telegramService: TelegramService,
+    private readonly gamerService: GamerService,
+  ) {}
+
+  async composeFinishGameMessage(dto: CreateGameDto) {
+    const game = dto.type;
+    const players = dto.rounds.find((round) => round._id === 'result').players;
+    let message = `<b>Game '${game}' has finished</b>\n`;
+    for (const player of players) {
+      const gamer = await this.gamerService.findOneAllData(player._id);
+      message = message + `<i>${gamer.name}</i> - ${player.score}\n`;
+    }
+    return message;
+  }
+
+  async broadcastFinishGameMessages(dto: CreateGameDto) {
+    const players = dto.rounds.find((round) => round._id === 'result').players;
+
+    for (const player of players) {
+      const gamer = await this.gamerService.findOneAllData(player._id);
+      if (gamer.telegramId) {
+        this.telegramService.sendMessage(
+          gamer.telegramId,
+          await this.composeFinishGameMessage(dto),
+          // String(player.score),
+          'HTML',
+        );
+      }
+    }
+  }
 
   async create(newGame: Game): Promise<GameDocument> {
     return await this.gameModel.createGame(newGame);
@@ -25,7 +58,11 @@ export class GameService {
     return await this.gameModel.findOne({ _id, owner });
   }
 
-  async update(_id: string, dto: UpdateGameDto, owner: string): Promise<GameDocument> {
+  async update(
+    _id: string,
+    dto: UpdateGameDto,
+    owner: string,
+  ): Promise<GameDocument> {
     try {
       return await this.gameModel.findOneAndUpdate(
         { _id, owner },

@@ -15,27 +15,34 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BindUserScene = void 0;
 const nestjs_telegraf_1 = require("nestjs-telegraf");
 const telegram_constants_1 = require("../telegram.constants");
-const buttons_1 = require("../utils/buttons");
+const telegram_service_1 = require("../telegram.service");
+const commands_1 = require("../utils/commands");
 let BindUserScene = class BindUserScene {
+    constructor(telegramService) {
+        this.telegramService = telegramService;
+    }
     async onSceneEnter(ctx) {
-        (0, buttons_1.onSubscribeSceneCmd)(ctx);
+        (0, commands_1.onSubscribeSceneCmd)(ctx);
     }
     async hearsReturn(ctx) {
         await ctx.scene.leave();
-        (0, buttons_1.backCmd)(ctx);
+        (0, commands_1.backCmd)(ctx);
     }
     async onText(ctx) {
-        await ctx.reply('Ваш код ' + ctx.message.text);
-        await ctx.reply('Ваш id ' + ctx.from.id);
+        try {
+            await this.telegramService.subscribeToBot({
+                telegramId: ctx.from.id,
+                telegramSubscriptionName: ctx.from.first_name,
+                telegramCheckCode: ctx.message.text,
+            });
+            await ctx.reply('You have successfully subscribed');
+        }
+        catch (error) {
+            await ctx.reply('Subscription error: ' + error.message);
+            throw error;
+        }
         await ctx.scene.leave();
-        (0, buttons_1.backCmd)(ctx);
-    }
-    onRandomCommand() {
-        console.log('Use "random" command');
-        return Math.floor(Math.random() * 11);
-    }
-    async onLeaveCommand(ctx) {
-        await ctx.scene.leave();
+        (0, commands_1.backCmd)(ctx);
     }
 };
 __decorate([
@@ -59,20 +66,9 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], BindUserScene.prototype, "onText", null);
-__decorate([
-    (0, nestjs_telegraf_1.Command)(['rng', 'random']),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Number)
-], BindUserScene.prototype, "onRandomCommand", null);
-__decorate([
-    (0, nestjs_telegraf_1.Command)('leave'),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], BindUserScene.prototype, "onLeaveCommand", null);
 BindUserScene = __decorate([
-    (0, nestjs_telegraf_1.Scene)(telegram_constants_1.BIND_USER)
+    (0, nestjs_telegraf_1.Scene)(telegram_constants_1.BIND_USER),
+    __metadata("design:paramtypes", [telegram_service_1.TelegramService])
 ], BindUserScene);
 exports.BindUserScene = BindUserScene;
 //# sourceMappingURL=bind-user.js.map

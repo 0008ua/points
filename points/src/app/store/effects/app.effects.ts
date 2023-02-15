@@ -1,6 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import { catchError, filter, map, mergeMap, switchMap, take, tap } from 'rxjs/operators';
+import {
+  catchError,
+  filter,
+  map,
+  mergeMap,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs/operators';
 
 import * as fromAnalyticsActions from '../actions/analytics.actions';
 import * as fromAuthActions from '../actions/auth.actions';
@@ -25,6 +33,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { GameService } from '../game-data.service';
 import { EntityAction, EntityOp, ofEntityOp, ofEntityType } from '@ngrx/data';
 import { once } from 'events';
+import { TelegramService } from 'src/app/modules/auth/telegram/telegram.service';
 
 @Injectable()
 export class AppEffects {
@@ -76,10 +85,15 @@ export class AppEffects {
       map(([{ payload }, gameType]) => {
         const { urlAfterRedirects } = payload.event;
         const payloadGameType = urlAfterRedirects.split('/');
-        if (payloadGameType[1] === 'games' || payloadGameType[1] === 'analytics') {
+        if (
+          payloadGameType[1] === 'games' ||
+          payloadGameType[1] === 'analytics'
+        ) {
           if (!gameType) {
             // initial state, get gameType from url
-            return fromAppActions.gameType({ gameType: payloadGameType[2] as GameType });
+            return fromAppActions.gameType({
+              gameType: payloadGameType[2] as GameType,
+            });
           }
           if (payloadGameType[2] !== gameType) {
             // fire action only if game was changed
@@ -125,7 +139,9 @@ export class AppEffects {
   addRoundMembers = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromAppActions.loadGame),
-      map(({ roundMembers }) => fromRoundMemberActions.addRoundMembers({ roundMembers })),
+      map(({ roundMembers }) =>
+        fromRoundMemberActions.addRoundMembers({ roundMembers }),
+      ),
     );
   });
 
@@ -136,10 +152,15 @@ export class AppEffects {
 
       filter(([action, gameType]) => false), // gameType === 'thousand'),
 
-      concatLatestFrom(() => this.store.select(fromRoundMemberReducer.selectAllRoundMembers)),
+      concatLatestFrom(() =>
+        this.store.select(fromRoundMemberReducer.selectAllRoundMembers),
+      ),
       map(([action, roundMembers]) => {
-        const qtyOfPlayedSubrounds = roundMembers[roundMembers.length - 1].namedScoresLine.length;
-        const qtyOfPlayers = new Set(roundMembers.map((roundMember) => roundMember.player)).size;
+        const qtyOfPlayedSubrounds =
+          roundMembers[roundMembers.length - 1].namedScoresLine.length;
+        const qtyOfPlayers = new Set(
+          roundMembers.map((roundMember) => roundMember.player),
+        ).size;
         if (qtyOfPlayedSubrounds >= qtyOfPlayers) {
           // TODO  === or error
           return fromAppActions.openNextRound();
@@ -177,7 +198,10 @@ export class AppEffects {
             namePostfix: rounds.length + 1 + '',
           },
         ];
-        return fromAppActions.loadGame({ roundMembers: newRoundMembers, rounds: newRounds });
+        return fromAppActions.loadGame({
+          roundMembers: newRoundMembers,
+          rounds: newRounds,
+        });
       }),
     );
   });
@@ -222,9 +246,12 @@ export class AppEffects {
 
   environment = environment;
   constructor(
-    private actions$: Actions<fromAppActions.CoreActionsUnion | EntityAction<any>>,
+    private actions$: Actions<
+      fromAppActions.CoreActionsUnion | EntityAction<any>
+    >,
     private store: Store,
     private sharedService: SharedService,
     private gameService: GameService,
+    private telegramService: TelegramService,
   ) {}
 }

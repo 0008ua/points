@@ -1,7 +1,11 @@
-import { TelegrafContext } from './common/interfaces/telegraf-context.interface.ts';
-export declare class AppUpdate {
-    start(ctx: TelegrafContext): Promise<void>;
-    help(ctx: TelegrafContext): Promise<void>;
-    on(ctx: TelegrafContext): Promise<void>;
-    hears(ctx: TelegrafContext): Promise<void>;
+import { TelegramService } from './telegram.service';
+import { Request } from 'express';
+import { GamerService } from 'src/gamer/gamer.service';
+import { MessageDto } from './dto/message.dto';
+export declare class TelegramController {
+    private readonly telegramService;
+    private readonly gamerService;
+    constructor(telegramService: TelegramService, gamerService: GamerService);
+    unsubscribe(_id: string, { user }: Request): Promise<void>;
+    messages({ user }: Request, messages: MessageDto[]): Promise<void>;
 }

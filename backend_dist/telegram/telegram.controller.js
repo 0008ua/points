@@ -11,55 +11,52 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var __param = (this && this.__param) || function (paramIndex, decorator) {
     return function (target, key) { decorator(target, key, paramIndex); }
 };
-var _a, _b, _c, _d;
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppUpdate = void 0;
-const nestjs_telegraf_1 = require("nestjs-telegraf");
-const telegraf_context_interface_ts_1 = require("./common/interfaces/telegraf-context.interface.ts");
-let AppUpdate = class AppUpdate {
-    async start(ctx) {
-        await ctx.reply('Welcome');
+exports.TelegramController = void 0;
+const common_1 = require("@nestjs/common");
+const passport_1 = require("@nestjs/passport");
+const telegram_service_1 = require("./telegram.service");
+const gamer_service_1 = require("../gamer/gamer.service");
+let TelegramController = class TelegramController {
+    constructor(telegramService, gamerService) {
+        this.telegramService = telegramService;
+        this.gamerService = gamerService;
     }
-    async help(ctx) {
-        await ctx.reply('Send me a sticker');
+    async unsubscribe(_id, { user }) {
+        return this.telegramService.unsubscribeFromBot(_id, user._id);
     }
-    async on(ctx) {
-        await ctx.reply('👍');
-    }
-    async hears(ctx) {
-        await ctx.reply('Hey there');
+    async messages({ user }, messages) {
+        console.log('messages', messages);
+        for (const message of messages) {
+            const gamer = await this.gamerService.findOneAllData(message.gamerId, user._id);
+            if (gamer.telegramId) {
+                this.telegramService.sendMessage(gamer.telegramId, message.message);
+            }
+        }
     }
 };
 __decorate([
-    (0, nestjs_telegraf_1.Start)(),
-    __param(0, (0, nestjs_telegraf_1.Ctx)()),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    (0, common_1.Patch)('unsubscribe/:_id'),
+    __param(0, (0, common_1.Param)('_id')),
+    __param(1, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_a = typeof telegraf_context_interface_ts_1.TelegrafContext !== "undefined" && telegraf_context_interface_ts_1.TelegrafContext) === "function" ? _a : Object]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
-], AppUpdate.prototype, "start", null);
+], TelegramController.prototype, "unsubscribe", null);
 __decorate([
-    (0, nestjs_telegraf_1.Help)(),
-    __param(0, (0, nestjs_telegraf_1.Ctx)()),
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    (0, common_1.Post)('messages'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_b = typeof telegraf_context_interface_ts_1.TelegrafContext !== "undefined" && telegraf_context_interface_ts_1.TelegrafContext) === "function" ? _b : Object]),
+    __metadata("design:paramtypes", [Object, Array]),
     __metadata("design:returntype", Promise)
-], AppUpdate.prototype, "help", null);
-__decorate([
-    (0, nestjs_telegraf_1.On)('sticker'),
-    __param(0, (0, nestjs_telegraf_1.Ctx)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_c = typeof telegraf_context_interface_ts_1.TelegrafContext !== "undefined" && telegraf_context_interface_ts_1.TelegrafContext) === "function" ? _c : Object]),
-    __metadata("design:returntype", Promise)
-], AppUpdate.prototype, "on", null);
-__decorate([
-    (0, nestjs_telegraf_1.Hears)('hi'),
-    __param(0, (0, nestjs_telegraf_1.Ctx)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [typeof (_d = typeof telegraf_context_interface_ts_1.TelegrafContext !== "undefined" && telegraf_context_interface_ts_1.TelegrafContext) === "function" ? _d : Object]),
-    __metadata("design:returntype", Promise)
-], AppUpdate.prototype, "hears", null);
-AppUpdate = __decorate([
-    (0, nestjs_telegraf_1.Update)()
-], AppUpdate);
-exports.AppUpdate = AppUpdate;
+], TelegramController.prototype, "messages", null);
+TelegramController = __decorate([
+    (0, common_1.Controller)(['tg']),
+    __metadata("design:paramtypes", [telegram_service_1.TelegramService,
+        gamer_service_1.GamerService])
+], TelegramController);
+exports.TelegramController = TelegramController;
 //# sourceMappingURL=telegram.controller.js.map

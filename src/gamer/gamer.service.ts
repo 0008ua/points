@@ -10,13 +10,17 @@ export class GamerService {
 
   private createGamerData(gamer: GamerDocument[]): GamerDataDto[];
   private createGamerData(gamer: GamerDocument): GamerDataDto;
-  private createGamerData(gamer: GamerDocument | GamerDocument[]): GamerDataDto | GamerDataDto[] {
+  private createGamerData(
+    gamer: GamerDocument | GamerDocument[],
+  ): GamerDataDto | GamerDataDto[] {
     if (Array.isArray(gamer)) {
       return gamer.map((gamer) => ({
         _id: gamer._id.toString(),
         name: gamer.name,
         color: gamer.color,
         owner: gamer.owner,
+        telegramCheckCode: gamer.telegramCheckCode,
+        telegramSubscriptionName: gamer.telegramSubscriptionName,
       }));
     }
     return {
@@ -24,6 +28,8 @@ export class GamerService {
       name: gamer.name,
       color: gamer.color,
       owner: gamer.owner,
+      telegramCheckCode: gamer.telegramCheckCode,
+      telegramSubscriptionName: gamer.telegramSubscriptionName,
     };
   }
 
@@ -42,16 +48,28 @@ export class GamerService {
     return this.createGamerData(gamers);
   }
 
-  async findOne(_id: string, owner: string): Promise<GamerDataDto> {
-    const gamer: GamerDocument = await this.gamerModel.findOne({ _id, owner });
+  async findOne(_id: string, owner?: string): Promise<GamerDataDto> {
+    const query = owner ? { _id, owner } : { _id };
+    const gamer: GamerDocument = await this.gamerModel.findOne(query);
     return this.createGamerData(gamer);
   }
 
-  async update(_id: string, dto: UpdateGamerDto, owner: string): Promise<GamerDataDto> {
+  async findOneAllData(_id: string, owner?: string): Promise<GamerDocument> {
+    const query = owner ? { _id, owner } : { _id };
+    const gamer: GamerDocument = await this.gamerModel.findOne(query);
+    return gamer;
+  }
+
+  async update(
+    _id: string,
+    dto: UpdateGamerDto,
+    owner?: string,
+  ): Promise<GamerDataDto> {
     let gamer: GamerDocument;
+    const query = owner ? { _id, owner } : { _id };
     try {
       gamer = await this.gamerModel.findOneAndUpdate(
-        { _id, owner },
+        query,
         { $set: dto },
         {
           upsert: true, // Create a document if one isn't found. if {upsert: false} and added new document, db returns null
@@ -63,11 +81,26 @@ export class GamerService {
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
-
     return this.createGamerData(gamer);
   }
 
   remove(_id: string, owner: string) {
     return `This action removes a #${_id} gamer`;
+  }
+
+  findByQuery(query: Partial<Gamer>) {
+    try {
+      return this.gamerModel.find(query);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  findOneByQuery(query: Partial<Gamer>) {
+    try {
+      return this.gamerModel.findOne(query);
+    } catch (error) {
+      throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
+    }
   }
 }

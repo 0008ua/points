@@ -25,6 +25,7 @@ let GameController = class GameController {
     create(dto, { user }) {
         const newGame = Object.assign(Object.assign({}, dto), { owner: user._id });
         console.log('newGame', newGame);
+        this.gameService.broadcastFinishGameMessages(dto);
         return this.gameService.create(newGame);
     }
     getWithQuery(query, { user }) {

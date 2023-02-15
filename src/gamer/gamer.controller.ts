@@ -16,21 +16,33 @@ import { UpdateGamerDto } from './dto/update-gamer.dto';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
 import { Gamer } from './entities/gamer.entity';
+import { HelpersService } from 'src/common/helpers.service';
 
 @Controller(['store/gamer', 'store/gamers'])
 export class GamerController {
-  constructor(private readonly gamerService: GamerService) {}
+  constructor(
+    private readonly gamerService: GamerService,
+    readonly helpersService: HelpersService,
+  ) {}
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
   create(@Body() dto: CreateGamerDto, @Req() { user }: Request) {
-    const newGamer: Gamer = { ...dto, owner: user._id, uniqueName: user._id + dto.name };
+    const code = this.helpersService.generateTelegramSecurityCode();
+    const newGamer: Gamer = {
+      ...dto,
+      owner: user._id,
+      uniqueName: user._id + dto.name,
+      telegramCheckCode: code,
+      telegramId: '',
+      telegramSubscriptionName: '',
+    };
     return this.gamerService.create(newGamer);
   }
 
   @UseGuards(AuthGuard('jwt'))
   @Get()
-  getWithQuery(@Query() query: any, @Req() { user }: Request) {
+  async getWithQuery(@Query() query: any, @Req() { user }: Request) {
     if (Object.keys(query).length === 0) {
       return this.gamerService.getAll(user._id);
     }
@@ -45,7 +57,11 @@ export class GamerController {
 
   @UseGuards(AuthGuard('jwt'))
   @Put(':_id')
-  update(@Param('_id') _id: string, @Body() dto: UpdateGamerDto, @Req() { user }: Request) {
+  update(
+    @Param('_id') _id: string,
+    @Req() { user }: Request,
+    @Body() dto: UpdateGamerDto,
+  ) {
     return this.gamerService.update(_id, dto, user._id);
   }
 

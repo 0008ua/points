@@ -1,10 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { signin, storeUserFromToken, signup } from './store/actions/auth.actions';
+import {
+  signin,
+  storeUserFromToken,
+  signup,
+} from './store/actions/auth.actions';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from './modules/auth/auth.service';
 import jwtDecode from 'jwt-decode';
-import { NavigationEnd, NavigationError, NavigationStart, Router, Event } from '@angular/router';
+import {
+  NavigationEnd,
+  NavigationError,
+  NavigationStart,
+  Router,
+  Event,
+} from '@angular/router';
 import { SharedService } from './services/shared.service';
 @Component({
   selector: 'app-root',

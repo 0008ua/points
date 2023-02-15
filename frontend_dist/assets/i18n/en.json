@@ -53,6 +53,11 @@
       "email": "Email",
       "password": "Password",
       "confirmPassword": "Confirm password"
+    },
+    "profile": {
+      "telegramSetup": "Telegram setup",
+      "telegramSetupTitle": "Telegram codes",
+      "telegramSetupDescription": "Search in Telegram for 'pointsResultBot' and subscribe using this codes"
     }
   },
   "elements": {

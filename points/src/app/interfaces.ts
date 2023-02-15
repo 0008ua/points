@@ -20,11 +20,14 @@ export interface IGamer {
   _id?: UID;
   owner?: UID;
   name: string;
-  uniqueName?: string;
+  // uniqueName?: string;
   rating?: any;
   color: Colors;
-  createdAt?: string;
-  updatedAt?: string;
+  telegramCheckCode: string;
+  telegramSubscriptionName: string;
+  // telegramIds?: string[];
+  // createdAt?: string;
+  // updatedAt?: string;
 }
 
 export type IGamerTotal = IGamer & { totalScore: number };

@@ -1,6 +1,9 @@
 import { GamerDocument } from '../entities/gamer.entity';
 
-export type GamerDataType = Pick<GamerDocument, 'name' | 'color' | 'owner'> & {
+export type GamerDataType = Pick<
+  GamerDocument,
+  'name' | 'color' | 'owner' | 'telegramCheckCode' | 'telegramSubscriptionName'
+> & {
   _id: string;
 };
 

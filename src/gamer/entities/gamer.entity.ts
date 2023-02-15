@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument, Model, SchemaTypes, Types } from 'mongoose';
 
 export enum Colors {
   Red = 'red',
@@ -32,6 +32,15 @@ export class Gamer {
 
   @Prop({ required: true, unique: true })
   uniqueName: string;
+
+  @Prop({ required: true, unique: true })
+  telegramCheckCode: string;
+
+  @Prop()
+  telegramSubscriptionName: string;
+
+  @Prop()
+  telegramId: string;
 
   @Prop({ enum: Colors })
   color: Colors;

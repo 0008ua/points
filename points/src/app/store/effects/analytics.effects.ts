@@ -92,13 +92,25 @@ export class AnalyticsEffects {
       withLatestFrom(this.gamerService.entities$),
       map(([analytics, gamers]) => {
         const losers = gamers
-          .filter((gamer) => !analytics.some((winner) => winner._id === gamer._id))
-          .map(({ _id, name, color }) => ({
-            _id,
-            name,
-            color,
-            rating: { wins: 0 },
-          }));
+          .filter(
+            (gamer) => !analytics.some((winner) => winner._id === gamer._id),
+          )
+          .map(
+            ({
+              _id,
+              name,
+              color,
+              telegramCheckCode,
+              telegramSubscriptionName,
+            }) => ({
+              _id,
+              name,
+              color,
+              telegramCheckCode,
+              telegramSubscriptionName,
+              rating: { wins: 0 },
+            }),
+          );
         const fullList = analytics.concat(losers);
         return fullList;
       }),

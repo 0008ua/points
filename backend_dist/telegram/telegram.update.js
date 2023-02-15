@@ -15,16 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TelegramUpdate = void 0;
 const nestjs_telegraf_1 = require("nestjs-telegraf");
 const telegram_constants_1 = require("./telegram.constants");
-const buttons_1 = require("./utils/buttons");
+const commands_1 = require("./utils/commands");
 let TelegramUpdate = class TelegramUpdate {
     async start(ctx) {
-        await (0, buttons_1.startCmd)(ctx);
+        await (0, commands_1.startCmd)(ctx);
     }
     async hearsBack(ctx) {
-        await (0, buttons_1.backCmd)(ctx);
+        await (0, commands_1.backCmd)(ctx);
     }
     async hearsSubscribe(ctx) {
         await ctx.scene.enter(telegram_constants_1.BIND_USER);
+    }
+    async hearsVievSubscribtions(ctx) {
+        await ctx.scene.enter(telegram_constants_1.VIEW_SUBSCRIBTIONS);
     }
 };
 __decorate([
@@ -48,6 +51,13 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], TelegramUpdate.prototype, "hearsSubscribe", null);
+__decorate([
+    (0, nestjs_telegraf_1.Hears)(telegram_constants_1.BUTTON_TEXT.viewSubscribtions),
+    __param(0, (0, nestjs_telegraf_1.Ctx)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], TelegramUpdate.prototype, "hearsVievSubscribtions", null);
 TelegramUpdate = __decorate([
     (0, nestjs_telegraf_1.Update)()
 ], TelegramUpdate);

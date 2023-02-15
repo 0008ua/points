@@ -2,13 +2,18 @@ import { Markup } from 'telegraf';
 import { BUTTON_TEXT } from '../telegram.constants';
 
 export const mainMenuButtons = Markup.keyboard([
-  BUTTON_TEXT.subscribe,
+  [BUTTON_TEXT.subscribe, BUTTON_TEXT.viewSubscribtions],
 ]).resize();
+
 export const backMenuButtton = Markup.keyboard([BUTTON_TEXT.back]).resize();
 
-export const startCmd = async (ctx) =>
-  await ctx.reply('Welcome', { ...mainMenuButtons });
-export const backCmd = async (ctx) =>
-  await ctx.reply('You back to main menu', { ...mainMenuButtons });
-export const onSubscribeSceneCmd = async (ctx) =>
-  await ctx.reply('Enter code', { ...backMenuButtton });
+export const viewSubscriptionsMenuButtons = (
+  btns: {
+    text: string;
+    data: string;
+  }[],
+) => {
+  return Markup.inlineKeyboard(
+    btns.map((btn) => [Markup.button.callback(btn.text, btn.data)]),
+  );
+};

@@ -22,7 +22,10 @@ import { take } from 'rxjs/operators';
     },
   ],
 })
-export class RoundThousandComponent extends RoundTBaseDirective implements OnInit {
+export class RoundThousandComponent
+  extends RoundTBaseDirective
+  implements OnInit
+{
   scores: RoundScoresType = {};
   initialScores: RoundScoresType = {};
   roundScoresOption: RoundScoresOptionsType;
@@ -49,7 +52,9 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
     });
 
     // cancel prev game
-    this.actions$.pipe(ofType(fromAppActions.clearGame)).subscribe((_) => (this.scores = {}));
+    this.actions$
+      .pipe(ofType(fromAppActions.clearGame))
+      .subscribe((_) => (this.scores = {}));
   }
 
   addTotals(roundMembers: RoundMember[]): RoundMember[] {
@@ -57,15 +62,20 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
       let acc = 0;
       return {
         ...roundMember,
-        namedScoresLine: roundMember.namedScoresLine.map((namedScore: NamedScore) => {
-          acc = namedScore.value + acc;
-          return { ...namedScore, total: acc };
-        }),
+        namedScoresLine: roundMember.namedScoresLine.map(
+          (namedScore: NamedScore) => {
+            acc = namedScore.value + acc;
+            return { ...namedScore, total: acc };
+          },
+        ),
       };
     });
   }
 
-  changeScoresState(roundMemberId: string, option: RoundScoresOptionsType): void {
+  changeScoresState(
+    roundMemberId: string,
+    option: RoundScoresOptionsType,
+  ): void {
     if (this.scores[roundMemberId].barrel > 0) {
       return;
     }
@@ -95,7 +105,8 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
 
   resetScores(): void {
     const activeRoundMemberPosition = this.roundMembers.length
-      ? (this.roundMembers[0].namedScoresLine.length + this.qtyOfPlayers) % this.qtyOfPlayers
+      ? (this.roundMembers[0].namedScoresLine.length + this.qtyOfPlayers) %
+        this.qtyOfPlayers
       : 0;
     this.roundMembers.forEach((roundMember, i) => {
       if (i === activeRoundMemberPosition) {
@@ -112,8 +123,10 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
 
       if (roundMember.namedScoresLine.length > 1) {
         const isDoubleZero =
-          roundMember.namedScoresLine[roundMember.namedScoresLine.length - 1].value === 0 &&
-          roundMember.namedScoresLine[roundMember.namedScoresLine.length - 2].value === 0;
+          roundMember.namedScoresLine[roundMember.namedScoresLine.length - 1]
+            .value === 0 &&
+          roundMember.namedScoresLine[roundMember.namedScoresLine.length - 2]
+            .value === 0;
         if (isDoubleZero) {
           this.scores[roundMember._id].doubleZero = true;
         }
@@ -129,11 +142,15 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
         }
       });
 
-      const isAlreadyR = roundMember.namedScoresLine.find((score) => score.name === 'r');
+      const isAlreadyR = roundMember.namedScoresLine.find(
+        (score) => score.name === 'r',
+      );
       if (isAlreadyR) {
         this.scores[roundMember._id].disabled.push('r');
       }
-      const isAlreadyS = roundMember.namedScoresLine.find((score) => score.name === 's');
+      const isAlreadyS = roundMember.namedScoresLine.find(
+        (score) => score.name === 's',
+      );
       if (isAlreadyS) {
         this.scores[roundMember._id].disabled.push('s');
       }
@@ -154,7 +171,10 @@ export class RoundThousandComponent extends RoundTBaseDirective implements OnIni
 
   checkOnBarrelTimes(): void {
     Object.keys(this.scores).forEach((key) => {
-      if (this.scores[key].barrel >= this.qtyOfPlayers || this.scores[key].barrel >= 3) {
+      if (
+        this.scores[key].barrel >= this.qtyOfPlayers ||
+        this.scores[key].barrel >= 3
+      ) {
         let acc = 0;
         this.roundMembers
           .find((roundMember) => roundMember._id === key)

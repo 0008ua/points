@@ -18,6 +18,7 @@ import * as ex from 'express';
 import { UnauthorizedException } from '@nestjs/common/exceptions';
 import { AuthGuard } from '@nestjs/passport';
 import { Game } from './entities/game.entity';
+import { TelegramService } from 'src/telegram/telegram.service';
 
 @Controller(['store/game', 'store/games'])
 export class GameController {
@@ -29,6 +30,8 @@ export class GameController {
   create(@Body() dto: CreateGameDto, @Req() { user }: Request) {
     const newGame: Game = { ...dto, owner: user._id };
     console.log('newGame', newGame);
+    this.gameService.broadcastFinishGameMessages(dto);
+
     return this.gameService.create(newGame);
   }
 
@@ -52,7 +55,11 @@ export class GameController {
   // update
   @UseGuards(AuthGuard('jwt'))
   @Put(':_id')
-  update(@Param('_id') _id: string, @Body() dto: UpdateGameDto, @Req() { user }: Request) {
+  update(
+    @Param('_id') _id: string,
+    @Body() dto: UpdateGameDto,
+    @Req() { user }: Request,
+  ) {
     return this.gameService.update(_id, dto, user._id);
   }
 

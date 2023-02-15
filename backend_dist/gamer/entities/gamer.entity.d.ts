@@ -34,6 +34,9 @@ export declare class Gamer {
     owner: string;
     name: string;
     uniqueName: string;
+    telegramCheckCode: string;
+    telegramSubscriptionName: string;
+    telegramId: string;
     color: Colors;
 }
 export type GamerDocument = HydratedDocument<Gamer>;

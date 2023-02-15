@@ -12,11 +12,17 @@ const game_service_1 = require("./game.service");
 const game_controller_1 = require("./game.controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const game_entity_1 = require("./entities/game.entity");
+const telegram_module_1 = require("../telegram/telegram.module");
+const gamer_module_1 = require("../gamer/gamer.module");
 let GameModule = class GameModule {
 };
 GameModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: game_entity_1.Game.name, schema: game_entity_1.GameSchema }])],
+        imports: [
+            mongoose_1.MongooseModule.forFeature([{ name: game_entity_1.Game.name, schema: game_entity_1.GameSchema }]),
+            telegram_module_1.TelegramModule,
+            gamer_module_1.GamerModule,
+        ],
         controllers: [game_controller_1.GameController],
         providers: [game_service_1.GameService],
     })

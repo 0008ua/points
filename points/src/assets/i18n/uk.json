@@ -53,6 +53,11 @@
       "email": "Email",
       "password": "Пароль",
       "confirmPassword": "Підтвердити пароль"
+    },
+    "profile": {
+      "telegramSetup": "Налаштування Telegram",
+      "telegramSetupTitle": "Коди для Telegram",
+      "telegramSetupDescription": "Знайти в Телеграмі 'pointsResultBot' і підписатися за допомогою цих кодів"
     }
   },
   "elements": {

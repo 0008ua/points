@@ -166,7 +166,9 @@ let GamePage = class GamePage {
                 // game started and active menu 'start'
                 if (this.gameType === 'uno') {
                     this.activeRoundId$.next(this.roundsCfg[1]._id +
-                        (rounds.length === 1 ? this.roundsCfg[1].namePostfix : rounds.length));
+                        (rounds.length === 1
+                            ? this.roundsCfg[1].namePostfix
+                            : rounds.length));
                 }
                 else {
                     this.activeRoundId$.next(this.roundsCfg[1]._id);
@@ -382,7 +384,9 @@ let ChoosePlayersComponent = class ChoosePlayersComponent {
             }
             return true;
         });
-        this.filtredColors = (filtredColors === null || filtredColors === void 0 ? void 0 : filtredColors.length) ? filtredColors : this.filtredColors;
+        this.filtredColors = (filtredColors === null || filtredColors === void 0 ? void 0 : filtredColors.length)
+            ? filtredColors
+            : this.filtredColors;
     }
     choosePlayerHandler(e, index) {
         const players = this.players.map((player, idx) => {
@@ -427,7 +431,9 @@ let ChoosePlayersComponent = class ChoosePlayersComponent {
             this.store.dispatch(_store_actions_player_actions__WEBPACK_IMPORTED_MODULE_7__.addPlayer({ player: Object.assign({}, candidate) }));
         }
         else {
-            this.store.dispatch(_store_actions_player_actions__WEBPACK_IMPORTED_MODULE_7__.addPlayer({ player: Object.assign(Object.assign({}, candidate), { color: this.filtredColors[0] }) }));
+            this.store.dispatch(_store_actions_player_actions__WEBPACK_IMPORTED_MODULE_7__.addPlayer({
+                player: Object.assign(Object.assign({}, candidate), { color: this.filtredColors[0] }),
+            }));
         }
         // this.filter();
     }
@@ -650,13 +656,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GamesService": () => (/* binding */ GamesService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ 4452);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store */ 9407);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 4452);
 /* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
 /* harmony import */ var src_app_store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/store/reducers/round-member.reducer */ 7539);
 /* harmony import */ var _store_actions_round_member_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/actions/round-member.actions */ 8775);
+/* harmony import */ var _auth_telegram_telegram_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth/telegram/telegram.service */ 153);
+
 
 
 
@@ -665,9 +673,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let GamesService = class GamesService {
-    constructor(store, sharedService) {
+    constructor(store, sharedService, telegramService) {
         this.store = store;
         this.sharedService = sharedService;
+        this.telegramService = telegramService;
     }
     storeRoundScores(scores) {
         const updates = [];
@@ -676,7 +685,7 @@ let GamesService = class GamesService {
             if (scores.hasOwnProperty(key)) {
                 this.store
                     .select((0,src_app_store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_1__.selectByIdRoundMember)(key))
-                    .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.first)())
+                    .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.first)())
                     .subscribe((roundMember) => {
                     const namedScore = {
                         name: scores[key].name,
@@ -689,6 +698,15 @@ let GamesService = class GamesService {
                 });
             }
         }
+        // console.log('updates', updates);
+        // this.telegramService
+        //   .sendMessages(
+        //     updates.map((roundmember) => ({
+        //       gamerId: roundmember.changes.player,
+        //       message: String(roundmember.changes.scoresLine[0]),
+        //     })),
+        //   )
+        //   .subscribe((res) => console.log('send result', res));
         this.store.dispatch(_store_actions_round_member_actions__WEBPACK_IMPORTED_MODULE_2__.updateRoundMembers({
             roundMembers: updates,
         }));
@@ -755,11 +773,12 @@ let GamesService = class GamesService {
     }
 };
 GamesService.ctorParameters = () => [
-    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_4__.Store },
-    { type: src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__.SharedService }
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_5__.Store },
+    { type: src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__.SharedService },
+    { type: _auth_telegram_telegram_service__WEBPACK_IMPORTED_MODULE_3__.TelegramService }
 ];
-GamesService = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Injectable)({
+GamesService = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_7__.Injectable)({
         providedIn: 'root',
     })
 ], GamesService);
@@ -1270,7 +1289,9 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
             }
         });
         // cancel prev game
-        this.actions$.pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_5__.ofType)(_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__.clearGame)).subscribe((_) => (this.scores = {}));
+        this.actions$
+            .pipe((0,_ngrx_effects__WEBPACK_IMPORTED_MODULE_5__.ofType)(_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__.clearGame))
+            .subscribe((_) => (this.scores = {}));
     }
     addTotals(roundMembers) {
         return roundMembers.map((roundMember) => {
@@ -1304,7 +1325,8 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
     }
     resetScores() {
         const activeRoundMemberPosition = this.roundMembers.length
-            ? (this.roundMembers[0].namedScoresLine.length + this.qtyOfPlayers) % this.qtyOfPlayers
+            ? (this.roundMembers[0].namedScoresLine.length + this.qtyOfPlayers) %
+                this.qtyOfPlayers
             : 0;
         this.roundMembers.forEach((roundMember, i) => {
             if (i === activeRoundMemberPosition) {
@@ -1318,8 +1340,10 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
                 barrel: 0,
             };
             if (roundMember.namedScoresLine.length > 1) {
-                const isDoubleZero = roundMember.namedScoresLine[roundMember.namedScoresLine.length - 1].value === 0 &&
-                    roundMember.namedScoresLine[roundMember.namedScoresLine.length - 2].value === 0;
+                const isDoubleZero = roundMember.namedScoresLine[roundMember.namedScoresLine.length - 1]
+                    .value === 0 &&
+                    roundMember.namedScoresLine[roundMember.namedScoresLine.length - 2]
+                        .value === 0;
                 if (isDoubleZero) {
                     this.scores[roundMember._id].doubleZero = true;
                 }
@@ -1357,7 +1381,8 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
     }
     checkOnBarrelTimes() {
         Object.keys(this.scores).forEach((key) => {
-            if (this.scores[key].barrel >= this.qtyOfPlayers || this.scores[key].barrel >= 3) {
+            if (this.scores[key].barrel >= this.qtyOfPlayers ||
+                this.scores[key].barrel >= 3) {
                 let acc = 0;
                 this.roundMembers
                     .find((roundMember) => roundMember._id === key)

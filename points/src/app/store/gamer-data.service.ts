@@ -4,12 +4,8 @@ import {
   EntityCollectionServiceBase,
   DefaultDataService,
   HttpUrlGenerator,
-  Logger,
-  QueryParams,
   EntityCollectionServiceElementsFactory,
 } from '@ngrx/data';
-import { Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 import { IGamer, IUser } from '../interfaces';
 
 @Injectable()

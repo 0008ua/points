@@ -1,13 +1,28 @@
-import { AfterViewChecked, Component, ComponentRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import {
+  Component,
+  OnInit,
+} from '@angular/core';
+import {
+  FormControl,
+  FormGroup,
+  FormGroupDirective,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
-import { CollectionSelectors, EntityActionFactory, MergeStrategy } from '@ngrx/data';
+import {
+  CollectionSelectors,
+  EntityActionFactory,
+  MergeStrategy,
+} from '@ngrx/data';
 import { ReducerManager, Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { switchMap, take } from 'rxjs/operators';
 import { IGamer, Colors, IGame, GameType } from 'src/app/interfaces';
-import { GamerDataService, GamerService } from 'src/app/store/gamer-data.service';
+import {
+  GamerDataService,
+  GamerService,
+} from 'src/app/store/gamer-data.service';
 import { AuthService } from '../../../auth/auth.service';
 import { AlertController, PopoverController } from '@ionic/angular';
 import { SelectColorComponent } from '../select-color/select-color.component';
@@ -62,8 +77,10 @@ export class ChoosePlayersComponent implements OnInit {
     this.gameType$ = this.store.select(fromAppReducer.selectGameType);
     this.gameType$.subscribe((gameType) => {
       this.gameType = gameType;
-      this.playersColors = environment.games[gameType]?.playersColors as Colors[];
-      this.filtredColors = environment.games[gameType]?.playersColors as Colors[];
+      this.playersColors = environment.games[gameType]
+        ?.playersColors as Colors[];
+      this.filtredColors = environment.games[gameType]
+        ?.playersColors as Colors[];
     });
 
     this.players$ = this.store.select(fromPlayerReducer.selectAllPlayers);
@@ -107,7 +124,11 @@ export class ChoosePlayersComponent implements OnInit {
   }
 
   async showCreateGamerPopup(event: Event) {
-    const { data } = await this.presentPopover(event, CreateGamerComponent, null);
+    const { data } = await this.presentPopover(
+      event,
+      CreateGamerComponent,
+      null,
+    );
     if (data) {
       const { gamer } = data;
       this.createGamerHandler(gamer);
@@ -131,7 +152,9 @@ export class ChoosePlayersComponent implements OnInit {
       }
       return true;
     });
-    this.filtredColors = filtredColors?.length ? filtredColors : this.filtredColors;
+    this.filtredColors = filtredColors?.length
+      ? filtredColors
+      : this.filtredColors;
   }
 
   choosePlayerHandler(e: any, index: number) {
@@ -177,10 +200,14 @@ export class ChoosePlayersComponent implements OnInit {
     }
     const preferredColor = candidate.color;
     if (this.filtredColors.includes(preferredColor)) {
-      this.store.dispatch(fromPlayerActions.addPlayer({ player: { ...candidate } }));
+      this.store.dispatch(
+        fromPlayerActions.addPlayer({ player: { ...candidate } }),
+      );
     } else {
       this.store.dispatch(
-        fromPlayerActions.addPlayer({ player: { ...candidate, color: this.filtredColors[0] } }),
+        fromPlayerActions.addPlayer({
+          player: { ...candidate, color: this.filtredColors[0] },
+        }),
       );
     }
     // this.filter();

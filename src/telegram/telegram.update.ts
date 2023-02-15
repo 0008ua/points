@@ -17,9 +17,10 @@ import {
   BIND_USER,
   BUTTON_TEXT,
   TELEGRAM_BOT_NAME,
+  VIEW_SUBSCRIBTIONS,
 } from './telegram.constants';
 import { SceneContext } from './telegram.interface';
-import { backCmd, startCmd } from './utils/buttons';
+import { backCmd, startCmd } from './utils/commands';
 
 @Update()
 export class TelegramUpdate {
@@ -52,6 +53,11 @@ export class TelegramUpdate {
   @Hears(BUTTON_TEXT.subscribe)
   async hearsSubscribe(@Ctx() ctx: any) {
     await ctx.scene.enter(BIND_USER);
+  }
+
+  @Hears(BUTTON_TEXT.viewSubscribtions)
+  async hearsVievSubscribtions(@Ctx() ctx: any) {
+    await ctx.scene.enter(VIEW_SUBSCRIBTIONS);
   }
 
   // @Hears(BUTTON_TEXT.back)

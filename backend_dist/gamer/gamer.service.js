@@ -27,6 +27,8 @@ let GamerService = class GamerService {
                 name: gamer.name,
                 color: gamer.color,
                 owner: gamer.owner,
+                telegramCheckCode: gamer.telegramCheckCode,
+                telegramSubscriptionName: gamer.telegramSubscriptionName,
             }));
         }
         return {
@@ -34,6 +36,8 @@ let GamerService = class GamerService {
             name: gamer.name,
             color: gamer.color,
             owner: gamer.owner,
+            telegramCheckCode: gamer.telegramCheckCode,
+            telegramSubscriptionName: gamer.telegramSubscriptionName,
         };
     }
     async create(newGamer) {
@@ -48,13 +52,20 @@ let GamerService = class GamerService {
         return this.createGamerData(gamers);
     }
     async findOne(_id, owner) {
-        const gamer = await this.gamerModel.findOne({ _id, owner });
+        const query = owner ? { _id, owner } : { _id };
+        const gamer = await this.gamerModel.findOne(query);
         return this.createGamerData(gamer);
+    }
+    async findOneAllData(_id, owner) {
+        const query = owner ? { _id, owner } : { _id };
+        const gamer = await this.gamerModel.findOne(query);
+        return gamer;
     }
     async update(_id, dto, owner) {
         let gamer;
+        const query = owner ? { _id, owner } : { _id };
         try {
-            gamer = await this.gamerModel.findOneAndUpdate({ _id, owner }, { $set: dto }, {
+            gamer = await this.gamerModel.findOneAndUpdate(query, { $set: dto }, {
                 upsert: true,
                 useFindAndModify: true,
                 new: true,
@@ -68,6 +79,22 @@ let GamerService = class GamerService {
     }
     remove(_id, owner) {
         return `This action removes a #${_id} gamer`;
+    }
+    findByQuery(query) {
+        try {
+            return this.gamerModel.find(query);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
+    }
+    findOneByQuery(query) {
+        try {
+            return this.gamerModel.findOne(query);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
 };
 GamerService = __decorate([

@@ -2,16 +2,27 @@ import { Injectable } from '@angular/core';
 import { Update } from '@ngrx/entity';
 import { Store } from '@ngrx/store';
 import { first } from 'rxjs/operators';
-import { NamedScore, RoundMember, RoundScores, RoundScoresType, UID } from 'src/app/interfaces';
+import {
+  NamedScore,
+  RoundMember,
+  RoundScores,
+  RoundScoresType,
+  UID,
+} from 'src/app/interfaces';
 import { SharedService } from 'src/app/services/shared.service';
 import { selectByIdRoundMember } from 'src/app/store/reducers/round-member.reducer';
 import * as fromRoundMembersActions from '../../store/actions/round-member.actions';
+import { TelegramService } from '../auth/telegram/telegram.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GamesService {
-  constructor(private store: Store, private sharedService: SharedService) {}
+  constructor(
+    protected store: Store,
+    protected sharedService: SharedService,
+    protected telegramService: TelegramService,
+  ) {}
 
   storeRoundScores(scores: RoundScoresType) {
     const updates: Update<RoundMember>[] = [];
@@ -37,6 +48,17 @@ export class GamesService {
           });
       }
     }
+
+    // console.log('updates', updates);
+    // this.telegramService
+    //   .sendMessages(
+    //     updates.map((roundmember) => ({
+    //       gamerId: roundmember.changes.player,
+    //       message: String(roundmember.changes.scoresLine[0]),
+    //     })),
+    //   )
+    //   .subscribe((res) => console.log('send result', res));
+
     this.store.dispatch(
       fromRoundMembersActions.updateRoundMembers({
         roundMembers: updates,
@@ -45,7 +67,10 @@ export class GamesService {
   }
 
   addToNamedScoresLine(namedScore: NamedScore, playerId: UID, roundId: string) {
-    const roundMember = this.sharedService.getMemberByPlayerId(playerId, roundId);
+    const roundMember = this.sharedService.getMemberByPlayerId(
+      playerId,
+      roundId,
+    );
     const changes = {
       ...roundMember,
       namedScoresLine: [...roundMember.namedScoresLine, namedScore],
@@ -64,7 +89,10 @@ export class GamesService {
   }
 
   addToScoresLine(score: number, playerId: UID, roundId: string) {
-    const roundMember = this.sharedService.getMemberByPlayerId(playerId, roundId);
+    const roundMember = this.sharedService.getMemberByPlayerId(
+      playerId,
+      roundId,
+    );
     const changes = {
       ...roundMember,
       scoresLine: [...roundMember.scoresLine, score],
@@ -80,10 +108,19 @@ export class GamesService {
     );
   }
 
-  removeFromNamedScoresLine(namedScore: NamedScore, playerId: UID, roundId: string) {
-    const roundMember = this.sharedService.getMemberByPlayerId(playerId, roundId);
+  removeFromNamedScoresLine(
+    namedScore: NamedScore,
+    playerId: UID,
+    roundId: string,
+  ) {
+    const roundMember = this.sharedService.getMemberByPlayerId(
+      playerId,
+      roundId,
+    );
     const namedScoresLine = [...roundMember.namedScoresLine];
-    const index = namedScoresLine.findIndex((ns) => ns.name === namedScore.name);
+    const index = namedScoresLine.findIndex(
+      (ns) => ns.name === namedScore.name,
+    );
     if (index !== -1) {
       namedScoresLine.splice(index, 1);
       const changes = {
@@ -104,7 +141,10 @@ export class GamesService {
   }
 
   removeFromScoresLine(score: number, playerId: UID, roundId: string) {
-    const roundMember = this.sharedService.getMemberByPlayerId(playerId, roundId);
+    const roundMember = this.sharedService.getMemberByPlayerId(
+      playerId,
+      roundId,
+    );
     const scoresLine = [...roundMember.scoresLine];
     const index = scoresLine.indexOf(score);
     scoresLine.splice(index, 1);
@@ -125,7 +165,10 @@ export class GamesService {
   }
 
   setScoresLine(scoresLine: number[], playerId: UID, roundId: string) {
-    const roundMember = this.sharedService.getMemberByPlayerId(playerId, roundId);
+    const roundMember = this.sharedService.getMemberByPlayerId(
+      playerId,
+      roundId,
+    );
     const changes = {
       ...roundMember,
       scoresLine,

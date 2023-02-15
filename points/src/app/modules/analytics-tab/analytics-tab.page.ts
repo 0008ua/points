@@ -5,7 +5,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { IUser } from 'src/app/interfaces';
 import { logout } from 'src/app/store/actions/auth.actions';
-import { selectUser, selectUserRole } from 'src/app/store/reducers/auth.reducer';
+import {
+  selectUser,
+  selectUserRole,
+} from 'src/app/store/reducers/auth.reducer';
 import { StatBase, STAT_COMPONENT } from './stat/stat-interfaces';
 
 @Component({
@@ -31,6 +34,8 @@ export class AnalyticsTabPage implements OnInit {
 
   ionViewWillEnter() {
     this.menuController.enable(true, 'analytics-menu');
+    console.log(this.menuController);
+
   }
 
   onLogout() {
