@@ -37,22 +37,25 @@ import { ViewSubscribtionsScene } from './telegram/scenes/view-subscribtions.sce
       inject: [ConfigService],
       useFactory: getMongoConfig,
     }),
-    TelegramModule.forRootAsync({
+    TelegramModule
+      .forRootAsync
+      // {
       // botName: TELEGRAM_BOT_NAME,
-      imports: [GamerModule, CommonModule, AuthModule],
-      providers: [
-        TelegramService,
-        TelegramUpdate,
-        BindUserScene,
-        ViewSubscribtionsScene,
-      ],
-      exports: [TelegramService, TelegramUpdate, BindUserScene],
-      controllers: [TelegramController],
+      // imports: [GamerModule, CommonModule, AuthModule],
+      // providers: [
+      //   TelegramService,
+      //   TelegramUpdate,
+      //   BindUserScene,
+      //   ViewSubscribtionsScene,
+      // ],
+      // exports: [TelegramService, TelegramUpdate, BindUserScene],
+      // controllers: [TelegramController],
       // useFactory: getTelegramConfig,
       // inject: [ConfigService],
       // include: [],
       // middlewares: [sessionMiddleware],
-    }),
+      // }
+      (),
     AuthModule,
     ConfigModule.forRoot(),
     AnalyticsModule,

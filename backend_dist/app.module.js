@@ -21,12 +21,7 @@ const gamer_module_1 = require("./gamer/gamer.module");
 const game_module_1 = require("./game/game.module");
 const logger_module_1 = require("./logger/logger.module");
 const common_module_1 = require("./common/common.module");
-const telegram_service_1 = require("./telegram/telegram.service");
 const telegram_module_1 = require("./telegram/telegram.module");
-const telegram_update_1 = require("./telegram/telegram.update");
-const bind_user_1 = require("./telegram/scenes/bind-user");
-const telegram_controller_1 = require("./telegram/telegram.controller");
-const view_subscribtions_scene_1 = require("./telegram/scenes/view-subscribtions.scene");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -41,17 +36,8 @@ AppModule = __decorate([
                 inject: [config_1.ConfigService],
                 useFactory: mongo_config_1.getMongoConfig,
             }),
-            telegram_module_1.TelegramModule.forRootAsync({
-                imports: [gamer_module_1.GamerModule, common_module_1.CommonModule, auth_module_1.AuthModule],
-                providers: [
-                    telegram_service_1.TelegramService,
-                    telegram_update_1.TelegramUpdate,
-                    bind_user_1.BindUserScene,
-                    view_subscribtions_scene_1.ViewSubscribtionsScene,
-                ],
-                exports: [telegram_service_1.TelegramService, telegram_update_1.TelegramUpdate, bind_user_1.BindUserScene],
-                controllers: [telegram_controller_1.TelegramController],
-            }),
+            telegram_module_1.TelegramModule
+                .forRootAsync(),
             auth_module_1.AuthModule,
             config_1.ConfigModule.forRoot(),
             analytics_module_1.AnalyticsModule,

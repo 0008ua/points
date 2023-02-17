@@ -6,7 +6,7 @@ import {
 } from 'nestjs-telegraf';
 import {
   TelegrafFactory,
-  TelegramModuleAsyncOptions,
+  // TelegramModuleAsyncOptions,
   TelegramOptions,
 } from './telegram.interface';
 import { TelegramService } from './telegram.service';
@@ -18,19 +18,32 @@ import { getTelegramConfig } from 'src/common/config/telegram.config';
 import { TELEGRAM_BOT_NAME } from './telegram.constants';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { sessionMiddleware } from './middlewares/session.middleware';
+import { TelegramController } from './telegram.controller';
+import { ViewSubscribtionsScene } from './scenes/view-subscribtions.scene';
+import { CommonModule } from 'src/common/common.module';
+import { AuthModule } from 'src/auth/auth.module';
 
-@Global()
-@Module({})
+@Module({
+  imports: [GamerModule, CommonModule, AuthModule],
+  providers: [
+    TelegramService,
+    TelegramUpdate,
+    BindUserScene,
+    ViewSubscribtionsScene,
+  ],
+  exports: [TelegramService, TelegramUpdate, BindUserScene],
+  controllers: [TelegramController],
+})
 export class TelegramModule {
-  static forRootAsync(options: TelegramModuleAsyncOptions): DynamicModule {
+  static forRootAsync(): DynamicModule {
     const useFactory = this.extendFactory(getTelegramConfig);
     return {
       module: TelegramModule,
-      providers: [...options.providers],
-      exports: [...options.exports],
-      controllers: [...options.controllers],
+      // providers: [...options.providers],
+      // exports: [...options.exports],
+      // controllers: [...options.controllers],
       imports: [
-        ...options.imports,
+        // ...options.imports,
         TelegrafModule.forRootAsync({
           botName: TELEGRAM_BOT_NAME,
           useFactory,

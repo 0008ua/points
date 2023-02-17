@@ -6,7 +6,9 @@ import { TelegramModule } from 'src/telegram/telegram.module';
 // import { TelegramModule } from 'src/telegram/telegram.module';
 import { TelegramService } from 'src/telegram/telegram.service';
 
-export const getTelegramConfig = (configService: ConfigService): TelegrafModuleOptions => {
+export const getTelegramConfig = (
+  configService: ConfigService,
+): TelegrafModuleOptions => {
   const token = configService.get('TELEGRAM_TOKEN');
   if (!token) {
     throw new Error('No TELEGRAM_TOKEN');
