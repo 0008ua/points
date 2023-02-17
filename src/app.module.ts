@@ -24,6 +24,7 @@ import { TelegramUpdate } from './telegram/telegram.update';
 import { BindUserScene } from './telegram/scenes/bind-user';
 import { TelegramController } from './telegram/telegram.controller';
 import { ViewSubscribtionsScene } from './telegram/scenes/view-subscribtions.scene';
+import { TelegrafDynamicModule } from './telegram/telegraf.module';
 // import { TelegramModule } from './telegram/telegram.module';
 
 @Module({
@@ -37,25 +38,26 @@ import { ViewSubscribtionsScene } from './telegram/scenes/view-subscribtions.sce
       inject: [ConfigService],
       useFactory: getMongoConfig,
     }),
-    TelegramModule
-      .forRootAsync
-      // {
-      // botName: TELEGRAM_BOT_NAME,
-      // imports: [GamerModule, CommonModule, AuthModule],
-      // providers: [
-      //   TelegramService,
-      //   TelegramUpdate,
-      //   BindUserScene,
-      //   ViewSubscribtionsScene,
-      // ],
-      // exports: [TelegramService, TelegramUpdate, BindUserScene],
-      // controllers: [TelegramController],
-      // useFactory: getTelegramConfig,
-      // inject: [ConfigService],
-      // include: [],
-      // middlewares: [sessionMiddleware],
-      // }
-      (),
+    TelegramModule,
+    TelegrafDynamicModule.forRootAsync(),
+    // .forRootAsync
+    // {
+    // botName: TELEGRAM_BOT_NAME,
+    // imports: [GamerModule, CommonModule, AuthModule],
+    // providers: [
+    //   TelegramService,
+    //   TelegramUpdate,
+    //   BindUserScene,
+    //   ViewSubscribtionsScene,
+    // ],
+    // exports: [TelegramService, TelegramUpdate, BindUserScene],
+    // controllers: [TelegramController],
+    // useFactory: getTelegramConfig,
+    // inject: [ConfigService],
+    // include: [],
+    // middlewares: [sessionMiddleware],
+    // }
+    // (),
     AuthModule,
     ConfigModule.forRoot(),
     AnalyticsModule,

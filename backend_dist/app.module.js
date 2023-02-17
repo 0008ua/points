@@ -22,6 +22,7 @@ const game_module_1 = require("./game/game.module");
 const logger_module_1 = require("./logger/logger.module");
 const common_module_1 = require("./common/common.module");
 const telegram_module_1 = require("./telegram/telegram.module");
+const telegraf_module_1 = require("./telegram/telegraf.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -36,8 +37,8 @@ AppModule = __decorate([
                 inject: [config_1.ConfigService],
                 useFactory: mongo_config_1.getMongoConfig,
             }),
-            telegram_module_1.TelegramModule
-                .forRootAsync(),
+            telegram_module_1.TelegramModule,
+            telegraf_module_1.TelegrafDynamicModule.forRootAsync(),
             auth_module_1.AuthModule,
             config_1.ConfigModule.forRoot(),
             analytics_module_1.AnalyticsModule,
