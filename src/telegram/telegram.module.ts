@@ -22,7 +22,7 @@ import { TelegramController } from './telegram.controller';
 import { ViewSubscribtionsScene } from './scenes/view-subscribtions.scene';
 import { CommonModule } from 'src/common/common.module';
 import { AuthModule } from 'src/auth/auth.module';
-import { TelegrafDynamicModule } from './telegraf.module';
+// import { TelegrafDynamicModule } from './telegraf.module';
 
 @Module({
   imports: [
@@ -37,7 +37,7 @@ import { TelegrafDynamicModule } from './telegraf.module';
     BindUserScene,
     ViewSubscribtionsScene,
   ],
-  exports: [TelegramService, TelegramUpdate, BindUserScene],
+  exports: [TelegramService],
   controllers: [TelegramController],
 })
 export class TelegramModule {

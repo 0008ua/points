@@ -31,7 +31,7 @@ TelegramModule = __decorate([
             bind_user_1.BindUserScene,
             view_subscribtions_scene_1.ViewSubscribtionsScene,
         ],
-        exports: [telegram_service_1.TelegramService, telegram_update_1.TelegramUpdate, bind_user_1.BindUserScene],
+        exports: [telegram_service_1.TelegramService],
         controllers: [telegram_controller_1.TelegramController],
     })
 ], TelegramModule);

@@ -13,7 +13,7 @@ import { GameModule } from './game/game.module';
 import { LoggerModule } from './logger/logger.module';
 // import { TelegramModule } from './telegram/telegram.module';
 import { CommonModule } from './common/common.module';
-import { getTelegramConfig } from './common/config/telegram.config';
+import { getTelegramConfig, telegrafFactory } from './common/config/telegram.config';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { TELEGRAM_BOT_NAME } from './telegram/telegram.constants';
 import { TelegramService } from './telegram/telegram.service';
@@ -24,7 +24,7 @@ import { TelegramUpdate } from './telegram/telegram.update';
 import { BindUserScene } from './telegram/scenes/bind-user';
 import { TelegramController } from './telegram/telegram.controller';
 import { ViewSubscribtionsScene } from './telegram/scenes/view-subscribtions.scene';
-import { TelegrafDynamicModule } from './telegram/telegraf.module';
+// import { TelegrafDynamicModule } from './telegram/telegraf.module';
 // import { TelegramModule } from './telegram/telegram.module';
 
 @Module({
@@ -39,7 +39,12 @@ import { TelegrafDynamicModule } from './telegram/telegraf.module';
       useFactory: getMongoConfig,
     }),
     TelegramModule,
-    TelegrafDynamicModule.forRootAsync(),
+    TelegrafModule.forRootAsync({
+      botName: TELEGRAM_BOT_NAME,
+      useFactory: telegrafFactory,
+      inject: [ConfigService],
+      imports: [ConfigModule],
+    }),
     // .forRootAsync
     // {
     // botName: TELEGRAM_BOT_NAME,

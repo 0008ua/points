@@ -21,8 +21,10 @@ const gamer_module_1 = require("./gamer/gamer.module");
 const game_module_1 = require("./game/game.module");
 const logger_module_1 = require("./logger/logger.module");
 const common_module_1 = require("./common/common.module");
+const telegram_config_1 = require("./common/config/telegram.config");
+const nestjs_telegraf_1 = require("nestjs-telegraf");
+const telegram_constants_1 = require("./telegram/telegram.constants");
 const telegram_module_1 = require("./telegram/telegram.module");
-const telegraf_module_1 = require("./telegram/telegraf.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -38,7 +40,12 @@ AppModule = __decorate([
                 useFactory: mongo_config_1.getMongoConfig,
             }),
             telegram_module_1.TelegramModule,
-            telegraf_module_1.TelegrafDynamicModule.forRootAsync(),
+            nestjs_telegraf_1.TelegrafModule.forRootAsync({
+                botName: telegram_constants_1.TELEGRAM_BOT_NAME,
+                useFactory: telegram_config_1.telegrafFactory,
+                inject: [config_1.ConfigService],
+                imports: [config_1.ConfigModule],
+            }),
             auth_module_1.AuthModule,
             config_1.ConfigModule.forRoot(),
             analytics_module_1.AnalyticsModule,
