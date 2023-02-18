@@ -9,6 +9,5 @@ export class AppController {
   @Get()
   chat() {
     console.log('chat');
-    this.telegramService.sendMessage('hello', '1028538094');
   }
 }

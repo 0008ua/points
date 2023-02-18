@@ -77,7 +77,9 @@
       "delete": "Видалити",
       "finishGame": "Завершити гру",
       "cancelGame": "Відмінити гру",
-      "nextRound": "Наступний раунд"
+      "nextRound": "Наступний раунд",
+      "subscribe": "Підписатися",
+      "unsubscribe": "Відписатися"
     }
   },
   "common": {

@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1676617200159,
+  "timestamp": 1676707875984,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -148,8 +148,8 @@
     "/assets/games/uno/plus4.svg": "253ea607025caea2e4a298fa405406d792fc7086",
     "/assets/games/uno/reverse.svg": "e578858bed9e49ae280c87f2718a94c0b16edf77",
     "/assets/games/uno/skip.svg": "0aac49d185d08a53d1a6217d99eef035696ff60a",
-    "/assets/i18n/en.json": "b53c8331583be9acdc43c2d0033339833e7baa82",
-    "/assets/i18n/uk.json": "736dd22895da50717409fd8386cac5dc736c7fbd",
+    "/assets/i18n/en.json": "a9d4d58c29f329f6e574377d34f27cc59e40766f",
+    "/assets/i18n/uk.json": "811601165ee3f975b347945734f044399cf67973",
     "/assets/icons/favicon.ico": "9c5309d1d18070aff3b75a14ee03e4fcd949fe3d",
     "/assets/icons/icon-128x128.png": "cf764470b13484922b30e4d44732aba37aab90f7",
     "/assets/icons/icon-144x144.png": "08167a102e6cd69c2f6ad3fdadbe10ac13927fb1",
@@ -228,11 +228,11 @@
     "/src_app_modules_auth_profile_profile_module_ts.js": "39a3147f6dd36e1ce012a4784798d98731d69231",
     "/src_app_modules_auth_signin_signin_module_ts.js": "a9d26fdb08662f83d2cdf74c1dbf02625e9b6bc6",
     "/src_app_modules_auth_signup_signup_module_ts.js": "60782da5fd82b28ee93d589eb707c576011f59f2",
-    "/src_app_modules_auth_telegram_telegram_module_ts.js": "2809c0128c23ec5b1e63f8054c5738ac627f92bb",
-    "/src_app_modules_games_game_game_module_ts.js": "4739a6e67dc70e651722708f0f2209113fc7fee4",
+    "/src_app_modules_auth_telegram_telegram_module_ts.js": "a90e1ca90b21655a55e3bee5034716ae13d8c25d",
+    "/src_app_modules_games_game_game_module_ts.js": "aa9098cd7b3850d2b27f057d3264f8584dde6f1b",
     "/src_app_modules_games_games_module_ts.js": "669b2d9524d2c0b33e41cd77680bdea92708a6ae",
     "/src_app_tabs_tabs_module_ts.js": "398b43dff93ca1e94c2e57f51335740ba6c1e9ea",
-    "/styles.css": "3541ded1c5eae6717e8a46b78bbfd923e8b8e24b",
+    "/styles.css": "b04aef71102c0496d640fd74c6591704829123b3",
     "/vendor.js": "b3578cf8b460b2b6f9f5a331264b32f0c19072c7"
   },
   "navigationUrls": [

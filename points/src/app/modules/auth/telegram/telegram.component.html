@@ -40,20 +40,28 @@
                       [ngStyle]="{ 'background-color': gamer?.color }"
                     ></div>
                   </div>
-                  <div class="players-list__name">
+                  <div class="players-list__info">
                     <ion-item lines="full">
-                      <ion-label slot="start">{{ gamer.name }} </ion-label>
-                      <ion-label slot="end">
-                        <ion-button *ngIf="gamer.telegramSubscriptionName" (click)="unsubscibeFromBot(gamer._id)">Unsubscribe</ion-button>
-                        <ion-text color="primary">{{
-                          gamer.telegramSubscriptionName
-                        }}</ion-text>
-                        {{ gamer.telegramCheckCode }}</ion-label
-                      >
-                      <!-- <ion-note slot="end" color="danger">
-                          <ion-icon name="trash-outline"></ion-icon>
-                          <ion-icon name="caret-back-outline"></ion-icon>
-                        </ion-note> -->
+                      <ion-label class="players-list-info">
+                        <ion-text
+                          class="players-list-info__item players-list-info__item_name"
+                          color="primary"
+                          >{{ gamer.name }}</ion-text
+                        >
+                        <ion-button
+                        size="small"
+                          *ngIf="gamer.telegramSubscriptionName"
+                          class="players-list-info__item players-list-info__item_btn"
+                          (click)="unsubscibeFromBot(gamer._id)"
+                          >{{'elements.button.unsubscribe' | translate}}
+                          {{ gamer.telegramSubscriptionName }}</ion-button
+                        >
+                        <ion-text
+                          class="players-list-info__item players-list-info__item_code"
+                          color="primary"
+                          >{{ gamer.telegramCheckCode }}</ion-text
+                        >
+                      </ion-label>
                     </ion-item>
                   </div>
                 </div>

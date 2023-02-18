@@ -25,12 +25,24 @@ let TelegramController = class TelegramController {
     async unsubscribe(_id, { user }) {
         return this.telegramService.unsubscribeFromBot(_id, user._id);
     }
+    async composeMessageThousandRound(messages) {
+        let text = `<b>Thousand - 1000</b>\n\n`;
+        for (const message of messages) {
+            const gamer = await this.gamerService.findOneAllData(message.gamerId);
+            text += `<i>${gamer.name}:</i> ${message.currentScore} total: ${message.totalScore}\n`;
+        }
+        return text;
+    }
     async messages({ user }, messages) {
         console.log('messages', messages);
+        const text = await this.composeMessageThousandRound(messages);
         for (const message of messages) {
             const gamer = await this.gamerService.findOneAllData(message.gamerId, user._id);
             if (gamer.telegramId) {
-                this.telegramService.sendMessage(gamer.telegramId, message.message);
+                this.telegramService.sendMessage({
+                    chatId: gamer.telegramId,
+                    text,
+                });
             }
         }
     }
@@ -46,7 +58,7 @@ __decorate([
 ], TelegramController.prototype, "unsubscribe", null);
 __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
-    (0, common_1.Post)('messages'),
+    (0, common_1.Post)('messages/thousand-round'),
     __param(0, (0, common_1.Req)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),

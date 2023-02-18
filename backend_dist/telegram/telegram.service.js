@@ -28,8 +28,8 @@ let TelegramService = class TelegramService {
         this.authService = authService;
         this.helpersService = helpersService;
     }
-    async sendMessage(chatId, message, parse_mode = 'Markdown') {
-        await this.bot.telegram.sendMessage(chatId, message, {
+    async sendMessage(message, parse_mode = 'Markdown') {
+        await this.bot.telegram.sendMessage(message.chatId, message.text, {
             parse_mode: parse_mode,
         });
     }

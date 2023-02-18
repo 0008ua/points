@@ -77,7 +77,9 @@
       "delete": "Delete",
       "finishGame": "Finish game",
       "cancelGame": "Cancel game",
-      "nextRound": "Next Round"
+      "nextRound": "Next Round",
+      "subscribe": "Subscribe",
+      "unsubscribe": "Unubscribe"
     }
   },
   "common": {

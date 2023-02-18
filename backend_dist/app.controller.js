@@ -18,7 +18,6 @@ let AppController = class AppController {
     }
     chat() {
         console.log('chat');
-        this.telegramService.sendMessage('hello', '1028538094');
     }
 };
 __decorate([

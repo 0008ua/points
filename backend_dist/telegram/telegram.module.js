@@ -20,11 +20,7 @@ let TelegramModule = class TelegramModule {
 };
 TelegramModule = __decorate([
     (0, common_1.Module)({
-        imports: [
-            gamer_module_1.GamerModule,
-            common_module_1.CommonModule,
-            auth_module_1.AuthModule,
-        ],
+        imports: [gamer_module_1.GamerModule, common_module_1.CommonModule, auth_module_1.AuthModule],
         providers: [
             telegram_service_1.TelegramService,
             telegram_update_1.TelegramUpdate,

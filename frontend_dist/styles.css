@@ -1403,12 +1403,23 @@ input[type=number] {
   flex-flow: row nowrap;
   width: 100%;
 }
-.players-list__name {
+.players-list__info {
   flex: 1 1 100%;
 }
 .players-list__color {
   flex: 0 0 49px;
   padding: 10px;
+}
+.players-list-info {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+}
+.players-list-info__item {
+  margin: 0 8px;
+}
+.players-list-info__item_name {
+  flex: 1 1 100%;
 }
 .select-color {
   border: 0;

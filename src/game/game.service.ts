@@ -32,8 +32,10 @@ export class GameService {
       const gamer = await this.gamerService.findOneAllData(player._id);
       if (gamer.telegramId) {
         this.telegramService.sendMessage(
-          gamer.telegramId,
-          await this.composeFinishGameMessage(dto),
+          {
+            chatId: gamer.telegramId,
+            text: await this.composeFinishGameMessage(dto),
+          },
           // String(player.score),
           'HTML',
         );

@@ -10,6 +10,7 @@ import { Gamer, GamerModel } from 'src/gamer/entities/gamer.entity';
 import { GamerService } from 'src/gamer/gamer.service';
 import { Context, Telegraf } from 'telegraf';
 import { ParseMode } from 'telegraf/typings/core/types/typegram';
+import { Message } from './dto/message.dto';
 import { SubscribtionDto } from './dto/subscribtion.dto';
 import { SubscribeToBotDto } from './dto/subsctibe-to-bot.dto';
 import { TELEGRAM_BOT_NAME } from './telegram.constants';
@@ -25,11 +26,10 @@ export class TelegramService {
   ) {}
 
   async sendMessage(
-    chatId: string,
-    message: string,
+    message: Message,
     parse_mode: ParseMode = 'Markdown',
-  ) {
-    await this.bot.telegram.sendMessage(chatId, message, {
+  ): Promise<void> {
+    await this.bot.telegram.sendMessage(message.chatId, message.text, {
       parse_mode: parse_mode,
     });
   }

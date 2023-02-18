@@ -39,7 +39,10 @@ let GameService = class GameService {
         for (const player of players) {
             const gamer = await this.gamerService.findOneAllData(player._id);
             if (gamer.telegramId) {
-                this.telegramService.sendMessage(gamer.telegramId, await this.composeFinishGameMessage(dto), 'HTML');
+                this.telegramService.sendMessage({
+                    chatId: gamer.telegramId,
+                    text: await this.composeFinishGameMessage(dto),
+                }, 'HTML');
             }
         }
     }

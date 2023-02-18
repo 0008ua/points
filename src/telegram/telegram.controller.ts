@@ -12,7 +12,10 @@ import { AuthGuard } from '@nestjs/passport';
 import { TelegramService } from './telegram.service';
 import { Request } from 'express';
 import { GamerService } from 'src/gamer/gamer.service';
-import { MessageDto } from './dto/message.dto';
+import {
+  MessageThousandRound,
+  MessageThousandRoundDto,
+} from './dto/message.dto';
 
 @Controller(['tg'])
 export class TelegramController {
@@ -27,30 +30,40 @@ export class TelegramController {
     return this.telegramService.unsubscribeFromBot(_id, user._id);
   }
 
+  async composeMessageThousandRound(
+    messages: MessageThousandRoundDto[],
+  ): Promise<string> {
+    let text = `<b>Thousand - 1000</b>\n\n`;
+
+    for (const message of messages) {
+      const gamer = await this.gamerService.findOneAllData(message.gamerId);
+      text += `<i>${gamer.name}:</i> ${message.currentScore} total: ${message.totalScore}\n`;
+    }
+
+    return text;
+  }
+
   @UseGuards(AuthGuard('jwt'))
-  @Post('messages')
-  async messages(@Req() { user }: Request, @Body() messages : MessageDto[]) {
+  @Post('messages/thousand-round')
+  async messages(
+    @Req() { user }: Request,
+    @Body() messages: MessageThousandRoundDto[],
+  ) {
     console.log('messages', messages);
+    const text = await this.composeMessageThousandRound(messages);
+
     for (const message of messages) {
       const gamer = await this.gamerService.findOneAllData(
         message.gamerId,
         user._id,
       );
+
       if (gamer.telegramId) {
-        this.telegramService.sendMessage(gamer.telegramId, message.message);
+        this.telegramService.sendMessage({
+          chatId: gamer.telegramId,
+          text,
+        });
       }
     }
-    // Promise.all(
-    //   messages.map(async (message) => {
-    //     const gamer = await this.gamerService.findOneAllData(
-    //       message.gamerId,
-    //       user._id,
-    //     );
-    //     if (gamer.telegramId) {
-    //       this.telegramService.sendMessage(gamer.telegramId, message.message);
-    //     }
-    //     return;
-    //   }),
-    // );
   }
 }
