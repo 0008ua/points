@@ -16,6 +16,19 @@ import { telegrafFactory } from './common/config/telegram.config';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { TELEGRAM_BOT_NAME } from './telegram/telegram.constants';
 import { TelegramModule } from './telegram/telegram.module';
+import { TelegrafDynamicModule } from './telegram/telegraf.module';
+
+let t;
+try {
+  t = TelegrafModule.forRootAsync({
+    botName: 'TELEGRAM_BOT_NAME',
+    useFactory: telegrafFactory,
+    inject: [ConfigService],
+    imports: [ConfigModule],
+  });
+} catch (error) {
+  console.log('error', error);
+}
 
 @Module({
   imports: [
@@ -35,6 +48,7 @@ import { TelegramModule } from './telegram/telegram.module';
       inject: [ConfigService],
       imports: [ConfigModule],
     }),
+    // TelegrafDynamicModule.forRootAsync(TELEGRAM_BOT_NAME),
     AuthModule,
     ConfigModule.forRoot(),
     AnalyticsModule,
@@ -42,7 +56,6 @@ import { TelegramModule } from './telegram/telegram.module';
     GamerModule,
     LoggerModule,
     CommonModule,
-    TelegramModule,
   ],
   controllers: [AppController],
   providers: [AppService],

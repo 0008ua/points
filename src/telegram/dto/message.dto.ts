@@ -1,19 +1,16 @@
-import { ParseMode } from 'telegraf/typings/core/types/typegram';
+import { NamedScore, UID } from 'src/app.interfaces';
 
 export interface Message {
   chatId: string;
   text: string;
 }
 
-export interface MessageThousandRound extends Message {
-  currentScore: string;
-  totalScore: string;
+export interface MessageDto {
+  playerId: UID;
 }
 
-// export type SendMessageType<T> = (message: T, parse_mode?: ParseMode) => void
-
-export interface MessageThousandRoundDto {
-  gamerId: string;
-  currentScore: string;
-  totalScore: string;
+export interface MessageThousandRound {
+  lastScores: Pick<NamedScore, 'value' | 'name' | 'total'>;
 }
+
+export type MessageThousandRoundDto = MessageDto & MessageThousandRound;

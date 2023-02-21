@@ -7,6 +7,7 @@ import { SharedService } from 'src/app/services/shared.service';
 import { selectAllRoundMembers } from 'src/app/store/reducers/round-member.reducer';
 import { selectAllRounds } from 'src/app/store/reducers/round.reducer';
 import { environment } from 'src/environments/environment';
+import { TelegramService } from '../../auth/telegram/telegram.service';
 import { GamesService } from '../games.service';
 import { RoundBase, RoundScoresLine, RoundTBase } from './round-interfaces';
 
@@ -18,11 +19,13 @@ export class RoundBaseDirective implements RoundBase {
   @Input() roundId: string;
   sharedService: SharedService;
   gamesService: GamesService;
+  telegramService: TelegramService;
   actions$: Actions;
 
   constructor(injector: Injector) {
     this.sharedService = injector.get(SharedService);
     this.gamesService = injector.get(GamesService);
+    this.telegramService = injector.get(TelegramService);
     this.actions$ = injector.get(Actions);
   }
 

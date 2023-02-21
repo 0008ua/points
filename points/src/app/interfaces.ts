@@ -71,9 +71,14 @@ export interface ResultRoundWithTotal extends RoundWithTotal {
 
 export interface RoundMember {
   _id: RoundMemberUUID;
-  player: UID; // Player
+  player: UID;
   scoresLine: number[];
   namedScoresLine?: NamedScore[];
+}
+
+export interface MessageThousandRoundDto {
+  playerId: UID;
+  lastScores: Pick<NamedScore, 'value' | 'name' | 'total'> 
 }
 
 export interface RoundCfg {

@@ -1020,14 +1020,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "RoundScoresLineDirective": () => (/* binding */ RoundScoresLineDirective),
 /* harmony export */   "RoundTBaseDirective": () => (/* binding */ RoundTBaseDirective)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/effects */ 2251);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngrx/store */ 9407);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/effects */ 2251);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngrx/store */ 9407);
 /* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
 /* harmony import */ var src_app_store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/store/reducers/round-member.reducer */ 7539);
 /* harmony import */ var src_app_store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/reducers/round.reducer */ 8761);
-/* harmony import */ var _games_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../games.service */ 5333);
+/* harmony import */ var _auth_telegram_telegram_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../auth/telegram/telegram.service */ 153);
+/* harmony import */ var _games_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../games.service */ 5333);
+
 
 
 
@@ -1039,8 +1041,9 @@ __webpack_require__.r(__webpack_exports__);
 let RoundBaseDirective = class RoundBaseDirective {
     constructor(injector) {
         this.sharedService = injector.get(src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__.SharedService);
-        this.gamesService = injector.get(_games_service__WEBPACK_IMPORTED_MODULE_3__.GamesService);
-        this.actions$ = injector.get(_ngrx_effects__WEBPACK_IMPORTED_MODULE_4__.Actions);
+        this.gamesService = injector.get(_games_service__WEBPACK_IMPORTED_MODULE_4__.GamesService);
+        this.telegramService = injector.get(_auth_telegram_telegram_service__WEBPACK_IMPORTED_MODULE_3__.TelegramService);
+        this.actions$ = injector.get(_ngrx_effects__WEBPACK_IMPORTED_MODULE_5__.Actions);
     }
     getMemberByPlayerId() {
         return this.sharedService.getMemberByPlayerId(this.playerId, this.roundId);
@@ -1056,14 +1059,14 @@ let RoundBaseDirective = class RoundBaseDirective {
     }
 };
 RoundBaseDirective.ctorParameters = () => [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Injector }
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Injector }
 ];
 RoundBaseDirective.propDecorators = {
-    playerId: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input }],
-    roundId: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Input }]
+    playerId: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input }],
+    roundId: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Input }]
 };
-RoundBaseDirective = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Directive)({
+RoundBaseDirective = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Directive)({
         selector: '[appRound]',
     })
 ], RoundBaseDirective);
@@ -1080,10 +1083,10 @@ let RoundScoresLineDirective = class RoundScoresLineDirective extends RoundBaseD
     }
 };
 RoundScoresLineDirective.ctorParameters = () => [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Injector }
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Injector }
 ];
-RoundScoresLineDirective = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Directive)({
+RoundScoresLineDirective = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Directive)({
         selector: '[appRoundScoresLine]',
     })
 ], RoundScoresLineDirective);
@@ -1092,17 +1095,17 @@ let RoundTBaseDirective = class RoundTBaseDirective extends RoundScoresLineDirec
     // roundMembers: RoundMember[];
     constructor(injector) {
         super(injector);
-        this.store = injector.get(_ngrx_store__WEBPACK_IMPORTED_MODULE_7__.Store);
+        this.store = injector.get(_ngrx_store__WEBPACK_IMPORTED_MODULE_8__.Store);
         this.rounds$ = this.store.select(src_app_store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_2__.selectAllRounds);
         this.roundMembers$ = this.store.select(src_app_store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_1__.selectAllRoundMembers);
         // this.roundMembers$.subscribe((roundMembers) => this.roundMembers = roundMembers)
     }
 };
 RoundTBaseDirective.ctorParameters = () => [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_5__.Injector }
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_6__.Injector }
 ];
-RoundTBaseDirective = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Directive)({
+RoundTBaseDirective = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_6__.Directive)({
         selector: '[appRoundT]',
     })
 ], RoundTBaseDirective);
@@ -1282,7 +1285,21 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
             this.roundMembers = roundMembers;
             if (this.checkOnFinishGame() && !this.isFinished) {
                 this.isFinished = true;
+                console.log('finish');
                 return this.store.dispatch(_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__.finishGame());
+            }
+            else {
+                const messages = this.addTotals(roundMembers).map((roundMember) => {
+                    const { name, value, total } = roundMember.namedScoresLine[roundMember.namedScoresLine.length - 1];
+                    return {
+                        playerId: roundMember.player,
+                        lastScores: { name, value, total },
+                    };
+                });
+                this.telegramService
+                    .sendMessagesThousandRoundDto(messages)
+                    .subscribe((_) => _);
+                console.log(messages);
             }
             if (this.roundMembers.length) {
                 this.resetScores();

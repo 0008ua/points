@@ -28,8 +28,10 @@ let TelegramController = class TelegramController {
     async composeMessageThousandRound(messages) {
         let text = `<b>Thousand - 1000</b>\n\n`;
         for (const message of messages) {
-            const gamer = await this.gamerService.findOneAllData(message.gamerId);
-            text += `<i>${gamer.name}:</i> ${message.currentScore} total: ${message.totalScore}\n`;
+            const player = await this.gamerService.findOneAllData(message.playerId);
+            text += `<i>${player.name}:</i> ${message.lastScores.name === 'r' || message.lastScores.name === 's'
+                ? message.lastScores.name.toUpperCase()
+                : message.lastScores.value} total: ${message.lastScores.total}\n`;
         }
         return text;
     }
@@ -37,14 +39,15 @@ let TelegramController = class TelegramController {
         console.log('messages', messages);
         const text = await this.composeMessageThousandRound(messages);
         for (const message of messages) {
-            const gamer = await this.gamerService.findOneAllData(message.gamerId, user._id);
+            const gamer = await this.gamerService.findOneAllData(message.playerId, user._id);
             if (gamer.telegramId) {
                 this.telegramService.sendMessage({
                     chatId: gamer.telegramId,
                     text,
-                });
+                }, 'HTML');
             }
         }
+        return;
     }
 };
 __decorate([

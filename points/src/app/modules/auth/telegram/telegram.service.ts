@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
+import { MessageThousandRoundDto } from 'src/app/interfaces';
 import { GamerService } from 'src/app/store/gamer-data.service';
 import { environment } from 'src/environments/environment';
 import * as fromAuthActions from '../../../store/actions/auth.actions';
@@ -53,14 +54,19 @@ export class TelegramService {
       messages,
       httpOptions,
     );
-    // .pipe(
-    //   catchError((error) => {
-    //     this.store.dispatch(
-    //       fromAuthActions.error({ error: error.error.message }),
-    //     );
-    //     return throwError(error);
-    //   }),
-    //   tap(() => this.gamerService.load()),
-    // );
+  }
+
+  sendMessagesThousandRoundDto(messages: MessageThousandRoundDto[]) {
+    console.log('messages');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.post<string>(
+      this.host + '/api/tg/messages/thousand-round',
+      messages,
+      httpOptions,
+    );
   }
 }

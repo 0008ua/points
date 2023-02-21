@@ -25,6 +25,18 @@ const telegram_config_1 = require("./common/config/telegram.config");
 const nestjs_telegraf_1 = require("nestjs-telegraf");
 const telegram_constants_1 = require("./telegram/telegram.constants");
 const telegram_module_1 = require("./telegram/telegram.module");
+let t;
+try {
+    t = nestjs_telegraf_1.TelegrafModule.forRootAsync({
+        botName: 'TELEGRAM_BOT_NAME',
+        useFactory: telegram_config_1.telegrafFactory,
+        inject: [config_1.ConfigService],
+        imports: [config_1.ConfigModule],
+    });
+}
+catch (error) {
+    console.log('error', error);
+}
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -53,7 +65,6 @@ AppModule = __decorate([
             gamer_module_1.GamerModule,
             logger_module_1.LoggerModule,
             common_module_1.CommonModule,
-            telegram_module_1.TelegramModule,
         ],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],

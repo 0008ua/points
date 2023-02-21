@@ -1,13 +1,12 @@
+import { NamedScore, UID } from 'src/app.interfaces';
 export interface Message {
     chatId: string;
     text: string;
 }
-export interface MessageThousandRound extends Message {
-    currentScore: string;
-    totalScore: string;
+export interface MessageDto {
+    playerId: UID;
 }
-export interface MessageThousandRoundDto {
-    gamerId: string;
-    currentScore: string;
-    totalScore: string;
+export interface MessageThousandRound {
+    lastScores: Pick<NamedScore, 'value' | 'name' | 'total'>;
 }
+export type MessageThousandRoundDto = MessageDto & MessageThousandRound;

@@ -18,6 +18,7 @@ let AppController = class AppController {
     }
     chat() {
         console.log('chat');
+        return 'chat';
     }
 };
 __decorate([

@@ -1,6 +1,7 @@
 import { Component, Injector, Input, OnDestroy, OnInit } from '@angular/core';
 import { ofType } from '@ngrx/effects';
 import {
+  MessageThousandRoundDto,
   NamedScore,
   RoundMember,
   RoundScoresOptionsType,
@@ -44,8 +45,26 @@ export class RoundThousandComponent
 
       if (this.checkOnFinishGame() && !this.isFinished) {
         this.isFinished = true;
+        console.log('finish');
+
         return this.store.dispatch(fromAppActions.finishGame());
+      } else {
+        const messages: MessageThousandRoundDto[] = this.addTotals(
+          roundMembers,
+        ).map((roundMember) => {
+          const { name, value, total } =
+            roundMember.namedScoresLine[roundMember.namedScoresLine.length - 1];
+          return {
+            playerId: roundMember.player,
+            lastScores: { name, value, total },
+          };
+        });
+        this.telegramService
+          .sendMessagesThousandRoundDto(messages)
+          .subscribe((_) => _);
+        console.log(messages);
       }
+
       if (this.roundMembers.length) {
         this.resetScores();
       }

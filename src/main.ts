@@ -11,6 +11,7 @@ async function bootstrap() {
       key: fs.readFileSync(path.join(__dirname, '..', 'security', 'cert.key')),
       cert: fs.readFileSync(path.join(__dirname, '..', 'security', 'cert.pem')),
     };
+
     app = await NestFactory.create(AppModule, { httpsOptions });
   } else {
     app = await NestFactory.create(AppModule);

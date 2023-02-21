@@ -7,11 +7,11 @@ const getTelegramConfig = (configService) => {
     if (!token) {
         throw new Error('No TELEGRAM_TOKEN');
     }
-    return {
-        token,
-    };
+    return { token };
 };
 exports.getTelegramConfig = getTelegramConfig;
-const telegrafFactory = (configService) => (Object.assign(Object.assign({}, (0, exports.getTelegramConfig)(configService)), { include: [], middlewares: [session_middleware_1.sessionMiddleware] }));
+const telegrafFactory = (configService) => {
+    return Object.assign(Object.assign({}, (0, exports.getTelegramConfig)(configService)), { include: [], middlewares: [session_middleware_1.sessionMiddleware] });
+};
 exports.telegrafFactory = telegrafFactory;
 //# sourceMappingURL=telegram.config.js.map

@@ -470,15 +470,15 @@ let TelegramService = class TelegramService {
             }),
         };
         return this.http.post(this.host + '/api/tg/messages', messages, httpOptions);
-        // .pipe(
-        //   catchError((error) => {
-        //     this.store.dispatch(
-        //       fromAuthActions.error({ error: error.error.message }),
-        //     );
-        //     return throwError(error);
-        //   }),
-        //   tap(() => this.gamerService.load()),
-        // );
+    }
+    sendMessagesThousandRoundDto(messages) {
+        console.log('messages');
+        const httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_3__.HttpHeaders({
+                'Content-Type': 'application/json',
+            }),
+        };
+        return this.http.post(this.host + '/api/tg/messages/thousand-round', messages, httpOptions);
     }
 };
 TelegramService.ctorParameters = () => [
