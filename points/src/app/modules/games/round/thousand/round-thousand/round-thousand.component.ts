@@ -42,13 +42,23 @@ export class RoundThousandComponent
     this.roundMembers$.subscribe((roundMembers) => {
       this.qtyOfPlayers = roundMembers.length;
       this.roundMembers = roundMembers;
+      console.log('roundMembers', roundMembers);
+      console.log(
+        '0',
+        roundMembers[0].namedScoresLine.length % roundMembers.length,
+      );
+
 
       if (this.checkOnFinishGame() && !this.isFinished) {
+        // game finished
         this.isFinished = true;
-        console.log('finish');
-
         return this.store.dispatch(fromAppActions.finishGame());
-      } else {
+      } else if (
+        roundMembers.length &&
+        roundMembers[0].namedScoresLine.length &&
+        roundMembers[0].namedScoresLine.length % roundMembers.length === 0
+      ) {
+        // game started and at least one round finished
         const messages: MessageThousandRoundDto[] = this.addTotals(
           roundMembers,
         ).map((roundMember) => {
@@ -57,12 +67,12 @@ export class RoundThousandComponent
           return {
             playerId: roundMember.player,
             lastScores: { name, value, total },
+            gameType: 'thousand',
           };
         });
         this.telegramService
           .sendMessagesThousandRoundDto(messages)
           .subscribe((_) => _);
-        console.log(messages);
       }
 
       if (this.roundMembers.length) {

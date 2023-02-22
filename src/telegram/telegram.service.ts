@@ -1,16 +1,22 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { InjectBot } from 'nestjs-telegraf';
+import { UID } from 'src/app.interfaces';
 import { AuthService } from 'src/auth/auth.service';
 import { UserDataDto } from 'src/auth/dto/userData.dto';
 import { getTelegramConfig } from 'src/common/config/telegram.config';
 import { DB_ERROR, WRONG_CODE } from 'src/common/error.constants';
 import { HelpersService } from 'src/common/helpers.service';
+import { CreateGameDto } from 'src/game/dto/create-game.dto';
 import { Gamer, GamerModel } from 'src/gamer/entities/gamer.entity';
 import { GamerService } from 'src/gamer/gamer.service';
 import { Context, Telegraf } from 'telegraf';
 import { ParseMode } from 'telegraf/typings/core/types/typegram';
-import { Message } from './dto/message.dto';
+import {
+  Message,
+  MessageFinishGameDto,
+  MessageThousandRoundDto,
+} from './dto/message.dto';
 import { SubscribtionDto } from './dto/subscribtion.dto';
 import { SubscribeToBotDto } from './dto/subsctibe-to-bot.dto';
 import { TELEGRAM_BOT_NAME } from './telegram.constants';
@@ -73,5 +79,60 @@ export class TelegramService {
         };
       }),
     );
+  }
+
+  async composeFinishGameMessage(messages: MessageFinishGameDto[]) {
+    let text = `<b>Game '${messages[0].gameType}' has finished</b>\n\n`;
+    for (const message of messages) {
+      const gamer = await this.gamerService.findOneAllData(message.playerId);
+      text += `<i>${gamer.name}</i> - ${message.score}\n`;
+    }
+    return text;
+  }
+
+  async composeMessageThousandRound(
+    messages: MessageThousandRoundDto[],
+  ): Promise<string> {
+    let text = `<b>${messages[0].gameType}</b>\n\n`;
+    for (const message of messages) {
+      const player = await this.gamerService.findOneAllData(message.playerId);
+
+      text += `<i>${player.name}:</i> ${
+        message.lastScores.name === 'r' || message.lastScores.name === 's'
+          ? message.lastScores.name.toUpperCase()
+          : message.lastScores.value
+      } total: ${message.lastScores.total}\n`;
+    }
+    return text;
+  }
+  async broadcastMessages(playerId: UID, text: string) {
+    const gamer = await this.gamerService.findOneAllData(playerId);
+    if (gamer.telegramId) {
+      this.sendMessage(
+        {
+          chatId: gamer.telegramId,
+          text,
+        },
+        'HTML',
+      );
+    }
+  }
+
+  async broadcastMessagesFinishGame(
+    messages: MessageFinishGameDto[],
+  ): Promise<void> {
+    const text = await this.composeFinishGameMessage(messages);
+    for (const message of messages) {
+      this.broadcastMessages(message.playerId, text);
+    }
+  }
+
+  async broadcastMessagesThousandRound(
+    messages: MessageThousandRoundDto[],
+  ): Promise<void> {
+    const text = await this.composeMessageThousandRound(messages);
+    for (const message of messages) {
+      this.broadcastMessages(message.playerId, text);
+    }
   }
 }

@@ -1,6 +1,5 @@
 import { GamerService } from 'src/gamer/gamer.service';
 import { TelegramService } from 'src/telegram/telegram.service';
-import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { Game, GameDocument, GameModel } from './entities/game.entity';
 export declare class GameService {
@@ -8,8 +7,6 @@ export declare class GameService {
     private readonly telegramService;
     private readonly gamerService;
     constructor(gameModel: GameModel, telegramService: TelegramService, gamerService: GamerService);
-    composeFinishGameMessage(dto: CreateGameDto): Promise<string>;
-    broadcastFinishGameMessages(dto: CreateGameDto): Promise<void>;
     create(newGame: Game): Promise<GameDocument>;
     getWithQuery(query: any, owner: string): Promise<any>;
     getAll(owner: string): Promise<GameDocument[]>;

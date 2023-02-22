@@ -26,7 +26,10 @@ import {
   selectByIdRoundMember,
 } from '../store/reducers/round-member.reducer';
 import * as fromAppActions from '../store/actions/app.actions';
-import { selectRedirectionUrl, selectGameType } from '../store/reducers/app.reducer';
+import {
+  selectRedirectionUrl,
+  selectGameType,
+} from '../store/reducers/app.reducer';
 import { Router } from '@angular/router';
 import { redirection } from '../store/actions/app.actions';
 import * as fromRoundMembersActions from '../store/actions/round-member.actions';
@@ -39,6 +42,7 @@ import { GameResultComponent } from '../modules/games/game/game-result/game-resu
   providedIn: 'root',
 })
 export class SharedService {
+  environment = environment;
   players: IGamer[] = [];
   players$: Observable<IGamer[]>;
 
@@ -135,7 +139,9 @@ export class SharedService {
   createClientRoundsWithTotal(): RoundWithTotal[] {
     return this.rounds.map((round) => {
       const players = round.roundMembers.map((memberId) => {
-        const member = this.roundMembers.find((roundMember) => roundMember._id === memberId);
+        const member = this.roundMembers.find(
+          (roundMember) => roundMember._id === memberId,
+        );
         return {
           _id: member.player,
           score: member.scoresLine.reduce((prev, cur) => prev + cur, 0),
@@ -149,10 +155,16 @@ export class SharedService {
     if (this.gameType !== 'rummy') {
       return {
         _id: 'result',
-        players: this.players.map((player) => ({
-          _id: player._id,
-          score: this.getPlayerTotalScores(player._id),
-        })),
+        players: this.players
+          .map((player) => ({
+            _id: player._id,
+            score: this.getPlayerTotalScores(player._id),
+          }))
+          .sort(
+            (a, b) =>
+              (a.score - b.score) *
+              this.environment.games[this.gameType].resultsOrder,
+          ),
       };
     }
     let acc = 0;
@@ -167,6 +179,11 @@ export class SharedService {
             score,
           };
         })
+        .sort(
+          (a, b) =>
+            (a.score - b.score) *
+            this.environment.games[this.gameType].resultsOrder,
+        )
         .map((player) => ({ ...player, score: player.score || acc * -1 })),
     };
   }
@@ -174,27 +191,36 @@ export class SharedService {
   createResultOfGame(): IGame {
     return {
       type: this.gameType,
-      rounds: [...this.createClientRoundsWithTotal(), this.createResultRoundWithTotal()],
+      rounds: [
+        ...this.createClientRoundsWithTotal(),
+        this.createResultRoundWithTotal(),
+      ],
     };
   }
 
   async presentModalFinishGame(game: IGame) {
-    let order = -1; //desc
-    if (game.type === 'uno' || game.type === 'rummy') {
-      order = 1;
-    }
+    const order = this.environment.games[game.type].resultsOrder;
     const results = game.rounds.find((round) => round._id === 'result').players;
-    return this.modalService.presentModal(GameResultComponent, { results, order });
+    return this.modalService.presentModal(GameResultComponent, {
+      results,
+      order,
+    });
   }
 
-  calcQtyOfArrItems(item: string | number, playerId: string, roundId: string): number {
+  calcQtyOfArrItems(
+    item: string | number,
+    playerId: string,
+    roundId: string,
+  ): number {
     let count = 0;
 
-    this.getMemberByPlayerId(playerId, roundId).scoresLine.forEach((arrItem) => {
-      if (arrItem === item) {
-        count++;
-      }
-    });
+    this.getMemberByPlayerId(playerId, roundId).scoresLine.forEach(
+      (arrItem) => {
+        if (arrItem === item) {
+          count++;
+        }
+      },
+    );
     return count;
   }
 
@@ -221,7 +247,8 @@ export class SharedService {
     const round = this.getRoundById(roundId);
     return this.roundMembers.find(
       (roundMember) =>
-        roundMember.player === playerId && round?.roundMembers.includes(roundMember._id),
+        roundMember.player === playerId &&
+        round?.roundMembers.includes(roundMember._id),
     );
   }
   getRoundMemberById$(roundMemberId: UID): Observable<RoundMember> {

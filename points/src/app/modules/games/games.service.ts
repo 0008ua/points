@@ -48,17 +48,6 @@ export class GamesService {
           });
       }
     }
-
-    // console.log('updates', updates);
-    // this.telegramService
-    //   .sendMessages(
-    //     updates.map((roundmember) => ({
-    //       gamerId: roundmember.changes.player,
-    //       message: String(roundmember.changes.scoresLine[0]),
-    //     })),
-    //   )
-    //   .subscribe((res) => console.log('send result', res));
-
     this.store.dispatch(
       fromRoundMembersActions.updateRoundMembers({
         roundMembers: updates,

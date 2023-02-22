@@ -698,15 +698,6 @@ let GamesService = class GamesService {
                 });
             }
         }
-        // console.log('updates', updates);
-        // this.telegramService
-        //   .sendMessages(
-        //     updates.map((roundmember) => ({
-        //       gamerId: roundmember.changes.player,
-        //       message: String(roundmember.changes.scoresLine[0]),
-        //     })),
-        //   )
-        //   .subscribe((res) => console.log('send result', res));
         this.store.dispatch(_store_actions_round_member_actions__WEBPACK_IMPORTED_MODULE_2__.updateRoundMembers({
             roundMembers: updates,
         }));
@@ -1283,23 +1274,28 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
         this.roundMembers$.subscribe((roundMembers) => {
             this.qtyOfPlayers = roundMembers.length;
             this.roundMembers = roundMembers;
+            console.log('roundMembers', roundMembers);
+            console.log('0', roundMembers[0].namedScoresLine.length % roundMembers.length);
             if (this.checkOnFinishGame() && !this.isFinished) {
+                // game finished
                 this.isFinished = true;
-                console.log('finish');
                 return this.store.dispatch(_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__.finishGame());
             }
-            else {
+            else if (roundMembers.length &&
+                roundMembers[0].namedScoresLine.length &&
+                roundMembers[0].namedScoresLine.length % roundMembers.length === 0) {
+                // game started and at least one round finished
                 const messages = this.addTotals(roundMembers).map((roundMember) => {
                     const { name, value, total } = roundMember.namedScoresLine[roundMember.namedScoresLine.length - 1];
                     return {
                         playerId: roundMember.player,
                         lastScores: { name, value, total },
+                        gameType: 'thousand',
                     };
                 });
                 this.telegramService
                     .sendMessagesThousandRoundDto(messages)
                     .subscribe((_) => _);
-                console.log(messages);
             }
             if (this.roundMembers.length) {
                 this.resetScores();

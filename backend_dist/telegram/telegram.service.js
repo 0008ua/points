@@ -63,6 +63,45 @@ let TelegramService = class TelegramService {
             };
         }));
     }
+    async composeFinishGameMessage(messages) {
+        let text = `<b>Game '${messages[0].gameType}' has finished</b>\n\n`;
+        for (const message of messages) {
+            const gamer = await this.gamerService.findOneAllData(message.playerId);
+            text += `<i>${gamer.name}</i> - ${message.score}\n`;
+        }
+        return text;
+    }
+    async composeMessageThousandRound(messages) {
+        let text = `<b>${messages[0].gameType}</b>\n\n`;
+        for (const message of messages) {
+            const player = await this.gamerService.findOneAllData(message.playerId);
+            text += `<i>${player.name}:</i> ${message.lastScores.name === 'r' || message.lastScores.name === 's'
+                ? message.lastScores.name.toUpperCase()
+                : message.lastScores.value} total: ${message.lastScores.total}\n`;
+        }
+        return text;
+    }
+    async broadcastMessages(playerId, text) {
+        const gamer = await this.gamerService.findOneAllData(playerId);
+        if (gamer.telegramId) {
+            this.sendMessage({
+                chatId: gamer.telegramId,
+                text,
+            }, 'HTML');
+        }
+    }
+    async broadcastMessagesFinishGame(messages) {
+        const text = await this.composeFinishGameMessage(messages);
+        for (const message of messages) {
+            this.broadcastMessages(message.playerId, text);
+        }
+    }
+    async broadcastMessagesThousandRound(messages) {
+        const text = await this.composeMessageThousandRound(messages);
+        for (const message of messages) {
+            this.broadcastMessages(message.playerId, text);
+        }
+    }
 };
 TelegramService = __decorate([
     (0, common_1.Injectable)(),

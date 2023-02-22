@@ -1,9 +1,10 @@
+import { UID } from 'src/app.interfaces';
 import { AuthService } from 'src/auth/auth.service';
 import { HelpersService } from 'src/common/helpers.service';
 import { GamerService } from 'src/gamer/gamer.service';
 import { Context, Telegraf } from 'telegraf';
 import { ParseMode } from 'telegraf/typings/core/types/typegram';
-import { Message } from './dto/message.dto';
+import { Message, MessageFinishGameDto, MessageThousandRoundDto } from './dto/message.dto';
 import { SubscribtionDto } from './dto/subscribtion.dto';
 import { SubscribeToBotDto } from './dto/subsctibe-to-bot.dto';
 export declare class TelegramService {
@@ -16,4 +17,9 @@ export declare class TelegramService {
     subscribeToBot({ telegramId, telegramSubscriptionName, telegramCheckCode, }: SubscribeToBotDto): Promise<void>;
     unsubscribeFromBot(gamerId: string, owner?: string): Promise<void>;
     getSubscribtions(telegramId: string): Promise<SubscribtionDto[]>;
+    composeFinishGameMessage(messages: MessageFinishGameDto[]): Promise<string>;
+    composeMessageThousandRound(messages: MessageThousandRoundDto[]): Promise<string>;
+    broadcastMessages(playerId: UID, text: string): Promise<void>;
+    broadcastMessagesFinishGame(messages: MessageFinishGameDto[]): Promise<void>;
+    broadcastMessagesThousandRound(messages: MessageThousandRoundDto[]): Promise<void>;
 }

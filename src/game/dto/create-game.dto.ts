@@ -1,3 +1,4 @@
+import { UID } from 'src/app.interfaces';
 import { GameType } from '../entities/game.entity';
 
 export class CreateGameDto {
@@ -5,7 +6,7 @@ export class CreateGameDto {
   rounds: {
     _id: string;
     players: {
-      _id: string;
+      _id: UID;
       score: number;
     }[];
   }[];

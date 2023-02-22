@@ -14,34 +14,34 @@ export class GameService {
     private readonly gamerService: GamerService,
   ) {}
 
-  async composeFinishGameMessage(dto: CreateGameDto) {
-    const game = dto.type;
-    const players = dto.rounds.find((round) => round._id === 'result').players;
-    let message = `<b>Game '${game}' has finished</b>\n`;
-    for (const player of players) {
-      const gamer = await this.gamerService.findOneAllData(player._id);
-      message = message + `<i>${gamer.name}</i> - ${player.score}\n`;
-    }
-    return message;
-  }
+  // async composeFinishGameMessage(dto: CreateGameDto) {
+  //   const game = dto.type;
+  //   const players = dto.rounds.find((round) => round._id === 'result').players;
+  //   let message = `<b>Game '${game}' has finished</b>\n`;
+  //   for (const player of players) {
+  //     const gamer = await this.gamerService.findOneAllData(player._id);
+  //     message = message + `<i>${gamer.name}</i> - ${player.score}\n`;
+  //   }
+  //   return message;
+  // }
 
-  async broadcastFinishGameMessages(dto: CreateGameDto) {
-    const players = dto.rounds.find((round) => round._id === 'result').players;
+  // async broadcastFinishGameMessages(dto: CreateGameDto) {
+  //   const players = dto.rounds.find((round) => round._id === 'result').players;
 
-    for (const player of players) {
-      const gamer = await this.gamerService.findOneAllData(player._id);
-      if (gamer.telegramId) {
-        this.telegramService.sendMessage(
-          {
-            chatId: gamer.telegramId,
-            text: await this.composeFinishGameMessage(dto),
-          },
-          // String(player.score),
-          'HTML',
-        );
-      }
-    }
-  }
+  //   for (const player of players) {
+  //     const gamer = await this.gamerService.findOneAllData(player._id);
+  //     if (gamer.telegramId) {
+  //       this.telegramService.sendMessage(
+  //         {
+  //           chatId: gamer.telegramId,
+  //           text: await this.composeFinishGameMessage(dto),
+  //         },
+  //         // String(player.score),
+  //         'HTML',
+  //       );
+  //     }
+  //   }
+  // }
 
   async create(newGame: Game): Promise<GameDocument> {
     return await this.gameModel.createGame(newGame);

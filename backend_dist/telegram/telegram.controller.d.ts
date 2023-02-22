@@ -7,6 +7,5 @@ export declare class TelegramController {
     private readonly gamerService;
     constructor(telegramService: TelegramService, gamerService: GamerService);
     unsubscribe(_id: string, { user }: Request): Promise<void>;
-    composeMessageThousandRound(messages: MessageThousandRoundDto[]): Promise<string>;
     messages({ user }: Request, messages: MessageThousandRoundDto[]): Promise<void>;
 }

@@ -756,6 +756,7 @@ let SharedService = class SharedService {
         this.router = router;
         this.modalService = modalService;
         this.jwtDecode = jwtDecode;
+        this.environment = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment;
         this.players = [];
         this.rounds = [];
         this.roundMembers = [];
@@ -832,10 +833,13 @@ let SharedService = class SharedService {
         if (this.gameType !== 'rummy') {
             return {
                 _id: 'result',
-                players: this.players.map((player) => ({
+                players: this.players
+                    .map((player) => ({
                     _id: player._id,
                     score: this.getPlayerTotalScores(player._id),
-                })),
+                }))
+                    .sort((a, b) => (a.score - b.score) *
+                    this.environment.games[this.gameType].resultsOrder),
             };
         }
         let acc = 0;
@@ -850,23 +854,28 @@ let SharedService = class SharedService {
                     score,
                 };
             })
+                .sort((a, b) => (a.score - b.score) *
+                this.environment.games[this.gameType].resultsOrder)
                 .map((player) => (Object.assign(Object.assign({}, player), { score: player.score || acc * -1 }))),
         };
     }
     createResultOfGame() {
         return {
             type: this.gameType,
-            rounds: [...this.createClientRoundsWithTotal(), this.createResultRoundWithTotal()],
+            rounds: [
+                ...this.createClientRoundsWithTotal(),
+                this.createResultRoundWithTotal(),
+            ],
         };
     }
     presentModalFinishGame(game) {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, function* () {
-            let order = -1; //desc
-            if (game.type === 'uno' || game.type === 'rummy') {
-                order = 1;
-            }
+            const order = this.environment.games[game.type].resultsOrder;
             const results = game.rounds.find((round) => round._id === 'result').players;
-            return this.modalService.presentModal(_modules_games_game_game_result_game_result_component__WEBPACK_IMPORTED_MODULE_9__.GameResultComponent, { results, order });
+            return this.modalService.presentModal(_modules_games_game_game_result_game_result_component__WEBPACK_IMPORTED_MODULE_9__.GameResultComponent, {
+                results,
+                order,
+            });
         });
     }
     calcQtyOfArrItems(item, playerId, roundId) {
@@ -892,7 +901,8 @@ let SharedService = class SharedService {
     }
     getMemberByPlayerId(playerId, roundId) {
         const round = this.getRoundById(roundId);
-        return this.roundMembers.find((roundMember) => roundMember.player === playerId && (round === null || round === void 0 ? void 0 : round.roundMembers.includes(roundMember._id)));
+        return this.roundMembers.find((roundMember) => roundMember.player === playerId &&
+            (round === null || round === void 0 ? void 0 : round.roundMembers.includes(roundMember._id)));
     }
     getRoundMemberById$(roundMemberId) {
         return this.store.select((0,_store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__.selectByIdRoundMember)(roundMemberId));
@@ -2863,6 +2873,7 @@ const environment = {
     games: {
         rummy: {
             name: 'Rummy',
+            resultsOrder: 1,
             showToolbarMenu: false,
             maxPlayersQty: 4,
             minPlayersQty: 2,
@@ -2881,7 +2892,11 @@ const environment = {
                 { name: '11', value: -11, picture: './assets/games/uno/9.svg' },
                 { name: '12', value: -12, picture: './assets/games/uno/9.svg' },
                 { name: '13', value: -13, picture: './assets/games/uno/9.svg' },
-                { name: 'Joker', value: -30, picture: './assets/games/uno/reverse.svg' },
+                {
+                    name: 'Joker',
+                    value: -30,
+                    picture: './assets/games/uno/reverse.svg',
+                },
             ],
             rounds: [
                 {
@@ -2909,6 +2924,7 @@ const environment = {
         },
         uno: {
             name: 'Uno',
+            resultsOrder: 1,
             showToolbarMenu: false,
             maxPlayersQty: 10,
             minPlayersQty: 2,
@@ -2924,7 +2940,11 @@ const environment = {
                 { name: '7', value: 7, picture: './assets/games/uno/7.svg' },
                 { name: '8', value: 8, picture: './assets/games/uno/8.svg' },
                 { name: '9', value: 9, picture: './assets/games/uno/9.svg' },
-                { name: 'reverse', value: 20, picture: './assets/games/uno/reverse.svg' },
+                {
+                    name: 'reverse',
+                    value: 20,
+                    picture: './assets/games/uno/reverse.svg',
+                },
                 { name: 'skip', value: 20, picture: './assets/games/uno/skip.svg' },
                 { name: 'plus2', value: 20, picture: './assets/games/uno/plus2.svg' },
                 { name: 'plus4', value: 50, picture: './assets/games/uno/plus4.svg' },
@@ -2950,6 +2970,7 @@ const environment = {
         },
         thousand: {
             name: 'Thousand - 1000',
+            resultsOrder: -1,
             showToolbarMenu: false,
             maxPlayersQty: 4,
             minPlayersQty: 2,
@@ -2985,6 +3006,7 @@ const environment = {
         },
         train: {
             name: 'Ticket to ride',
+            resultsOrder: -1,
             showToolbarMenu: true,
             maxPlayersQty: 5,
             minPlayersQty: 2,

@@ -78,7 +78,8 @@ export interface RoundMember {
 
 export interface MessageThousandRoundDto {
   playerId: UID;
-  lastScores: Pick<NamedScore, 'value' | 'name' | 'total'> 
+  lastScores: Pick<NamedScore, 'value' | 'name' | 'total'>;
+  gameType: GameType;
 }
 
 export interface RoundCfg {

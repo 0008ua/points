@@ -18,14 +18,22 @@ const game_service_1 = require("./game.service");
 const create_game_dto_1 = require("./dto/create-game.dto");
 const update_game_dto_1 = require("./dto/update-game.dto");
 const passport_1 = require("@nestjs/passport");
+const telegram_service_1 = require("../telegram/telegram.service");
 let GameController = class GameController {
-    constructor(gameService) {
+    constructor(gameService, telegramService) {
         this.gameService = gameService;
+        this.telegramService = telegramService;
     }
     create(dto, { user }) {
         const newGame = Object.assign(Object.assign({}, dto), { owner: user._id });
-        console.log('newGame', newGame);
-        this.gameService.broadcastFinishGameMessages(dto);
+        const messages = dto.rounds
+            .find((round) => round._id === 'result')
+            .players.map((player) => ({
+            gameType: dto.type,
+            playerId: player._id,
+            score: String(player.score),
+        }));
+        this.telegramService.broadcastMessagesFinishGame(messages);
         return this.gameService.create(newGame);
     }
     getWithQuery(query, { user }) {
@@ -92,7 +100,8 @@ __decorate([
 ], GameController.prototype, "remove", null);
 GameController = __decorate([
     (0, common_1.Controller)(['store/game', 'store/games']),
-    __metadata("design:paramtypes", [game_service_1.GameService])
+    __metadata("design:paramtypes", [game_service_1.GameService,
+        telegram_service_1.TelegramService])
 ], GameController);
 exports.GameController = GameController;
 //# sourceMappingURL=game.controller.js.map
