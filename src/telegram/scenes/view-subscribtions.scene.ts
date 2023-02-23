@@ -25,6 +25,7 @@ export class ViewSubscribtionsScene {
         text: `Unsubscribe '${sub.name}' (user: ${sub.ownerName})`,
         data: sub._id,
       }));
+
       ctx.reply('Subscriptions: ', viewSubscriptionsMenuButtons(buttons));
     }
   }
@@ -32,6 +33,7 @@ export class ViewSubscribtionsScene {
   @Hears(BUTTON_TEXT.back)
   async hearsReturn(@Ctx() ctx: any) {
     await ctx.scene.leave();
+
     backCmd(ctx);
   }
 

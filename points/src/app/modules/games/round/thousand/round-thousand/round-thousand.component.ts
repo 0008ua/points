@@ -25,7 +25,7 @@ import { take } from 'rxjs/operators';
 })
 export class RoundThousandComponent
   extends RoundTBaseDirective
-  implements OnInit
+  implements OnInit, OnDestroy
 {
   scores: RoundScoresType = {};
   initialScores: RoundScoresType = {};
@@ -34,21 +34,19 @@ export class RoundThousandComponent
   roundMembers: RoundMember[];
   activeRoundMemberId: string;
   isFinished = false;
+  sub: any;
   constructor(injector: Injector) {
     super(injector);
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
   ngOnInit(): void {
-    this.roundMembers$.subscribe((roundMembers) => {
+    this.sub = this.roundMembers$.subscribe((roundMembers) => {
       this.qtyOfPlayers = roundMembers.length;
       this.roundMembers = roundMembers;
-      console.log('roundMembers', roundMembers);
-      console.log(
-        '0',
-        roundMembers[0].namedScoresLine.length % roundMembers.length,
-      );
-
-
       if (this.checkOnFinishGame() && !this.isFinished) {
         // game finished
         this.isFinished = true;

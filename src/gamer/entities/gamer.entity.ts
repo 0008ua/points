@@ -42,6 +42,9 @@ export class Gamer {
   @Prop()
   telegramId: string;
 
+  @Prop()
+  telegramLanguage: string;
+
   @Prop({ enum: Colors })
   color: Colors;
 }

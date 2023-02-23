@@ -16,7 +16,6 @@ import { telegrafFactory } from './common/config/telegram.config';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { TELEGRAM_BOT_NAME } from './telegram/telegram.constants';
 import { TelegramModule } from './telegram/telegram.module';
-import { TelegrafDynamicModule } from './telegram/telegraf.module';
 
 let t;
 try {
@@ -46,7 +45,7 @@ try {
       botName: TELEGRAM_BOT_NAME,
       useFactory: telegrafFactory,
       inject: [ConfigService],
-      imports: [ConfigModule],
+      imports: [ConfigModule, TelegramModule],
     }),
     // TelegrafDynamicModule.forRootAsync(TELEGRAM_BOT_NAME),
     AuthModule,

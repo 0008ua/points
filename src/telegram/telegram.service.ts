@@ -21,15 +21,24 @@ import { SubscribtionDto } from './dto/subscribtion.dto';
 import { SubscribeToBotDto } from './dto/subsctibe-to-bot.dto';
 import { TELEGRAM_BOT_NAME } from './telegram.constants';
 import { TelegramOptions } from './telegram.interface';
+import { ComposerService } from './utils/composer.service';
 
 @Injectable()
 export class TelegramService {
+  public language: string;
   constructor(
-    @InjectBot(TELEGRAM_BOT_NAME) private readonly bot: Telegraf<Context>,
+    @InjectBot(TELEGRAM_BOT_NAME) public readonly bot: Telegraf<any>,
     private readonly gamerService: GamerService,
     private readonly authService: AuthService,
     private readonly helpersService: HelpersService,
-  ) {}
+    private readonly composerService: ComposerService,
+  ) {
+    this.bot.use((ctx, next) => {
+      console.log('ctx', ctx.update.message.from.language_code);
+      this.language = ctx.update.message.from.language_code;
+      return next();
+    });
+  }
 
   async sendMessage(
     message: Message,
@@ -49,10 +58,15 @@ export class TelegramService {
     if (!gamer) {
       throw new HttpException(...WRONG_CODE);
     }
-    await this.gamerService.update(gamer._id.toString(), {
+
+    let query: any = {
       telegramId,
       telegramSubscriptionName,
-    });
+    };
+    if (this.language) {
+      query = { ...query, telegramLanguage: this.language };
+    }
+    await this.gamerService.update(gamer._id.toString(), query);
   }
 
   async unsubscribeFromBot(gamerId: string, owner?: string): Promise<void> {
@@ -81,58 +95,61 @@ export class TelegramService {
     );
   }
 
-  async composeFinishGameMessage(messages: MessageFinishGameDto[]) {
-    let text = `<b>Game '${messages[0].gameType}' has finished</b>\n\n`;
-    for (const message of messages) {
-      const gamer = await this.gamerService.findOneAllData(message.playerId);
-      text += `<i>${gamer.name}</i> - ${message.score}\n`;
-    }
-    return text;
-  }
-
-  async composeMessageThousandRound(
-    messages: MessageThousandRoundDto[],
-  ): Promise<string> {
-    let text = `<b>${messages[0].gameType}</b>\n\n`;
-    for (const message of messages) {
-      const player = await this.gamerService.findOneAllData(message.playerId);
-
-      text += `<i>${player.name}:</i> ${
-        message.lastScores.name === 'r' || message.lastScores.name === 's'
-          ? message.lastScores.name.toUpperCase()
-          : message.lastScores.value
-      } total: ${message.lastScores.total}\n`;
-    }
-    return text;
-  }
-  async broadcastMessages(playerId: UID, text: string) {
-    const gamer = await this.gamerService.findOneAllData(playerId);
-    if (gamer.telegramId) {
-      this.sendMessage(
-        {
-          chatId: gamer.telegramId,
-          text,
-        },
-        'HTML',
-      );
-    }
-  }
+  // private async broadcastMessages(
+  //   messages: MessageFinishGameDto[] | MessageThousandRoundDto[],
+  //   text: string,
+  // ) {
+  //   for (const message of messages) {
+  //     const gamer = await this.gamerService.findOneAllData(message.playerId);
+  //     if (gamer.telegramId) {
+  //       this.sendMessage(
+  //         {
+  //           chatId: gamer.telegramId,
+  //           text,
+  //         },
+  //         'HTML',
+  //       );
+  //     }
+  //   }
+  // }
 
   async broadcastMessagesFinishGame(
     messages: MessageFinishGameDto[],
   ): Promise<void> {
-    const text = await this.composeFinishGameMessage(messages);
     for (const message of messages) {
-      this.broadcastMessages(message.playerId, text);
+      const gamer = await this.gamerService.findOneAllData(message.playerId);
+      if (gamer.telegramId) {
+        this.sendMessage(
+          {
+            chatId: gamer.telegramId,
+            text: await this.composerService.composeFinishGameMessage(
+              messages,
+              gamer.telegramLanguage,
+            ),
+          },
+          'HTML',
+        );
+      }
     }
   }
 
   async broadcastMessagesThousandRound(
     messages: MessageThousandRoundDto[],
   ): Promise<void> {
-    const text = await this.composeMessageThousandRound(messages);
     for (const message of messages) {
-      this.broadcastMessages(message.playerId, text);
+      const gamer = await this.gamerService.findOneAllData(message.playerId);
+      if (gamer.telegramId) {
+        this.sendMessage(
+          {
+            chatId: gamer.telegramId,
+            text: await this.composerService.composeMessageThousandRound(
+              messages,
+              this.language,
+            ),
+          },
+          'HTML',
+        );
+      }
     }
   }
 }

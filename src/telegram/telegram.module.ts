@@ -22,7 +22,11 @@ import { TelegramController } from './telegram.controller';
 import { ViewSubscribtionsScene } from './scenes/view-subscribtions.scene';
 import { CommonModule } from 'src/common/common.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { ComposerService } from './utils/composer.service';
+import { languageMiddleware } from './middlewares/language.middleware';
 // import { TelegrafDynamicModule } from './telegraf.module';
+
+export const LANG = 'LanguageMiddleware';
 
 @Module({
   imports: [GamerModule, CommonModule, AuthModule],
@@ -31,6 +35,7 @@ import { AuthModule } from 'src/auth/auth.module';
     TelegramUpdate,
     BindUserScene,
     ViewSubscribtionsScene,
+    ComposerService,
   ],
   exports: [TelegramService],
   controllers: [TelegramController],

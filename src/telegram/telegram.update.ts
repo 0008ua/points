@@ -24,8 +24,16 @@ import { backCmd, startCmd } from './utils/commands';
 
 @Update()
 export class TelegramUpdate {
+
+  // @On('message')
+  // async hearsAll(@Ctx() ctx: any, next) {
+  //   console.log(ctx.update.message.from.language_code);
+  //   console.log('next', next)
+  //   await next();
+  // }
+
   @Start()
-  async start(@Ctx() ctx: SceneContext) {
+  async start(@Ctx() ctx: any) {
     // console.log(ctx.from.id);
     await startCmd(ctx);
     // await ctx.reply(

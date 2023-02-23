@@ -47,6 +47,10 @@ __decorate([
     __metadata("design:type", String)
 ], Gamer.prototype, "telegramId", void 0);
 __decorate([
+    (0, mongoose_1.Prop)(),
+    __metadata("design:type", String)
+], Gamer.prototype, "telegramLanguage", void 0);
+__decorate([
     (0, mongoose_1.Prop)({ enum: Colors }),
     __metadata("design:type", String)
 ], Gamer.prototype, "color", void 0);

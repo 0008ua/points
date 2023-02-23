@@ -2,7 +2,7 @@
   "language": "Switch to English",
   "games": {
     "train": {
-      "title": "Ticket to ride",
+      "name": "Ticket to ride",
       "routes": "Завершені маршрути",
       "length": "Найдовший маршрут",
       "cars": "Потяги",
@@ -11,22 +11,22 @@
       "stationsShort": "Станції"
     },
     "uno": {
-      "title": "Уно",
+      "name": "Уно",
       "round": "Раунд"
     },
     "thousand": {
-      "title": "Тисяча - 1000"
+      "name": "Тисяча - 1000"
     },
     "rummy": {
-      "title": "Румі"
+      "name": "Румі"
     }
   },
   "modules": {
     "settings": {
-      "title": "Налаштування"
+      "name": "Налаштування"
     },
     "analytics": {
-      "title": "Аналітика",
+      "name": "Аналітика",
       "rating": "Рейтинг",
       "byWins": "Рейтинг за загальною кількістю перемог",
       "byWinsToGames": "Рейтинг за кількістю перемог до зіграних партій",
@@ -35,7 +35,7 @@
       "wins": "Перемог"
     },
     "games": {
-      "title": "Ігри",
+      "name": "Ігри",
       "createGamer": "Створити гравця",
       "addPlayers": "Додати гравців",
       "color": "Колір",

@@ -1,6 +1,8 @@
 import { ConfigService } from '@nestjs/config';
 import { TelegrafModuleOptions } from 'nestjs-telegraf';
+import { languageMiddleware } from 'src/telegram/middlewares/language.middleware';
 import { sessionMiddleware } from 'src/telegram/middlewares/session.middleware';
+import { TelegramService } from 'src/telegram/telegram.service';
 
 export const getTelegramConfig = (
   configService: ConfigService,
@@ -12,10 +14,14 @@ export const getTelegramConfig = (
   return { token };
 };
 
-export const telegrafFactory = (configService: ConfigService) => {
+export const telegrafFactory = (
+  configService: ConfigService,
+  // languageMiddleware: LanguageMiddleware,
+  // telegramService: TelegramService,
+) => {
   return {
     ...getTelegramConfig(configService),
     include: [],
-    middlewares: [sessionMiddleware],
+    middlewares: [sessionMiddleware, languageMiddleware],
   };
 };

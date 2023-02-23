@@ -1,5 +1,5 @@
 export type UID = string;
-export type GameType = string;
+export type GameType = 'rummy' | 'uno' | 'thousand' | 'train';
 
 export interface NamedScore {
   name: string;

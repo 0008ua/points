@@ -21,12 +21,19 @@ const helpers_service_1 = require("../common/helpers.service");
 const gamer_service_1 = require("../gamer/gamer.service");
 const telegraf_1 = require("telegraf");
 const telegram_constants_1 = require("./telegram.constants");
+const composer_service_1 = require("./utils/composer.service");
 let TelegramService = class TelegramService {
-    constructor(bot, gamerService, authService, helpersService) {
+    constructor(bot, gamerService, authService, helpersService, composerService) {
         this.bot = bot;
         this.gamerService = gamerService;
         this.authService = authService;
         this.helpersService = helpersService;
+        this.composerService = composerService;
+        this.bot.use((ctx, next) => {
+            console.log('ctx', ctx.update.message.from.language_code);
+            this.language = ctx.update.message.from.language_code;
+            return next();
+        });
     }
     async sendMessage(message, parse_mode = 'Markdown') {
         await this.bot.telegram.sendMessage(message.chatId, message.text, {
@@ -38,10 +45,14 @@ let TelegramService = class TelegramService {
         if (!gamer) {
             throw new common_1.HttpException(...error_constants_1.WRONG_CODE);
         }
-        await this.gamerService.update(gamer._id.toString(), {
+        let query = {
             telegramId,
             telegramSubscriptionName,
-        });
+        };
+        if (this.language) {
+            query = Object.assign(Object.assign({}, query), { telegramLanguage: this.language });
+        }
+        await this.gamerService.update(gamer._id.toString(), query);
     }
     async unsubscribeFromBot(gamerId, owner) {
         const patch = {
@@ -63,43 +74,26 @@ let TelegramService = class TelegramService {
             };
         }));
     }
-    async composeFinishGameMessage(messages) {
-        let text = `<b>Game '${messages[0].gameType}' has finished</b>\n\n`;
+    async broadcastMessagesFinishGame(messages) {
         for (const message of messages) {
             const gamer = await this.gamerService.findOneAllData(message.playerId);
-            text += `<i>${gamer.name}</i> - ${message.score}\n`;
-        }
-        return text;
-    }
-    async composeMessageThousandRound(messages) {
-        let text = `<b>${messages[0].gameType}</b>\n\n`;
-        for (const message of messages) {
-            const player = await this.gamerService.findOneAllData(message.playerId);
-            text += `<i>${player.name}:</i> ${message.lastScores.name === 'r' || message.lastScores.name === 's'
-                ? message.lastScores.name.toUpperCase()
-                : message.lastScores.value} total: ${message.lastScores.total}\n`;
-        }
-        return text;
-    }
-    async broadcastMessages(playerId, text) {
-        const gamer = await this.gamerService.findOneAllData(playerId);
-        if (gamer.telegramId) {
-            this.sendMessage({
-                chatId: gamer.telegramId,
-                text,
-            }, 'HTML');
-        }
-    }
-    async broadcastMessagesFinishGame(messages) {
-        const text = await this.composeFinishGameMessage(messages);
-        for (const message of messages) {
-            this.broadcastMessages(message.playerId, text);
+            if (gamer.telegramId) {
+                this.sendMessage({
+                    chatId: gamer.telegramId,
+                    text: await this.composerService.composeFinishGameMessage(messages, gamer.telegramLanguage),
+                }, 'HTML');
+            }
         }
     }
     async broadcastMessagesThousandRound(messages) {
-        const text = await this.composeMessageThousandRound(messages);
         for (const message of messages) {
-            this.broadcastMessages(message.playerId, text);
+            const gamer = await this.gamerService.findOneAllData(message.playerId);
+            if (gamer.telegramId) {
+                this.sendMessage({
+                    chatId: gamer.telegramId,
+                    text: await this.composerService.composeMessageThousandRound(messages, this.language),
+                }, 'HTML');
+            }
         }
     }
 };
@@ -109,7 +103,8 @@ TelegramService = __decorate([
     __metadata("design:paramtypes", [telegraf_1.Telegraf,
         gamer_service_1.GamerService,
         auth_service_1.AuthService,
-        helpers_service_1.HelpersService])
+        helpers_service_1.HelpersService,
+        composer_service_1.ComposerService])
 ], TelegramService);
 exports.TelegramService = TelegramService;
 //# sourceMappingURL=telegram.service.js.map

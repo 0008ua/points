@@ -2,7 +2,7 @@
   "language": "Перейти на Українську",
   "games": {
     "train": {
-      "title": "Ticket to ride",
+      "name": "Ticket to ride",
       "routes": "Completed routes",
       "length": "Longest route",
       "cars": "Trains",
@@ -11,22 +11,22 @@
       "stationsShort": "Stations"
     },
     "uno": {
-      "title": "Uno",
+      "name": "Uno",
       "round": "Round"
     },
     "thousand": {
-      "title": "Thousand - 1000"
+      "name": "Thousand - 1000"
     },
     "rummy": {
-      "title": "Rummy"
+      "name": "Rummy"
     }
   },
   "modules": {
     "settings": {
-      "title": "Settings"
+      "name": "Settings"
     },
     "analytics": {
-      "title": "Analytics",
+      "name": "Analytics",
       "rating": "Raiting",
       "byWins": "Raiting by total wins",
       "byWinsToGames": "Raiting by wins to played games",
@@ -35,7 +35,7 @@
       "wins": "Wins"
     },
     "games": {
-      "title": "Games",
+      "name": "Games",
       "createGamer": "Create player",
       "addPlayers": "Add players",
       "color": "Color",

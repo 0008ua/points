@@ -56,7 +56,7 @@ AppModule = __decorate([
                 botName: telegram_constants_1.TELEGRAM_BOT_NAME,
                 useFactory: telegram_config_1.telegrafFactory,
                 inject: [config_1.ConfigService],
-                imports: [config_1.ConfigModule],
+                imports: [config_1.ConfigModule, telegram_module_1.TelegramModule],
             }),
             auth_module_1.AuthModule,
             config_1.ConfigModule.forRoot(),

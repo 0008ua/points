@@ -37,6 +37,7 @@ export declare class Gamer {
     telegramCheckCode: string;
     telegramSubscriptionName: string;
     telegramId: string;
+    telegramLanguage: string;
     color: Colors;
 }
 export type GamerDocument = HydratedDocument<Gamer>;

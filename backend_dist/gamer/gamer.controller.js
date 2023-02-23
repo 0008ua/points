@@ -26,7 +26,7 @@ let GamerController = class GamerController {
     }
     create(dto, { user }) {
         const code = this.helpersService.generateTelegramSecurityCode();
-        const newGamer = Object.assign(Object.assign({}, dto), { owner: user._id, uniqueName: user._id + dto.name, telegramCheckCode: code, telegramId: '', telegramSubscriptionName: '' });
+        const newGamer = Object.assign(Object.assign({}, dto), { owner: user._id, uniqueName: user._id + dto.name, telegramCheckCode: code, telegramId: '', telegramSubscriptionName: '', telegramLanguage: 'en' });
         return this.gamerService.create(newGamer);
     }
     async getWithQuery(query, { user }) {

@@ -6,6 +6,7 @@ export const environment = {
   games: {
     rummy: {
       name: 'Rummy',
+      resultsOrder: 1,
       showToolbarMenu: false,
       maxPlayersQty: 4,
       minPlayersQty: 2,
@@ -24,7 +25,11 @@ export const environment = {
         { name: '11', value: -11, picture: './assets/games/uno/9.svg' },
         { name: '12', value: -12, picture: './assets/games/uno/9.svg' },
         { name: '13', value: -13, picture: './assets/games/uno/9.svg' },
-        { name: 'Joker', value: -30, picture: './assets/games/uno/reverse.svg' },
+        {
+          name: 'Joker',
+          value: -30,
+          picture: './assets/games/uno/reverse.svg',
+        },
       ],
       rounds: [
         {
@@ -53,6 +58,7 @@ export const environment = {
     },
     uno: {
       name: 'Uno',
+      resultsOrder: 1,
       showToolbarMenu: false,
       maxPlayersQty: 10,
       minPlayersQty: 2,
@@ -68,7 +74,11 @@ export const environment = {
         { name: '7', value: 7, picture: './assets/games/uno/7.svg' },
         { name: '8', value: 8, picture: './assets/games/uno/8.svg' },
         { name: '9', value: 9, picture: './assets/games/uno/9.svg' },
-        { name: 'reverse', value: 20, picture: './assets/games/uno/reverse.svg' },
+        {
+          name: 'reverse',
+          value: 20,
+          picture: './assets/games/uno/reverse.svg',
+        },
         { name: 'skip', value: 20, picture: './assets/games/uno/skip.svg' },
         { name: 'plus2', value: 20, picture: './assets/games/uno/plus2.svg' },
         { name: 'plus4', value: 50, picture: './assets/games/uno/plus4.svg' },
@@ -94,6 +104,7 @@ export const environment = {
     },
     thousand: {
       name: 'Thousand - 1000',
+      resultsOrder: -1,
       showToolbarMenu: false,
       maxPlayersQty: 4,
       minPlayersQty: 2,
@@ -129,6 +140,7 @@ export const environment = {
     },
     train: {
       name: 'Ticket to ride',
+      resultsOrder: -1,
       showToolbarMenu: true,
       maxPlayersQty: 5,
       minPlayersQty: 2,

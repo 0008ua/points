@@ -6,7 +6,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TelegramModule = void 0;
+exports.TelegramModule = exports.LANG = void 0;
 const common_1 = require("@nestjs/common");
 const telegram_service_1 = require("./telegram.service");
 const telegram_update_1 = require("./telegram.update");
@@ -16,6 +16,8 @@ const telegram_controller_1 = require("./telegram.controller");
 const view_subscribtions_scene_1 = require("./scenes/view-subscribtions.scene");
 const common_module_1 = require("../common/common.module");
 const auth_module_1 = require("../auth/auth.module");
+const composer_service_1 = require("./utils/composer.service");
+exports.LANG = 'LanguageMiddleware';
 let TelegramModule = class TelegramModule {
 };
 TelegramModule = __decorate([
@@ -26,6 +28,7 @@ TelegramModule = __decorate([
             telegram_update_1.TelegramUpdate,
             bind_user_1.BindUserScene,
             view_subscribtions_scene_1.ViewSubscribtionsScene,
+            composer_service_1.ComposerService,
         ],
         exports: [telegram_service_1.TelegramService],
         controllers: [telegram_controller_1.TelegramController],

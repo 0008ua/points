@@ -36,6 +36,7 @@ export class GamerController {
       telegramCheckCode: code,
       telegramId: '',
       telegramSubscriptionName: '',
+      telegramLanguage: 'en',
     };
     return this.gamerService.create(newGamer);
   }
