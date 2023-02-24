@@ -10,12 +10,13 @@ import {
   Action,
   SceneLeave,
 } from 'nestjs-telegraf';
+import { buttons, environment } from 'src/app.environment';
+import { BtnType } from 'src/app.interfaces';
 import { Telegraf, Markup } from 'telegraf';
 import { callback } from 'telegraf/typings/button';
 import { button } from 'telegraf/typings/markup';
 import {
   BIND_USER,
-  BUTTON_TEXT,
   TELEGRAM_BOT_NAME,
   VIEW_SUBSCRIBTIONS,
 } from './telegram.constants';
@@ -24,14 +25,6 @@ import { backCmd, startCmd } from './utils/commands';
 
 @Update()
 export class TelegramUpdate {
-
-  // @On('message')
-  // async hearsAll(@Ctx() ctx: any, next) {
-  //   console.log(ctx.update.message.from.language_code);
-  //   console.log('next', next)
-  //   await next();
-  // }
-
   @Start()
   async start(@Ctx() ctx: any) {
     // console.log(ctx.from.id);
@@ -53,17 +46,17 @@ export class TelegramUpdate {
     // });
     // );
   }
-  @Hears(BUTTON_TEXT.back)
+  @Hears(buttons.back)
   async hearsBack(@Ctx() ctx: any) {
     await backCmd(ctx);
   }
 
-  @Hears(BUTTON_TEXT.subscribe)
+  @Hears(buttons.subscribe)
   async hearsSubscribe(@Ctx() ctx: any) {
     await ctx.scene.enter(BIND_USER);
   }
 
-  @Hears(BUTTON_TEXT.viewSubscribtions)
+  @Hears(buttons.viewSubscribtions)
   async hearsVievSubscribtions(@Ctx() ctx: any) {
     await ctx.scene.enter(VIEW_SUBSCRIBTIONS);
   }

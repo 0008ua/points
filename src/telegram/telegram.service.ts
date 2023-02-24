@@ -1,7 +1,8 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { InjectBot } from 'nestjs-telegraf';
-import { UID } from 'src/app.interfaces';
+import { environment } from 'src/app.environment';
+import { BtnType, CmdType, UID } from 'src/app.interfaces';
 import { AuthService } from 'src/auth/auth.service';
 import { UserDataDto } from 'src/auth/dto/userData.dto';
 import { getTelegramConfig } from 'src/common/config/telegram.config';
@@ -26,6 +27,7 @@ import { ComposerService } from './utils/composer.service';
 @Injectable()
 export class TelegramService {
   public language: string;
+
   constructor(
     @InjectBot(TELEGRAM_BOT_NAME) public readonly bot: Telegraf<any>,
     private readonly gamerService: GamerService,
@@ -34,8 +36,9 @@ export class TelegramService {
     private readonly composerService: ComposerService,
   ) {
     this.bot.use((ctx, next) => {
-      console.log('ctx', ctx.update.message.from.language_code);
-      this.language = ctx.update.message.from.language_code;
+      if (ctx.update.message) {
+        this.language = ctx.update.message.from.language_code;
+      }
       return next();
     });
   }

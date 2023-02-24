@@ -1,8 +1,10 @@
 import { Scene, SceneEnter, Ctx, On, Hears } from 'nestjs-telegraf';
-import { BIND_USER, BUTTON_TEXT } from '../telegram.constants';
+import { buttons } from 'src/app.environment';
+import { BIND_USER } from '../telegram.constants';
 import { SceneContext } from '../telegram.interface';
 import { TelegramService } from '../telegram.service';
 import { backCmd, onSubscribeSceneCmd } from '../utils/commands';
+import { getMsgText } from '../utils/composer';
 
 @Scene(BIND_USER)
 export class BindUserScene {
@@ -13,7 +15,7 @@ export class BindUserScene {
     onSubscribeSceneCmd(ctx);
   }
 
-  @Hears(BUTTON_TEXT.back)
+  @Hears(buttons.back)
   async hearsReturn(@Ctx() ctx: any) {
     await ctx.scene.leave();
     backCmd(ctx);
@@ -27,10 +29,10 @@ export class BindUserScene {
         telegramSubscriptionName: ctx.from.first_name,
         telegramCheckCode: ctx.message.text,
       });
-      await ctx.reply('You have successfully subscribed');
+      await ctx.reply(getMsgText('subscribeSuccess', ctx));
     } catch (error) {
-      await ctx.reply('Subscription error: ' + error.message);
-      throw error;
+      await ctx.reply(getMsgText('subscribeError', ctx) + ' ' + error.message);
+      // throw error;
     }
     await ctx.scene.leave();
     backCmd(ctx);

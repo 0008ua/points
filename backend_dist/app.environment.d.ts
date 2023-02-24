@@ -1,3 +1,4 @@
+import { BtnType, CmdType } from './app.interfaces';
 export declare const environment: {
     en: {
         common: {
@@ -5,6 +6,26 @@ export declare const environment: {
             round: string;
             hasFinished: string;
             results: string;
+        };
+        buttons: {
+            subscribe: string;
+            back: string;
+            viewSubscribtions: string;
+        };
+        commands: {
+            welcome: string;
+            getBack: string;
+            enterCode: string;
+            viewSubscribtions: string;
+        };
+        messages: {
+            subscribeSuccess: string;
+            unsubscribeSuccess: string;
+            subscribeError: string;
+            noSubscribtionsYet: string;
+            unsubscribe: string;
+            user: string;
+            subscriptions: string;
         };
         games: {
             rummy: {
@@ -32,6 +53,26 @@ export declare const environment: {
             hasFinished: string;
             results: string;
         };
+        buttons: {
+            subscribe: string;
+            back: string;
+            viewSubscribtions: string;
+        };
+        commands: {
+            welcome: string;
+            getBack: string;
+            enterCode: string;
+            viewSubscribtions: string;
+        };
+        messages: {
+            subscribeSuccess: string;
+            unsubscribeSuccess: string;
+            subscribeError: string;
+            noSubscribtionsYet: string;
+            unsubscribe: string;
+            user: string;
+            subscriptions: string;
+        };
         games: {
             rummy: {
                 name: string;
@@ -51,4 +92,10 @@ export declare const environment: {
             };
         };
     };
+};
+export declare const buttons: {
+    [key in BtnType]: string;
+};
+export declare const commands: {
+    [key in CmdType]: string;
 };

@@ -10,6 +10,26 @@ export declare class ComposerService {
                 hasFinished: string;
                 results: string;
             };
+            buttons: {
+                subscribe: string;
+                back: string;
+                viewSubscribtions: string;
+            };
+            commands: {
+                welcome: string;
+                getBack: string;
+                enterCode: string;
+                viewSubscribtions: string;
+            };
+            messages: {
+                subscribeSuccess: string;
+                unsubscribeSuccess: string;
+                subscribeError: string;
+                noSubscribtionsYet: string;
+                unsubscribe: string;
+                user: string;
+                subscriptions: string;
+            };
             games: {
                 rummy: {
                     name: string;
@@ -35,6 +55,26 @@ export declare class ComposerService {
                 round: string;
                 hasFinished: string;
                 results: string;
+            };
+            buttons: {
+                subscribe: string;
+                back: string;
+                viewSubscribtions: string;
+            };
+            commands: {
+                welcome: string;
+                getBack: string;
+                enterCode: string;
+                viewSubscribtions: string;
+            };
+            messages: {
+                subscribeSuccess: string;
+                unsubscribeSuccess: string;
+                subscribeError: string;
+                noSubscribtionsYet: string;
+                unsubscribe: string;
+                user: string;
+                subscriptions: string;
             };
             games: {
                 rummy: {

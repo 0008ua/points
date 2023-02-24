@@ -18,6 +18,8 @@ const telegram_constants_1 = require("../telegram.constants");
 const telegram_service_1 = require("../telegram.service");
 const commands_1 = require("../utils/commands");
 const buttons_1 = require("../utils/buttons");
+const app_environment_1 = require("../../app.environment");
+const composer_1 = require("../utils/composer");
 let ViewSubscribtionsScene = class ViewSubscribtionsScene {
     constructor(telegramService) {
         this.telegramService = telegramService;
@@ -27,15 +29,15 @@ let ViewSubscribtionsScene = class ViewSubscribtionsScene {
         const telegramId = String(ctx.from.id);
         const subscribtions = await this.telegramService.getSubscribtions(telegramId);
         if (!subscribtions.length) {
-            ctx.reply("You haven't subscribtions yet");
+            ctx.reply((0, composer_1.getMsgText)('noSubscribtionsYet', ctx));
             this.hearsReturn(ctx);
         }
         else {
             const buttons = subscribtions.map((sub) => ({
-                text: `Unsubscribe '${sub.name}' (user: ${sub.ownerName})`,
+                text: `${(0, composer_1.getMsgText)('unsubscribe', ctx)} '${sub.name}' (${(0, composer_1.getMsgText)('user', ctx)}: ${sub.ownerName})`,
                 data: sub._id,
             }));
-            ctx.reply('Subscriptions: ', (0, buttons_1.viewSubscriptionsMenuButtons)(buttons));
+            ctx.reply((0, composer_1.getMsgText)('subscriptions', ctx) + ': ', (0, buttons_1.viewSubscriptionsMenuButtons)(buttons));
         }
     }
     async hearsReturn(ctx) {
@@ -46,13 +48,12 @@ let ViewSubscribtionsScene = class ViewSubscribtionsScene {
         const gamerId = ctx.callbackQuery.data;
         try {
             await this.telegramService.unsubscribeFromBot(gamerId);
-            await ctx.reply('You have successfully unsubscribed');
+            await ctx.reply((0, composer_1.getMsgText)('unsubscribeSuccess', ctx));
             await ctx.answerCbQuery();
         }
         catch (error) {
-            await ctx.reply('Unsubscribe error: ' + error.message);
+            await ctx.reply((0, composer_1.getMsgText)('subscribeError', ctx) + ' ' + error.message);
             await ctx.answerCbQuery();
-            throw error;
         }
         this.hearsReturn(ctx);
     }
@@ -65,7 +66,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], ViewSubscribtionsScene.prototype, "onSceneEnter", null);
 __decorate([
-    (0, nestjs_telegraf_1.Hears)(telegram_constants_1.BUTTON_TEXT.back),
+    (0, nestjs_telegraf_1.Hears)(app_environment_1.buttons.back),
     __param(0, (0, nestjs_telegraf_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

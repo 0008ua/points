@@ -41,7 +41,6 @@ let BindUserScene = class BindUserScene {
         }
         catch (error) {
             await ctx.reply((0, composer_1.getMsgText)('subscribeError', ctx) + ' ' + error.message);
-            throw error;
         }
         await ctx.scene.leave();
         (0, commands_1.backCmd)(ctx);
@@ -73,4 +72,4 @@ BindUserScene = __decorate([
     __metadata("design:paramtypes", [telegram_service_1.TelegramService])
 ], BindUserScene);
 exports.BindUserScene = BindUserScene;
-//# sourceMappingURL=bind-user.js.map
+//# sourceMappingURL=bind-user.scene.js.map

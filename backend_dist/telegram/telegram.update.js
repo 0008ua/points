@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TelegramUpdate = void 0;
 const nestjs_telegraf_1 = require("nestjs-telegraf");
+const app_environment_1 = require("../app.environment");
 const telegram_constants_1 = require("./telegram.constants");
 const commands_1 = require("./utils/commands");
 let TelegramUpdate = class TelegramUpdate {
@@ -38,21 +39,21 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], TelegramUpdate.prototype, "start", null);
 __decorate([
-    (0, nestjs_telegraf_1.Hears)(telegram_constants_1.BUTTON_TEXT.back),
+    (0, nestjs_telegraf_1.Hears)(app_environment_1.buttons.back),
     __param(0, (0, nestjs_telegraf_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], TelegramUpdate.prototype, "hearsBack", null);
 __decorate([
-    (0, nestjs_telegraf_1.Hears)(telegram_constants_1.BUTTON_TEXT.subscribe),
+    (0, nestjs_telegraf_1.Hears)(app_environment_1.buttons.subscribe),
     __param(0, (0, nestjs_telegraf_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], TelegramUpdate.prototype, "hearsSubscribe", null);
 __decorate([
-    (0, nestjs_telegraf_1.Hears)(telegram_constants_1.BUTTON_TEXT.viewSubscribtions),
+    (0, nestjs_telegraf_1.Hears)(app_environment_1.buttons.viewSubscribtions),
     __param(0, (0, nestjs_telegraf_1.Ctx)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),

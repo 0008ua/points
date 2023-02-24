@@ -30,8 +30,9 @@ let TelegramService = class TelegramService {
         this.helpersService = helpersService;
         this.composerService = composerService;
         this.bot.use((ctx, next) => {
-            console.log('ctx', ctx.update.message.from.language_code);
-            this.language = ctx.update.message.from.language_code;
+            if (ctx.update.message) {
+                this.language = ctx.update.message.from.language_code;
+            }
             return next();
         });
     }

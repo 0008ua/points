@@ -1,11 +1,11 @@
+import { buttons } from 'src/app.environment';
 import { Markup } from 'telegraf';
-import { BUTTON_TEXT } from '../telegram.constants';
 
 export const mainMenuButtons = Markup.keyboard([
-  [BUTTON_TEXT.subscribe, BUTTON_TEXT.viewSubscribtions],
+  [buttons.subscribe, buttons.viewSubscribtions],
 ]).resize();
 
-export const backMenuButtton = Markup.keyboard([BUTTON_TEXT.back]).resize();
+export const backMenuButtton = Markup.keyboard([buttons.back]).resize();
 
 export const viewSubscriptionsMenuButtons = (
   btns: {

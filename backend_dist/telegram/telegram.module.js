@@ -10,13 +10,13 @@ exports.TelegramModule = exports.LANG = void 0;
 const common_1 = require("@nestjs/common");
 const telegram_service_1 = require("./telegram.service");
 const telegram_update_1 = require("./telegram.update");
-const bind_user_1 = require("./scenes/bind-user");
+const bind_user_scene_1 = require("./scenes/bind-user.scene");
 const gamer_module_1 = require("../gamer/gamer.module");
-const telegram_controller_1 = require("./telegram.controller");
 const view_subscribtions_scene_1 = require("./scenes/view-subscribtions.scene");
 const common_module_1 = require("../common/common.module");
 const auth_module_1 = require("../auth/auth.module");
 const composer_service_1 = require("./utils/composer.service");
+const telegram_controller_1 = require("./telegram.controller");
 exports.LANG = 'LanguageMiddleware';
 let TelegramModule = class TelegramModule {
 };
@@ -26,7 +26,7 @@ TelegramModule = __decorate([
         providers: [
             telegram_service_1.TelegramService,
             telegram_update_1.TelegramUpdate,
-            bind_user_1.BindUserScene,
+            bind_user_scene_1.BindUserScene,
             view_subscribtions_scene_1.ViewSubscribtionsScene,
             composer_service_1.ComposerService,
         ],

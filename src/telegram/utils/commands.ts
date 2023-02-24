@@ -1,13 +1,16 @@
 import { backMenuButtton, mainMenuButtons } from './buttons';
+import { getCmdText } from './composer';
 
 export const startCmd = async (ctx) =>
-  await ctx.reply('Welcome', { ...mainMenuButtons });
+  await ctx.reply(getCmdText('welcome', ctx), { ...mainMenuButtons });
 
 export const backCmd = async (ctx) =>
-  await ctx.reply('You get back to the main menu', { ...mainMenuButtons });
+  await ctx.reply(getCmdText('getBack', ctx), { ...mainMenuButtons });
 
 export const onSubscribeSceneCmd = async (ctx) =>
-  await ctx.reply('Enter code', { ...backMenuButtton });
+  await ctx.reply(getCmdText('enterCode', ctx), { ...backMenuButtton });
 
 export const onViewSubscribtionsCmd = async (ctx) =>
-  await ctx.reply('View subscribtions', { ...backMenuButtton });
+  await ctx.reply(getCmdText('viewSubscribtions', ctx), {
+    ...backMenuButtton,
+  });
