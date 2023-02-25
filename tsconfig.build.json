@@ -4,7 +4,7 @@
     "node_modules",
     "test",
     "frontend_dist",
-    "backend_dist",
+    "public",
     "points",
     "security",
     "**/*spec.ts"
