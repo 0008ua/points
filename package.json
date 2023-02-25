@@ -93,7 +93,7 @@
     "testEnvironment": "node"
   },
   "engines": {
-    "node": "16.16.0",
-    "npm": "8.1.4"
+    "node": "v16.18.1",
+    "npm": "8.19.2"
   }
 }
