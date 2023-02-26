@@ -5,6 +5,7 @@
 /security
 .env
 .vscode
+ngrok.exe
 
 # Logs
 logs
