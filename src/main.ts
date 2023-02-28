@@ -14,13 +14,18 @@ async function bootstrap() {
       cert: fs.readFileSync(path.join(__dirname, '..', 'security', 'cert.pem')),
     };
     app = await NestFactory.create(AppModule, { httpsOptions });
-    const bot = app.get(getBotToken(TELEGRAM_BOT_NAME));
-    app.use(bot.webhookCallback('/api/tg'));
   } else {
     app = await NestFactory.create(AppModule);
-    const bot = app.get(getBotToken(TELEGRAM_BOT_NAME));
-    app.use(bot.webhookCallback('/api/tg'));
   }
+  app.use((req, res, next) => {
+    if (req.url.slice(0, 4) === '/api') {
+      console.log(req.url);
+    }
+
+    return next();
+  });
+  const bot = app.get(getBotToken(TELEGRAM_BOT_NAME));
+  app.use(bot.webhookCallback('/api/' + process.env.TELEGRAM_TOKEN.slice(11)));
   app.setGlobalPrefix('api');
 
   await app.listen(process.env.PORT);

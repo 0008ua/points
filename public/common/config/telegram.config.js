@@ -8,28 +8,15 @@ const getTelegramConfig = (configService) => {
     if (!token) {
         throw new Error('No TELEGRAM_TOKEN');
     }
-    if (configService.get('NODE_ENV') === 'development') {
-        return {
-            token,
-            launchOptions: {
-                webhook: {
-                    domain: configService.get('DOMAIN'),
-                    hookPath: '/api/tg',
-                },
+    return {
+        token,
+        launchOptions: {
+            webhook: {
+                domain: configService.get('DOMAIN'),
+                hookPath: '/api/' + configService.get('TELEGRAM_TOKEN').slice(11),
             },
-        };
-    }
-    else {
-        return {
-            token,
-            launchOptions: {
-                webhook: {
-                    domain: configService.get('DOMAIN'),
-                    hookPath: '/api/tg',
-                },
-            },
-        };
-    }
+        },
+    };
 };
 exports.getTelegramConfig = getTelegramConfig;
 const telegrafFactory = (configService) => {
