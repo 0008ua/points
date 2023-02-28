@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1677577072732,
+  "timestamp": 1677591030153,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -123,8 +123,7 @@
         "/assets/icons/icon-384x384.png",
         "/assets/icons/icon-512x512.png",
         "/assets/icons/icon-72x72.png",
-        "/assets/icons/icon-96x96.png",
-        "/assets/shapes.svg"
+        "/assets/icons/icon-96x96.png"
       ],
       "patterns": []
     }
@@ -150,16 +149,15 @@
     "/assets/games/uno/skip.svg": "0aac49d185d08a53d1a6217d99eef035696ff60a",
     "/assets/i18n/en.json": "334a1a3006b376fb945ec33d835692485994ef68",
     "/assets/i18n/uk.json": "b156dcbb2bdf182cde1c97f2c5be071c246fb4cb",
-    "/assets/icons/favicon.ico": "9c5309d1d18070aff3b75a14ee03e4fcd949fe3d",
-    "/assets/icons/icon-128x128.png": "cf764470b13484922b30e4d44732aba37aab90f7",
-    "/assets/icons/icon-144x144.png": "08167a102e6cd69c2f6ad3fdadbe10ac13927fb1",
-    "/assets/icons/icon-152x152.png": "f54481f739aacd701a0b3c5a406c217481f00bc3",
-    "/assets/icons/icon-192x192.png": "5289a8c568f52e966b75a3948d196ecc0b46017b",
-    "/assets/icons/icon-384x384.png": "5d27f415f6338b6bcdac105469b8eabb3b4ea0e2",
-    "/assets/icons/icon-512x512.png": "71e641cb9970d4e54eab7024d0029d040e886dc9",
-    "/assets/icons/icon-72x72.png": "efcf2aa8fc3a1939aff016968e350e7ec4bb3011",
-    "/assets/icons/icon-96x96.png": "1adc8948534ef293018a64e6484a57b4cac35d8c",
-    "/assets/shapes.svg": "638f87e27e6fc7ddfd6e6b262ea70d690f6c7011",
+    "/assets/icons/favicon.ico": "b7b4bcab90d88c7db04872c271fdb5296e77d4fd",
+    "/assets/icons/icon-128x128.png": "942bb16b5cd699ee6950b9b675afac48157d5c3b",
+    "/assets/icons/icon-144x144.png": "07fd03180b6b56a5d65c5f047070716f23aa09c2",
+    "/assets/icons/icon-152x152.png": "c9b8de2c2e4ccf32c358fb1e1b1b2ae37b231502",
+    "/assets/icons/icon-192x192.png": "0958898ed7ef76800546ce1c7f3a19da0c26847a",
+    "/assets/icons/icon-384x384.png": "f253f77903a299c6f6dac0e8ad9faaf557b8643d",
+    "/assets/icons/icon-512x512.png": "dad90e3aab1e67748279a5a126abcb205598eeee",
+    "/assets/icons/icon-72x72.png": "f954de82eca8197c2eb50f9d37ad192464ba4d88",
+    "/assets/icons/icon-96x96.png": "e0493f056b2cdd129af0e31411db9da87b550166",
     "/common.js": "a0aa375dadb9fca96d5d1e2dc6f325fdd84883ba",
     "/index.html": "baf2b380b52b271289db044b4e48034638b79e73",
     "/main.js": "dd3ab2a4e6e4d117b3d88482e00c1eb6eeffc91b",
