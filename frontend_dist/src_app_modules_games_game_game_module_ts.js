@@ -1290,7 +1290,7 @@ let RoundThousandComponent = RoundThousandComponent_1 = class RoundThousandCompo
                     const { name, value, total } = roundMember.namedScoresLine[roundMember.namedScoresLine.length - 1];
                     return {
                         playerId: roundMember.player,
-                        lastScores: { name, value, total },
+                        data: { lastScores: { name, value, total } },
                         gameType: 'thousand',
                     };
                 });

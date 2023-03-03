@@ -21,14 +21,12 @@ const helpers_service_1 = require("../common/helpers.service");
 const gamer_service_1 = require("../gamer/gamer.service");
 const telegraf_1 = require("telegraf");
 const telegram_constants_1 = require("./telegram.constants");
-const composer_service_1 = require("./utils/composer.service");
 let TelegramService = class TelegramService {
-    constructor(bot, gamerService, authService, helpersService, composerService) {
+    constructor(bot, gamerService, authService, helpersService) {
         this.bot = bot;
         this.gamerService = gamerService;
         this.authService = authService;
         this.helpersService = helpersService;
-        this.composerService = composerService;
         this.bot.use((ctx, next) => {
             if (ctx.update.message) {
                 this.language = ctx.update.message.from.language_code;
@@ -75,24 +73,13 @@ let TelegramService = class TelegramService {
             };
         }));
     }
-    async broadcastMessagesFinishGame(messages) {
+    async broadcast(messages, strategy) {
         for (const message of messages) {
             const gamer = await this.gamerService.findOneAllData(message.playerId);
             if (gamer.telegramId) {
                 this.sendMessage({
                     chatId: gamer.telegramId,
-                    text: await this.composerService.composeFinishGameMessage(messages, gamer.telegramLanguage),
-                }, 'HTML');
-            }
-        }
-    }
-    async broadcastMessagesThousandRound(messages) {
-        for (const message of messages) {
-            const gamer = await this.gamerService.findOneAllData(message.playerId);
-            if (gamer.telegramId) {
-                this.sendMessage({
-                    chatId: gamer.telegramId,
-                    text: await this.composerService.composeMessageThousandRound(messages, this.language),
+                    text: await strategy.compose(messages, gamer.telegramLanguage),
                 }, 'HTML');
             }
         }
@@ -104,8 +91,7 @@ TelegramService = __decorate([
     __metadata("design:paramtypes", [telegraf_1.Telegraf,
         gamer_service_1.GamerService,
         auth_service_1.AuthService,
-        helpers_service_1.HelpersService,
-        composer_service_1.ComposerService])
+        helpers_service_1.HelpersService])
 ], TelegramService);
 exports.TelegramService = TelegramService;
 //# sourceMappingURL=telegram.service.js.map

@@ -1,7 +1,8 @@
 import { Component, Injector, Input, OnDestroy, OnInit } from '@angular/core';
 import { ofType } from '@ngrx/effects';
 import {
-  MessageThousandRoundDto,
+  MessageDto,
+  MessageThousandRound,
   NamedScore,
   RoundMember,
   RoundScoresOptionsType,
@@ -57,14 +58,14 @@ export class RoundThousandComponent
         roundMembers[0].namedScoresLine.length % roundMembers.length === 0
       ) {
         // game started and at least one round finished
-        const messages: MessageThousandRoundDto[] = this.addTotals(
+        const messages: MessageDto<MessageThousandRound>[] = this.addTotals(
           roundMembers,
         ).map((roundMember) => {
           const { name, value, total } =
             roundMember.namedScoresLine[roundMember.namedScoresLine.length - 1];
           return {
             playerId: roundMember.player,
-            lastScores: { name, value, total },
+            data: { lastScores: { name, value, total } },
             gameType: 'thousand',
           };
         });

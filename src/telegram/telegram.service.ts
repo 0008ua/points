@@ -1,28 +1,17 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
 import { InjectBot } from 'nestjs-telegraf';
-import { environment } from 'src/app.environment';
-import { BtnType, CmdType, UID } from 'src/app.interfaces';
 import { AuthService } from 'src/auth/auth.service';
 import { UserDataDto } from 'src/auth/dto/userData.dto';
-import { getTelegramConfig } from 'src/common/config/telegram.config';
-import { DB_ERROR, WRONG_CODE } from 'src/common/error.constants';
+import { WRONG_CODE } from 'src/common/error.constants';
 import { HelpersService } from 'src/common/helpers.service';
-import { CreateGameDto } from 'src/game/dto/create-game.dto';
-import { Gamer, GamerModel } from 'src/gamer/entities/gamer.entity';
 import { GamerService } from 'src/gamer/gamer.service';
-import { Context, Telegraf } from 'telegraf';
+import { Telegraf } from 'telegraf';
 import { ParseMode } from 'telegraf/typings/core/types/typegram';
-import {
-  Message,
-  MessageFinishGameDto,
-  MessageThousandRoundDto,
-} from './dto/message.dto';
+import { ComposeStrategies, Message, MessageDto } from './dto/message.dto';
 import { SubscribtionDto } from './dto/subscribtion.dto';
 import { SubscribeToBotDto } from './dto/subsctibe-to-bot.dto';
 import { TELEGRAM_BOT_NAME } from './telegram.constants';
-import { TelegramOptions } from './telegram.interface';
-import { ComposerService } from './utils/composer.service';
+import { ComposeStrategy } from './telegram.interface';
 
 @Injectable()
 export class TelegramService {
@@ -33,7 +22,6 @@ export class TelegramService {
     private readonly gamerService: GamerService,
     private readonly authService: AuthService,
     private readonly helpersService: HelpersService,
-    private readonly composerService: ComposerService,
   ) {
     this.bot.use((ctx, next) => {
       if (ctx.update.message) {
@@ -98,26 +86,9 @@ export class TelegramService {
     );
   }
 
-  // private async broadcastMessages(
-  //   messages: MessageFinishGameDto[] | MessageThousandRoundDto[],
-  //   text: string,
-  // ) {
-  //   for (const message of messages) {
-  //     const gamer = await this.gamerService.findOneAllData(message.playerId);
-  //     if (gamer.telegramId) {
-  //       this.sendMessage(
-  //         {
-  //           chatId: gamer.telegramId,
-  //           text,
-  //         },
-  //         'HTML',
-  //       );
-  //     }
-  //   }
-  // }
-
-  async broadcastMessagesFinishGame(
-    messages: MessageFinishGameDto[],
+  async broadcast<T extends ComposeStrategies>(
+    messages: MessageDto<T>[],
+    strategy: ComposeStrategy<T>,
   ): Promise<void> {
     for (const message of messages) {
       const gamer = await this.gamerService.findOneAllData(message.playerId);
@@ -125,30 +96,7 @@ export class TelegramService {
         this.sendMessage(
           {
             chatId: gamer.telegramId,
-            text: await this.composerService.composeFinishGameMessage(
-              messages,
-              gamer.telegramLanguage,
-            ),
-          },
-          'HTML',
-        );
-      }
-    }
-  }
-
-  async broadcastMessagesThousandRound(
-    messages: MessageThousandRoundDto[],
-  ): Promise<void> {
-    for (const message of messages) {
-      const gamer = await this.gamerService.findOneAllData(message.playerId);
-      if (gamer.telegramId) {
-        this.sendMessage(
-          {
-            chatId: gamer.telegramId,
-            text: await this.composerService.composeMessageThousandRound(
-              messages,
-              this.language,
-            ),
+            text: await strategy.compose(messages, gamer.telegramLanguage),
           },
           'HTML',
         );

@@ -20,7 +20,7 @@ async function bootstrap() {
     }
     app.use((req, res, next) => {
         if (req.url.slice(0, 4) === '/api') {
-            console.log(req.url);
+            console.log('url: ', req.url);
         }
         return next();
     });

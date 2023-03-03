@@ -76,10 +76,18 @@ export interface RoundMember {
   namedScoresLine?: NamedScore[];
 }
 
-export interface MessageThousandRoundDto {
+export interface MessageDto<T> {
   playerId: UID;
-  lastScores: Pick<NamedScore, 'value' | 'name' | 'total'>;
   gameType: GameType;
+  data: T;
+}
+
+export interface MessageThousandRound {
+  lastScores: Pick<NamedScore, 'value' | 'name' | 'total'>;
+}
+
+export interface MessageFinishGame {
+  score: string;
 }
 
 export interface RoundCfg {

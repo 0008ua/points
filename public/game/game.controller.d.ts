@@ -29,10 +29,12 @@ import { UpdateGameDto } from './dto/update-game.dto';
 import { Request } from 'express';
 import { Game } from './entities/game.entity';
 import { TelegramService } from 'src/telegram/telegram.service';
+import { ComposeFinishGameStrategy } from 'src/telegram/composers/compose-finish-game.strategy';
 export declare class GameController {
     private readonly gameService;
     private readonly telegramService;
-    constructor(gameService: GameService, telegramService: TelegramService);
+    private readonly composeFinishGameStrategy;
+    constructor(gameService: GameService, telegramService: TelegramService, composeFinishGameStrategy: ComposeFinishGameStrategy);
     create(dto: CreateGameDto, { user }: Request): Promise<import("mongoose").Document<unknown, any, Game> & Game & {
         _id: import("mongoose").Types.ObjectId;
     }>;

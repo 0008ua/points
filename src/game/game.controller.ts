@@ -14,18 +14,18 @@ import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { Request } from 'express';
-import * as ex from 'express';
-import { UnauthorizedException } from '@nestjs/common/exceptions';
 import { AuthGuard } from '@nestjs/passport';
 import { Game } from './entities/game.entity';
 import { TelegramService } from 'src/telegram/telegram.service';
-import { MessageFinishGameDto } from 'src/telegram/dto/message.dto';
+import { MessageDto, MessageFinishGame } from 'src/telegram/dto/message.dto';
+import { ComposeFinishGameStrategy } from 'src/telegram/composers/compose-finish-game.strategy';
 
 @Controller(['store/game', 'store/games'])
 export class GameController {
   constructor(
     private readonly gameService: GameService,
     private readonly telegramService: TelegramService,
+    private readonly composeFinishGameStrategy: ComposeFinishGameStrategy,
   ) {}
 
   // add
@@ -33,15 +33,18 @@ export class GameController {
   @Post()
   create(@Body() dto: CreateGameDto, @Req() { user }: Request) {
     const newGame: Game = { ...dto, owner: user._id };
-    const messages: MessageFinishGameDto[] = dto.rounds
+    const messages: MessageDto<MessageFinishGame>[] = dto.rounds
       .find((round) => round._id === 'result')
       .players.map((player) => ({
         gameType: dto.type,
         playerId: player._id,
-        score: String(player.score),
+        data: { score: String(player.score) },
       }));
 
-    this.telegramService.broadcastMessagesFinishGame(messages);
+    this.telegramService.broadcast<MessageFinishGame>(
+      messages,
+      this.composeFinishGameStrategy,
+    );
 
     return this.gameService.create(newGame);
   }

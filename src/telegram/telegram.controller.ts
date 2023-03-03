@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   Param,
   Patch,
   Post,
@@ -11,17 +10,14 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { TelegramService } from './telegram.service';
 import { Request } from 'express';
-import { GamerService } from 'src/gamer/gamer.service';
-import {
-  MessageThousandRound,
-  MessageThousandRoundDto,
-} from './dto/message.dto';
+import { MessageDto, MessageThousandRound } from './dto/message.dto';
+import { ComposeThousandRoundStrategy } from './composers/compose-thousand-round.strategy';
 
 @Controller(['tg'])
 export class TelegramController {
   constructor(
     private readonly telegramService: TelegramService,
-    private readonly gamerService: GamerService,
+    private readonly composeThousandRoundStrategy: ComposeThousandRoundStrategy,
   ) {}
 
   @UseGuards(AuthGuard('jwt'))
@@ -32,10 +28,10 @@ export class TelegramController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post('messages/thousand-round')
-  async messages(
-    @Req() { user }: Request,
-    @Body() messages: MessageThousandRoundDto[],
-  ) {
-    return this.telegramService.broadcastMessagesThousandRound(messages);
+  async messages(@Body() messages: MessageDto<MessageThousandRound>[]) {
+    return this.telegramService.broadcast<MessageThousandRound>(
+      messages,
+      this.composeThousandRoundStrategy,
+    );
   }
 }

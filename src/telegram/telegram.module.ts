@@ -6,11 +6,9 @@ import { GamerModule } from 'src/gamer/gamer.module';
 import { ViewSubscribtionsScene } from './scenes/view-subscribtions.scene';
 import { CommonModule } from 'src/common/common.module';
 import { AuthModule } from 'src/auth/auth.module';
-import { ComposerService } from './utils/composer.service';
-import { languageMiddleware } from './middlewares/language.middleware';
 import { TelegramController } from './telegram.controller';
-
-export const LANG = 'LanguageMiddleware';
+import { ComposeFinishGameStrategy } from './composers/compose-finish-game.strategy';
+import { ComposeThousandRoundStrategy } from './composers/compose-thousand-round.strategy';
 
 @Module({
   imports: [GamerModule, CommonModule, AuthModule],
@@ -19,9 +17,10 @@ export const LANG = 'LanguageMiddleware';
     TelegramUpdate,
     BindUserScene,
     ViewSubscribtionsScene,
-    ComposerService,
+    ComposeFinishGameStrategy,
+    ComposeThousandRoundStrategy,
   ],
-  exports: [TelegramService],
+  exports: [TelegramService, ComposeFinishGameStrategy],
   controllers: [TelegramController],
 })
 export class TelegramModule {}

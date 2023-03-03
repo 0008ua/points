@@ -1,11 +1,11 @@
 import { TelegramService } from './telegram.service';
 import { Request } from 'express';
-import { GamerService } from 'src/gamer/gamer.service';
-import { MessageThousandRoundDto } from './dto/message.dto';
+import { MessageDto, MessageThousandRound } from './dto/message.dto';
+import { ComposeThousandRoundStrategy } from './composers/compose-thousand-round.strategy';
 export declare class TelegramController {
     private readonly telegramService;
-    private readonly gamerService;
-    constructor(telegramService: TelegramService, gamerService: GamerService);
+    private readonly composeThousandRoundStrategy;
+    constructor(telegramService: TelegramService, composeThousandRoundStrategy: ComposeThousandRoundStrategy);
     unsubscribe(_id: string, { user }: Request): Promise<void>;
-    messages({ user }: Request, messages: MessageThousandRoundDto[]): Promise<void>;
+    messages(messages: MessageDto<MessageThousandRound>[]): Promise<void>;
 }
