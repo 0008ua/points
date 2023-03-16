@@ -15,10 +15,7 @@ import { ComposeThousandRoundStrategy } from './composers/compose-thousand-round
 
 @Controller(['tg'])
 export class TelegramController {
-  constructor(
-    private readonly telegramService: TelegramService,
-    private readonly composeThousandRoundStrategy: ComposeThousandRoundStrategy,
-  ) {}
+  constructor(private readonly telegramService: TelegramService) {}
 
   @UseGuards(AuthGuard('jwt'))
   @Patch('unsubscribe/:_id')
@@ -31,7 +28,7 @@ export class TelegramController {
   async messages(@Body() messages: MessageDto<MessageThousandRound>[]) {
     return this.telegramService.broadcast<MessageThousandRound>(
       messages,
-      this.composeThousandRoundStrategy,
+      ComposeThousandRoundStrategy,
     );
   }
 }

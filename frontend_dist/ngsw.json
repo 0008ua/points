@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1677834095553,
+  "timestamp": 1678952668091,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -147,14 +147,14 @@
     "/assets/games/uno/plus4.svg": "253ea607025caea2e4a298fa405406d792fc7086",
     "/assets/games/uno/reverse.svg": "e578858bed9e49ae280c87f2718a94c0b16edf77",
     "/assets/games/uno/skip.svg": "0aac49d185d08a53d1a6217d99eef035696ff60a",
-    "/assets/i18n/en.json": "334a1a3006b376fb945ec33d835692485994ef68",
-    "/assets/i18n/uk.json": "b156dcbb2bdf182cde1c97f2c5be071c246fb4cb",
+    "/assets/i18n/en.json": "5294854f969191b9fd11097ef982491c32eefaac",
+    "/assets/i18n/uk.json": "3ea815efbef19f311078a8e7788e29c899589c1b",
     "/assets/icons/favicon.ico": "b7b4bcab90d88c7db04872c271fdb5296e77d4fd",
     "/assets/icons/icon-128x128.png": "942bb16b5cd699ee6950b9b675afac48157d5c3b",
     "/assets/icons/icon-144x144.png": "07fd03180b6b56a5d65c5f047070716f23aa09c2",
     "/assets/icons/icon-152x152.png": "c9b8de2c2e4ccf32c358fb1e1b1b2ae37b231502",
     "/assets/icons/icon-192x192.png": "0958898ed7ef76800546ce1c7f3a19da0c26847a",
-    "/assets/icons/icon-384x384.png": "f253f77903a299c6f6dac0e8ad9faaf557b8643d",
+    "/assets/icons/icon-384x384.png": "9a23c78a17d0202cf5765358ab892cb180ffc1f4",
     "/assets/icons/icon-512x512.png": "dad90e3aab1e67748279a5a126abcb205598eeee",
     "/assets/icons/icon-72x72.png": "f954de82eca8197c2eb50f9d37ad192464ba4d88",
     "/assets/icons/icon-96x96.png": "e0493f056b2cdd129af0e31411db9da87b550166",
@@ -227,10 +227,10 @@
     "/src_app_modules_auth_signin_signin_module_ts.js": "a9d26fdb08662f83d2cdf74c1dbf02625e9b6bc6",
     "/src_app_modules_auth_signup_signup_module_ts.js": "60782da5fd82b28ee93d589eb707c576011f59f2",
     "/src_app_modules_auth_telegram_telegram_module_ts.js": "a90e1ca90b21655a55e3bee5034716ae13d8c25d",
-    "/src_app_modules_games_game_game_module_ts.js": "baaddf085bf7b5513e203b1d9a7a71314f87656c",
+    "/src_app_modules_games_game_game_module_ts.js": "858267c61c35ee35e4a3199d868511acfec631f4",
     "/src_app_modules_games_games_module_ts.js": "3e14ed79528e8e5cdc930be20552d01a184246e3",
     "/src_app_tabs_tabs_module_ts.js": "56de588d79a25b2614345414ab11c57215df6ae5",
-    "/styles.css": "b04aef71102c0496d640fd74c6591704829123b3",
+    "/styles.css": "7511e30383c368d346746fcc3430ad61b0a33f27",
     "/vendor.js": "b3578cf8b460b2b6f9f5a331264b32f0c19072c7"
   },
   "navigationUrls": [

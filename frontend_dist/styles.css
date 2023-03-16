@@ -1372,6 +1372,9 @@ input[type=number] {
 .bold {
   font-weight: 700;
 }
+.height100 {
+  height: 100%;
+}
 .active-link {
   border-left: 8px solid var(--ion-color-secondary);
 }
@@ -1533,6 +1536,23 @@ input[type=number] {
   justify-content: space-around;
   width: 100%;
   padding: 0 5px;
+}
+.finish-game-modal {
+  display: flex;
+  height: 100%;
+  align-items: stretch;
+  flex-direction: column;
+}
+.finish-game-modal__text {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+}
+.finish-game-modal__buttons {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
 }
 
 /*# sourceMappingURL=styles.css.map*/

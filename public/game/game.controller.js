@@ -21,10 +21,9 @@ const passport_1 = require("@nestjs/passport");
 const telegram_service_1 = require("../telegram/telegram.service");
 const compose_finish_game_strategy_1 = require("../telegram/composers/compose-finish-game.strategy");
 let GameController = class GameController {
-    constructor(gameService, telegramService, composeFinishGameStrategy) {
+    constructor(gameService, telegramService) {
         this.gameService = gameService;
         this.telegramService = telegramService;
-        this.composeFinishGameStrategy = composeFinishGameStrategy;
     }
     create(dto, { user }) {
         const newGame = Object.assign(Object.assign({}, dto), { owner: user._id });
@@ -35,7 +34,7 @@ let GameController = class GameController {
             playerId: player._id,
             data: { score: String(player.score) },
         }));
-        this.telegramService.broadcast(messages, this.composeFinishGameStrategy);
+        this.telegramService.broadcast(messages, compose_finish_game_strategy_1.ComposeFinishGameStrategy);
         return this.gameService.create(newGame);
     }
     getWithQuery(query, { user }) {
@@ -103,8 +102,7 @@ __decorate([
 GameController = __decorate([
     (0, common_1.Controller)(['store/game', 'store/games']),
     __metadata("design:paramtypes", [game_service_1.GameService,
-        telegram_service_1.TelegramService,
-        compose_finish_game_strategy_1.ComposeFinishGameStrategy])
+        telegram_service_1.TelegramService])
 ], GameController);
 exports.GameController = GameController;
 //# sourceMappingURL=game.controller.js.map

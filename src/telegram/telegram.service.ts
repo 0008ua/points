@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { ModuleRef } from '@nestjs/core';
 import { InjectBot } from 'nestjs-telegraf';
 import { AuthService } from 'src/auth/auth.service';
 import { UserDataDto } from 'src/auth/dto/userData.dto';
@@ -7,11 +8,15 @@ import { HelpersService } from 'src/common/helpers.service';
 import { GamerService } from 'src/gamer/gamer.service';
 import { Telegraf } from 'telegraf';
 import { ParseMode } from 'telegraf/typings/core/types/typegram';
-import { ComposeStrategies, Message, MessageDto } from './dto/message.dto';
+import {
+  ComposeStrategyConstructor,
+  ComposeTypes,
+  Message,
+  MessageDto,
+} from './dto/message.dto';
 import { SubscribtionDto } from './dto/subscribtion.dto';
 import { SubscribeToBotDto } from './dto/subsctibe-to-bot.dto';
 import { TELEGRAM_BOT_NAME } from './telegram.constants';
-import { ComposeStrategy } from './telegram.interface';
 
 @Injectable()
 export class TelegramService {
@@ -22,6 +27,7 @@ export class TelegramService {
     private readonly gamerService: GamerService,
     private readonly authService: AuthService,
     private readonly helpersService: HelpersService,
+    private readonly moduleRef: ModuleRef,
   ) {
     this.bot.use((ctx, next) => {
       if (ctx.update.message) {
@@ -86,17 +92,18 @@ export class TelegramService {
     );
   }
 
-  async broadcast<T extends ComposeStrategies>(
+  async broadcast<T extends ComposeTypes>(
     messages: MessageDto<T>[],
-    strategy: ComposeStrategy<T>,
+    strategy: ComposeStrategyConstructor<T>,
   ): Promise<void> {
+    const injector = this.moduleRef.get(strategy);
     for (const message of messages) {
       const gamer = await this.gamerService.findOneAllData(message.playerId);
       if (gamer.telegramId) {
         this.sendMessage(
           {
             chatId: gamer.telegramId,
-            text: await strategy.compose(messages, gamer.telegramLanguage),
+            text: await injector.compose(messages, gamer.telegramLanguage),
           },
           'HTML',
         );

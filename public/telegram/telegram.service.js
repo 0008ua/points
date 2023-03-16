@@ -14,6 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.TelegramService = void 0;
 const common_1 = require("@nestjs/common");
+const core_1 = require("@nestjs/core");
 const nestjs_telegraf_1 = require("nestjs-telegraf");
 const auth_service_1 = require("../auth/auth.service");
 const error_constants_1 = require("../common/error.constants");
@@ -22,11 +23,12 @@ const gamer_service_1 = require("../gamer/gamer.service");
 const telegraf_1 = require("telegraf");
 const telegram_constants_1 = require("./telegram.constants");
 let TelegramService = class TelegramService {
-    constructor(bot, gamerService, authService, helpersService) {
+    constructor(bot, gamerService, authService, helpersService, moduleRef) {
         this.bot = bot;
         this.gamerService = gamerService;
         this.authService = authService;
         this.helpersService = helpersService;
+        this.moduleRef = moduleRef;
         this.bot.use((ctx, next) => {
             if (ctx.update.message) {
                 this.language = ctx.update.message.from.language_code;
@@ -74,12 +76,13 @@ let TelegramService = class TelegramService {
         }));
     }
     async broadcast(messages, strategy) {
+        const injector = this.moduleRef.get(strategy);
         for (const message of messages) {
             const gamer = await this.gamerService.findOneAllData(message.playerId);
             if (gamer.telegramId) {
                 this.sendMessage({
                     chatId: gamer.telegramId,
-                    text: await strategy.compose(messages, gamer.telegramLanguage),
+                    text: await injector.compose(messages, gamer.telegramLanguage),
                 }, 'HTML');
             }
         }
@@ -91,7 +94,8 @@ TelegramService = __decorate([
     __metadata("design:paramtypes", [telegraf_1.Telegraf,
         gamer_service_1.GamerService,
         auth_service_1.AuthService,
-        helpers_service_1.HelpersService])
+        helpers_service_1.HelpersService,
+        core_1.ModuleRef])
 ], TelegramService);
 exports.TelegramService = TelegramService;
 //# sourceMappingURL=telegram.service.js.map

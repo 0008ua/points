@@ -62,6 +62,8 @@
   },
   "elements": {
     "button": {
+      "cancel": "Відмінити",
+      "confirm": "Підтвердити",
       "send": "Надіслати",
       "add": "Додати",
       "create": "Створити",
@@ -83,6 +85,7 @@
     }
   },
   "common": {
+    "cancelGameQuestion": "Ви впевнені, що хочете відмінити гру?",
     "logic": {
       "true": "Так",
       "false": "Ні"

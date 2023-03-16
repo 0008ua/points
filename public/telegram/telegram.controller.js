@@ -18,15 +18,14 @@ const passport_1 = require("@nestjs/passport");
 const telegram_service_1 = require("./telegram.service");
 const compose_thousand_round_strategy_1 = require("./composers/compose-thousand-round.strategy");
 let TelegramController = class TelegramController {
-    constructor(telegramService, composeThousandRoundStrategy) {
+    constructor(telegramService) {
         this.telegramService = telegramService;
-        this.composeThousandRoundStrategy = composeThousandRoundStrategy;
     }
     async unsubscribe(_id, { user }) {
         return this.telegramService.unsubscribeFromBot(_id, user._id);
     }
     async messages(messages) {
-        return this.telegramService.broadcast(messages, this.composeThousandRoundStrategy);
+        return this.telegramService.broadcast(messages, compose_thousand_round_strategy_1.ComposeThousandRoundStrategy);
     }
 };
 __decorate([
@@ -48,8 +47,7 @@ __decorate([
 ], TelegramController.prototype, "messages", null);
 TelegramController = __decorate([
     (0, common_1.Controller)(['tg']),
-    __metadata("design:paramtypes", [telegram_service_1.TelegramService,
-        compose_thousand_round_strategy_1.ComposeThousandRoundStrategy])
+    __metadata("design:paramtypes", [telegram_service_1.TelegramService])
 ], TelegramController);
 exports.TelegramController = TelegramController;
 //# sourceMappingURL=telegram.controller.js.map

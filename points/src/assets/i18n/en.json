@@ -62,6 +62,8 @@
   },
   "elements": {
     "button": {
+      "cancel": "Cancel",
+      "confirm": "Confirm",
       "send": "Send",
       "add": "Add",
       "create": "Create",
@@ -83,6 +85,7 @@
     }
   },
   "common": {
+    "cancelGameQuestion": "Are you sure you want to cancel game?",
     "logic": {
       "true": "Yes",
       "false": "No"

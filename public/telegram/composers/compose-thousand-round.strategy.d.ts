@@ -1,6 +1,5 @@
 import { GamerService } from 'src/gamer/gamer.service';
-import { MessageDto, MessageThousandRound } from '../dto/message.dto';
-import { ComposeStrategy } from '../telegram.interface';
+import { ComposeStrategy, MessageDto, MessageThousandRound } from '../dto/message.dto';
 export declare class ComposeThousandRoundStrategy implements ComposeStrategy<MessageThousandRound> {
     private readonly gamerService;
     environment: {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
 import {
   BehaviorSubject,
@@ -32,6 +32,8 @@ import * as fromAppActions from 'src/app/store/actions/app.actions';
 import { GameService } from 'src/app/store/game-data.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { GameResultComponent } from './game-result/game-result.component';
+import { IonModal, ModalController } from '@ionic/angular';
+import { OverlayEventDetail } from '@ionic/core/components';
 
 @Component({
   selector: 'app-game',
@@ -39,6 +41,8 @@ import { GameResultComponent } from './game-result/game-result.component';
   styleUrls: ['./game.page.scss'],
 })
 export class GamePage implements OnInit {
+  @ViewChild(IonModal) modal: IonModal;
+
   roundsCfg: RoundCfg[];
   nextRound: RoundCfg;
 
@@ -66,6 +70,7 @@ export class GamePage implements OnInit {
     private store: Store,
     private sharedService: SharedService,
     private route: ActivatedRoute,
+    private modalController: ModalController,
   ) {}
 
   ngOnInit() {
@@ -171,9 +176,7 @@ export class GamePage implements OnInit {
     this.store.dispatch(fromAppActions.finishGame());
   }
 
-  onCancelGameHandler() {
-    this.store.dispatch(fromAppActions.clearGame());
-  }
+  // onCancelGameHandler() {}
 
   openNextRound() {
     this.store.dispatch(fromAppActions.openNextRound());
@@ -185,5 +188,20 @@ export class GamePage implements OnInit {
       return;
     }
     this.activePlayerId$.next(playerId);
+  }
+
+  cancel() {
+    this.modal.dismiss('cancel');
+  }
+
+  confirm() {
+    this.modal.dismiss('confirm');
+  }
+
+  onWillDismiss(event: Event) {
+    const ev = event as CustomEvent<OverlayEventDetail<string>>;
+    if (ev.detail.role === 'confirm') {
+      this.store.dispatch(fromAppActions.clearGame());
+    }
   }
 }

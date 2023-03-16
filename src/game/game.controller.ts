@@ -25,7 +25,6 @@ export class GameController {
   constructor(
     private readonly gameService: GameService,
     private readonly telegramService: TelegramService,
-    private readonly composeFinishGameStrategy: ComposeFinishGameStrategy,
   ) {}
 
   // add
@@ -43,7 +42,7 @@ export class GameController {
 
     this.telegramService.broadcast<MessageFinishGame>(
       messages,
-      this.composeFinishGameStrategy,
+      ComposeFinishGameStrategy,
     );
 
     return this.gameService.create(newGame);
