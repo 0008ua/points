@@ -63,6 +63,7 @@
   "elements": {
     "button": {
       "cancel": "Відмінити",
+      "returnToGame": "Повернутись до гри",
       "confirm": "Підтвердити",
       "send": "Надіслати",
       "add": "Додати",

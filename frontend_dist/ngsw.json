@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1678952668091,
+  "timestamp": 1678958548355,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -147,8 +147,8 @@
     "/assets/games/uno/plus4.svg": "253ea607025caea2e4a298fa405406d792fc7086",
     "/assets/games/uno/reverse.svg": "e578858bed9e49ae280c87f2718a94c0b16edf77",
     "/assets/games/uno/skip.svg": "0aac49d185d08a53d1a6217d99eef035696ff60a",
-    "/assets/i18n/en.json": "5294854f969191b9fd11097ef982491c32eefaac",
-    "/assets/i18n/uk.json": "3ea815efbef19f311078a8e7788e29c899589c1b",
+    "/assets/i18n/en.json": "0b121ba440cc34f2635237635010bdf64b507129",
+    "/assets/i18n/uk.json": "dda77bcd6c90e37a5668dba1ba9c023e35bbdee3",
     "/assets/icons/favicon.ico": "b7b4bcab90d88c7db04872c271fdb5296e77d4fd",
     "/assets/icons/icon-128x128.png": "942bb16b5cd699ee6950b9b675afac48157d5c3b",
     "/assets/icons/icon-144x144.png": "07fd03180b6b56a5d65c5f047070716f23aa09c2",
@@ -227,7 +227,7 @@
     "/src_app_modules_auth_signin_signin_module_ts.js": "a9d26fdb08662f83d2cdf74c1dbf02625e9b6bc6",
     "/src_app_modules_auth_signup_signup_module_ts.js": "60782da5fd82b28ee93d589eb707c576011f59f2",
     "/src_app_modules_auth_telegram_telegram_module_ts.js": "a90e1ca90b21655a55e3bee5034716ae13d8c25d",
-    "/src_app_modules_games_game_game_module_ts.js": "858267c61c35ee35e4a3199d868511acfec631f4",
+    "/src_app_modules_games_game_game_module_ts.js": "b03e84e4905ab506054309f94b16cbbeba38b648",
     "/src_app_modules_games_games_module_ts.js": "3e14ed79528e8e5cdc930be20552d01a184246e3",
     "/src_app_tabs_tabs_module_ts.js": "56de588d79a25b2614345414ab11c57215df6ae5",
     "/styles.css": "7511e30383c368d346746fcc3430ad61b0a33f27",
