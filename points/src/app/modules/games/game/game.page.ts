@@ -33,7 +33,7 @@ import { GameService } from 'src/app/store/game-data.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { GameResultComponent } from './game-result/game-result.component';
 import { IonModal, ModalController } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core/components';
+import { GameActionConfirmComponent } from './game-action-confirm/game-action-confirm.component';
 
 @Component({
   selector: 'app-game',
@@ -70,7 +70,7 @@ export class GamePage implements OnInit {
     private store: Store,
     private sharedService: SharedService,
     private route: ActivatedRoute,
-    private modalController: ModalController,
+    private modalService: ModalService,
   ) {}
 
   ngOnInit() {
@@ -176,7 +176,15 @@ export class GamePage implements OnInit {
     this.store.dispatch(fromAppActions.finishGame());
   }
 
-  // onCancelGameHandler() {}
+  async onCancelGameHandler() {
+    const { role } = await this.modalService.presentModal(
+      GameActionConfirmComponent,
+      null,
+    );
+    if (role === 'confirm') {
+      this.store.dispatch(fromAppActions.clearGame());
+    }
+  }
 
   openNextRound() {
     this.store.dispatch(fromAppActions.openNextRound());
@@ -188,20 +196,5 @@ export class GamePage implements OnInit {
       return;
     }
     this.activePlayerId$.next(playerId);
-  }
-
-  cancel() {
-    this.modal.dismiss('cancel');
-  }
-
-  confirm() {
-    this.modal.dismiss('confirm');
-  }
-
-  onWillDismiss(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>;
-    if (ev.detail.role === 'confirm') {
-      this.store.dispatch(fromAppActions.clearGame());
-    }
   }
 }

@@ -10,8 +10,9 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { TelegramService } from './telegram.service';
 import { Request } from 'express';
-import { MessageDto, MessageThousandRound } from './dto/message.dto';
+import { MessageDto } from './dto/message.dto';
 import { ComposeThousandRoundStrategy } from './composers/compose-thousand-round.strategy';
+import { MessageThousandRound } from './telegram.interface';
 
 @Controller(['tg'])
 export class TelegramController {

@@ -1,11 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { environment } from 'src/app.environment';
 import { GamerService } from 'src/gamer/gamer.service';
-import {
-  ComposeStrategy,
-  MessageDto,
-  MessageThousandRound,
-} from '../dto/message.dto';
+import { MessageDto } from '../dto/message.dto';
+import { ComposeStrategy, MessageThousandRound } from '../telegram.interface';
 
 @Injectable()
 export class ComposeThousandRoundStrategy

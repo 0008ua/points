@@ -21,6 +21,7 @@ export class ModalService {
       componentProps: data,
     });
     modal.present();
+    console.log('modal', modal)
 
     return modal.onWillDismiss();
   }

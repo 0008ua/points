@@ -17,8 +17,9 @@ import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { Game } from './entities/game.entity';
 import { TelegramService } from 'src/telegram/telegram.service';
-import { MessageDto, MessageFinishGame } from 'src/telegram/dto/message.dto';
+import { MessageDto } from 'src/telegram/dto/message.dto';
 import { ComposeFinishGameStrategy } from 'src/telegram/composers/compose-finish-game.strategy';
+import { MessageFinishGame } from 'src/telegram/telegram.interface';
 
 @Controller(['store/game', 'store/games'])
 export class GameController {

@@ -4,9 +4,10 @@ import { HelpersService } from 'src/common/helpers.service';
 import { GamerService } from 'src/gamer/gamer.service';
 import { Telegraf } from 'telegraf';
 import { ParseMode } from 'telegraf/typings/core/types/typegram';
-import { ComposeStrategyConstructor, ComposeTypes, Message, MessageDto } from './dto/message.dto';
+import { MessageDto } from './dto/message.dto';
 import { SubscribtionDto } from './dto/subscribtion.dto';
 import { SubscribeToBotDto } from './dto/subsctibe-to-bot.dto';
+import { ComposeStrategyConstructor, ComposeTypes, Message } from './telegram.interface';
 export declare class TelegramService {
     readonly bot: Telegraf<any>;
     private readonly gamerService;

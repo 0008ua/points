@@ -16,7 +16,10 @@ export class GameResultComponent implements OnInit {
 
   resultWithNames: Array<PlayersResult & { name: string; color: string }>;
   players$: Observable<IGamer[]>;
-  constructor(private modalController: ModalController, protected store: Store) {}
+  constructor(
+    private modalController: ModalController,
+    protected store: Store,
+  ) {}
 
   ngOnInit() {
     this.players$ = this.store.select(selectAllPlayers);
