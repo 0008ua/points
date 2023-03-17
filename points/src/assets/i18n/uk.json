@@ -87,6 +87,7 @@
   },
   "common": {
     "cancelGameQuestion": "Ви впевнені, що хочете відмінити гру?",
+    "finishGameQuestion": "Ви впевнені, що хочете закінчити гру?",
     "logic": {
       "true": "Так",
       "false": "Ні"

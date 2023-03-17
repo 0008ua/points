@@ -2,7 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { IGamer, PlayersResult, UID } from 'src/app/interfaces';
+import {
+  GameResultModalData,
+  IGamer,
+  PlayersResult,
+  UID,
+} from 'src/app/interfaces';
 import { selectAllPlayers } from 'src/app/store/reducers/player.reducer';
 
 @Component({
@@ -11,8 +16,7 @@ import { selectAllPlayers } from 'src/app/store/reducers/player.reducer';
   styleUrls: ['./game-result.component.scss'],
 })
 export class GameResultComponent implements OnInit {
-  @Input() results: PlayersResult[];
-  @Input() order: 1 | -1;
+  @Input() data: GameResultModalData;
 
   resultWithNames: Array<PlayersResult & { name: string; color: string }>;
   players$: Observable<IGamer[]>;
@@ -24,11 +28,13 @@ export class GameResultComponent implements OnInit {
   ngOnInit() {
     this.players$ = this.store.select(selectAllPlayers);
     this.players$.subscribe((players) => {
-      this.resultWithNames = this.results.map((result) => {
+      this.resultWithNames = this.data.results.map((result) => {
         const player = players.find((pl) => pl._id === result._id);
         return { ...result, name: player?.name, color: player?.color };
       });
-      this.resultWithNames.sort((a, b) => (a.score - b.score) * this.order);
+      this.resultWithNames.sort(
+        (a, b) => (a.score - b.score) * this.data.order,
+      );
     });
   }
 

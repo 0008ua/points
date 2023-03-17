@@ -72,7 +72,6 @@ export class AppEffects {
     return this.actions$.pipe(
       ofEntityType(['game']),
       ofEntityOp([EntityOp.SAVE_ADD_ONE_SUCCESS]),
-      tap((_) => console.log('gameStoredToDbSuccess', _)),
       map(() => fromAppActions.clearGame()),
       catchError((error) => [fromAppActions.loading({ loading: false })]),
     );

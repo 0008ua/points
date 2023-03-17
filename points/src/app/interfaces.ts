@@ -126,3 +126,15 @@ export type RoundScoresType = {
 export interface RoundScores {
   [key: RoundMemberUUID]: number | string; // TODO: only number
 }
+
+export interface GameActionConfirmModalData {
+  title: string;
+  text: string;
+  cancelBtnText: string;
+  confirmBtnText: string;
+}
+
+export interface GameResultModalData {
+  results: PlayersResult[];
+  order: 1 | -1;
+}

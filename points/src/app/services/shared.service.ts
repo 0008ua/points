@@ -3,6 +3,7 @@ import { from, Observable, of, throwError } from 'rxjs';
 import { Storage } from '@capacitor/storage';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import {
+  GameResultModalData,
   GameType,
   IGame,
   IGamer,
@@ -199,12 +200,13 @@ export class SharedService {
   }
 
   async presentModalFinishGame(game: IGame) {
-    const order = this.environment.games[game.type].resultsOrder;
+    const order = this.environment.games[game.type].resultsOrder as -1 | 1;
     const results = game.rounds.find((round) => round._id === 'result').players;
-    return this.modalService.presentModal(GameResultComponent, {
+    const data: GameResultModalData = {
       results,
       order,
-    });
+    };
+    return this.modalService.presentModal(GameResultComponent, { data });
   }
 
   calcQtyOfArrItems(

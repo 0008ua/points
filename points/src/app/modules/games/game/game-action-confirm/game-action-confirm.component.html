@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{ 'elements.button.cancelGame' | translate }}?</ion-title>
+    <ion-title>{{ data?.title | translate }}?</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cancel()">{{
         'elements.button.close' | translate
@@ -12,7 +12,7 @@
   <div class="finish-game-modal">
     <div class="finish-game-modal__text">
       <p class="ion-padding-horizontal">
-        {{ 'common.cancelGameQuestion' | translate }}
+        {{ data?.text | translate }}
       </p>
     </div>
     <div class="finish-game-modal__buttons">
@@ -20,12 +20,12 @@
         <ion-row>
           <ion-col size="7">
             <ion-button (click)="cancel()" expand="block">{{
-              'elements.button.returnToGame' | translate
+              data?.cancelBtnText | translate
             }}</ion-button>
           </ion-col>
           <ion-col size="5">
             <ion-button (click)="confirm()" fill="outline" expand="block">{{
-              'elements.button.cancelGame' | translate
+              data?.confirmBtnText | translate
             }}</ion-button></ion-col
           >
         </ion-row>

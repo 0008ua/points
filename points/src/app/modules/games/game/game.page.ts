@@ -9,6 +9,7 @@ import {
   Subject,
 } from 'rxjs';
 import {
+  GameActionConfirmModalData,
   GameType,
   IGame,
   IGamer,
@@ -172,14 +173,32 @@ export class GamePage implements OnInit {
     this.activeRoundId$.next(e.target.value);
   }
 
-  onFinishGameHandler() {
-    this.store.dispatch(fromAppActions.finishGame());
+  async onFinishGameHandler() {
+    const data: GameActionConfirmModalData = {
+      title: 'elements.button.finishGame',
+      text: 'common.finishGameQuestion',
+      cancelBtnText: 'elements.button.returnToGame',
+      confirmBtnText: 'elements.button.finishGame',
+    };
+    const { role } = await this.modalService.presentModal(
+      GameActionConfirmComponent,
+      { data },
+    );
+    if (role === 'confirm') {
+      this.store.dispatch(fromAppActions.finishGame());
+    }
   }
 
   async onCancelGameHandler() {
+    const data: GameActionConfirmModalData = {
+      title: 'elements.button.cancelGame',
+      text: 'common.cancelGameQuestion',
+      cancelBtnText: 'elements.button.returnToGame',
+      confirmBtnText: 'elements.button.cancelGame',
+    };
     const { role } = await this.modalService.presentModal(
       GameActionConfirmComponent,
-      null,
+      { data },
     );
     if (role === 'confirm') {
       this.store.dispatch(fromAppActions.clearGame());

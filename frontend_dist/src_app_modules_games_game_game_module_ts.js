@@ -11,10 +11,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GameActionConfirmComponent": () => (/* binding */ GameActionConfirmComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
 /* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_game_action_confirm_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./game-action-confirm.component.html */ 2608);
 /* harmony import */ var _game_action_confirm_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game-action-confirm.component.scss */ 3024);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ 2650);
 
 
@@ -36,8 +36,11 @@ let GameActionConfirmComponent = class GameActionConfirmComponent {
 GameActionConfirmComponent.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.ModalController }
 ];
-GameActionConfirmComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+GameActionConfirmComponent.propDecorators = {
+    data: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }]
+};
+GameActionConfirmComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
         selector: 'app-game-action-confirm',
         template: _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_game_action_confirm_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_game_action_confirm_component_scss__WEBPACK_IMPORTED_MODULE_1__]
@@ -276,11 +279,28 @@ let GamePage = class GamePage {
         this.activeRoundId$.next(e.target.value);
     }
     onFinishGameHandler() {
-        this.store.dispatch(src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__.finishGame());
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__awaiter)(this, void 0, void 0, function* () {
+            const data = {
+                title: 'elements.button.finishGame',
+                text: 'common.finishGameQuestion',
+                cancelBtnText: 'elements.button.returnToGame',
+                confirmBtnText: 'elements.button.finishGame',
+            };
+            const { role } = yield this.modalService.presentModal(_game_action_confirm_game_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__.GameActionConfirmComponent, { data });
+            if (role === 'confirm') {
+                this.store.dispatch(src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__.finishGame());
+            }
+        });
     }
     onCancelGameHandler() {
         return (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__awaiter)(this, void 0, void 0, function* () {
-            const { role } = yield this.modalService.presentModal(_game_action_confirm_game_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__.GameActionConfirmComponent, null);
+            const data = {
+                title: 'elements.button.cancelGame',
+                text: 'common.cancelGameQuestion',
+                cancelBtnText: 'elements.button.returnToGame',
+                confirmBtnText: 'elements.button.cancelGame',
+            };
+            const { role } = yield this.modalService.presentModal(_game_action_confirm_game_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__.GameActionConfirmComponent, { data });
             if (role === 'confirm') {
                 this.store.dispatch(src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__.clearGame());
             }
@@ -1860,7 +1880,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>{{ 'elements.button.cancelGame' | translate }}?</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"cancel()\">{{\n        'elements.button.close' | translate\n      }}</ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <div class=\"finish-game-modal\">\n    <div class=\"finish-game-modal__text\">\n      <p class=\"ion-padding-horizontal\">\n        {{ 'common.cancelGameQuestion' | translate }}\n      </p>\n    </div>\n    <div class=\"finish-game-modal__buttons\">\n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"7\">\n            <ion-button (click)=\"cancel()\" expand=\"block\">{{\n              'elements.button.returnToGame' | translate\n            }}</ion-button>\n          </ion-col>\n          <ion-col size=\"5\">\n            <ion-button (click)=\"confirm()\" fill=\"outline\" expand=\"block\">{{\n              'elements.button.cancelGame' | translate\n            }}</ion-button></ion-col\n          >\n        </ion-row>\n      </ion-grid>\n    </div>\n  </div>\n</ion-content>\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>{{ data?.title | translate }}?</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"cancel()\">{{\n        'elements.button.close' | translate\n      }}</ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <div class=\"finish-game-modal\">\n    <div class=\"finish-game-modal__text\">\n      <p class=\"ion-padding-horizontal\">\n        {{ data?.text | translate }}\n      </p>\n    </div>\n    <div class=\"finish-game-modal__buttons\">\n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"7\">\n            <ion-button (click)=\"cancel()\" expand=\"block\">{{\n              data?.cancelBtnText | translate\n            }}</ion-button>\n          </ion-col>\n          <ion-col size=\"5\">\n            <ion-button (click)=\"confirm()\" fill=\"outline\" expand=\"block\">{{\n              data?.confirmBtnText | translate\n            }}</ion-button></ion-col\n          >\n        </ion-row>\n      </ion-grid>\n    </div>\n  </div>\n</ion-content>\n");
 
 /***/ }),
 

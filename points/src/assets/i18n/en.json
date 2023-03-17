@@ -87,6 +87,7 @@
   },
   "common": {
     "cancelGameQuestion": "Are you sure you want to cancel game?",
+    "finishGameQuestion": "Are you sure you want to finish game?",
     "logic": {
       "true": "Yes",
       "false": "No"
