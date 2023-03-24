@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { GameActionConfirmComponent } from './game-action-confirm.component';
+import { ActionConfirmComponent } from './action-confirm.component';
 
-describe('GameActionConfirmComponent', () => {
-  let component: GameActionConfirmComponent;
-  let fixture: ComponentFixture<GameActionConfirmComponent>;
+describe('ActionConfirmComponent', () => {
+  let component: ActionConfirmComponent;
+  let fixture: ComponentFixture<ActionConfirmComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameActionConfirmComponent ],
+      declarations: [ ActionConfirmComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(GameActionConfirmComponent);
+    fixture = TestBed.createComponent(ActionConfirmComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

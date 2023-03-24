@@ -138,3 +138,7 @@ export interface GameResultModalData {
   results: PlayersResult[];
   order: 1 | -1;
 }
+
+export interface CanDeactivateComponent {
+  canDeactivate(): boolean;
+}

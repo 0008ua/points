@@ -9,6 +9,7 @@ import {
   Subject,
 } from 'rxjs';
 import {
+  CanDeactivateComponent,
   GameActionConfirmModalData,
   GameType,
   IGame,
@@ -34,14 +35,14 @@ import { GameService } from 'src/app/store/game-data.service';
 import { ModalService } from 'src/app/services/modal.service';
 import { GameResultComponent } from './game-result/game-result.component';
 import { IonModal, ModalController } from '@ionic/angular';
-import { GameActionConfirmComponent } from './game-action-confirm/game-action-confirm.component';
+import { ActionConfirmComponent } from '../../common/action-confirm/action-confirm.component';
 
 @Component({
   selector: 'app-game',
   templateUrl: './game.page.html',
   styleUrls: ['./game.page.scss'],
 })
-export class GamePage implements OnInit {
+export class GamePage implements OnInit, CanDeactivateComponent {
   @ViewChild(IonModal) modal: IonModal;
 
   roundsCfg: RoundCfg[];
@@ -154,6 +155,10 @@ export class GamePage implements OnInit {
     });
   }
 
+  canDeactivate(): boolean {
+    return this.rounds.length === 0;
+  }
+
   finishGameDisabled(playersWithTotal: IGamer[]): boolean {
     let countZeros = 0;
 
@@ -181,7 +186,7 @@ export class GamePage implements OnInit {
       confirmBtnText: 'elements.button.finishGame',
     };
     const { role } = await this.modalService.presentModal(
-      GameActionConfirmComponent,
+      ActionConfirmComponent,
       { data },
     );
     if (role === 'confirm') {
@@ -197,7 +202,7 @@ export class GamePage implements OnInit {
       confirmBtnText: 'elements.button.cancelGame',
     };
     const { role } = await this.modalService.presentModal(
-      GameActionConfirmComponent,
+      ActionConfirmComponent,
       { data },
     );
     if (role === 'confirm') {

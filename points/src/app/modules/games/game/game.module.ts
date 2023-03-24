@@ -11,7 +11,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RoundModule } from '../round/round.module';
 import { GamersModule } from '../gamers/gamers.module';
 import { GameResultComponent } from './game-result/game-result.component';
-import { GameActionConfirmComponent } from './game-action-confirm/game-action-confirm.component';
+import { SharedModule } from '../../common/shared.module';
 
 @NgModule({
   imports: [
@@ -24,7 +24,8 @@ import { GameActionConfirmComponent } from './game-action-confirm/game-action-co
     }),
     RoundModule,
     GamersModule,
+    SharedModule,
   ],
-  declarations: [GamePage, GameResultComponent, GameActionConfirmComponent],
+  declarations: [GamePage, GameResultComponent],
 })
 export class GamePageModule {}

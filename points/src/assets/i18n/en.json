@@ -79,6 +79,7 @@
       "close": "Close",
       "delete": "Delete",
       "finishGame": "Finish game",
+      "leaveGame": "Leave game",
       "cancelGame": "Cancel game",
       "nextRound": "Next Round",
       "subscribe": "Subscribe",
@@ -88,6 +89,7 @@
   "common": {
     "cancelGameQuestion": "Are you sure you want to cancel game?",
     "finishGameQuestion": "Are you sure you want to finish game?",
+    "leaveGameQuestion": "Are you sure you want to leave game?",
     "logic": {
       "true": "Yes",
       "false": "No"

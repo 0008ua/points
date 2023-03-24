@@ -1,19 +1,71 @@
 "use strict";
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_modules_games_game_game_module_ts"],{
 
-/***/ 6168:
-/*!*****************************************************************************************!*\
-  !*** ./src/app/modules/games/game/game-action-confirm/game-action-confirm.component.ts ***!
-  \*****************************************************************************************/
+/***/ 8265:
+/*!********************************************************!*\
+  !*** ./src/app/modules/auth/deactivate-route.guard.ts ***!
+  \********************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "GameActionConfirmComponent": () => (/* binding */ GameActionConfirmComponent)
+/* harmony export */   "DeactivateRouteGuard": () => (/* binding */ DeactivateRouteGuard)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/modal.service */ 9853);
+/* harmony import */ var _common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/action-confirm/action-confirm.component */ 658);
+
+
+
+
+let DeactivateRouteGuard = class DeactivateRouteGuard {
+    constructor(modalService) {
+        this.modalService = modalService;
+    }
+    canDeactivate(component, currentRoute, currentState, nextState) {
+        if (!component.canDeactivate()) {
+            const data = {
+                title: 'elements.button.leaveGame',
+                text: 'common.leaveGameQuestion',
+                cancelBtnText: 'elements.button.returnToGame',
+                confirmBtnText: 'elements.button.leaveGame',
+            };
+            return this.modalService
+                .presentModal(_common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_1__.ActionConfirmComponent, { data })
+                .then(({ role }) => role === 'confirm');
+        }
+        else {
+            return Promise.resolve(true);
+        }
+    }
+};
+DeactivateRouteGuard.ctorParameters = () => [
+    { type: src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_0__.ModalService }
+];
+DeactivateRouteGuard = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
+        providedIn: 'root',
+    })
+], DeactivateRouteGuard);
+
+
+
+/***/ }),
+
+/***/ 658:
+/*!***************************************************************************!*\
+  !*** ./src/app/modules/common/action-confirm/action-confirm.component.ts ***!
+  \***************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ActionConfirmComponent": () => (/* binding */ ActionConfirmComponent)
 /* harmony export */ });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_game_action_confirm_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./game-action-confirm.component.html */ 2608);
-/* harmony import */ var _game_action_confirm_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game-action-confirm.component.scss */ 3024);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_action_confirm_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./action-confirm.component.html */ 107);
+/* harmony import */ var _action_confirm_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./action-confirm.component.scss */ 4958);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ 2650);
 
@@ -21,7 +73,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-let GameActionConfirmComponent = class GameActionConfirmComponent {
+let ActionConfirmComponent = class ActionConfirmComponent {
     constructor(modalController) {
         this.modalController = modalController;
     }
@@ -33,19 +85,58 @@ let GameActionConfirmComponent = class GameActionConfirmComponent {
         this.modalController.dismiss(null, 'confirm');
     }
 };
-GameActionConfirmComponent.ctorParameters = () => [
+ActionConfirmComponent.ctorParameters = () => [
     { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.ModalController }
 ];
-GameActionConfirmComponent.propDecorators = {
+ActionConfirmComponent.propDecorators = {
     data: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }]
 };
-GameActionConfirmComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+ActionConfirmComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
     (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
-        selector: 'app-game-action-confirm',
-        template: _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_game_action_confirm_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
-        styles: [_game_action_confirm_component_scss__WEBPACK_IMPORTED_MODULE_1__]
+        selector: 'app-action-confirm',
+        template: _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_action_confirm_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
+        styles: [_action_confirm_component_scss__WEBPACK_IMPORTED_MODULE_1__]
     })
-], GameActionConfirmComponent);
+], ActionConfirmComponent);
+
+
+
+/***/ }),
+
+/***/ 3938:
+/*!*************************************************!*\
+  !*** ./src/app/modules/common/shared.module.ts ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "SharedModule": () => (/* binding */ SharedModule)
+/* harmony export */ });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ 8267);
+/* harmony import */ var _action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./action-confirm/action-confirm.component */ 658);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngx-translate/core */ 466);
+
+
+
+
+
+let SharedModule = class SharedModule {
+};
+SharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
+        declarations: [_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_0__.ActionConfirmComponent],
+        exports: [_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_0__.ActionConfirmComponent],
+        imports: [
+            _angular_common__WEBPACK_IMPORTED_MODULE_3__.CommonModule,
+            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__.TranslateModule.forChild({
+                extend: true,
+            }),
+        ],
+    })
+], SharedModule);
 
 
 
@@ -61,10 +152,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GamePageRoutingModule": () => (/* binding */ GamePageRoutingModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 3252);
-/* harmony import */ var _game_page__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game.page */ 9123);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 3252);
+/* harmony import */ var _auth_deactivate_route_guard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../auth/deactivate-route.guard */ 8265);
+/* harmony import */ var _game_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.page */ 9123);
+
 
 
 
@@ -72,15 +165,16 @@ __webpack_require__.r(__webpack_exports__);
 const routes = [
     {
         path: '',
-        component: _game_page__WEBPACK_IMPORTED_MODULE_0__.GamePage,
+        component: _game_page__WEBPACK_IMPORTED_MODULE_1__.GamePage,
+        canDeactivate: [_auth_deactivate_route_guard__WEBPACK_IMPORTED_MODULE_0__.DeactivateRouteGuard],
     },
 ];
 let GamePageRoutingModule = class GamePageRoutingModule {
 };
-GamePageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
-        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule.forChild(routes)],
-        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_3__.RouterModule],
+GamePageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.NgModule)({
+        imports: [_angular_router__WEBPACK_IMPORTED_MODULE_4__.RouterModule.forChild(routes)],
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_4__.RouterModule],
     })
 ], GamePageRoutingModule);
 
@@ -109,7 +203,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _round_round_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../round/round.module */ 740);
 /* harmony import */ var _gamers_gamers_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../gamers/gamers.module */ 6932);
 /* harmony import */ var _game_result_game_result_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./game-result/game-result.component */ 8339);
-/* harmony import */ var _game_action_confirm_game_action_confirm_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./game-action-confirm/game-action-confirm.component */ 6168);
+/* harmony import */ var _common_shared_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../common/shared.module */ 3938);
 
 
 
@@ -136,8 +230,9 @@ GamePageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
             }),
             _round_round_module__WEBPACK_IMPORTED_MODULE_2__.RoundModule,
             _gamers_gamers_module__WEBPACK_IMPORTED_MODULE_3__.GamersModule,
+            _common_shared_module__WEBPACK_IMPORTED_MODULE_5__.SharedModule,
         ],
-        declarations: [_game_page__WEBPACK_IMPORTED_MODULE_1__.GamePage, _game_result_game_result_component__WEBPACK_IMPORTED_MODULE_4__.GameResultComponent, _game_action_confirm_game_action_confirm_component__WEBPACK_IMPORTED_MODULE_5__.GameActionConfirmComponent],
+        declarations: [_game_page__WEBPACK_IMPORTED_MODULE_1__.GamePage, _game_result_game_result_component__WEBPACK_IMPORTED_MODULE_4__.GameResultComponent],
     })
 ], GamePageModule);
 
@@ -173,7 +268,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/store/actions/app.actions */ 8717);
 /* harmony import */ var src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/modal.service */ 9853);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ionic/angular */ 2650);
-/* harmony import */ var _game_action_confirm_game_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./game-action-confirm/game-action-confirm.component */ 6168);
+/* harmony import */ var _common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../common/action-confirm/action-confirm.component */ 658);
 
 
 
@@ -263,6 +358,9 @@ let GamePage = class GamePage {
             // this.gameType = params.id;
         });
     }
+    canDeactivate() {
+        return this.rounds.length === 0;
+    }
     finishGameDisabled(playersWithTotal) {
         let countZeros = 0;
         playersWithTotal.forEach((player) => {
@@ -286,7 +384,7 @@ let GamePage = class GamePage {
                 cancelBtnText: 'elements.button.returnToGame',
                 confirmBtnText: 'elements.button.finishGame',
             };
-            const { role } = yield this.modalService.presentModal(_game_action_confirm_game_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__.GameActionConfirmComponent, { data });
+            const { role } = yield this.modalService.presentModal(_common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__.ActionConfirmComponent, { data });
             if (role === 'confirm') {
                 this.store.dispatch(src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__.finishGame());
             }
@@ -300,7 +398,7 @@ let GamePage = class GamePage {
                 cancelBtnText: 'elements.button.returnToGame',
                 confirmBtnText: 'elements.button.cancelGame',
             };
-            const { role } = yield this.modalService.presentModal(_game_action_confirm_game_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__.GameActionConfirmComponent, { data });
+            const { role } = yield this.modalService.presentModal(_common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__.ActionConfirmComponent, { data });
             if (role === 'confirm') {
                 this.store.dispatch(src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__.clearGame());
             }
@@ -1870,10 +1968,10 @@ RoundUnoComponent = RoundUnoComponent_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.
 
 /***/ }),
 
-/***/ 2608:
-/*!**********************************************************************************************************************************************************!*\
-  !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/game/game-action-confirm/game-action-confirm.component.html ***!
-  \**********************************************************************************************************************************************************/
+/***/ 107:
+/*!********************************************************************************************************************************************!*\
+  !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/common/action-confirm/action-confirm.component.html ***!
+  \********************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -1894,7 +1992,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-menu-button menu=\"games-menu\"></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-segment\r\n      *ngIf=\"showToolbarMenu\"\r\n      scrollable\r\n      [value]=\"(activeRoundId$ | async)\"\r\n      (ionChange)=\"onMenuClickHandler($event)\"\r\n    >\r\n      <ion-segment-button\r\n        *ngFor=\"let round of roundsCfg; let idx = index\"\r\n        [value]=\"round._id\"\r\n        [disabled]=\"(round._id === 'start' && (rounds$ | async).length) ||\r\n                    (round._id !== 'start' && (rounds$ | async).length === 0)\"\r\n      >\r\n        <ion-icon [name]=\"round.icon\"></ion-icon>\r\n      </ion-segment-button>\r\n    </ion-segment>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\r\n    <ion-row>\r\n      <ion-col\r\n        size-lg=\"6\"\r\n        size-md=\"8\"\r\n        size-sm=\"10\"\r\n        offset-lg=\"3\"\r\n        offset-md=\"2\"\r\n        offset-sm=\"1\"\r\n      >\r\n        <ion-card *ngIf=\"(rounds$ | async).length !== 0\">\r\n          <ion-card-header>\r\n            <ion-card-title class=\"ion-text-center\"\r\n              >{{'games.' + gameType + '.name' | translate}}</ion-card-title\r\n            >\r\n          </ion-card-header>\r\n          <ion-card-content>\r\n            <ion-list>\r\n              <ion-item\r\n                *ngFor=\"let player of playersWithTotal\"\r\n                (click)=\"selectPlayer(player._id)\"\r\n                [ngClass]=\"{'active-player': player._id === (activePlayerId$ | async) && gameType !== 'thousand'}\"\r\n              >\r\n                <ion-label\r\n                  [ngStyle]=\"{\r\n                  'border-left': '6px solid ' + player.color,\r\n                  'padding-left': '10px'\r\n                }\"\r\n                >\r\n                  {{player.name}}\r\n                </ion-label>\r\n                <div\r\n                  slot=\"end\"\r\n                  [ngStyle]=\"{\r\n                  'border-right': '6px solid ' + player.color,\r\n                  'padding-right': '10px'\r\n                }\"\r\n                >\r\n                  {{getPlayerTotalScores(player._id)}}\r\n                </div>\r\n              </ion-item>\r\n            </ion-list>\r\n            <ion-row class=\"ion-justify-content-around\">\r\n              <ion-button\r\n                *ngIf=\"gameType !== 'thousand'\"\r\n                fill=\"outline\"\r\n                size=\"small\"\r\n                (click)=\"onFinishGameHandler()\"\r\n                [disabled]=\"(rounds$ | async).length === 0 || (loading$ | async) ||\r\n              (gameType === 'rummy' && finishGameDisabled(playersWithTotal))\"\r\n              >\r\n                {{'elements.button.finishGame' | translate}}\r\n              </ion-button>\r\n              <ion-button\r\n                fill=\"outline\"\r\n                size=\"small\"\r\n                [disabled]=\"(rounds$ | async).length === 0 || (loading$ | async)\"\r\n                (click)=\"onCancelGameHandler()\"\r\n              >\r\n                {{'elements.button.cancelGame' | translate}}\r\n              </ion-button>\r\n              <ion-button\r\n                *ngIf=\"gameType === 'uno'\"\r\n                fill=\"outline\"\r\n                size=\"small\"\r\n                (click)=\"openNextRound()\"\r\n              >\r\n                {{'elements.button.nextRound' | translate}}\r\n              </ion-button>\r\n            </ion-row>\r\n          </ion-card-content>\r\n        </ion-card>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row\r\n      *ngIf=\"(activeRoundId$ | async) === 'start' || ((activeRoundId$ | async) && (activePlayerId$ | async))\"\r\n    >\r\n      <ion-col\r\n        size-lg=\"8\"\r\n        size-md=\"10\"\r\n        size-sm=\"12\"\r\n        offset-lg=\"2\"\r\n        offset-md=\"1\"\r\n        offset-sm=\"0\"\r\n      >\r\n        <app-round\r\n          [activeRoundId$]=\"activeRoundId$\"\r\n          [activePlayerId$]=\"activePlayerId$\"\r\n          [gameType$]=\"gameType$\"\r\n          [players$]=\"players$\"\r\n        ></app-round>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-grid>\r\n\r\n  <!-- <ion-modal trigger=\"open-modal\" (willDismiss)=\"onWillDismiss($event)\">\r\n    <ng-template>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-buttons slot=\"start\">\r\n            <ion-button (click)=\"cancel()\">Cancel</ion-button>\r\n          </ion-buttons>\r\n          <ion-title>Cancel game?</ion-title>\r\n          <ion-buttons slot=\"end\">\r\n            <ion-button (click)=\"confirm()\" [strong]=\"true\">Confirm</ion-button>\r\n          </ion-buttons>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content class=\"ion-padding\">\r\n\r\n      </ion-content>\r\n    </ng-template>\r\n  </ion-modal> -->\r\n</ion-content>\r\n");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\r\n  <ion-toolbar>\r\n    <ion-buttons slot=\"end\">\r\n      <ion-menu-button menu=\"games-menu\"></ion-menu-button>\r\n    </ion-buttons>\r\n    <ion-segment\r\n      *ngIf=\"showToolbarMenu\"\r\n      scrollable\r\n      [value]=\"(activeRoundId$ | async)\"\r\n      (ionChange)=\"onMenuClickHandler($event)\"\r\n    >\r\n      <ion-segment-button\r\n        *ngFor=\"let round of roundsCfg; let idx = index\"\r\n        [value]=\"round._id\"\r\n        [disabled]=\"(round._id === 'start' && (rounds$ | async).length) ||\r\n                    (round._id !== 'start' && (rounds$ | async).length === 0)\"\r\n      >\r\n        <ion-icon [name]=\"round.icon\"></ion-icon>\r\n      </ion-segment-button>\r\n    </ion-segment>\r\n  </ion-toolbar>\r\n</ion-header>\r\n<ion-content>\r\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\r\n    <ion-row>\r\n      <ion-col\r\n        size-lg=\"6\"\r\n        size-md=\"8\"\r\n        size-sm=\"10\"\r\n        offset-lg=\"3\"\r\n        offset-md=\"2\"\r\n        offset-sm=\"1\"\r\n      >\r\n\r\n        <ion-card *ngIf=\"(rounds$ | async).length !== 0\">\r\n          <ion-card-header>\r\n            <ion-card-title class=\"ion-text-center\"\r\n              >{{'games.' + gameType + '.name' | translate}}</ion-card-title\r\n            >\r\n          </ion-card-header>\r\n          <ion-card-content>\r\n            <ion-list>\r\n              <ion-item\r\n                *ngFor=\"let player of playersWithTotal\"\r\n                (click)=\"selectPlayer(player._id)\"\r\n                [ngClass]=\"{'active-player': player._id === (activePlayerId$ | async) && gameType !== 'thousand'}\"\r\n              >\r\n                <ion-label\r\n                  [ngStyle]=\"{\r\n                  'border-left': '6px solid ' + player.color,\r\n                  'padding-left': '10px'\r\n                }\"\r\n                >\r\n                  {{player.name}}\r\n                </ion-label>\r\n                <div\r\n                  slot=\"end\"\r\n                  [ngStyle]=\"{\r\n                  'border-right': '6px solid ' + player.color,\r\n                  'padding-right': '10px'\r\n                }\"\r\n                >\r\n                  {{getPlayerTotalScores(player._id)}}\r\n                </div>\r\n              </ion-item>\r\n            </ion-list>\r\n            <ion-row class=\"ion-justify-content-around\">\r\n              <ion-button\r\n                *ngIf=\"gameType !== 'thousand'\"\r\n                fill=\"outline\"\r\n                size=\"small\"\r\n                (click)=\"onFinishGameHandler()\"\r\n                [disabled]=\"(rounds$ | async).length === 0 || (loading$ | async) ||\r\n              (gameType === 'rummy' && finishGameDisabled(playersWithTotal))\"\r\n              >\r\n                {{'elements.button.finishGame' | translate}}\r\n              </ion-button>\r\n              <ion-button\r\n                fill=\"outline\"\r\n                size=\"small\"\r\n                [disabled]=\"(rounds$ | async).length === 0 || (loading$ | async)\"\r\n                (click)=\"onCancelGameHandler()\"\r\n              >\r\n                {{'elements.button.cancelGame' | translate}}\r\n              </ion-button>\r\n              <ion-button\r\n                *ngIf=\"gameType === 'uno'\"\r\n                fill=\"outline\"\r\n                size=\"small\"\r\n                (click)=\"openNextRound()\"\r\n              >\r\n                {{'elements.button.nextRound' | translate}}\r\n              </ion-button>\r\n            </ion-row>\r\n          </ion-card-content>\r\n        </ion-card>\r\n      </ion-col>\r\n    </ion-row>\r\n\r\n    <ion-row\r\n      *ngIf=\"(activeRoundId$ | async) === 'start' || ((activeRoundId$ | async) && (activePlayerId$ | async))\"\r\n    >\r\n      <ion-col\r\n        size-lg=\"8\"\r\n        size-md=\"10\"\r\n        size-sm=\"12\"\r\n        offset-lg=\"2\"\r\n        offset-md=\"1\"\r\n        offset-sm=\"0\"\r\n      >\r\n        <app-round\r\n          [activeRoundId$]=\"activeRoundId$\"\r\n          [activePlayerId$]=\"activePlayerId$\"\r\n          [gameType$]=\"gameType$\"\r\n          [players$]=\"players$\"\r\n        ></app-round>\r\n      </ion-col>\r\n    </ion-row>\r\n  </ion-grid>\r\n\r\n  <!-- <ion-modal trigger=\"open-modal\" (willDismiss)=\"onWillDismiss($event)\">\r\n    <ng-template>\r\n      <ion-header>\r\n        <ion-toolbar>\r\n          <ion-buttons slot=\"start\">\r\n            <ion-button (click)=\"cancel()\">Cancel</ion-button>\r\n          </ion-buttons>\r\n          <ion-title>Cancel game?</ion-title>\r\n          <ion-buttons slot=\"end\">\r\n            <ion-button (click)=\"confirm()\" [strong]=\"true\">Confirm</ion-button>\r\n          </ion-buttons>\r\n        </ion-toolbar>\r\n      </ion-header>\r\n      <ion-content class=\"ion-padding\">\r\n\r\n      </ion-content>\r\n    </ng-template>\r\n  </ion-modal> -->\r\n</ion-content>\r\n");
 
 /***/ }),
 
@@ -2080,13 +2178,13 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 3024:
-/*!*******************************************************************************************!*\
-  !*** ./src/app/modules/games/game/game-action-confirm/game-action-confirm.component.scss ***!
-  \*******************************************************************************************/
+/***/ 4958:
+/*!*****************************************************************************!*\
+  !*** ./src/app/modules/common/action-confirm/action-confirm.component.scss ***!
+  \*****************************************************************************/
 /***/ ((module) => {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJnYW1lLWFjdGlvbi1jb25maXJtLmNvbXBvbmVudC5zY3NzIn0= */";
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhY3Rpb24tY29uZmlybS5jb21wb25lbnQuc2NzcyJ9 */";
 
 /***/ }),
 

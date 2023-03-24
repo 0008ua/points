@@ -79,6 +79,7 @@
       "close": "Закрити",
       "delete": "Видалити",
       "finishGame": "Завершити гру",
+      "leaveGame": "Залишити гру",
       "cancelGame": "Відмінити гру",
       "nextRound": "Наступний раунд",
       "subscribe": "Підписатися",
@@ -88,6 +89,7 @@
   "common": {
     "cancelGameQuestion": "Ви впевнені, що хочете відмінити гру?",
     "finishGameQuestion": "Ви впевнені, що хочете закінчити гру?",
+    "leaveGameQuestion": "Ви впевнені, що хочете покинути гру?",
     "logic": {
       "true": "Так",
       "false": "Ні"
