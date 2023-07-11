@@ -1,0 +1,22 @@
+<div class="ion-page">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button (click)="cancel()">Cancel</ion-button>
+      </ion-buttons>
+      <ion-title>Error details</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-item *ngFor="let pair of error | keyvalue">
+      <ion-label *ngIf="pair.key === 'error'" class="ion-text-wrap">
+        <h2>{{ pair.key }}</h2>
+        <p>{{ pair.value | json }}</p>
+      </ion-label>
+      <ion-label *ngIf="pair.key !== 'error'">
+        <h2>{{ pair.key }}</h2>
+        <p>{{ pair.value }}</p>
+      </ion-label>
+    </ion-item>
+  </ion-content>
+</div>

@@ -16,6 +16,7 @@ import * as fromPlayers from './player.reducer';
 import * as fromAnalytics from './analytics.reducer';
 import * as fromApp from './app.reducer';
 import * as fromPersistStore from './persist-store.reducer';
+import * as fromErrorLog from './error-log.reducer';
 import { routerReducer } from '@ngrx/router-store';
 import { getSelectors, RouterReducerState, RouterState } from '@ngrx/router-store';
 
@@ -26,6 +27,7 @@ export interface State {
   players: fromPlayers.State;
   analytics: fromAnalytics.State;
   app: fromApp.State;
+  [fromErrorLog.errorLogsFeatureKey]: fromErrorLog.State;
   persistStore: fromPersistStore.State;
   router: RouterReducerState<any>; // typeof routerReducer;
 }
@@ -37,6 +39,7 @@ export const reducers: ActionReducerMap<State> = {
   players: fromPlayers.reducer,
   analytics: fromAnalytics.reducer,
   app: fromApp.reducer,
+  [fromErrorLog.errorLogsFeatureKey]: fromErrorLog.reducer,
   router: routerReducer,
   persistStore: fromPersistStore.reducer,
 };

@@ -1,7 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as fromAppActions from '../actions/app.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { GameType } from 'src/app/interfaces';
+import { ErrorTypes, GameType } from 'src/app/interfaces';
 import { environment } from 'src/environments/environment';
 
 export const appFeatureKey = 'app';
@@ -10,7 +10,8 @@ export interface State {
   loading: boolean;
   gameType: GameType | null;
   redirectionUrl: string | null;
-  error: string | null;
+  error: any | null;
+  errorType?: ErrorTypes | null;
 }
 
 export const initialState: State = {
@@ -55,6 +56,22 @@ export const reducer = createReducer(
     (state, { redirectionUrl }): State => ({
       ...state,
       redirectionUrl,
+    }),
+  ),
+  on(
+    fromAppActions.addError,
+    (state, { error, errorType }): State => ({
+      ...state,
+      error,
+      errorType,
+    }),
+  ),
+  on(
+    fromAppActions.removeError,
+    (state, _): State => ({
+      ...state,
+      error: null,
+      errorType: null,
     }),
   ),
 );

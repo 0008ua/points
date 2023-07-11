@@ -56,10 +56,7 @@ export class GamesService {
   }
 
   addToNamedScoresLine(namedScore: NamedScore, playerId: UID, roundId: string) {
-    const roundMember = this.sharedService.getMemberByPlayerId(
-      playerId,
-      roundId,
-    );
+    const roundMember = this.sharedService.getMemberByPlayerId(playerId, roundId);
     const changes = {
       ...roundMember,
       namedScoresLine: [...roundMember.namedScoresLine, namedScore],
@@ -78,10 +75,7 @@ export class GamesService {
   }
 
   addToScoresLine(score: number, playerId: UID, roundId: string) {
-    const roundMember = this.sharedService.getMemberByPlayerId(
-      playerId,
-      roundId,
-    );
+    const roundMember = this.sharedService.getMemberByPlayerId(playerId, roundId);
     const changes = {
       ...roundMember,
       scoresLine: [...roundMember.scoresLine, score],
@@ -97,19 +91,10 @@ export class GamesService {
     );
   }
 
-  removeFromNamedScoresLine(
-    namedScore: NamedScore,
-    playerId: UID,
-    roundId: string,
-  ) {
-    const roundMember = this.sharedService.getMemberByPlayerId(
-      playerId,
-      roundId,
-    );
+  removeFromNamedScoresLine(namedScore: NamedScore, playerId: UID, roundId: string) {
+    const roundMember = this.sharedService.getMemberByPlayerId(playerId, roundId);
     const namedScoresLine = [...roundMember.namedScoresLine];
-    const index = namedScoresLine.findIndex(
-      (ns) => ns.name === namedScore.name,
-    );
+    const index = namedScoresLine.findIndex((ns) => ns.name === namedScore.name);
     if (index !== -1) {
       namedScoresLine.splice(index, 1);
       const changes = {
@@ -130,10 +115,7 @@ export class GamesService {
   }
 
   removeFromScoresLine(score: number, playerId: UID, roundId: string) {
-    const roundMember = this.sharedService.getMemberByPlayerId(
-      playerId,
-      roundId,
-    );
+    const roundMember = this.sharedService.getMemberByPlayerId(playerId, roundId);
     const scoresLine = [...roundMember.scoresLine];
     const index = scoresLine.indexOf(score);
     scoresLine.splice(index, 1);
@@ -154,10 +136,7 @@ export class GamesService {
   }
 
   setScoresLine(scoresLine: number[], playerId: UID, roundId: string) {
-    const roundMember = this.sharedService.getMemberByPlayerId(
-      playerId,
-      roundId,
-    );
+    const roundMember = this.sharedService.getMemberByPlayerId(playerId, roundId);
     const changes = {
       ...roundMember,
       scoresLine,

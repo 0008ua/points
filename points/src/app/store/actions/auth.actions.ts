@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Action, createAction, props, union } from '@ngrx/store';
 import { IUser } from 'src/app/interfaces';
 
@@ -16,7 +17,8 @@ export enum AuthActionTypes {
 
   redirectionType = 'auth/redirection',
 
-  errorType = 'auth/error',
+  addErrorType = 'auth/addError',
+  removeErrorType = 'auth/removeError',
   loadingType = 'auth/loading',
 }
 
@@ -45,7 +47,12 @@ export const redirection = createAction(
   props<{ redirectionUrl: string | null }>(),
 );
 
-export const error = createAction(AuthActionTypes.errorType, props<{ error: string }>());
+export const addError = createAction(
+  AuthActionTypes.addErrorType,
+  props<{ error: HttpErrorResponse }>(),
+);
+
+export const removeError = createAction(AuthActionTypes.removeErrorType);
 
 export const loading = createAction(AuthActionTypes.loadingType, props<{ loading: boolean }>());
 
@@ -55,7 +62,8 @@ const all = union({
   storeUserFromTokenSuccess,
   signin,
   signup,
-  error,
+  addError,
+  removeError,
   loading,
   redirection,
   logout,

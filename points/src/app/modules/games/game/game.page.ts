@@ -1,13 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import {
-  BehaviorSubject,
-  combineLatest,
-  Observable,
-  of,
-  ReplaySubject,
-  Subject,
-} from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, of, ReplaySubject, Subject } from 'rxjs';
 import {
   CanDeactivateComponent,
   GameActionConfirmModalData,
@@ -80,45 +73,39 @@ export class GamePage implements OnInit, CanDeactivateComponent {
     this.gameType$ = this.store.select(fromAppReducer.selectGameType);
     this.rounds$ = this.store.select(fromRoundsReducer.selectAllRounds);
 
-    combineLatest([this.gameType$, this.rounds$]).subscribe(
-      ([gameType, rounds]) => {
-        if (!gameType) {
-          return;
-        }
-        this.gameType = gameType;
+    combineLatest([this.gameType$, this.rounds$]).subscribe(([gameType, rounds]) => {
+      if (!gameType) {
+        return;
+      }
+      this.gameType = gameType;
 
-        this.showToolbarMenu = environment.games[gameType].showToolbarMenu;
+      this.showToolbarMenu = environment.games[gameType].showToolbarMenu;
 
-        this.roundsCfg = environment.games[gameType].rounds;
-        if (gameType === 'uno') {
-          this.nextRound = this.roundsCfg[1];
-        }
-        this.rounds = rounds;
-        if (!this.roundsCfg) {
-          return;
-        }
-        if (rounds.length) {
-          // game started and active menu 'start'
-          if (this.gameType === 'uno') {
-            this.activeRoundId$.next(
-              this.roundsCfg[1]._id +
-                (rounds.length === 1
-                  ? this.roundsCfg[1].namePostfix
-                  : rounds.length),
-            );
-          } else {
-            this.activeRoundId$.next(this.roundsCfg[1]._id);
-          }
+      this.roundsCfg = environment.games[gameType].rounds;
+      if (gameType === 'uno') {
+        this.nextRound = this.roundsCfg[1];
+      }
+      this.rounds = rounds;
+      if (!this.roundsCfg) {
+        return;
+      }
+      if (rounds.length) {
+        // game started and active menu 'start'
+        if (this.gameType === 'uno') {
+          this.activeRoundId$.next(
+            this.roundsCfg[1]._id +
+              (rounds.length === 1 ? this.roundsCfg[1].namePostfix : rounds.length),
+          );
         } else {
-          // game not started and active menu !'start'
-          this.activeRoundId$.next(this.roundsCfg[0]._id);
+          this.activeRoundId$.next(this.roundsCfg[1]._id);
         }
-      },
-    );
+      } else {
+        // game not started and active menu !'start'
+        this.activeRoundId$.next(this.roundsCfg[0]._id);
+      }
+    });
 
-    this.roundMembers$ = this.store.select(
-      fromRoundMembersReducer.selectAllRoundMembers,
-    );
+    this.roundMembers$ = this.store.select(fromRoundMembersReducer.selectAllRoundMembers);
 
     this.players$ = this.store.select(fromPlayersReducer.selectAllPlayers);
     this.players$.subscribe((players) => {
@@ -146,9 +133,7 @@ export class GamePage implements OnInit, CanDeactivateComponent {
           })
           .sort((a, b) => b.totalScore - a.totalScore);
       });
-    this.activePlayerId$.subscribe(
-      (activePlayerId) => (this.activePlayerId = activePlayerId),
-    );
+    this.activePlayerId$.subscribe((activePlayerId) => (this.activePlayerId = activePlayerId));
 
     this.route.params.subscribe((params) => {
       // this.gameType = params.id;
@@ -185,10 +170,7 @@ export class GamePage implements OnInit, CanDeactivateComponent {
       cancelBtnText: 'elements.button.returnToGame',
       confirmBtnText: 'elements.button.finishGame',
     };
-    const { role } = await this.modalService.presentModal(
-      ActionConfirmComponent,
-      { data },
-    );
+    const { role } = await this.modalService.presentModal(ActionConfirmComponent, { data });
     if (role === 'confirm') {
       this.store.dispatch(fromAppActions.finishGame());
     }
@@ -201,10 +183,7 @@ export class GamePage implements OnInit, CanDeactivateComponent {
       cancelBtnText: 'elements.button.returnToGame',
       confirmBtnText: 'elements.button.cancelGame',
     };
-    const { role } = await this.modalService.presentModal(
-      ActionConfirmComponent,
-      { data },
-    );
+    const { role } = await this.modalService.presentModal(ActionConfirmComponent, { data });
     if (role === 'confirm') {
       this.store.dispatch(fromAppActions.clearGame());
     }

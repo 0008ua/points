@@ -22,13 +22,17 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { HydratedDocument, Model } from 'mongoose';
-export declare class ErrorLogger {
+import { HydratedDocument, Model, Schema as MongooseSchema } from 'mongoose';
+import { ErrorTypes } from 'src/app.interfaces';
+import { IErrorLogger } from './error-loger.interface';
+export declare class ErrorLogger implements IErrorLogger {
     message: string;
+    errorType: ErrorTypes;
+    error: any;
     owner: string;
 }
 export type ErrorLoggerDocument = HydratedDocument<ErrorLogger>;
 export interface ErrorLoggerModel extends Model<ErrorLoggerDocument> {
-    createErrorLogger(errorLogger: ErrorLogger): Promise<any>;
+    createErrorLogger(errorLogger: ErrorLogger): Promise<ErrorLoggerDocument>;
 }
-export declare const ErrorLoggerSchema: import("mongoose").Schema<ErrorLogger, Model<ErrorLogger, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, ErrorLogger>;
+export declare const ErrorLoggerSchema: MongooseSchema<ErrorLogger, Model<ErrorLogger, any, any, any, any>, {}, {}, {}, {}, import("mongoose").DefaultSchemaOptions, ErrorLogger>;

@@ -9,6 +9,8 @@ import {
   Req,
   Query,
   Put,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { GamerService } from './gamer.service';
 import { CreateGamerDto } from './dto/create-gamer.dto';
@@ -44,6 +46,8 @@ export class GamerController {
   @UseGuards(AuthGuard('jwt'))
   @Get()
   async getWithQuery(@Query() query: any, @Req() { user }: Request) {
+    // throw new HttpException('super new error get gamers from back', HttpStatus.BAD_REQUEST);
+
     if (Object.keys(query).length === 0) {
       return this.gamerService.getAll(user._id);
     }
@@ -58,11 +62,7 @@ export class GamerController {
 
   @UseGuards(AuthGuard('jwt'))
   @Put(':_id')
-  update(
-    @Param('_id') _id: string,
-    @Req() { user }: Request,
-    @Body() dto: UpdateGamerDto,
-  ) {
+  update(@Param('_id') _id: string, @Req() { user }: Request, @Body() dto: UpdateGamerDto) {
     return this.gamerService.update(_id, dto, user._id);
   }
 

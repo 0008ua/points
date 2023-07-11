@@ -31,6 +31,7 @@ import { routerReducer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { PersistStoreEffects } from './effects/persist-store.effects';
 import { PlayerEffects } from './effects/player.effects';
 import { StoreErrorService } from './store-error.service';
+import { ErrorLogEffects } from './effects/error-log.effects';
 
 export const defaultDataServiceConfig: DefaultDataServiceConfig = {
   root: environment.host + 'api/store/',
@@ -68,6 +69,7 @@ export const defaultDataServiceConfig: DefaultDataServiceConfig = {
       RoundMemberEffects,
       PersistStoreEffects,
       PlayerEffects,
+      ErrorLogEffects,
     ]),
     StoreRouterConnectingModule.forRoot({ stateKey: 'router' }),
 
@@ -85,7 +87,7 @@ export class AppStoreModule {
     entityDataService: EntityDataService,
     gameDataService: GameDataService,
     gamerDataService: GamerDataService,
-    storeErrorService: StoreErrorService,
+    // storeErrorService: StoreErrorService,
     // storeAppService: StoreAppService,
   ) {
     entityDataService.registerService('Game', gameDataService);

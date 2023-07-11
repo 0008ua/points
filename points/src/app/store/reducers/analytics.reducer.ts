@@ -2,12 +2,13 @@ import { createReducer, on } from '@ngrx/store';
 import { IGamer } from '../../interfaces';
 import * as fromAnalyticsActions from '../actions/analytics.actions';
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export const analyticsFeatureKey = 'analytics';
 
 export interface State {
   analytics: IGamer[];
-  error: string | null;
+  error: HttpErrorResponse | null;
   loading: boolean;
 }
 
@@ -36,10 +37,17 @@ export const reducer = createReducer(
     }),
   ),
   on(
-    fromAnalyticsActions.error,
+    fromAnalyticsActions.addError,
     (state, { error }): State => ({
       ...state,
       error,
+    }),
+  ),
+  on(
+    fromAnalyticsActions.removeError,
+    (state, _): State => ({
+      ...state,
+      error: null,
     }),
   ),
   on(

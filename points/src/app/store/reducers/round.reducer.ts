@@ -5,9 +5,7 @@ import * as RoundActions from '../actions/round.actions';
 
 export const roundsFeatureKey = 'rounds';
 
-export interface State extends EntityState<Round> {
-  // additional entities state properties
-}
+export type State = EntityState<Round>;
 
 export const adapter: EntityAdapter<Round> = createEntityAdapter<Round>({
   selectId: (round: Round) => round._id,

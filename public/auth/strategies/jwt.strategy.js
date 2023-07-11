@@ -32,6 +32,7 @@ let JwtStrategy = class JwtStrategy extends (0, passport_1.PassportStrategy)(pas
         this.authService = authService;
     }
     async validate(userData) {
+        console.log('userData', userData);
         const userFromDb = await this.userModel.findUserByIdAndUpdateTimestamp(userData._id);
         return this.authService.createUserData(userFromDb);
     }

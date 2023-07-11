@@ -17,18 +17,6 @@ import { TelegrafModule } from 'nestjs-telegraf';
 import { TELEGRAM_BOT_NAME } from './telegram/telegram.constants';
 import { TelegramModule } from './telegram/telegram.module';
 
-let t;
-try {
-  t = TelegrafModule.forRootAsync({
-    botName: 'TELEGRAM_BOT_NAME',
-    useFactory: telegrafFactory,
-    inject: [ConfigService],
-    imports: [ConfigModule],
-  });
-} catch (error) {
-  console.log('error', error);
-}
-
 @Module({
   imports: [
     ServeStaticModule.forRoot({
@@ -47,7 +35,6 @@ try {
       inject: [ConfigService],
       imports: [ConfigModule, TelegramModule],
     }),
-    // TelegrafDynamicModule.forRootAsync(TELEGRAM_BOT_NAME),
     AuthModule,
     ConfigModule.forRoot(),
     AnalyticsModule,

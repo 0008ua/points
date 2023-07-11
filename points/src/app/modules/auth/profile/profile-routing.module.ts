@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AuthAdminGuard } from '../auth-admin.guard';
 import { ProfilePage } from './profile.page';
 
 const routes: Routes = [
@@ -11,6 +12,14 @@ const routes: Routes = [
         path: 'telegram',
         loadChildren: () =>
           import('../telegram/telegram.module').then((m) => m.TelegramModule),
+      },
+
+      {
+        path: 'error-log',
+        loadChildren: () =>
+          import('../error-log/error-log.module').then((m) => m.ErrorLogModule),
+        canLoad: [AuthAdminGuard],
+        canActivate: [AuthAdminGuard],
       },
       {
         path: '**',

@@ -1,6 +1,6 @@
 import { environment } from '../environments/environment';
 
-type UserRoles = 'member' | 'guest';
+type UserRoles = 'member' | 'admin' | 'guest';
 export type UID = string;
 export type UUID = string;
 export type RoundMemberUUID = string;
@@ -142,3 +142,45 @@ export interface GameResultModalData {
 export interface CanDeactivateComponent {
   canDeactivate(): boolean;
 }
+
+// global
+
+export const errors = [
+  'unknownError',
+  'analytics/error',
+  'auth/error',
+  'app/error',
+  'ngrxDataError',
+] as const;
+
+// export type ErrorTypes = typeof errors[number];
+
+export type ErrorTypes = typeof errors[number];
+
+// global
+export interface ErrorBody {
+  error: any;
+}
+
+// global
+export interface ErrorType {
+  errorType: ErrorTypes;
+}
+
+// global
+export interface Owner {
+  owner: string;
+}
+
+// global
+export interface OwnerData {
+  owner: string;
+  name: string;
+}
+
+// global
+export interface ErrorMessage {
+  message: string;
+}
+
+export interface IErrorData extends ErrorBody, ErrorType {}

@@ -5,7 +5,10 @@ import {
   DefaultDataService,
   HttpUrlGenerator,
   EntityCollectionServiceElementsFactory,
+  EntityActionOptions,
 } from '@ngrx/data';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { IGamer, IUser } from '../interfaces';
 
 @Injectable()

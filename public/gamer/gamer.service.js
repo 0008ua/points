@@ -20,7 +20,7 @@ let GamerService = class GamerService {
     constructor(gamerModel) {
         this.gamerModel = gamerModel;
     }
-    createGamerData(gamer) {
+    normalizeGamerDocument(gamer) {
         if (Array.isArray(gamer)) {
             return gamer.map((gamer) => ({
                 _id: gamer._id.toString(),
@@ -42,19 +42,19 @@ let GamerService = class GamerService {
     }
     async create(newGamer) {
         const gamer = await this.gamerModel.createGamer(newGamer);
-        return this.createGamerData(gamer);
+        return this.normalizeGamerDocument(gamer);
     }
     async getWithQuery(query, owner) {
         return `This action returns query game ${JSON.stringify(query)}`;
     }
     async getAll(owner) {
         const gamers = await this.gamerModel.find({ owner });
-        return this.createGamerData(gamers);
+        return this.normalizeGamerDocument(gamers);
     }
     async findOne(_id, owner) {
         const query = owner ? { _id, owner } : { _id };
         const gamer = await this.gamerModel.findOne(query);
-        return this.createGamerData(gamer);
+        return this.normalizeGamerDocument(gamer);
     }
     async findOneAllData(_id, owner) {
         const query = owner ? { _id, owner } : { _id };
@@ -75,7 +75,7 @@ let GamerService = class GamerService {
         catch (error) {
             throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
         }
-        return this.createGamerData(gamer);
+        return this.normalizeGamerDocument(gamer);
     }
     remove(_id, owner) {
         return `This action removes a #${_id} gamer`;

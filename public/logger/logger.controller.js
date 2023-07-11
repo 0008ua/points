@@ -17,7 +17,9 @@ const common_1 = require("@nestjs/common");
 const request_mapping_decorator_1 = require("@nestjs/common/decorators/http/request-mapping.decorator");
 const route_params_decorator_1 = require("@nestjs/common/decorators/http/route-params.decorator");
 const passport_1 = require("@nestjs/passport");
-const createErrorLogger_dto_1 = require("./dto/createErrorLogger.dto");
+const error_log_query_dto_1 = require("./dto/error-log-query.dto");
+const error_log__createdto_1 = require("./dto/error-log.-createdto");
+const owner_dto_1 = require("./dto/owner.dto");
 const logger_service_1 = require("./logger.service");
 let LoggerController = class LoggerController {
     constructor(loggerService) {
@@ -27,6 +29,13 @@ let LoggerController = class LoggerController {
         const errorLogger = Object.assign(Object.assign({}, dto), { owner: user._id });
         return this.loggerService.logErrorToDB(errorLogger);
     }
+    getOwnersWithQuery(query) {
+        return this.loggerService.getOwnersWithQuery(query);
+    }
+    getWithQuery(query, { user }) {
+        console.log(query);
+        return this.loggerService.getWithQuery(query, user._id);
+    }
 };
 __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
@@ -34,9 +43,25 @@ __decorate([
     __param(0, (0, route_params_decorator_1.Req)()),
     __param(1, (0, route_params_decorator_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, createErrorLogger_dto_1.CreateErrorLoggerDto]),
+    __metadata("design:paramtypes", [Object, error_log__createdto_1.ErrorLogCreateDto]),
     __metadata("design:returntype", void 0)
 ], LoggerController.prototype, "logErrorToDB", null);
+__decorate([
+    (0, request_mapping_decorator_1.Get)('get-owners-with-query'),
+    __param(0, (0, route_params_decorator_1.Query)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [owner_dto_1.OwnerQueryDto]),
+    __metadata("design:returntype", void 0)
+], LoggerController.prototype, "getOwnersWithQuery", null);
+__decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    (0, request_mapping_decorator_1.Get)('get-with-query'),
+    __param(0, (0, route_params_decorator_1.Query)()),
+    __param(1, (0, route_params_decorator_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [error_log_query_dto_1.ErrorLogQueryDto, Object]),
+    __metadata("design:returntype", void 0)
+], LoggerController.prototype, "getWithQuery", null);
 LoggerController = __decorate([
     (0, common_1.Controller)('logger'),
     __metadata("design:paramtypes", [logger_service_1.LoggerService])

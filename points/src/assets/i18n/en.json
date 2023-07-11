@@ -57,7 +57,10 @@
     "profile": {
       "telegramSetup": "Telegram setup",
       "telegramSetupTitle": "Telegram codes",
-      "telegramSetupDescription": "Search in Telegram for 'pointsResultBot' and subscribe using this codes"
+      "telegramSetupDescription": "Search in Telegram for 'pointsResultBot' and subscribe using this codes",
+      "errorLogTitle": "Error Log",
+      "errorLogDescription": "Search for exeptions",
+      "errorLog": "Error Log"
     }
   },
   "elements": {

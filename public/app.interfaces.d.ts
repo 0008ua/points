@@ -10,3 +10,22 @@ export interface NamedScore {
     picture?: string;
     total?: number;
 }
+declare const errors: readonly ["unknownError", "analytics/error", "auth/error", "app/error", "ngrxDataError"];
+export type ErrorTypes = typeof errors[number];
+export interface ErrorBody {
+    error: any;
+}
+export interface ErrorType {
+    errorType: ErrorTypes;
+}
+export interface Owner {
+    owner: string;
+}
+export interface OwnerData {
+    owner: string;
+    name: string;
+}
+export interface ErrorMessage {
+    message: string;
+}
+export {};

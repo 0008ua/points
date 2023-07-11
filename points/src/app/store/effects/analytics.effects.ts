@@ -7,8 +7,10 @@ import { SharedService } from 'src/app/services/shared.service';
 import * as fromAnalyticsActions from '../actions/analytics.actions';
 import { Store } from '@ngrx/store';
 import { GamerService } from '../gamer-data.service';
-import { IGamer } from 'src/app/interfaces';
+import { IGamer, ErrorTypes } from 'src/app/interfaces';
 import { AnalyticsService } from 'src/app/modules/analytics-tab/analytics.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Injectable()
 export class AnalyticsEffects {
@@ -25,14 +27,27 @@ export class AnalyticsEffects {
 
   cancelLoading = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromAnalyticsActions.getRatingSuccess, fromAnalyticsActions.error),
-      filter(
-        (action) =>
-          // ignore error cancelling (null) actions
-          action.type !== fromAnalyticsActions.AnalyticsActionTypes.errorType ||
-          (action.type === fromAnalyticsActions.AnalyticsActionTypes.errorType && !!action.error),
-      ),
+      ofType(fromAnalyticsActions.getRatingSuccess, fromAnalyticsActions.addError),
+      // filter(
+      //   (action) =>
+      //     // ignore error cancelling (null) actions
+      //     action.type !== fromAnalyticsActions.AnalyticsActionTypes.errorType ||
+      //     (action.type === fromAnalyticsActions.AnalyticsActionTypes.errorType && !!action.error),
+      // ),
       map((_) => fromAnalyticsActions.loading({ loading: false })),
+    );
+  });
+
+  errorHadler = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAnalyticsActions.addError),
+      map(({ error }) =>
+        this.errorHandlerService.logError({
+          error,
+          errorType: 'analytics/error',
+        }),
+      ),
+      map((_) => fromAnalyticsActions.removeError()),
     );
   });
 
@@ -43,9 +58,7 @@ export class AnalyticsEffects {
         this.analyticsService.getRatingByWins(gameType).pipe(
           switchMap((result) => this.addLoosers(of(result))),
           map((analytics) => fromAnalyticsActions.getRatingSuccess({ analytics })),
-          catchError((error) =>
-            of(fromAnalyticsActions.error({ error: error.error.message || 'error' })),
-          ),
+          catchError((error: HttpErrorResponse) => of(fromAnalyticsActions.addError({ error }))),
         ),
       ),
     );
@@ -57,9 +70,7 @@ export class AnalyticsEffects {
       switchMap(({ gameType }) =>
         this.analyticsService.getRatingByWinsToGames(gameType).pipe(
           map((analytics) => fromAnalyticsActions.getRatingSuccess({ analytics })),
-          catchError((error) =>
-            of(fromAnalyticsActions.error({ error: error.error.message || 'error' })),
-          ),
+          catchError((error: HttpErrorResponse) => of(fromAnalyticsActions.addError({ error }))),
         ),
       ),
     );
@@ -71,9 +82,7 @@ export class AnalyticsEffects {
       switchMap(({ gameType }) => {
         return this.analyticsService.getRating(gameType).pipe(
           map((analytics) => fromAnalyticsActions.getRatingSuccess({ analytics })),
-          catchError((error) =>
-            of(fromAnalyticsActions.error({ error: error.error.message || 'error' })),
-          ),
+          catchError((error: HttpErrorResponse) => of(fromAnalyticsActions.addError({ error }))),
         );
       }),
     );
@@ -81,7 +90,7 @@ export class AnalyticsEffects {
 
   constructor(
     private actions$: Actions<fromAuthActions.CoreActionsUnion>,
-    private sharedService: SharedService,
+    private errorHandlerService: ErrorHandlerService,
     private analyticsService: AnalyticsService,
     private gamerService: GamerService,
   ) {}
@@ -92,25 +101,15 @@ export class AnalyticsEffects {
       withLatestFrom(this.gamerService.entities$),
       map(([analytics, gamers]) => {
         const losers = gamers
-          .filter(
-            (gamer) => !analytics.some((winner) => winner._id === gamer._id),
-          )
-          .map(
-            ({
-              _id,
-              name,
-              color,
-              telegramCheckCode,
-              telegramSubscriptionName,
-            }) => ({
-              _id,
-              name,
-              color,
-              telegramCheckCode,
-              telegramSubscriptionName,
-              rating: { wins: 0 },
-            }),
-          );
+          .filter((gamer) => !analytics.some((winner) => winner._id === gamer._id))
+          .map(({ _id, name, color, telegramCheckCode, telegramSubscriptionName }) => ({
+            _id,
+            name,
+            color,
+            telegramCheckCode,
+            telegramSubscriptionName,
+            rating: { wins: 0 },
+          }));
         const fullList = analytics.concat(losers);
         return fullList;
       }),

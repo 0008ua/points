@@ -25,7 +25,8 @@
 import { HydratedDocument, Model } from 'mongoose';
 export declare enum UserRoles {
     Member = "member",
-    Guest = "guest"
+    Guest = "guest",
+    Admin = "admin"
 }
 export declare class User {
     name: string;

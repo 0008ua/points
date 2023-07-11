@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_modules_auth_telegram_telegram_module_ts"],{
 
-/***/ 3063:
+/***/ 43063:
 /*!******************************************************************!*\
   !*** ./src/app/modules/auth/telegram/telegram-routing.module.ts ***!
   \******************************************************************/
@@ -11,10 +11,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "TelegramRoutingModule": () => (/* binding */ TelegramRoutingModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 3252);
-/* harmony import */ var _telegram_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./telegram.component */ 2793);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 13252);
+/* harmony import */ var _telegram_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./telegram.component */ 92793);
 
 
 
@@ -42,7 +42,7 @@ TelegramRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
 
 /***/ }),
 
-/***/ 2793:
+/***/ 92793:
 /*!*************************************************************!*\
   !*** ./src/app/modules/auth/telegram/telegram.component.ts ***!
   \*************************************************************/
@@ -52,13 +52,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "TelegramComponent": () => (/* binding */ TelegramComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_telegram_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./telegram.component.html */ 4538);
-/* harmony import */ var _telegram_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./telegram.component.scss */ 1723);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var src_app_store_gamer_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/gamer-data.service */ 9973);
-/* harmony import */ var _telegram_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./telegram.service */ 153);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_telegram_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./telegram.component.html */ 84538);
+/* harmony import */ var _telegram_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./telegram.component.scss */ 41723);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var src_app_store_gamer_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/gamer-data.service */ 19973);
+/* harmony import */ var _telegram_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./telegram.service */ 50153);
 
 
 
@@ -100,7 +100,7 @@ TelegramComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
 
 /***/ }),
 
-/***/ 4232:
+/***/ 64232:
 /*!**********************************************************!*\
   !*** ./src/app/modules/auth/telegram/telegram.module.ts ***!
   \**********************************************************/
@@ -110,13 +110,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "TelegramModule": () => (/* binding */ TelegramModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 8267);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 2650);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ 466);
-/* harmony import */ var _telegram_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./telegram.component */ 2793);
-/* harmony import */ var _telegram_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./telegram-routing.module */ 3063);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/common */ 28267);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 78099);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngx-translate/core */ 90466);
+/* harmony import */ var _telegram_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./telegram.component */ 92793);
+/* harmony import */ var _telegram_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./telegram-routing.module */ 43063);
 
 
 
@@ -144,7 +144,7 @@ TelegramModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
 
 /***/ }),
 
-/***/ 4538:
+/***/ 84538:
 /*!******************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/auth/telegram/telegram.component.html ***!
   \******************************************************************************************************************************/
@@ -158,7 +158,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 1723:
+/***/ 41723:
 /*!***************************************************************!*\
   !*** ./src/app/modules/auth/telegram/telegram.component.scss ***!
   \***************************************************************/

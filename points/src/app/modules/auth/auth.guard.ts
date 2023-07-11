@@ -26,7 +26,6 @@ export class AuthGuard implements CanLoad, CanActivate {
 
   constructor(private authService: AuthService, private router: Router, private store: Store) {
     // this.userRole$ = this.store.select(selectUserRole);
-
     this.store
       .select(selectUserRole)
       .pipe(tap((role) => console.log('role change guard', role)))

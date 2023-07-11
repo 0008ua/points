@@ -20,8 +20,136 @@ let LoggerService = class LoggerService {
     constructor(errorLoggerModel) {
         this.errorLoggerModel = errorLoggerModel;
     }
-    logErrorToDB(errorLogger) {
-        return this.errorLoggerModel.createErrorLogger(errorLogger);
+    async logErrorToDB(errorLogger) {
+        console.log('errorLogger', errorLogger);
+        return this.normalizeErrorDocument(await this.errorLoggerModel.createErrorLogger(errorLogger));
+    }
+    async getOwnersWithQuery(query) {
+        return (await this.errorLoggerModel.aggregate([
+            {
+                $group: {
+                    _id: null,
+                    owner: {
+                        $addToSet: '$owner',
+                    },
+                },
+            },
+            {
+                $unwind: {
+                    path: '$owner',
+                },
+            },
+            {
+                $addFields: {
+                    owner: {
+                        $toObjectId: '$owner',
+                    },
+                },
+            },
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'owner',
+                    foreignField: '_id',
+                    as: 'result',
+                },
+            },
+            {
+                $project: {
+                    owner: '$owner',
+                    _id: 0,
+                    name: {
+                        $arrayElemAt: ['$result', 0],
+                    },
+                },
+            },
+            {
+                $project: {
+                    owner: 1,
+                    name: '$name.name',
+                },
+            },
+            {
+                $sort: {
+                    name: 1,
+                },
+            },
+            {
+                $match: {
+                    name: { $regex: query.name ? '^(?i)' + query.name : '^' },
+                },
+            },
+            {
+                $facet: {
+                    data: [
+                        {
+                            $skip: Number(query.skip) || 0,
+                        },
+                        {
+                            $limit: Number(query.limit) || 10,
+                        },
+                    ],
+                    total: [
+                        {
+                            $count: 'total',
+                        },
+                    ],
+                },
+            },
+            {
+                $project: {
+                    data: 1,
+                    totalDocuments: {
+                        $arrayElemAt: ['$total', 0],
+                    },
+                },
+            },
+            {
+                $project: {
+                    data: 1,
+                    totalDocuments: '$totalDocuments.total',
+                },
+            },
+        ]))[0];
+    }
+    async getWithQuery(query, userId) {
+        const { owner, errorType, skip = 0, limit = 5 } = query;
+        let errorLoggerDocuments;
+        try {
+            const normalizedQuery = Object.assign({}, !owner ? null : { owner }, !errorType ? null : { errorType });
+            errorLoggerDocuments = await this.errorLoggerModel
+                .find(normalizedQuery)
+                .skip(skip)
+                .limit(limit);
+        }
+        catch (error) {
+            throw new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST);
+        }
+        return this.normalizeErrorDocument(errorLoggerDocuments);
+    }
+    normalizeErrorDocument(doc) {
+        if (Array.isArray(doc)) {
+            return doc.map((item) => {
+                const { message, error, errorType, owner, _id, createdAt } = item;
+                return {
+                    message,
+                    error,
+                    errorType,
+                    owner,
+                    _id,
+                    createdAt,
+                };
+            });
+        }
+        const { message, error, errorType, owner, _id, createdAt } = doc;
+        return {
+            message,
+            error,
+            errorType,
+            owner,
+            _id,
+            createdAt,
+        };
     }
 };
 LoggerService = __decorate([

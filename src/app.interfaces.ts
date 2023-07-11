@@ -1,3 +1,4 @@
+import { type } from 'os';
 import { environment } from './app.environment';
 
 export type UID = string;
@@ -13,4 +14,44 @@ export interface NamedScore {
   value: number;
   picture?: string;
   total?: number;
+}
+
+// global
+const errors = [
+  'unknownError',
+  'analytics/error',
+  'auth/error',
+  'app/error',
+  'ngrxDataError',
+] as const;
+
+// export type ErrorTypes = typeof errors[number];
+
+// export type ErrorTypes = typeof errors[number];
+export type ErrorTypes = typeof errors[number];
+
+// global
+export interface ErrorBody {
+  error: any;
+}
+
+// global
+export interface ErrorType {
+  errorType: ErrorTypes;
+}
+
+// global
+export interface Owner {
+  owner: string;
+}
+
+// global
+export interface OwnerData {
+  owner: string;
+  name: string;
+}
+
+// global
+export interface ErrorMessage {
+  message: string;
 }

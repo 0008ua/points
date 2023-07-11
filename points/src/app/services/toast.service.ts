@@ -17,29 +17,29 @@ export class ToastService {
   constructor(private store: Store, public toastController: ToastController) {}
 
   async presentErrorToast(
-    message = 'Error',
-    action?: typeof fromAnalyticsActions.error | typeof fromAuthActions.error,
+    header = 'Error occurred',
+    message = '',
+    // action?: typeof fromAnalyticsActions.error | typeof fromAuthActions.error,
   ) {
     const toast = await this.toastController.create({
-      header: 'Error',
+      header,
       message,
       icon: 'bug-outline',
       position: 'top',
-      duration: 4000,
+      duration: 5000,
       buttons: [
         {
           text: 'Ok',
           role: 'cancel',
-          handler: () => {
-          },
+          handler: () => {},
         },
       ],
     });
     await toast.present();
 
     const { role, ...rest } = await toast.onDidDismiss();
-    if (action) {
-      this.store.dispatch(action({ error: null }));
-    }
+    // if (action) {
+    //   this.store.dispatch(action({ error: null }));
+    // }
   }
 }

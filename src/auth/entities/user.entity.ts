@@ -9,6 +9,7 @@ import { UserDataDto } from '../dto/userData.dto';
 export enum UserRoles {
   Member = 'member',
   Guest = 'guest',
+  Admin = 'admin',
 }
 
 @Schema({

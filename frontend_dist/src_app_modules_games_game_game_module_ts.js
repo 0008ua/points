@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_modules_games_game_game_module_ts"],{
 
-/***/ 8265:
+/***/ 48265:
 /*!********************************************************!*\
   !*** ./src/app/modules/auth/deactivate-route.guard.ts ***!
   \********************************************************/
@@ -11,17 +11,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "DeactivateRouteGuard": () => (/* binding */ DeactivateRouteGuard)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/modal.service */ 9853);
-/* harmony import */ var _common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/action-confirm/action-confirm.component */ 658);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/modal.service */ 39853);
+/* harmony import */ var _common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../common/action-confirm/action-confirm.component */ 50658);
+/* harmony import */ var src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/actions/app.actions */ 58717);
+
+
 
 
 
 
 let DeactivateRouteGuard = class DeactivateRouteGuard {
-    constructor(modalService) {
+    constructor(modalService, store) {
         this.modalService = modalService;
+        this.store = store;
     }
     canDeactivate(component, currentRoute, currentState, nextState) {
         if (!component.canDeactivate()) {
@@ -31,9 +36,13 @@ let DeactivateRouteGuard = class DeactivateRouteGuard {
                 cancelBtnText: 'elements.button.returnToGame',
                 confirmBtnText: 'elements.button.leaveGame',
             };
-            return this.modalService
-                .presentModal(_common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_1__.ActionConfirmComponent, { data })
-                .then(({ role }) => role === 'confirm');
+            return this.modalService.presentModal(_common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_1__.ActionConfirmComponent, { data }).then(({ role }) => {
+                if (role === 'confirm') {
+                    this.store.dispatch(src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_2__.clearGame());
+                    return true;
+                }
+                return false;
+            });
         }
         else {
             return Promise.resolve(true);
@@ -41,10 +50,11 @@ let DeactivateRouteGuard = class DeactivateRouteGuard {
     }
 };
 DeactivateRouteGuard.ctorParameters = () => [
-    { type: src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_0__.ModalService }
+    { type: src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_0__.ModalService },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_3__.Store }
 ];
-DeactivateRouteGuard = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
+DeactivateRouteGuard = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Injectable)({
         providedIn: 'root',
     })
 ], DeactivateRouteGuard);
@@ -53,96 +63,7 @@ DeactivateRouteGuard = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
 
 /***/ }),
 
-/***/ 658:
-/*!***************************************************************************!*\
-  !*** ./src/app/modules/common/action-confirm/action-confirm.component.ts ***!
-  \***************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "ActionConfirmComponent": () => (/* binding */ ActionConfirmComponent)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_action_confirm_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./action-confirm.component.html */ 107);
-/* harmony import */ var _action_confirm_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./action-confirm.component.scss */ 4958);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ 2650);
-
-
-
-
-
-let ActionConfirmComponent = class ActionConfirmComponent {
-    constructor(modalController) {
-        this.modalController = modalController;
-    }
-    ngOnInit() { }
-    cancel() {
-        this.modalController.dismiss(null, 'cancel');
-    }
-    confirm() {
-        this.modalController.dismiss(null, 'confirm');
-    }
-};
-ActionConfirmComponent.ctorParameters = () => [
-    { type: _ionic_angular__WEBPACK_IMPORTED_MODULE_2__.ModalController }
-];
-ActionConfirmComponent.propDecorators = {
-    data: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Input }]
-};
-ActionConfirmComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Component)({
-        selector: 'app-action-confirm',
-        template: _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_action_confirm_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
-        styles: [_action_confirm_component_scss__WEBPACK_IMPORTED_MODULE_1__]
-    })
-], ActionConfirmComponent);
-
-
-
-/***/ }),
-
-/***/ 3938:
-/*!*************************************************!*\
-  !*** ./src/app/modules/common/shared.module.ts ***!
-  \*************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "SharedModule": () => (/* binding */ SharedModule)
-/* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/common */ 8267);
-/* harmony import */ var _action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./action-confirm/action-confirm.component */ 658);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngx-translate/core */ 466);
-
-
-
-
-
-let SharedModule = class SharedModule {
-};
-SharedModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_2__.NgModule)({
-        declarations: [_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_0__.ActionConfirmComponent],
-        exports: [_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_0__.ActionConfirmComponent],
-        imports: [
-            _angular_common__WEBPACK_IMPORTED_MODULE_3__.CommonModule,
-            _ngx_translate_core__WEBPACK_IMPORTED_MODULE_4__.TranslateModule.forChild({
-                extend: true,
-            }),
-        ],
-    })
-], SharedModule);
-
-
-
-/***/ }),
-
-/***/ 2926:
+/***/ 62926:
 /*!***********************************************************!*\
   !*** ./src/app/modules/games/game/game-routing.module.ts ***!
   \***********************************************************/
@@ -152,11 +73,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GamePageRoutingModule": () => (/* binding */ GamePageRoutingModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 3252);
-/* harmony import */ var _auth_deactivate_route_guard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../auth/deactivate-route.guard */ 8265);
-/* harmony import */ var _game_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.page */ 9123);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ 13252);
+/* harmony import */ var _auth_deactivate_route_guard__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../auth/deactivate-route.guard */ 48265);
+/* harmony import */ var _game_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.page */ 19123);
 
 
 
@@ -182,7 +103,7 @@ GamePageRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_2__.__decorate)([
 
 /***/ }),
 
-/***/ 770:
+/***/ 60770:
 /*!***************************************************!*\
   !*** ./src/app/modules/games/game/game.module.ts ***!
   \***************************************************/
@@ -192,18 +113,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GamePageModule": () => (/* binding */ GamePageModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 8267);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 8346);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 2650);
-/* harmony import */ var _game_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game-routing.module */ 2926);
-/* harmony import */ var _game_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.page */ 9123);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ngx-translate/core */ 466);
-/* harmony import */ var _round_round_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../round/round.module */ 740);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 28267);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 18346);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 78099);
+/* harmony import */ var _game_routing_module__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./game-routing.module */ 62926);
+/* harmony import */ var _game_page__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.page */ 19123);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ngx-translate/core */ 90466);
+/* harmony import */ var _round_round_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../round/round.module */ 20740);
 /* harmony import */ var _gamers_gamers_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../gamers/gamers.module */ 6932);
-/* harmony import */ var _game_result_game_result_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./game-result/game-result.component */ 8339);
-/* harmony import */ var _common_shared_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../common/shared.module */ 3938);
+/* harmony import */ var _game_result_game_result_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./game-result/game-result.component */ 18339);
+/* harmony import */ var _common_shared_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../common/shared.module */ 43938);
 
 
 
@@ -240,7 +161,7 @@ GamePageModule = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
 
 /***/ }),
 
-/***/ 9123:
+/***/ 19123:
 /*!*************************************************!*\
   !*** ./src/app/modules/games/game/game.page.ts ***!
   \*************************************************/
@@ -250,25 +171,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GamePage": () => (/* binding */ GamePage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_game_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./game.page.html */ 4464);
-/* harmony import */ var _game_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.page.scss */ 7728);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ 563);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs */ 2890);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 8260);
-/* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../store/reducers/app.reducer */ 5305);
-/* harmony import */ var _store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../store/reducers/round.reducer */ 8761);
-/* harmony import */ var _store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../store/reducers/player.reducer */ 3051);
-/* harmony import */ var _store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../store/reducers/round-member.reducer */ 7539);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 9026);
-/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/router */ 3252);
-/* harmony import */ var src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/store/actions/app.actions */ 8717);
-/* harmony import */ var src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/modal.service */ 9853);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ionic/angular */ 2650);
-/* harmony import */ var _common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../common/action-confirm/action-confirm.component */ 658);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_game_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./game.page.html */ 44464);
+/* harmony import */ var _game_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.page.scss */ 97728);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ 40563);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs */ 92890);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 18260);
+/* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../store/reducers/app.reducer */ 55305);
+/* harmony import */ var _store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../store/reducers/round.reducer */ 88761);
+/* harmony import */ var _store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../store/reducers/player.reducer */ 43051);
+/* harmony import */ var _store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../store/reducers/round-member.reducer */ 27539);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 29026);
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/shared.service */ 44718);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/router */ 13252);
+/* harmony import */ var src_app_store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/store/actions/app.actions */ 58717);
+/* harmony import */ var src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/modal.service */ 39853);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @ionic/angular */ 78099);
+/* harmony import */ var _common_action_confirm_action_confirm_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../../common/action-confirm/action-confirm.component */ 50658);
 
 
 
@@ -320,9 +241,7 @@ let GamePage = class GamePage {
                 // game started and active menu 'start'
                 if (this.gameType === 'uno') {
                     this.activeRoundId$.next(this.roundsCfg[1]._id +
-                        (rounds.length === 1
-                            ? this.roundsCfg[1].namePostfix
-                            : rounds.length));
+                        (rounds.length === 1 ? this.roundsCfg[1].namePostfix : rounds.length));
                 }
                 else {
                     this.activeRoundId$.next(this.roundsCfg[1]._id);
@@ -436,7 +355,7 @@ GamePage = (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__decorate)([
 
 /***/ }),
 
-/***/ 7630:
+/***/ 78412:
 /*!*********************************************************************************!*\
   !*** ./src/app/modules/games/gamers/choose-players/choose-players.component.ts ***!
   \*********************************************************************************/
@@ -446,22 +365,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ChoosePlayersComponent": () => (/* binding */ ChoosePlayersComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_choose_players_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./choose-players.component.html */ 6244);
-/* harmony import */ var _choose_players_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./choose-players.component.scss */ 1243);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngx-translate/core */ 466);
-/* harmony import */ var src_app_store_gamer_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/gamer-data.service */ 9973);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ionic/angular */ 2650);
-/* harmony import */ var _select_color_select_color_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../select-color/select-color.component */ 5648);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_choose_players_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./choose-players.component.html */ 26244);
+/* harmony import */ var _choose_players_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./choose-players.component.scss */ 11243);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngx-translate/core */ 90466);
+/* harmony import */ var src_app_store_gamer_data_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/gamer-data.service */ 19973);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @ionic/angular */ 78099);
+/* harmony import */ var _select_color_select_color_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../select-color/select-color.component */ 95648);
 /* harmony import */ var _create_gamer_create_gamer_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../create-gamer/create-gamer.component */ 4874);
-/* harmony import */ var _store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../store/reducers/player.reducer */ 3051);
-/* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../store/reducers/app.reducer */ 5305);
-/* harmony import */ var _store_actions_player_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../store/actions/player.actions */ 5803);
-/* harmony import */ var _store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../store/actions/app.actions */ 8717);
-/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/environments/environment */ 8260);
+/* harmony import */ var _store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../../store/reducers/player.reducer */ 43051);
+/* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../store/reducers/app.reducer */ 55305);
+/* harmony import */ var _store_actions_player_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../../store/actions/player.actions */ 75803);
+/* harmony import */ var _store_actions_app_actions__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../../store/actions/app.actions */ 58717);
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/shared.service */ 44718);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/environments/environment */ 18260);
 
 
 
@@ -656,13 +575,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "CreateGamerComponent": () => (/* binding */ CreateGamerComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_create_gamer_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./create-gamer.component.html */ 6938);
-/* harmony import */ var _create_gamer_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-gamer.component.scss */ 8716);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 2650);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 8260);
-/* harmony import */ var _select_color_select_color_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../select-color/select-color.component */ 5648);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_create_gamer_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./create-gamer.component.html */ 86938);
+/* harmony import */ var _create_gamer_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-gamer.component.scss */ 78716);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ionic/angular */ 78099);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 18260);
+/* harmony import */ var _select_color_select_color_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../select-color/select-color.component */ 95648);
 
 
 
@@ -738,15 +657,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GamersModule": () => (/* binding */ GamersModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 8267);
-/* harmony import */ var _choose_players_choose_players_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./choose-players/choose-players.component */ 7630);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngx-translate/core */ 466);
-/* harmony import */ var _select_color_select_color_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./select-color/select-color.component */ 5648);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 2650);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/common */ 28267);
+/* harmony import */ var _choose_players_choose_players_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./choose-players/choose-players.component */ 78412);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngx-translate/core */ 90466);
+/* harmony import */ var _select_color_select_color_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./select-color/select-color.component */ 95648);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ionic/angular */ 78099);
 /* harmony import */ var _create_gamer_create_gamer_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./create-gamer/create-gamer.component */ 4874);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 8346);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ 18346);
 
 
 
@@ -777,7 +696,7 @@ GamersModule = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([
 
 /***/ }),
 
-/***/ 5648:
+/***/ 95648:
 /*!*****************************************************************************!*\
   !*** ./src/app/modules/games/gamers/select-color/select-color.component.ts ***!
   \*****************************************************************************/
@@ -787,11 +706,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SelectColorComponent": () => (/* binding */ SelectColorComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_select_color_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./select-color.component.html */ 488);
-/* harmony import */ var _select_color_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./select-color.component.scss */ 4327);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ 2650);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_select_color_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./select-color.component.html */ 50488);
+/* harmony import */ var _select_color_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./select-color.component.scss */ 24327);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ 78099);
 
 
 
@@ -829,7 +748,7 @@ SelectColorComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
 
 /***/ }),
 
-/***/ 5333:
+/***/ 75333:
 /*!************************************************!*\
   !*** ./src/app/modules/games/games.service.ts ***!
   \************************************************/
@@ -839,14 +758,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "GamesService": () => (/* binding */ GamesService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 4452);
-/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
-/* harmony import */ var src_app_store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/store/reducers/round-member.reducer */ 7539);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 84452);
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/shared.service */ 44718);
+/* harmony import */ var src_app_store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/store/reducers/round-member.reducer */ 27539);
 /* harmony import */ var _store_actions_round_member_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../store/actions/round-member.actions */ 8775);
-/* harmony import */ var _auth_telegram_telegram_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth/telegram/telegram.service */ 153);
+/* harmony import */ var _auth_telegram_telegram_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../auth/telegram/telegram.service */ 50153);
 
 
 
@@ -971,14 +890,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ROUND_COMPONENT": () => (/* binding */ ROUND_COMPONENT)
 /* harmony export */ });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 14001);
 
 const ROUND_COMPONENT = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.InjectionToken('roundComponent');
 
 
 /***/ }),
 
-/***/ 6108:
+/***/ 46108:
 /*!**********************************************************************************!*\
   !*** ./src/app/modules/games/round/round-t-wrapper/round-t-wrapper.component.ts ***!
   \**********************************************************************************/
@@ -988,15 +907,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundTWrapperComponent": () => (/* binding */ RoundTWrapperComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_t_wrapper_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-t-wrapper.component.html */ 5440);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_t_wrapper_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-t-wrapper.component.html */ 15440);
 /* harmony import */ var _round_t_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-t-wrapper.component.scss */ 3879);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/shared.service */ 44718);
 /* harmony import */ var _round_interfaces__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../round-interfaces */ 6737);
-/* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../store/reducers/app.reducer */ 5305);
-/* harmony import */ var src_app_store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/store/reducers/player.reducer */ 3051);
+/* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../store/reducers/app.reducer */ 55305);
+/* harmony import */ var src_app_store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/store/reducers/player.reducer */ 43051);
 
 
 
@@ -1055,7 +974,7 @@ RoundTWrapperComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
 
 /***/ }),
 
-/***/ 2059:
+/***/ 72059:
 /*!******************************************************************************!*\
   !*** ./src/app/modules/games/round/round-wrapper/round-wrapper.component.ts ***!
   \******************************************************************************/
@@ -1065,14 +984,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundWrapperComponent": () => (/* binding */ RoundWrapperComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_wrapper_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-wrapper.component.html */ 3715);
-/* harmony import */ var _round_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-wrapper.component.scss */ 1134);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_wrapper_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-wrapper.component.html */ 73715);
+/* harmony import */ var _round_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-wrapper.component.scss */ 21134);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/shared.service */ 44718);
 /* harmony import */ var _round_interfaces__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../round-interfaces */ 6737);
-/* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../store/reducers/app.reducer */ 5305);
+/* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../store/reducers/app.reducer */ 55305);
 
 
 
@@ -1129,7 +1048,7 @@ RoundWrapperComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
 
 /***/ }),
 
-/***/ 238:
+/***/ 50238:
 /*!********************************************************!*\
   !*** ./src/app/modules/games/round/round.component.ts ***!
   \********************************************************/
@@ -1139,12 +1058,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundComponent": () => (/* binding */ RoundComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 8806);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 98806);
 /* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round.component.html */ 2695);
-/* harmony import */ var _round_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round.component.scss */ 4568);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var src_app_store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/reducers/round.reducer */ 8761);
+/* harmony import */ var _round_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round.component.scss */ 44568);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var src_app_store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/reducers/round.reducer */ 88761);
 
 
 
@@ -1182,7 +1101,7 @@ RoundComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([
 
 /***/ }),
 
-/***/ 4743:
+/***/ 64743:
 /*!********************************************************!*\
   !*** ./src/app/modules/games/round/round.directive.ts ***!
   \********************************************************/
@@ -1194,15 +1113,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "RoundScoresLineDirective": () => (/* binding */ RoundScoresLineDirective),
 /* harmony export */   "RoundTBaseDirective": () => (/* binding */ RoundTBaseDirective)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/effects */ 2251);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/shared.service */ 4718);
-/* harmony import */ var src_app_store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/store/reducers/round-member.reducer */ 7539);
-/* harmony import */ var src_app_store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/reducers/round.reducer */ 8761);
-/* harmony import */ var _auth_telegram_telegram_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../auth/telegram/telegram.service */ 153);
-/* harmony import */ var _games_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../games.service */ 5333);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/effects */ 52251);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/app/services/shared.service */ 44718);
+/* harmony import */ var src_app_store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/store/reducers/round-member.reducer */ 27539);
+/* harmony import */ var src_app_store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/reducers/round.reducer */ 88761);
+/* harmony import */ var _auth_telegram_telegram_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../auth/telegram/telegram.service */ 50153);
+/* harmony import */ var _games_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../games.service */ 75333);
 
 
 
@@ -1288,7 +1207,7 @@ RoundTBaseDirective = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
 
 /***/ }),
 
-/***/ 740:
+/***/ 20740:
 /*!*****************************************************!*\
   !*** ./src/app/modules/games/round/round.module.ts ***!
   \*****************************************************/
@@ -1298,23 +1217,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundModule": () => (/* binding */ RoundModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ 8267);
-/* harmony import */ var _round_wrapper_round_wrapper_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./round-wrapper/round-wrapper.component */ 2059);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ngx-translate/core */ 466);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/forms */ 8346);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ionic/angular */ 2650);
-/* harmony import */ var _round_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round.component */ 238);
-/* harmony import */ var _train_round_routes_round_routes_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./train/round-routes/round-routes.component */ 6284);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @angular/common */ 28267);
+/* harmony import */ var _round_wrapper_round_wrapper_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./round-wrapper/round-wrapper.component */ 72059);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ngx-translate/core */ 90466);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/forms */ 18346);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ionic/angular */ 78099);
+/* harmony import */ var _round_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round.component */ 50238);
+/* harmony import */ var _train_round_routes_round_routes_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./train/round-routes/round-routes.component */ 46284);
 /* harmony import */ var _train_round_length_round_length_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./train/round-length/round-length.component */ 7535);
-/* harmony import */ var _train_round_stations_round_stations_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./train/round-stations/round-stations.component */ 2276);
-/* harmony import */ var _train_round_cars_round_cars_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./train/round-cars/round-cars.component */ 8582);
-/* harmony import */ var _uno_round_uno_round_uno_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./uno/round-uno/round-uno.component */ 3169);
+/* harmony import */ var _train_round_stations_round_stations_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./train/round-stations/round-stations.component */ 72276);
+/* harmony import */ var _train_round_cars_round_cars_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./train/round-cars/round-cars.component */ 98582);
+/* harmony import */ var _uno_round_uno_round_uno_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./uno/round-uno/round-uno.component */ 33169);
 /* harmony import */ var _gamers_gamers_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../gamers/gamers.module */ 6932);
-/* harmony import */ var _round_t_wrapper_round_t_wrapper_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./round-t-wrapper/round-t-wrapper.component */ 6108);
-/* harmony import */ var _thousand_round_thousand_round_thousand_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./thousand/round-thousand/round-thousand.component */ 347);
-/* harmony import */ var _rummy_round_rummy_round_rummy_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./rummy/round-rummy/round-rummy.component */ 5206);
+/* harmony import */ var _round_t_wrapper_round_t_wrapper_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./round-t-wrapper/round-t-wrapper.component */ 46108);
+/* harmony import */ var _thousand_round_thousand_round_thousand_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./thousand/round-thousand/round-thousand.component */ 40347);
+/* harmony import */ var _rummy_round_rummy_round_rummy_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./rummy/round-rummy/round-rummy.component */ 35206);
 
 
 
@@ -1365,7 +1284,7 @@ RoundModule = (0,tslib__WEBPACK_IMPORTED_MODULE_11__.__decorate)([
 
 /***/ }),
 
-/***/ 5206:
+/***/ 35206:
 /*!********************************************************************************!*\
   !*** ./src/app/modules/games/round/rummy/round-rummy/round-rummy.component.ts ***!
   \********************************************************************************/
@@ -1375,13 +1294,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundRummyComponent": () => (/* binding */ RoundRummyComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_rummy_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-rummy.component.html */ 3841);
-/* harmony import */ var _round_rummy_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-rummy.component.scss */ 6620);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 8260);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_rummy_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-rummy.component.html */ 63841);
+/* harmony import */ var _round_rummy_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-rummy.component.scss */ 26620);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 18260);
 /* harmony import */ var _round_interfaces__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round-interfaces */ 6737);
-/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../round.directive */ 4743);
+/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../round.directive */ 64743);
 var RoundRummyComponent_1;
 
 
@@ -1419,7 +1338,7 @@ RoundRummyComponent = RoundRummyComponent_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_
 
 /***/ }),
 
-/***/ 347:
+/***/ 40347:
 /*!*****************************************************************************************!*\
   !*** ./src/app/modules/games/round/thousand/round-thousand/round-thousand.component.ts ***!
   \*****************************************************************************************/
@@ -1429,14 +1348,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundThousandComponent": () => (/* binding */ RoundThousandComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_thousand_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-thousand.component.html */ 3580);
-/* harmony import */ var _round_thousand_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-thousand.component.scss */ 1074);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/effects */ 2251);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_thousand_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-thousand.component.html */ 63580);
+/* harmony import */ var _round_thousand_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-thousand.component.scss */ 81074);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/effects */ 52251);
 /* harmony import */ var _round_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../round-interfaces */ 6737);
-/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round.directive */ 4743);
-/* harmony import */ var _store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../store/actions/app.actions */ 8717);
+/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round.directive */ 64743);
+/* harmony import */ var _store_actions_app_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../../../store/actions/app.actions */ 58717);
 var RoundThousandComponent_1;
 
 
@@ -1672,7 +1591,7 @@ RoundThousandComponent = RoundThousandComponent_1 = (0,tslib__WEBPACK_IMPORTED_M
 
 /***/ }),
 
-/***/ 8582:
+/***/ 98582:
 /*!******************************************************************************!*\
   !*** ./src/app/modules/games/round/train/round-cars/round-cars.component.ts ***!
   \******************************************************************************/
@@ -1682,13 +1601,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundCarsComponent": () => (/* binding */ RoundCarsComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_cars_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-cars.component.html */ 3462);
-/* harmony import */ var _round_cars_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-cars.component.scss */ 9627);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 8260);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_cars_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-cars.component.html */ 23462);
+/* harmony import */ var _round_cars_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-cars.component.scss */ 39627);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 18260);
 /* harmony import */ var _round_interfaces__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round-interfaces */ 6737);
-/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../round.directive */ 4743);
+/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../round.directive */ 64743);
 var RoundCarsComponent_1;
 
 
@@ -1740,13 +1659,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundLengthComponent": () => (/* binding */ RoundLengthComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_length_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-length.component.html */ 1986);
-/* harmony import */ var _round_length_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-length.component.scss */ 413);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 8260);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_length_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-length.component.html */ 31986);
+/* harmony import */ var _round_length_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-length.component.scss */ 60413);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 18260);
 /* harmony import */ var _round_interfaces__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round-interfaces */ 6737);
-/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../round.directive */ 4743);
+/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../round.directive */ 64743);
 var RoundLengthComponent_1;
 
 
@@ -1797,7 +1716,7 @@ RoundLengthComponent = RoundLengthComponent_1 = (0,tslib__WEBPACK_IMPORTED_MODUL
 
 /***/ }),
 
-/***/ 6284:
+/***/ 46284:
 /*!**********************************************************************************!*\
   !*** ./src/app/modules/games/round/train/round-routes/round-routes.component.ts ***!
   \**********************************************************************************/
@@ -1807,12 +1726,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundRoutesComponent": () => (/* binding */ RoundRoutesComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_routes_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-routes.component.html */ 4998);
-/* harmony import */ var _round_routes_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-routes.component.scss */ 1735);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 8260);
-/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round.directive */ 4743);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_routes_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-routes.component.html */ 96381);
+/* harmony import */ var _round_routes_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-routes.component.scss */ 91735);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 18260);
+/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round.directive */ 64743);
 /* harmony import */ var _round_interfaces__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../round-interfaces */ 6737);
 var RoundRoutesComponent_1;
 
@@ -1859,7 +1778,7 @@ RoundRoutesComponent = RoundRoutesComponent_1 = (0,tslib__WEBPACK_IMPORTED_MODUL
 
 /***/ }),
 
-/***/ 2276:
+/***/ 72276:
 /*!**************************************************************************************!*\
   !*** ./src/app/modules/games/round/train/round-stations/round-stations.component.ts ***!
   \**************************************************************************************/
@@ -1869,12 +1788,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundStationsComponent": () => (/* binding */ RoundStationsComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_stations_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-stations.component.html */ 7729);
-/* harmony import */ var _round_stations_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-stations.component.scss */ 4204);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_stations_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-stations.component.html */ 77729);
+/* harmony import */ var _round_stations_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-stations.component.scss */ 14204);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 14001);
 /* harmony import */ var _round_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../round-interfaces */ 6737);
-/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round.directive */ 4743);
+/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round.directive */ 64743);
 var RoundStationsComponent_1;
 
 
@@ -1914,7 +1833,7 @@ RoundStationsComponent = RoundStationsComponent_1 = (0,tslib__WEBPACK_IMPORTED_M
 
 /***/ }),
 
-/***/ 3169:
+/***/ 33169:
 /*!**************************************************************************!*\
   !*** ./src/app/modules/games/round/uno/round-uno/round-uno.component.ts ***!
   \**************************************************************************/
@@ -1924,13 +1843,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RoundUnoComponent": () => (/* binding */ RoundUnoComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_uno_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-uno.component.html */ 343);
-/* harmony import */ var _round_uno_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-uno.component.scss */ 3717);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 8260);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_round_uno_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./round-uno.component.html */ 70343);
+/* harmony import */ var _round_uno_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./round-uno.component.scss */ 53717);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 18260);
 /* harmony import */ var _round_interfaces__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../round-interfaces */ 6737);
-/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../round.directive */ 4743);
+/* harmony import */ var _round_directive__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../round.directive */ 64743);
 var RoundUnoComponent_1;
 
 
@@ -1968,21 +1887,7 @@ RoundUnoComponent = RoundUnoComponent_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.
 
 /***/ }),
 
-/***/ 107:
-/*!********************************************************************************************************************************************!*\
-  !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/common/action-confirm/action-confirm.component.html ***!
-  \********************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("<ion-header>\n  <ion-toolbar>\n    <ion-title>{{ data?.title | translate }}?</ion-title>\n    <ion-buttons slot=\"end\">\n      <ion-button (click)=\"cancel()\">{{\n        'elements.button.close' | translate\n      }}</ion-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content>\n  <div class=\"finish-game-modal\">\n    <div class=\"finish-game-modal__text\">\n      <p class=\"ion-padding-horizontal\">\n        {{ data?.text | translate }}\n      </p>\n    </div>\n    <div class=\"finish-game-modal__buttons\">\n      <ion-grid>\n        <ion-row>\n          <ion-col size=\"7\">\n            <ion-button (click)=\"cancel()\" expand=\"block\">{{\n              data?.cancelBtnText | translate\n            }}</ion-button>\n          </ion-col>\n          <ion-col size=\"5\">\n            <ion-button (click)=\"confirm()\" fill=\"outline\" expand=\"block\">{{\n              data?.confirmBtnText | translate\n            }}</ion-button></ion-col\n          >\n        </ion-row>\n      </ion-grid>\n    </div>\n  </div>\n</ion-content>\n");
-
-/***/ }),
-
-/***/ 4464:
+/***/ 44464:
 /*!******************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/game/game.page.html ***!
   \******************************************************************************************************************/
@@ -1996,7 +1901,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 6244:
+/***/ 26244:
 /*!**************************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/gamers/choose-players/choose-players.component.html ***!
   \**************************************************************************************************************************************************/
@@ -2010,7 +1915,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 6938:
+/***/ 86938:
 /*!**********************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/gamers/create-gamer/create-gamer.component.html ***!
   \**********************************************************************************************************************************************/
@@ -2024,7 +1929,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 488:
+/***/ 50488:
 /*!**********************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/gamers/select-color/select-color.component.html ***!
   \**********************************************************************************************************************************************/
@@ -2038,7 +1943,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 5440:
+/***/ 15440:
 /*!***************************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/round/round-t-wrapper/round-t-wrapper.component.html ***!
   \***************************************************************************************************************************************************/
@@ -2052,7 +1957,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 3715:
+/***/ 73715:
 /*!***********************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/round/round-wrapper/round-wrapper.component.html ***!
   \***********************************************************************************************************************************************/
@@ -2080,7 +1985,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 3841:
+/***/ 63841:
 /*!*************************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/round/rummy/round-rummy/round-rummy.component.html ***!
   \*************************************************************************************************************************************************/
@@ -2094,7 +1999,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 3580:
+/***/ 63580:
 /*!**********************************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/round/thousand/round-thousand/round-thousand.component.html ***!
   \**********************************************************************************************************************************************************/
@@ -2108,7 +2013,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 3462:
+/***/ 23462:
 /*!***********************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/round/train/round-cars/round-cars.component.html ***!
   \***********************************************************************************************************************************************/
@@ -2122,7 +2027,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 1986:
+/***/ 31986:
 /*!***************************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/round/train/round-length/round-length.component.html ***!
   \***************************************************************************************************************************************************/
@@ -2136,7 +2041,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 4998:
+/***/ 96381:
 /*!***************************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/round/train/round-routes/round-routes.component.html ***!
   \***************************************************************************************************************************************************/
@@ -2150,7 +2055,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 7729:
+/***/ 77729:
 /*!*******************************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/round/train/round-stations/round-stations.component.html ***!
   \*******************************************************************************************************************************************************/
@@ -2164,7 +2069,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 343:
+/***/ 70343:
 /*!*******************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/games/round/uno/round-uno/round-uno.component.html ***!
   \*******************************************************************************************************************************************/
@@ -2178,17 +2083,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 4958:
-/*!*****************************************************************************!*\
-  !*** ./src/app/modules/common/action-confirm/action-confirm.component.scss ***!
-  \*****************************************************************************/
-/***/ ((module) => {
-
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJhY3Rpb24tY29uZmlybS5jb21wb25lbnQuc2NzcyJ9 */";
-
-/***/ }),
-
-/***/ 7728:
+/***/ 97728:
 /*!***************************************************!*\
   !*** ./src/app/modules/games/game/game.page.scss ***!
   \***************************************************/
@@ -2198,7 +2093,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 1243:
+/***/ 11243:
 /*!***********************************************************************************!*\
   !*** ./src/app/modules/games/gamers/choose-players/choose-players.component.scss ***!
   \***********************************************************************************/
@@ -2208,7 +2103,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 8716:
+/***/ 78716:
 /*!*******************************************************************************!*\
   !*** ./src/app/modules/games/gamers/create-gamer/create-gamer.component.scss ***!
   \*******************************************************************************/
@@ -2218,7 +2113,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 4327:
+/***/ 24327:
 /*!*******************************************************************************!*\
   !*** ./src/app/modules/games/gamers/select-color/select-color.component.scss ***!
   \*******************************************************************************/
@@ -2238,7 +2133,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 1134:
+/***/ 21134:
 /*!********************************************************************************!*\
   !*** ./src/app/modules/games/round/round-wrapper/round-wrapper.component.scss ***!
   \********************************************************************************/
@@ -2248,7 +2143,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 4568:
+/***/ 44568:
 /*!**********************************************************!*\
   !*** ./src/app/modules/games/round/round.component.scss ***!
   \**********************************************************/
@@ -2258,7 +2153,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 6620:
+/***/ 26620:
 /*!**********************************************************************************!*\
   !*** ./src/app/modules/games/round/rummy/round-rummy/round-rummy.component.scss ***!
   \**********************************************************************************/
@@ -2268,7 +2163,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 1074:
+/***/ 81074:
 /*!*******************************************************************************************!*\
   !*** ./src/app/modules/games/round/thousand/round-thousand/round-thousand.component.scss ***!
   \*******************************************************************************************/
@@ -2278,7 +2173,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 9627:
+/***/ 39627:
 /*!********************************************************************************!*\
   !*** ./src/app/modules/games/round/train/round-cars/round-cars.component.scss ***!
   \********************************************************************************/
@@ -2288,7 +2183,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 413:
+/***/ 60413:
 /*!************************************************************************************!*\
   !*** ./src/app/modules/games/round/train/round-length/round-length.component.scss ***!
   \************************************************************************************/
@@ -2298,7 +2193,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 1735:
+/***/ 91735:
 /*!************************************************************************************!*\
   !*** ./src/app/modules/games/round/train/round-routes/round-routes.component.scss ***!
   \************************************************************************************/
@@ -2308,7 +2203,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 4204:
+/***/ 14204:
 /*!****************************************************************************************!*\
   !*** ./src/app/modules/games/round/train/round-stations/round-stations.component.scss ***!
   \****************************************************************************************/
@@ -2318,7 +2213,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 3717:
+/***/ 53717:
 /*!****************************************************************************!*\
   !*** ./src/app/modules/games/round/uno/round-uno/round-uno.component.scss ***!
   \****************************************************************************/

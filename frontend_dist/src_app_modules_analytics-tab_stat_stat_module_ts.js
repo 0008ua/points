@@ -1,7 +1,7 @@
 "use strict";
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_modules_analytics-tab_stat_stat_module_ts"],{
 
-/***/ 3115:
+/***/ 73115:
 /*!****************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/rummy/rummy.page.ts ***!
   \****************************************************************/
@@ -11,12 +11,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "RummyPage": () => (/* binding */ RummyPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_rummy_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./rummy.page.html */ 6421);
-/* harmony import */ var _rummy_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rummy.page.scss */ 7666);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _stat_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../stat-interfaces */ 8327);
-/* harmony import */ var _stat_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stat.directive */ 4011);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_rummy_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./rummy.page.html */ 16421);
+/* harmony import */ var _rummy_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./rummy.page.scss */ 47666);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _stat_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../stat-interfaces */ 48327);
+/* harmony import */ var _stat_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stat.directive */ 24011);
 var RummyPage_1;
 
 
@@ -49,7 +49,7 @@ RummyPage = RummyPage_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
 
 /***/ }),
 
-/***/ 8327:
+/***/ 48327:
 /*!***************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/stat-interfaces.ts ***!
   \***************************************************************/
@@ -59,14 +59,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "STAT_COMPONENT": () => (/* binding */ STAT_COMPONENT)
 /* harmony export */ });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 14001);
 
 const STAT_COMPONENT = new _angular_core__WEBPACK_IMPORTED_MODULE_0__.InjectionToken('statComponent');
 
 
 /***/ }),
 
-/***/ 5174:
+/***/ 55174:
 /*!*******************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/stat-routing.module.ts ***!
   \*******************************************************************/
@@ -76,10 +76,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "StatRoutingModule": () => (/* binding */ StatRoutingModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 3252);
-/* harmony import */ var _stat_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stat.component */ 8401);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ 13252);
+/* harmony import */ var _stat_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stat.component */ 58401);
 
 
 
@@ -103,7 +103,7 @@ StatRoutingModule = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
 
 /***/ }),
 
-/***/ 3005:
+/***/ 53005:
 /*!***********************************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/stat-wrapper/stat-wrapper.component.ts ***!
   \***********************************************************************************/
@@ -113,13 +113,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "StatWrapperComponent": () => (/* binding */ StatWrapperComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_stat_wrapper_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./stat-wrapper.component.html */ 2489);
-/* harmony import */ var _stat_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stat-wrapper.component.scss */ 4184);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/store */ 9407);
-/* harmony import */ var src_app_store_reducers_analytics_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/reducers/analytics.reducer */ 3957);
-/* harmony import */ var _stat_interfaces__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stat-interfaces */ 8327);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_stat_wrapper_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./stat-wrapper.component.html */ 12489);
+/* harmony import */ var _stat_wrapper_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stat-wrapper.component.scss */ 84184);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var src_app_store_reducers_analytics_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/reducers/analytics.reducer */ 33957);
+/* harmony import */ var _stat_interfaces__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stat-interfaces */ 48327);
 
 
 
@@ -156,7 +156,7 @@ StatWrapperComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
 
 /***/ }),
 
-/***/ 8401:
+/***/ 58401:
 /*!**************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/stat.component.ts ***!
   \**************************************************************/
@@ -166,15 +166,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "StatComponent": () => (/* binding */ StatComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_stat_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./stat.component.html */ 4576);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_stat_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./stat.component.html */ 94576);
 /* harmony import */ var _stat_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stat.component.scss */ 7320);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store */ 9407);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @ngrx/store */ 89407);
 /* harmony import */ var src_app_store_actions_analytics_actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/actions/analytics.actions */ 4368);
-/* harmony import */ var src_app_store_reducers_analytics_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/store/reducers/analytics.reducer */ 3957);
-/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/environments/environment */ 8260);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 3252);
+/* harmony import */ var src_app_store_reducers_analytics_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/store/reducers/analytics.reducer */ 33957);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/environments/environment */ 18260);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 13252);
 
 
 
@@ -222,7 +222,7 @@ StatComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_7__.__decorate)([
 
 /***/ }),
 
-/***/ 4011:
+/***/ 24011:
 /*!**************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/stat.directive.ts ***!
   \**************************************************************/
@@ -232,8 +232,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "StatBaseDirective": () => (/* binding */ StatBaseDirective)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 4001);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ 14001);
 
 
 let StatBaseDirective = class StatBaseDirective {
@@ -258,7 +258,7 @@ StatBaseDirective = (0,tslib__WEBPACK_IMPORTED_MODULE_1__.__decorate)([
 
 /***/ }),
 
-/***/ 6657:
+/***/ 36657:
 /*!***********************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/stat.module.ts ***!
   \***********************************************************/
@@ -268,18 +268,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "StatModule": () => (/* binding */ StatModule)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 8267);
-/* harmony import */ var _stat_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stat.component */ 8401);
-/* harmony import */ var _stat_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stat-routing.module */ 5174);
-/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 2650);
-/* harmony import */ var _rummy_rummy_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./rummy/rummy.page */ 3115);
-/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ngx-translate/core */ 466);
-/* harmony import */ var _train_train_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./train/train.page */ 8469);
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 8346);
-/* harmony import */ var _stat_wrapper_stat_wrapper_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stat-wrapper/stat-wrapper.component */ 3005);
-/* harmony import */ var _thousand_thousand_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./thousand/thousand.component */ 3113);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/common */ 28267);
+/* harmony import */ var _stat_component__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./stat.component */ 58401);
+/* harmony import */ var _stat_routing_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./stat-routing.module */ 55174);
+/* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @ionic/angular */ 78099);
+/* harmony import */ var _rummy_rummy_page__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./rummy/rummy.page */ 73115);
+/* harmony import */ var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @ngx-translate/core */ 90466);
+/* harmony import */ var _train_train_page__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./train/train.page */ 18469);
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/forms */ 18346);
+/* harmony import */ var _stat_wrapper_stat_wrapper_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./stat-wrapper/stat-wrapper.component */ 53005);
+/* harmony import */ var _thousand_thousand_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./thousand/thousand.component */ 87348);
 
 
 
@@ -314,7 +314,7 @@ StatModule = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([
 
 /***/ }),
 
-/***/ 3113:
+/***/ 87348:
 /*!***************************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/thousand/thousand.component.ts ***!
   \***************************************************************************/
@@ -324,12 +324,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ThousandComponent": () => (/* binding */ ThousandComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_thousand_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./thousand.component.html */ 9208);
-/* harmony import */ var _thousand_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./thousand.component.scss */ 5264);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _stat_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../stat-interfaces */ 8327);
-/* harmony import */ var _stat_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stat.directive */ 4011);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_thousand_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./thousand.component.html */ 7632);
+/* harmony import */ var _thousand_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./thousand.component.scss */ 45264);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _stat_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../stat-interfaces */ 48327);
+/* harmony import */ var _stat_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stat.directive */ 24011);
 var ThousandComponent_1;
 
 
@@ -362,7 +362,7 @@ ThousandComponent = ThousandComponent_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.
 
 /***/ }),
 
-/***/ 8469:
+/***/ 18469:
 /*!****************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/train/train.page.ts ***!
   \****************************************************************/
@@ -372,12 +372,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "TrainPage": () => (/* binding */ TrainPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 8806);
-/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_train_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./train.page.html */ 3433);
-/* harmony import */ var _train_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./train.page.scss */ 38);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 4001);
-/* harmony import */ var _stat_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../stat-interfaces */ 8327);
-/* harmony import */ var _stat_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stat.directive */ 4011);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_train_page_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./train.page.html */ 53433);
+/* harmony import */ var _train_page_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./train.page.scss */ 30038);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _stat_interfaces__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../stat-interfaces */ 48327);
+/* harmony import */ var _stat_directive__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../stat.directive */ 24011);
 var TrainPage_1;
 
 
@@ -410,7 +410,7 @@ TrainPage = TrainPage_1 = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([
 
 /***/ }),
 
-/***/ 6421:
+/***/ 16421:
 /*!*********************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/analytics-tab/stat/rummy/rummy.page.html ***!
   \*********************************************************************************************************************************/
@@ -424,7 +424,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 2489:
+/***/ 12489:
 /*!****************************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/analytics-tab/stat/stat-wrapper/stat-wrapper.component.html ***!
   \****************************************************************************************************************************************************/
@@ -438,7 +438,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 4576:
+/***/ 94576:
 /*!*******************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/analytics-tab/stat/stat.component.html ***!
   \*******************************************************************************************************************************/
@@ -452,7 +452,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 9208:
+/***/ 7632:
 /*!********************************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/analytics-tab/stat/thousand/thousand.component.html ***!
   \********************************************************************************************************************************************/
@@ -466,7 +466,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 3433:
+/***/ 53433:
 /*!*********************************************************************************************************************************!*\
   !*** ./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./src/app/modules/analytics-tab/stat/train/train.page.html ***!
   \*********************************************************************************************************************************/
@@ -480,7 +480,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 7666:
+/***/ 47666:
 /*!******************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/rummy/rummy.page.scss ***!
   \******************************************************************/
@@ -490,7 +490,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 4184:
+/***/ 84184:
 /*!*************************************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/stat-wrapper/stat-wrapper.component.scss ***!
   \*************************************************************************************/
@@ -510,7 +510,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 5264:
+/***/ 45264:
 /*!*****************************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/thousand/thousand.component.scss ***!
   \*****************************************************************************/
@@ -520,7 +520,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 
 /***/ }),
 
-/***/ 38:
+/***/ 30038:
 /*!******************************************************************!*\
   !*** ./src/app/modules/analytics-tab/stat/train/train.page.scss ***!
   \******************************************************************/

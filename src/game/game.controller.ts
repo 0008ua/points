@@ -9,6 +9,8 @@ import {
   Query,
   Req,
   UseGuards,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { GameService } from './game.service';
 import { CreateGameDto } from './dto/create-game.dto';
@@ -32,6 +34,8 @@ export class GameController {
   @UseGuards(AuthGuard('jwt'))
   @Post()
   create(@Body() dto: CreateGameDto, @Req() { user }: Request) {
+    // throw new HttpException('error add game to back', HttpStatus.BAD_REQUEST);
+
     const newGame: Game = { ...dto, owner: user._id };
     const messages: MessageDto<MessageFinishGame>[] = dto.rounds
       .find((round) => round._id === 'result')
@@ -41,10 +45,7 @@ export class GameController {
         data: { score: String(player.score) },
       }));
 
-    this.telegramService.broadcast<MessageFinishGame>(
-      messages,
-      ComposeFinishGameStrategy,
-    );
+    this.telegramService.broadcast<MessageFinishGame>(messages, ComposeFinishGameStrategy);
 
     return this.gameService.create(newGame);
   }
@@ -69,11 +70,7 @@ export class GameController {
   // update
   @UseGuards(AuthGuard('jwt'))
   @Put(':_id')
-  update(
-    @Param('_id') _id: string,
-    @Body() dto: UpdateGameDto,
-    @Req() { user }: Request,
-  ) {
+  update(@Param('_id') _id: string, @Body() dto: UpdateGameDto, @Req() { user }: Request) {
     return this.gameService.update(_id, dto, user._id);
   }
 

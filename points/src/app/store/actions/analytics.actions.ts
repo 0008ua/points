@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props, union } from '@ngrx/store';
 import { GameType, IGamer } from 'src/app/interfaces';
 
@@ -7,8 +8,8 @@ export enum AnalyticsActionTypes {
   getRatingType = 'analytics/rating',
   getRatingSuccessType = 'analytics/getRatingSuccess',
   addManyType = 'analytics/addMany',
-
-  errorType = 'analytics/error',
+  addErrorType = 'analytics/addError',
+  removeErrorType = 'analytics/removeError',
   loadingType = 'analytics/loading',
 }
 
@@ -46,10 +47,12 @@ export const addMany = createAction(
   props<{ analytics: IGamer[] }>(),
 );
 
-export const error = createAction(
-  AnalyticsActionTypes.errorType,
-  props<{ error: string | null }>(),
+export const addError = createAction(
+  AnalyticsActionTypes.addErrorType,
+  props<{ error: HttpErrorResponse }>(),
 );
+
+export const removeError = createAction(AnalyticsActionTypes.removeErrorType);
 
 export const loading = createAction(
   AnalyticsActionTypes.loadingType,
@@ -57,7 +60,8 @@ export const loading = createAction(
 );
 
 const all = union({
-  error,
+  addError,
+  removeError,
   getRatingByWins,
   getRatingByWinsToGames,
   getRating,

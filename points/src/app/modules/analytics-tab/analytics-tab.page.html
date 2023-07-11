@@ -2,7 +2,7 @@
   <ion-header>
     <ion-toolbar color="secondary">
       <ion-title>
-        <h2 *ngIf="(userRole$ | async) === 'member'">{{(user$ | async).name }}</h2>
+        <h2 *ngIf="(userRole$ | async) === 'member' || (userRole$ | async) === 'admin'">{{(user$ | async).name }}</h2>
         <h2 *ngIf="(userRole$ | async) === 'guest'">Guest</h2>
       </ion-title>
     </ion-toolbar>
@@ -42,7 +42,7 @@
           <ion-icon name="earth-outline" slot="start"></ion-icon>
           <ion-label>{{'language' | translate}}</ion-label>
         </ion-item>
-        <ion-item *ngIf="(userRole$ | async) === 'member'" button (click)="onLogout()">
+        <ion-item *ngIf="(userRole$ | async) === 'member' || (userRole$ | async) === 'admin'" button (click)="onLogout()">
           <ion-icon name="exit" slot="start"></ion-icon>
           <ion-label>{{'modules.user.logout' | translate}}</ion-label>
         </ion-item>

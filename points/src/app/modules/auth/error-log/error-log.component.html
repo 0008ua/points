@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ 'modules.profile.errorLog' | translate }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button menu="profile-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid class="ion-no-margin ion-no-padding">
+    <ion-row>
+      <ion-col
+        size-lg="6"
+        size-md="8"
+        size-sm="10"
+        offset-lg="3"
+        offset-md="2"
+        offset-sm="1"
+      >
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title class="ion-text-center">{{
+              'modules.profile.errorLogTitle' | translate
+            }}</ion-card-title>
+            <ion-card-subtitle class="ion-text-center">{{
+              'modules.profile.errorLogDescription' | translate
+            }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-list>
+              <ion-item>
+                <ion-label>Select error type</ion-label>
+                <ion-select
+                  interface="popover"
+                  placeholder="Select error type"
+                  (ionChange)="onSelectErrorType($event)"
+                  [value]="errorTypes[0]"
+                >
+                  <ion-select-option
+                    *ngFor="let error of errorTypes"
+                    [value]="error"
+                    slot="end"
+                    >{{ error }}</ion-select-option
+                  >
+                </ion-select>
+              </ion-item>
+              <ion-item button="true" detail="true" id="select-owners">
+                <ion-label>Select user</ion-label>
+                <div slot="end">{{ selectedOwner?.name }}</div>
+              </ion-item>
+            </ion-list>
+
+            <ion-list>
+              <ion-item
+                *ngFor="let item of allErrors; let i = index"
+                button
+                detail="true"
+                (click)="errorDetails(item)"
+              >
+                <ion-label>
+                  {{ i + '. ' + item.createdAt + ' ' + item.message }}</ion-label
+                >
+              </ion-item>
+            </ion-list>
+            <ion-infinite-scroll (ionInfinite)="onIonInfinite($event)">
+              <ion-infinite-scroll-content></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+<ion-modal trigger="select-owners" #modal>
+  <ng-template>
+    <app-select-with-search
+      class="ion-page"
+      title="Select user"
+      [items]="convertOwnersToItems(allOwners)"
+      [totalItems]="allOwners.totalDocuments"
+      (searchQuery)="searchOwnersWithQuery($event)"
+      (selectionChange)="onSelectOwner($event)"
+      (selectionCancel)="modal.dismiss()"
+      (ionInfinite)="onIonInfiniteSelectwithSearch($event)"
+    ></app-select-with-search>
+  </ng-template>
+</ion-modal>

@@ -6,8 +6,8 @@ import {
   EntityCollectionServiceElementsFactory,
   HttpUrlGenerator,
 } from '@ngrx/data';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { IGame } from '../interfaces';
 
 @Injectable()
@@ -27,6 +27,13 @@ export class GameService extends EntityCollectionServiceBase<IGame> {
 
   // add(entity: IGame): Observable<IGame> {
   //   console.log('game data service - add', entity);
-  //   return super.add(entity).pipe(tap((_) => console.log('tap - game data service - add', _)));
+  //   return super.add(entity);
+  //   // .pipe(
+  //   //       catchError((error) => {
+  //   //         console.log('game data service - add error', error);
+  //   // return of(null)
+  //   //         return throwError(error);
+  //   //       }),
+  //   // );
   // }
 }

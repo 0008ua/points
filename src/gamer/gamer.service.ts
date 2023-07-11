@@ -8,9 +8,9 @@ import { Gamer, GamerDocument, GamerModel } from './entities/gamer.entity';
 export class GamerService {
   constructor(@InjectModel(Gamer.name) protected gamerModel: GamerModel) {}
 
-  private createGamerData(gamer: GamerDocument[]): GamerDataDto[];
-  private createGamerData(gamer: GamerDocument): GamerDataDto;
-  private createGamerData(
+  private normalizeGamerDocument(gamer: GamerDocument[]): GamerDataDto[];
+  private normalizeGamerDocument(gamer: GamerDocument): GamerDataDto;
+  private normalizeGamerDocument(
     gamer: GamerDocument | GamerDocument[],
   ): GamerDataDto | GamerDataDto[] {
     if (Array.isArray(gamer)) {
@@ -35,7 +35,7 @@ export class GamerService {
 
   async create(newGamer: Gamer): Promise<GamerDataDto> {
     const gamer: GamerDocument = await this.gamerModel.createGamer(newGamer);
-    return this.createGamerData(gamer);
+    return this.normalizeGamerDocument(gamer);
   }
 
   async getWithQuery(query: any, owner: string): Promise<any> {
@@ -45,13 +45,13 @@ export class GamerService {
 
   async getAll(owner: string): Promise<GamerDataDto[]> {
     const gamers: GamerDocument[] = await this.gamerModel.find({ owner });
-    return this.createGamerData(gamers);
+    return this.normalizeGamerDocument(gamers);
   }
 
   async findOne(_id: string, owner?: string): Promise<GamerDataDto> {
     const query = owner ? { _id, owner } : { _id };
     const gamer: GamerDocument = await this.gamerModel.findOne(query);
-    return this.createGamerData(gamer);
+    return this.normalizeGamerDocument(gamer);
   }
 
   async findOneAllData(_id: string, owner?: string): Promise<GamerDocument> {
@@ -81,7 +81,7 @@ export class GamerService {
     } catch (error) {
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
-    return this.createGamerData(gamer);
+    return this.normalizeGamerDocument(gamer);
   }
 
   remove(_id: string, owner: string) {

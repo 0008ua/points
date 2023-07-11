@@ -29,7 +29,7 @@ import { Gamer, GamerDocument, GamerModel } from './entities/gamer.entity';
 export declare class GamerService {
     protected gamerModel: GamerModel;
     constructor(gamerModel: GamerModel);
-    private createGamerData;
+    private normalizeGamerDocument;
     create(newGamer: Gamer): Promise<GamerDataDto>;
     getWithQuery(query: any, owner: string): Promise<any>;
     getAll(owner: string): Promise<GamerDataDto[]>;

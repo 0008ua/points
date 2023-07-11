@@ -14,7 +14,7 @@ import { OperatorFunction } from 'rxjs';
 /** Report ngrx-data success/error actions as toast messages **/
 @Injectable({ providedIn: 'root' })
 export class ModalService {
-  constructor(private store: Store, public modalController: ModalController) {}
+  constructor(public modalController: ModalController) {}
   async presentModal(component: any, data: any) {
     const modal = await this.modalController.create({
       component,

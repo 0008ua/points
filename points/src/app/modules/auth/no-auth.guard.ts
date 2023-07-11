@@ -24,12 +24,15 @@ export class NoAuthGuard implements CanActivate {
   constructor(private router: Router, private store: Store) {}
 
   // Prevents fetching lazy loading modules
-  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+  canLoad(
+    route: Route,
+    segments: UrlSegment[],
+  ): Observable<boolean> | Promise<boolean> | boolean {
     // const userRole$ = this.store.select(selectUserRole);
 
     return this.userRole$.pipe(
       map((role) => {
-        if (role === 'member') {
+        if (role === 'member' || role === 'admin') {
           this.router.navigateByUrl('/auth/profile');
           return false;
         }
@@ -39,14 +42,15 @@ export class NoAuthGuard implements CanActivate {
     );
   }
 
+  
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
   ): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     // const userRole$ = this.store.select(selectUserRole);
     return this.userRole$.pipe(
-      map((userRole) => {
-        if (userRole === 'member') {
+      map((role) => {
+        if (role === 'member' || role === 'admin') {
           this.router.navigateByUrl('/auth/profile');
           return false;
         }

@@ -1,14 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, concatLatestFrom, createEffect, ofType } from '@ngrx/effects';
-import {
-  catchError,
-  filter,
-  map,
-  mergeMap,
-  switchMap,
-  take,
-  tap,
-} from 'rxjs/operators';
+import { catchError, filter, map, mergeMap, switchMap, take, tap } from 'rxjs/operators';
 
 import * as fromAnalyticsActions from '../actions/analytics.actions';
 import * as fromAuthActions from '../actions/auth.actions';
@@ -24,16 +16,26 @@ import * as fromAppReducer from '../reducers/app.reducer';
 import * as fromPlayerReducer from '../reducers/player.reducer';
 import * as fromPersistStoreReducer from '../reducers/persist-store.reducer';
 
-import { GameType, IGame, Round, RoundCfg } from 'src/app/interfaces';
+import { ErrorTypes, GameType, IGame, Round, RoundCfg } from 'src/app/interfaces';
 import { combineLatest, of, OperatorFunction } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { v4 as uuidv4 } from 'uuid';
 import { environment } from 'src/environments/environment';
 import { SharedService } from 'src/app/services/shared.service';
 import { GameService } from '../game-data.service';
-import { EntityAction, EntityOp, ofEntityOp, ofEntityType } from '@ngrx/data';
+import {
+  EntityAction,
+  EntityActionFactory,
+  EntityOp,
+  ofEntityOp,
+  ofEntityType,
+  OP_ERROR,
+} from '@ngrx/data';
 import { once } from 'events';
 import { TelegramService } from 'src/app/modules/auth/telegram/telegram.service';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { GamerService } from '../gamer-data.service';
 
 @Injectable()
 export class AppEffects {
@@ -46,34 +48,73 @@ export class AppEffects {
 
   cancelLoading = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromRoundActions.clearRounds),
+      ofType(fromRoundActions.clearRounds, fromAppActions.addError),
       map((_) => fromAppActions.loading({ loading: false })),
     );
   });
 
-  finishGame = createEffect(
-    () => {
-      return this.actions$.pipe(
-        ofType(fromAppActions.finishGame),
-        mergeMap(() => {
-          const game: IGame = this.sharedService.createResultOfGame();
-          //save to db
-          return this.gameService.add(game).pipe(
-            switchMap((_) => this.sharedService.presentModalFinishGame(game)),
-            catchError((error) => [fromAppActions.loading({ loading: false })]),
-          );
-        }),
-      );
-    },
-    { dispatch: false },
-  );
+  // entityOpErrorHadler = createEffect(() => {
+  //   return this.actions$.pipe(
+  //     ofEntityOp(),
+  //     tap((x) => console.log('action ', x)),
+  //     filter((ea: EntityAction) => ea.payload.entityOp.endsWith(OP_ERROR)),
+  //     tap((x) => console.log('x', x)),
+  //     map(({ payload }) =>
+  //       fromAppActions.addError({
+  //         error: payload.data.error,
+  //         errorType: ErrorTypesEnum.ngrxDataError,
+  //       }),
+  //     ),
+  //   );
+  // });
 
-  gameStoredToDbSuccess = createEffect(() => {
+  errorHadler = createEffect(() => {
     return this.actions$.pipe(
-      ofEntityType(['game']),
-      ofEntityOp([EntityOp.SAVE_ADD_ONE_SUCCESS]),
-      map(() => fromAppActions.clearGame()),
-      catchError((error) => [fromAppActions.loading({ loading: false })]),
+      ofType(fromAppActions.addError),
+      switchMap(({ error, errorType }) =>
+        this.errorHandlerService.logError({
+          error,
+          errorType: errorType || 'app/error',
+        }),
+      ),
+      map((_) => fromAnalyticsActions.removeError()),
+    );
+  });
+
+  finishGame = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAppActions.finishGame),
+      switchMap(() => {
+        const game: IGame = this.sharedService.createResultOfGame();
+        console.log('game', game);
+        // save to db
+        return this.gameService.add(game).pipe(
+          switchMap((_) => this.sharedService.presentModalFinishGame(game)),
+          map(() => fromAppActions.clearGame()),
+          catchError((error: HttpErrorResponse) =>
+            of(fromAppActions.addError({ error, errorType: 'ngrxDataError' })),
+          ),
+        );
+      }),
+    );
+  });
+
+  getGamers = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.storeUserFromTokenSuccess),
+      switchMap(() =>
+        this.gamerService.load().pipe(
+          map(() => fromAppActions.nop()),
+          catchError((error: HttpErrorResponse) =>
+            of(fromAppActions.addError({ error, errorType: 'ngrxDataError' })),
+          ),
+        ),
+      ),
+      // map(() =>
+      //   this.entityActionFactory.create('gamer', EntityOp.QUERY_LOAD, null, {
+      //     tag: 'gamer/on storeUserFromToken Success',
+      //   }),
+      // ),
     );
   });
 
@@ -84,10 +125,7 @@ export class AppEffects {
       map(([{ payload }, gameType]) => {
         const { urlAfterRedirects } = payload.event;
         const payloadGameType = urlAfterRedirects.split('/');
-        if (
-          payloadGameType[1] === 'games' ||
-          payloadGameType[1] === 'analytics'
-        ) {
+        if (payloadGameType[1] === 'games' || payloadGameType[1] === 'analytics') {
           if (!gameType) {
             // initial state, get gameType from url
             return fromAppActions.gameType({
@@ -132,15 +170,15 @@ export class AppEffects {
     return this.actions$.pipe(
       ofType(fromAppActions.loadGame),
       map(({ rounds }) => fromRoundActions.addRounds({ rounds })),
+      catchError((error: HttpErrorResponse) => of(fromAnalyticsActions.addError({ error }))),
     );
   });
 
   addRoundMembers = createEffect(() => {
     return this.actions$.pipe(
       ofType(fromAppActions.loadGame),
-      map(({ roundMembers }) =>
-        fromRoundMemberActions.addRoundMembers({ roundMembers }),
-      ),
+      map(({ roundMembers }) => fromRoundMemberActions.addRoundMembers({ roundMembers })),
+      catchError((error: HttpErrorResponse) => of(fromAnalyticsActions.addError({ error }))),
     );
   });
 
@@ -148,18 +186,11 @@ export class AppEffects {
     return this.actions$.pipe(
       ofType(fromRoundMemberActions.updateRoundMembersSuccess),
       concatLatestFrom(() => this.store.select(fromAppReducer.selectGameType)),
-
       filter(([action, gameType]) => false), // gameType === 'thousand'),
-
-      concatLatestFrom(() =>
-        this.store.select(fromRoundMemberReducer.selectAllRoundMembers),
-      ),
+      concatLatestFrom(() => this.store.select(fromRoundMemberReducer.selectAllRoundMembers)),
       map(([action, roundMembers]) => {
-        const qtyOfPlayedSubrounds =
-          roundMembers[roundMembers.length - 1].namedScoresLine.length;
-        const qtyOfPlayers = new Set(
-          roundMembers.map((roundMember) => roundMember.player),
-        ).size;
+        const qtyOfPlayedSubrounds = roundMembers[roundMembers.length - 1].namedScoresLine.length;
+        const qtyOfPlayers = new Set(roundMembers.map((roundMember) => roundMember.player)).size;
         if (qtyOfPlayedSubrounds >= qtyOfPlayers) {
           // TODO  === or error
           return fromAppActions.openNextRound();
@@ -245,12 +276,12 @@ export class AppEffects {
 
   environment = environment;
   constructor(
-    private actions$: Actions<
-      fromAppActions.CoreActionsUnion | EntityAction<any>
-    >,
+    private actions$: Actions<fromAppActions.CoreActionsUnion | EntityAction<any>>,
     private store: Store,
     private sharedService: SharedService,
     private gameService: GameService,
-    private telegramService: TelegramService,
+    private gamerService: GamerService,
+    private errorHandlerService: ErrorHandlerService,
+    private entityActionFactory: EntityActionFactory,
   ) {}
 }

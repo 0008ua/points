@@ -8,10 +8,7 @@ import { IUser } from '../../interfaces';
 
 import { Router } from '@angular/router';
 import { redirection } from 'src/app/store/actions/auth.actions';
-import {
-  selectRedirectionUrl,
-  selectUser,
-} from '../../store/reducers/auth.reducer';
+import { selectRedirectionUrl, selectUser } from '../../store/reducers/auth.reducer';
 @Injectable({
   providedIn: 'root',
 })
@@ -19,11 +16,7 @@ export class AuthService {
   host = environment.host;
   url$: Observable<string>;
 
-  constructor(
-    private http: HttpClient,
-    private store: Store,
-    private router: Router,
-  ) {
+  constructor(private http: HttpClient, private store: Store, private router: Router) {
     this.url$ = this.store.select(selectRedirectionUrl);
     this.url$.subscribe((url) => {
       if (url) {
@@ -54,11 +47,7 @@ export class AuthService {
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.post<string>(
-      this.host + '/api/auth/signin',
-      user,
-      httpOptions,
-    );
+    return this.http.post<string>(this.host + '/api/auth/signin', user, httpOptions);
   }
 
   signup(user: IUser | null): Observable<string> {
@@ -68,11 +57,7 @@ export class AuthService {
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.post<string>(
-      this.host + '/api/auth/signup',
-      user,
-      httpOptions,
-    );
+    return this.http.post<string>(this.host + '/api/auth/signup', user, httpOptions);
   }
 
   // sync validator

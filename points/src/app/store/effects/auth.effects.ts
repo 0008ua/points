@@ -24,7 +24,7 @@ import * as fromPlayerActions from '../actions/player.actions';
 import * as fromAppActions from '../actions/app.actions';
 
 import { AuthService } from '../../modules/auth/auth.service';
-import { IUser } from 'src/app/interfaces';
+import { ErrorTypes, IUser } from 'src/app/interfaces';
 import { userInfo } from 'os';
 import { GamerService } from '../gamer-data.service';
 import { EntityActionFactory, EntityOp, MergeStrategy } from '@ngrx/data';
@@ -32,31 +32,41 @@ import { SharedService } from 'src/app/services/shared.service';
 import { State } from '../reducers';
 import { selectUser } from '../reducers/auth.reducer';
 import { nop } from '../actions/app.actions';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Injectable()
 export class AuthEffects implements OnInitEffects {
   setLoading = createEffect(() => {
     return this.actions$.pipe(
-      ofType(
-        fromAuthActions.signin,
-        fromAuthActions.signup,
-        fromAuthActions.logout,
-      ),
+      ofType(fromAuthActions.signin, fromAuthActions.signup, fromAuthActions.logout),
       map((_) => fromAuthActions.loading({ loading: true })),
     );
   });
 
   cancelLoading = createEffect(() => {
     return this.actions$.pipe(
-      ofType(fromAuthActions.storeUserFromTokenSuccess, fromAuthActions.error),
-      filter(
-        (action) =>
-          // ignore error cancelling (null) actions
-          action.type !== fromAuthActions.AuthActionTypes.errorType ||
-          (action.type === fromAuthActions.AuthActionTypes.errorType &&
-            !!action.error),
-      ),
+      ofType(fromAuthActions.storeUserFromTokenSuccess, fromAuthActions.addError),
+      // filter(
+      //   (action) =>
+      //     // ignore error cancelling (null) actions
+      //     action.type !== fromAuthActions.AuthActionTypes.errorType ||
+      //     (action.type === fromAuthActions.AuthActionTypes.errorType && !!action.error),
+      // ),
       map((_) => fromAuthActions.loading({ loading: false })),
+    );
+  });
+
+  errorHadler = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(fromAuthActions.addError),
+      map(({ error }) =>
+        this.errorHandlerService.logError({
+          error,
+          errorType: 'auth/error',
+        }),
+      ),
+      map((_) => fromAuthActions.removeError()),
     );
   });
 
@@ -71,10 +81,8 @@ export class AuthEffects implements OnInitEffects {
       switchMap((user) =>
         this.authService.signin(user).pipe(
           map((token) => fromAuthActions.storeToken({ token })),
-          catchError((error) =>
-            of(
-              fromAuthActions.error({ error: error.error.message || 'error' }),
-            ),
+          catchError((error: HttpErrorResponse) =>
+            of(fromAuthActions.addError({ error })),
           ),
         ),
       ),
@@ -93,10 +101,8 @@ export class AuthEffects implements OnInitEffects {
       switchMap((user) =>
         this.authService.signup(user).pipe(
           map((token) => fromAuthActions.storeToken({ token })),
-          catchError((error) =>
-            of(
-              fromAuthActions.error({ error: error.error.message || 'error' }),
-            ),
+          catchError((error: HttpErrorResponse) =>
+            of(fromAuthActions.addError({ error })),
           ),
         ),
       ),
@@ -105,15 +111,9 @@ export class AuthEffects implements OnInitEffects {
 
   clearRounds = createEffect(() => {
     return this.actions$.pipe(
-      ofType(
-        fromAuthActions.signup,
-        fromAuthActions.signin,
-        fromAuthActions.logout,
-      ),
+      ofType(fromAuthActions.signup, fromAuthActions.signin, fromAuthActions.logout),
       map(() => fromRoundActions.clearRounds()),
-      catchError((error) =>
-        of(fromAuthActions.error({ error: error.error.message || 'error' })),
-      ),
+      catchError((error: HttpErrorResponse) => of(fromAuthActions.addError({ error }))),
     );
   });
 
@@ -121,9 +121,7 @@ export class AuthEffects implements OnInitEffects {
     return this.actions$.pipe(
       ofType(fromAuthActions.signup, fromAuthActions.logout),
       map(() => fromPlayerActions.clearPlayers()),
-      catchError((error) =>
-        of(fromAuthActions.error({ error: error.error.message || 'error' })),
-      ),
+      catchError((error: HttpErrorResponse) => of(fromAuthActions.addError({ error }))),
     );
   });
 
@@ -133,9 +131,7 @@ export class AuthEffects implements OnInitEffects {
       map((action) => action.token),
       switchMap((token) => this.sharedService.setToken(token)),
       map(() => fromAuthActions.storeUserFromToken()),
-      catchError((error) =>
-        of(fromAuthActions.error({ error: error.error.message || 'error' })),
-      ),
+      catchError((error: HttpErrorResponse) => of(fromAuthActions.addError({ error }))),
     );
   });
 
@@ -150,9 +146,7 @@ export class AuthEffects implements OnInitEffects {
           }),
         ),
       ),
-      catchError((error) =>
-        of(fromAuthActions.error({ error: error.message })),
-      ),
+      catchError((error: HttpErrorResponse) => of(fromAuthActions.addError({ error }))),
     );
   });
 
@@ -160,31 +154,11 @@ export class AuthEffects implements OnInitEffects {
     return this.actions$.pipe(
       ofType(fromAuthActions.storeUserFromTokenSuccess),
       map((payload) => {
-        if (payload.user?.role === 'member') {
+        if (payload.user?.role === 'member' || payload.user?.role === 'admin') {
           return fromAuthActions.redirection({ redirectionUrl: '/' });
         }
         return nop();
       }),
-    );
-  });
-
-  getGamers = createEffect(() => {
-    return this.actions$.pipe(
-      ofType(fromAuthActions.storeUserFromTokenSuccess),
-      map((_) =>
-        this.entityActionFactory.create(
-          'gamer',
-          EntityOp.QUERY_LOAD,
-          null,
-
-          {
-            tag: 'gamer/on storeUserFromToken Success',
-          },
-        ),
-      ),
-      catchError((error) =>
-        of(fromAuthActions.error({ error: error.error.message || 'error' })),
-      ),
     );
   });
 
@@ -193,18 +167,17 @@ export class AuthEffects implements OnInitEffects {
       ofType(fromAuthActions.signinSuccess),
       map((action) => action.token),
       map((token) => fromAuthActions.storeToken({ token })),
-      catchError((error) =>
-        of(fromAuthActions.error({ error: error.error.message || 'error' })),
-      ),
+      catchError((error: HttpErrorResponse) => of(fromAuthActions.addError({ error }))),
     );
   });
 
   constructor(
     private actions$: Actions<fromAuthActions.CoreActionsUnion>,
-    private store: Store,
+    private errorHandlerService: ErrorHandlerService,
     private authService: AuthService,
     private sharedService: SharedService,
     private entityActionFactory: EntityActionFactory,
+    private gamerService: GamerService,
   ) {}
 
   ngrxOnInitEffects(): Action {

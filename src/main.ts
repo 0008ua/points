@@ -5,6 +5,7 @@ import * as path from 'path';
 import { INestApplication } from '@nestjs/common';
 import { getBotToken } from 'nestjs-telegraf';
 import { TELEGRAM_BOT_NAME } from './telegram/telegram.constants';
+import { HttpExceptionFilter } from './http-exception.filter';
 
 async function bootstrap() {
   let app: INestApplication;
@@ -17,17 +18,17 @@ async function bootstrap() {
   } else {
     app = await NestFactory.create(AppModule);
   }
-  app.use((req, res, next) => {
-    if (req.url.slice(0, 4) === '/api') {
-      console.log('url: ', req.url);
-    }
+  // app.use((req, res, next) => {
+  //   if (req.url.slice(0, 4) === '/api') {
+  //     console.log('url: ', req.url);
+  //   }
+  //   return next();
+  // });
 
-    return next();
-  });
   const bot = app.get(getBotToken(TELEGRAM_BOT_NAME));
   app.use(bot.webhookCallback('/api/' + process.env.TELEGRAM_TOKEN.slice(11)));
   app.setGlobalPrefix('api');
-
+  // app.useGlobalFilters(new HttpExceptionFilter());
   await app.listen(process.env.PORT);
 }
 

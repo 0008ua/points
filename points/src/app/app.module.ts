@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { ErrorHandler, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -17,6 +17,7 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 import { JwtDecodeFactory, JWT_DECODE } from './config/jwt.config';
+import { ErrorHandlerService } from './services/error-handler.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -38,7 +39,12 @@ import { JwtDecodeFactory, JWT_DECODE } from './config/jwt.config';
   providers: [
     { provide: JWT_DECODE, useFactory: JwtDecodeFactory, deps: [] },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptorService,
+      multi: true,
+    },
+    { provide: ErrorHandler, useExisting: ErrorHandlerService },
   ],
   bootstrap: [AppComponent],
 })

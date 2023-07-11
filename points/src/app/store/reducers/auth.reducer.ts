@@ -30,10 +30,17 @@ export const reducer = createReducer(
     }),
   ),
   on(
-    fromAuthActions.error,
+    fromAuthActions.addError,
     (state, { error }): State => ({
       ...state,
       error,
+    }),
+  ),
+  on(
+    fromAuthActions.removeError,
+    (state, _): State => ({
+      ...state,
+      error: null,
     }),
   ),
   on(

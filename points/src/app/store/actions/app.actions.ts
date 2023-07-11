@@ -1,5 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { createAction, props, union } from '@ngrx/store';
-import { Round, RoundMember, GameType, IGamer } from 'src/app/interfaces';
+import { Round, RoundMember, GameType, IGamer, IGame, ErrorTypes } from 'src/app/interfaces';
 
 export enum AppActionTypes {
   loadingType = 'app/loading',
@@ -12,6 +13,8 @@ export enum AppActionTypes {
   createRoundsType = 'app/create rounds',
   redirectionType = 'app/redirection',
   nopType = 'app/nopType',
+  addErrorType = 'app/addError',
+  removeErrorType = 'app/removeError',
 }
 
 export const loading = createAction(AppActionTypes.loadingType, props<{ loading: boolean }>());
@@ -41,6 +44,13 @@ export const redirection = createAction(
   props<{ redirectionUrl: string | null }>(),
 );
 
+export const addError = createAction(
+  AppActionTypes.addErrorType,
+  props<{ error: HttpErrorResponse; errorType?: ErrorTypes }>(),
+);
+
+export const removeError = createAction(AppActionTypes.removeErrorType);
+
 export const nop = createAction(AppActionTypes.nopType);
 
 const all = union({
@@ -53,6 +63,8 @@ const all = union({
   gameType,
   gameTypeAndClearGame,
   redirection,
+  addError,
+  removeError,
   nop,
 });
 

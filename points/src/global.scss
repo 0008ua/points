@@ -26,3 +26,18 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 @import "./styles.scss";
+
+// fix select popover bug (after chrome update)
+[popover].popover-viewport {
+  display: initial;
+  position: initial;
+  margin: initial;
+  border: initial;
+  background: initial;
+  padding: initial;
+  width: initial;
+  height: initial;
+  overflow: initial;
+  inset: initial;
+  color: initial;
+}

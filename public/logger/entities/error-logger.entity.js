@@ -12,12 +12,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ErrorLoggerSchema = exports.ErrorLogger = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
 let ErrorLogger = class ErrorLogger {
 };
 __decorate([
-    (0, mongoose_1.Prop)({ required: true, default: 'Unknown Error' }),
+    (0, mongoose_1.Prop)({ required: true, default: 'unknownMessage' }),
     __metadata("design:type", String)
 ], ErrorLogger.prototype, "message", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, default: 'unknownError' }),
+    __metadata("design:type", String)
+], ErrorLogger.prototype, "errorType", void 0);
+__decorate([
+    (0, mongoose_1.Prop)({ required: true, type: mongoose_2.Schema.Types.Mixed }),
+    __metadata("design:type", Object)
+], ErrorLogger.prototype, "error", void 0);
 __decorate([
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
@@ -25,7 +34,7 @@ __decorate([
 ErrorLogger = __decorate([
     (0, mongoose_1.Schema)({
         timestamps: true,
-        collection: 'games',
+        collection: 'errorlogs',
         statics: {
             async createErrorLogger(errorLogger) {
                 try {

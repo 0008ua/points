@@ -27,10 +27,7 @@ import {
   selectByIdRoundMember,
 } from '../store/reducers/round-member.reducer';
 import * as fromAppActions from '../store/actions/app.actions';
-import {
-  selectRedirectionUrl,
-  selectGameType,
-} from '../store/reducers/app.reducer';
+import { selectRedirectionUrl, selectGameType } from '../store/reducers/app.reducer';
 import { Router } from '@angular/router';
 import { redirection } from '../store/actions/app.actions';
 import * as fromRoundMembersActions from '../store/actions/round-member.actions';
@@ -140,9 +137,7 @@ export class SharedService {
   createClientRoundsWithTotal(): RoundWithTotal[] {
     return this.rounds.map((round) => {
       const players = round.roundMembers.map((memberId) => {
-        const member = this.roundMembers.find(
-          (roundMember) => roundMember._id === memberId,
-        );
+        const member = this.roundMembers.find((roundMember) => roundMember._id === memberId);
         return {
           _id: member.player,
           score: member.scoresLine.reduce((prev, cur) => prev + cur, 0),
@@ -161,11 +156,7 @@ export class SharedService {
             _id: player._id,
             score: this.getPlayerTotalScores(player._id),
           }))
-          .sort(
-            (a, b) =>
-              (a.score - b.score) *
-              this.environment.games[this.gameType].resultsOrder,
-          ),
+          .sort((a, b) => (a.score - b.score) * this.environment.games[this.gameType].resultsOrder),
       };
     }
     let acc = 0;
@@ -180,11 +171,7 @@ export class SharedService {
             score,
           };
         })
-        .sort(
-          (a, b) =>
-            (a.score - b.score) *
-            this.environment.games[this.gameType].resultsOrder,
-        )
+        .sort((a, b) => (a.score - b.score) * this.environment.games[this.gameType].resultsOrder)
         .map((player) => ({ ...player, score: player.score || acc * -1 })),
     };
   }
@@ -192,10 +179,7 @@ export class SharedService {
   createResultOfGame(): IGame {
     return {
       type: this.gameType,
-      rounds: [
-        ...this.createClientRoundsWithTotal(),
-        this.createResultRoundWithTotal(),
-      ],
+      rounds: [...this.createClientRoundsWithTotal(), this.createResultRoundWithTotal()],
     };
   }
 
@@ -209,20 +193,14 @@ export class SharedService {
     return this.modalService.presentModal(GameResultComponent, { data });
   }
 
-  calcQtyOfArrItems(
-    item: string | number,
-    playerId: string,
-    roundId: string,
-  ): number {
+  calcQtyOfArrItems(item: string | number, playerId: string, roundId: string): number {
     let count = 0;
 
-    this.getMemberByPlayerId(playerId, roundId).scoresLine.forEach(
-      (arrItem) => {
-        if (arrItem === item) {
-          count++;
-        }
-      },
-    );
+    this.getMemberByPlayerId(playerId, roundId).scoresLine.forEach((arrItem) => {
+      if (arrItem === item) {
+        count++;
+      }
+    });
     return count;
   }
 
@@ -249,26 +227,21 @@ export class SharedService {
     const round = this.getRoundById(roundId);
     return this.roundMembers.find(
       (roundMember) =>
-        roundMember.player === playerId &&
-        round?.roundMembers.includes(roundMember._id),
+        roundMember.player === playerId && round?.roundMembers.includes(roundMember._id),
     );
   }
   getRoundMemberById$(roundMemberId: UID): Observable<RoundMember> {
     return this.store.select(selectByIdRoundMember(roundMemberId));
   }
 
-  logErrorToDB(message: string): Observable<string> {
-    // return of(error);
-    const httpOptions = {
-      headers: new HttpHeaders({
-        // eslint-disable-next-line  @typescript-eslint/naming-convention
-        'Content-Type': 'application/json',
-      }),
-    };
-    return this.http.post<string>(
-      this.host + '/api/logger/log-error-to-db',
-      { message },
-      httpOptions,
-    );
-  }
+  // logErrorToDB(error: ErrorLogDto): Observable<string> {
+  //   // return of(error);
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       // eslint-disable-next-line  @typescript-eslint/naming-convention
+  //       'Content-Type': 'application/json',
+  //     }),
+  //   };
+  //   return this.http.post<string>(this.host + '/api/logger/log-error-to-db', error, httpOptions);
+  // }
 }

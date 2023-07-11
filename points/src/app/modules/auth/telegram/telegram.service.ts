@@ -27,18 +27,12 @@ export class TelegramService {
       }),
     };
     return this.http
-      .patch<string>(
-        this.host + '/api/tg/unsubscribe/' + gamerId,
-        null,
-        httpOptions,
-      )
+      .patch<string>(this.host + '/api/tg/unsubscribe/' + gamerId, null, httpOptions)
       .pipe(
-        catchError((error) => {
-          this.store.dispatch(
-            fromAuthActions.error({ error: error.error.message }),
-          );
-          return throwError(error);
-        }),
+        // catchError((error) => {
+        //   this.store.dispatch(fromAuthActions.error({ error: error.error.message }));
+        //   return throwError(error);
+        // }),
         tap(() => this.gamerService.load()),
       );
   }
@@ -49,11 +43,7 @@ export class TelegramService {
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.post<string>(
-      this.host + '/api/tg/messages',
-      messages,
-      httpOptions,
-    );
+    return this.http.post<string>(this.host + '/api/tg/messages', messages, httpOptions);
   }
 
   sendMessagesThousandRoundDto(messages: MessageDto<MessageThousandRound>[]) {
