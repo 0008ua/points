@@ -62,7 +62,11 @@ export class GamerController {
 
   @UseGuards(AuthGuard('jwt'))
   @Put(':_id')
-  update(@Param('_id') _id: string, @Req() { user }: Request, @Body() dto: UpdateGamerDto) {
+  update(
+    @Param('_id') _id: string,
+    @Req() { user }: Request,
+    @Body() dto: UpdateGamerDto,
+  ) {
     return this.gamerService.update(_id, dto, user._id);
   }
 

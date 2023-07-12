@@ -3,7 +3,8 @@ import { Get, Post } from '@nestjs/common/decorators/http/request-mapping.decora
 import { Body, Query, Req } from '@nestjs/common/decorators/http/route-params.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
-// import { AdminGuard } from 'src/auth/guards/admin.guard';
+import { UserRoles } from 'src/auth/entities/user.entity';
+import { HasRoles, RolesGuard } from 'src/auth/guards/roles.guard';
 import { ErrorLogQueryDto } from './dto/error-log-query.dto';
 import { ErrorLogCreateDto } from './dto/error-log.-createdto';
 import { OwnerQueryDto } from './dto/owner.dto';
@@ -21,8 +22,8 @@ export class LoggerController {
     const errorLogger: ErrorLogger = { ...dto, owner: user._id };
     return this.loggerService.logErrorToDB(errorLogger);
   }
-  // @UseGuards(AuthGuard('jwt'))
-  // @UseGuards(AdminGuard)
+  @HasRoles(UserRoles.Admin)
+  @UseGuards(AuthGuard('jwt'), RolesGuard)
   @Get('get-owners-with-query')
   getOwnersWithQuery(@Query() query: OwnerQueryDto) {
     return this.loggerService.getOwnersWithQuery(query);

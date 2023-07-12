@@ -24,7 +24,6 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   async validate(
     userData: UserDataDto & { exp: number; iat: number },
   ): Promise<UserDataDto> {
-    console.log('userData', userData);
     const userFromDb = await this.userModel.findUserByIdAndUpdateTimestamp(userData._id);
     return this.authService.createUserData(userFromDb);
   }

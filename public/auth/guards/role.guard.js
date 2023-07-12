@@ -28,4 +28,4 @@ RoleGuard = __decorate([
     (0, common_1.Injectable)()
 ], RoleGuard);
 exports.RoleGuard = RoleGuard;
-//# sourceMappingURL=admin.guard.js.map
+//# sourceMappingURL=role.guard.js.map
