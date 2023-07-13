@@ -158,12 +158,12 @@ let ErrorLogComponent = class ErrorLogComponent {
         this.errorLogService = errorLogService;
         this.modalService = modalService;
         this.allErrors = [];
-        this.errorTypes = src_app_interfaces__WEBPACK_IMPORTED_MODULE_2__.errors;
+        this.errorTypes = ['all', ...src_app_interfaces__WEBPACK_IMPORTED_MODULE_2__.errors];
         this.newOwnersSearch = true;
         this.newErrorsSearch = true;
     }
     ngOnInit() {
-        this.errorsQuery = { errorType: this.errorTypes[0], skip: 0, limit: 20 };
+        this.errorsQuery = { owner: null, errorType: null, skip: 0, limit: 20 };
         this.ownersQuery = { name: '', skip: 0, limit: 20 };
         this.allOwners = { data: [], totalDocuments: 0 };
         this.loadedErrorsWithQuery$ = this.store.select(src_app_store_reducers_error_log_reducer__WEBPACK_IMPORTED_MODULE_4__.selectAllErrorLogs);
@@ -194,7 +194,8 @@ let ErrorLogComponent = class ErrorLogComponent {
         console.log('error Details', error);
     }
     onSelectErrorType(event) {
-        this.errorsQuery = Object.assign(Object.assign({}, this.errorsQuery), { errorType: event.target.value });
+        this.errorsQuery = Object.assign(Object.assign({}, this.errorsQuery), { errorType: event.target.value === 'all' ? null : event.target.value });
+        console.log('this.errorsQuery', this.errorsQuery);
         this.newErrorsSearch = true;
         this.getErrorsWithQuery();
     }

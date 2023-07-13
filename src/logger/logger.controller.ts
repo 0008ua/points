@@ -32,7 +32,7 @@ export class LoggerController {
   @UseGuards(AuthGuard('jwt'))
   @Get('get-with-query')
   getWithQuery(@Query() query: ErrorLogQueryDto, @Req() { user }: Request) {
-    console.log(query);
+    console.log('query', query);
     return this.loggerService.getWithQuery(query, user._id);
   }
 }

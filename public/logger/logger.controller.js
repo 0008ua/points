@@ -35,7 +35,7 @@ let LoggerController = class LoggerController {
         return this.loggerService.getOwnersWithQuery(query);
     }
     getWithQuery(query, { user }) {
-        console.log(query);
+        console.log('query', query);
         return this.loggerService.getWithQuery(query, user._id);
     }
 };

@@ -113,19 +113,25 @@ export class LoggerService {
   }
 
   async getWithQuery(
-    query: ErrorLogQueryDto,
+    pquery: ErrorLogQueryDto,
     userId: string,
   ): Promise<ErrorLoggerDocumentDto[]> {
+    // !!!!!!!!!!!!!
+    const queryx = JSON.stringify(pquery);
+    const query = JSON.parse(queryx);
+    console.log('queryx', queryx);
+    console.log('query', query);
     const { owner, errorType, skip = 0, limit = 5 } = query;
     let errorLoggerDocuments: ErrorLoggerDocument[];
     try {
-      // console.log('owner', owner);
+      console.log('errorType', errorType);
       const normalizedQuery = Object.assign(
         {},
-        !owner ? null : { owner },
-        !errorType ? null : { errorType },
+        // parse to convert from string 'null' to null
+        !owner || owner === 'null' ? null : { owner },
+        !errorType || errorType === 'null' ? null : { errorType },
       );
-      // console.log('normalizedQuery', normalizedQuery);
+      console.log('normalizedQuery', normalizedQuery);
       errorLoggerDocuments = await this.errorLoggerModel
         .find(normalizedQuery)
         .skip(skip)

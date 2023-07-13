@@ -27,7 +27,7 @@ export class ErrorLogComponent implements OnInit {
   @ViewChild('modal', { static: true }) modal!: IonModal;
   loadedErrorsWithQuery$: Observable<ErrorLoggerDocumentDto[]>;
   allErrors: ErrorLoggerDocumentDto[] = [];
-  errorTypes = errors;
+  errorTypes = ['all', ...errors];
   allOwners: OwnerDataDto;
   ownersQuery: OwnerQueryDto;
   selectedOwner: OwnerData;
@@ -43,7 +43,7 @@ export class ErrorLogComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.errorsQuery = { errorType: this.errorTypes[0], skip: 0, limit: 20 };
+    this.errorsQuery = { owner: null, errorType: null, skip: 0, limit: 20 };
     this.ownersQuery = { name: '', skip: 0, limit: 20 };
     this.allOwners = { data: [], totalDocuments: 0 };
 
@@ -82,7 +82,11 @@ export class ErrorLogComponent implements OnInit {
   }
 
   onSelectErrorType(event: any) {
-    this.errorsQuery = { ...this.errorsQuery, errorType: event.target.value };
+    this.errorsQuery = {
+      ...this.errorsQuery,
+      errorType: event.target.value === 'all' ? null : event.target.value,
+    };
+    console.log('this.errorsQuery', this.errorsQuery);
     this.newErrorsSearch = true;
     this.getErrorsWithQuery();
   }
