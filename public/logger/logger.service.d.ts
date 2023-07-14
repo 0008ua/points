@@ -7,6 +7,6 @@ export declare class LoggerService {
     constructor(errorLoggerModel: ErrorLoggerModel);
     logErrorToDB(errorLogger: ErrorLogger): Promise<ErrorLoggerDocumentDto>;
     getOwnersWithQuery(query: OwnerQueryDto): Promise<OwnerDataDto>;
-    getWithQuery(pquery: ErrorLogQueryDto, userId: string): Promise<ErrorLoggerDocumentDto[]>;
+    getWithQuery(query: ErrorLogQueryDto, userId: string): Promise<ErrorLoggerDocumentDto[]>;
     private normalizeErrorDocument;
 }

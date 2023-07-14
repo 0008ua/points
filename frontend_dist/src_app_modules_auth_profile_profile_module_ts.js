@@ -11,16 +11,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "AuthAdminGuard": () => (/* binding */ AuthAdminGuard)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! tslib */ 98806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/core */ 14001);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ 13252);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ 9500);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ 13252);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ 9500);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @ngrx/store */ 89407);
 /* harmony import */ var _auth_service__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./auth.service */ 76006);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ 85029);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ 88377);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 26928);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ 10592);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ 88377);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ 26928);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ 10592);
 /* harmony import */ var src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/store/reducers/auth.reducer */ 24433);
 
 
@@ -37,40 +36,37 @@ let AuthAdminGuard = class AuthAdminGuard {
         this.store = store;
         this.userRole$ = this.store.select(src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_1__.selectUserRole);
         // this.userRole$ = this.store.select(selectUserRole);
-        this.store
-            .select(src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_1__.selectUserRole)
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.tap)((role) => console.log('role change guard', role)))
-            .subscribe((_) => _);
+        this.store.select(src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_1__.selectUserRole).subscribe((_) => _);
     }
     // Prevents fetching lazy loading modules
     canLoad(route, segments) {
-        return this.userRole$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)((role) => {
+        return this.userRole$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.map)((role) => {
             if (role !== 'admin') {
                 return false;
             }
             return true;
-        }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.take)(1));
+        }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.take)(1));
     }
     // If lazy loadnig module already fetched and user logged out
     // this guard prevents to activate module
     canActivate(route, state) {
-        return this.userRole$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_3__.map)((role) => {
+        return this.userRole$.pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.map)((role) => {
             if (role !== 'admin') {
                 return false;
             }
             return true;
-        }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_5__.catchError)((e) => {
-            return (0,rxjs__WEBPACK_IMPORTED_MODULE_6__.throwError)(e);
+        }), (0,rxjs_operators__WEBPACK_IMPORTED_MODULE_4__.catchError)((e) => {
+            return (0,rxjs__WEBPACK_IMPORTED_MODULE_5__.throwError)(e);
         }));
     }
 };
 AuthAdminGuard.ctorParameters = () => [
     { type: _auth_service__WEBPACK_IMPORTED_MODULE_0__.AuthService },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__.Router },
-    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_8__.Store }
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__.Router },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_7__.Store }
 ];
-AuthAdminGuard = (0,tslib__WEBPACK_IMPORTED_MODULE_9__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_10__.Injectable)({
+AuthAdminGuard = (0,tslib__WEBPACK_IMPORTED_MODULE_8__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_9__.Injectable)({
         providedIn: 'root',
     })
 ], AuthAdminGuard);

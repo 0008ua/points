@@ -46,7 +46,7 @@
               </ion-item>
               <ion-item button="true" detail="true" id="select-owners">
                 <ion-label>Select user</ion-label>
-                <div slot="end">{{ selectedOwner?.name }}</div>
+                <div slot="end">{{ selectedOwner?.name || (user$ | async).name || 'all' }}</div>
               </ion-item>
             </ion-list>
 

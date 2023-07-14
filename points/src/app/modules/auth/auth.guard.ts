@@ -24,16 +24,20 @@ import { IUser } from 'src/app/interfaces';
 export class AuthGuard implements CanLoad, CanActivate {
   userRole$: Observable<string> = this.store.select(selectUserRole);
 
-  constructor(private authService: AuthService, private router: Router, private store: Store) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private store: Store,
+  ) {
     // this.userRole$ = this.store.select(selectUserRole);
-    this.store
-      .select(selectUserRole)
-      .pipe(tap((role) => console.log('role change guard', role)))
-      .subscribe((_) => _);
+    this.store.select(selectUserRole).subscribe((_) => _);
   }
 
   // Prevents fetching lazy loading modules
-  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> | Promise<boolean> | boolean {
+  canLoad(
+    route: Route,
+    segments: UrlSegment[],
+  ): Observable<boolean> | Promise<boolean> | boolean {
     return this.userRole$.pipe(
       map((role) => {
         if (role === 'guest') {

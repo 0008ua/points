@@ -1,15 +1,23 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { InfiniteScrollCustomEvent, IonModal } from '@ionic/angular';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  Observable,
+  of,
+  ReplaySubject,
+  Subject,
+} from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
+import { selectUser } from 'src/app/store/reducers/auth.reducer';
 import {
   ErrorLoggerDocumentDto,
   ErrorLogQueryDto,
   OwnerDataDto,
   OwnerQueryDto,
 } from 'src/app/dtos';
-import { errors, ErrorTypes, OwnerData } from 'src/app/interfaces';
+import { errors, ErrorTypes, IUser, OwnerData } from 'src/app/interfaces';
 import { ModalService } from 'src/app/services/modal.service';
 import { selectAllErrorLogs } from 'src/app/store/reducers/error-log.reducer';
 import * as fromErrorLogActions from '../../../store/actions/error-log.actions';
@@ -26,13 +34,14 @@ import { ErrorLogService } from './error-log.service';
 export class ErrorLogComponent implements OnInit {
   @ViewChild('modal', { static: true }) modal!: IonModal;
   loadedErrorsWithQuery$: Observable<ErrorLoggerDocumentDto[]>;
+  user$: Observable<IUser>;
   allErrors: ErrorLoggerDocumentDto[] = [];
   errorTypes = ['all', ...errors];
   allOwners: OwnerDataDto;
   ownersQuery: OwnerQueryDto;
   selectedOwner: OwnerData;
   errorsQuery: ErrorLogQueryDto;
-  getOwnersWithQuery$: BehaviorSubject<OwnerQueryDto>;
+  getOwnersWithQuery$: ReplaySubject<OwnerQueryDto>;
   newOwnersSearch = true;
   newErrorsSearch = true;
 
@@ -43,21 +52,22 @@ export class ErrorLogComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.errorsQuery = { owner: null, errorType: null, skip: 0, limit: 20 };
+    this.errorsQuery = { skip: 0, limit: 20 };
     this.ownersQuery = { name: '', skip: 0, limit: 20 };
     this.allOwners = { data: [], totalDocuments: 0 };
 
     this.loadedErrorsWithQuery$ = this.store.select(selectAllErrorLogs);
 
     this.loadedErrorsWithQuery$.subscribe((loadedErrorsWithQuery) => {
-      console.log('loadedErrorsWithQuery', loadedErrorsWithQuery);
       if (this.newErrorsSearch) {
         return (this.allErrors = loadedErrorsWithQuery);
       }
       return this.allErrors.push(...loadedErrorsWithQuery);
     });
+    this.user$ = this.store.select(selectUser);
 
-    this.getOwnersWithQuery$ = new BehaviorSubject(this.ownersQuery);
+    this.getOwnersWithQuery$ = new ReplaySubject(1);
+    // this.getOwnersWithQuery$ = new ReplaySubject(this.ownersQuery);
 
     this.getOwnersWithQuery$
       .pipe(
@@ -72,21 +82,27 @@ export class ErrorLogComponent implements OnInit {
           data: [...this.allOwners.data, ...loadedOwners.data],
         });
       });
-    this.getErrorsWithQuery();
+
+    this.user$.subscribe((user) => {
+      this.errorsQuery = { ...this.errorsQuery, owner: user._id };
+      this.getErrorsWithQuery();
+    });
   }
 
   errorDetails(error: ErrorLoggerDocumentDto) {
     this.modalService.presentModal(ErrorDetailsComponent, { error });
-    // .then((_) => console.log('_', _));
-    console.log('error Details', error);
   }
 
   onSelectErrorType(event: any) {
-    this.errorsQuery = {
-      ...this.errorsQuery,
-      errorType: event.target.value === 'all' ? null : event.target.value,
-    };
-    console.log('this.errorsQuery', this.errorsQuery);
+    if (event.target.value === 'all') {
+      const { errorType, ...rest } = this.errorsQuery;
+      this.errorsQuery = rest;
+    } else {
+      this.errorsQuery = {
+        ...this.errorsQuery,
+        errorType: event.target.value,
+      };
+    }
     this.newErrorsSearch = true;
     this.getErrorsWithQuery();
   }

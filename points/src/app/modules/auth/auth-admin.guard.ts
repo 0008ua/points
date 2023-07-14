@@ -30,10 +30,7 @@ export class AuthAdminGuard implements CanLoad, CanActivate {
     private store: Store,
   ) {
     // this.userRole$ = this.store.select(selectUserRole);
-    this.store
-      .select(selectUserRole)
-      .pipe(tap((role) => console.log('role change guard', role)))
-      .subscribe((_) => _);
+    this.store.select(selectUserRole).subscribe((_) => _);
   }
 
   // Prevents fetching lazy loading modules

@@ -112,16 +112,12 @@ let LoggerService = class LoggerService {
             },
         ]))[0];
     }
-    async getWithQuery(pquery, userId) {
-        const queryx = JSON.stringify(pquery);
-        const query = JSON.parse(queryx);
-        console.log('queryx', queryx);
-        console.log('query', query);
+    async getWithQuery(query, userId) {
         const { owner, errorType, skip = 0, limit = 5 } = query;
         let errorLoggerDocuments;
+        console.log('query', query);
         try {
-            console.log('errorType', errorType);
-            const normalizedQuery = Object.assign({}, !owner || owner === 'null' ? null : { owner }, !errorType || errorType === 'null' ? null : { errorType });
+            const normalizedQuery = Object.assign({ skip, limit }, !owner ? null : { owner }, !errorType ? null : { errorType });
             console.log('normalizedQuery', normalizedQuery);
             errorLoggerDocuments = await this.errorLoggerModel
                 .find(normalizedQuery)
