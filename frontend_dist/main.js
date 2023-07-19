@@ -779,23 +779,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "SharedService": () => (/* binding */ SharedService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! tslib */ 98806);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/core */ 14001);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ 4126);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs */ 4126);
 /* harmony import */ var _capacitor_storage__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @capacitor/storage */ 872);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs/operators */ 88377);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 88377);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ngrx/store */ 89407);
 /* harmony import */ var _store_reducers_player_reducer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store/reducers/player.reducer */ 43051);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 18260);
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/common/http */ 83981);
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/common/http */ 83981);
 /* harmony import */ var _store_reducers_round_reducer__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../store/reducers/round.reducer */ 88761);
 /* harmony import */ var _store_reducers_round_member_reducer__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../store/reducers/round-member.reducer */ 27539);
 /* harmony import */ var _store_reducers_app_reducer__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../store/reducers/app.reducer */ 55305);
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/router */ 13252);
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/router */ 13252);
 /* harmony import */ var _store_actions_app_actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../store/actions/app.actions */ 58717);
 /* harmony import */ var _config_jwt_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../config/jwt.config */ 99185);
 /* harmony import */ var _modal_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modal.service */ 39853);
 /* harmony import */ var _modules_games_game_game_result_game_result_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../modules/games/game/game-result/game-result.component */ 18339);
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! date-fns */ 52498);
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! date-fns */ 53924);
+
 
 
 
@@ -849,25 +852,40 @@ let SharedService = class SharedService {
             this.roundMembers = roundMembers;
         });
     }
+    // '2020-12-01T00:00:00.000Z' => 2020-12-01
+    convertISOToShort(ISO) {
+        return ISO.substring(0, 10);
+    }
+    convertISOToDate(ISO) {
+        return date_fns__WEBPACK_IMPORTED_MODULE_10__["default"](ISO);
+    }
+    // Tue Dec 01 2020 00:00:00 GMT-1000 => '2020-12-01'
+    convertDateToShort(date) {
+        return date_fns__WEBPACK_IMPORTED_MODULE_11__["default"](date, { representation: 'date' });
+    }
+    // Tue Dec 01 2020 00:00:00 GMT-1000 => '2020-12-01T00:00:00.000Z'
+    convertDateToISO(date) {
+        return date_fns__WEBPACK_IMPORTED_MODULE_11__["default"](date);
+    }
     setToStorage(key, value) {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_10__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.set({ key, value }));
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_12__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.set({ key, value }));
     }
     setToken(token) {
         return this.setToStorage('token', token);
     }
     getFromStorage(key) {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_10__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.get({ key })).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)((getResult) => getResult.value));
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_12__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.get({ key })).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)((getResult) => getResult.value));
     }
     getToken() {
         return this.getFromStorage('token');
     }
     getTokenAndDecode() {
-        return this.getToken().pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_11__.map)((token) => {
+        return this.getToken().pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.map)((token) => {
             return this.jwtDecode(token);
         }));
     }
     removeFromStorage(key) {
-        return (0,rxjs__WEBPACK_IMPORTED_MODULE_10__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.remove({ key }));
+        return (0,rxjs__WEBPACK_IMPORTED_MODULE_12__.from)(_capacitor_storage__WEBPACK_IMPORTED_MODULE_0__.Storage.remove({ key }));
     }
     removeToken() {
         return this.removeFromStorage('token');
@@ -928,7 +946,7 @@ let SharedService = class SharedService {
         };
     }
     presentModalFinishGame(game) {
-        return (0,tslib__WEBPACK_IMPORTED_MODULE_12__.__awaiter)(this, void 0, void 0, function* () {
+        return (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__awaiter)(this, void 0, void 0, function* () {
             const order = this.environment.games[game.type].resultsOrder;
             const results = game.rounds.find((round) => round._id === 'result').players;
             const data = {
@@ -968,14 +986,14 @@ let SharedService = class SharedService {
     }
 };
 SharedService.ctorParameters = () => [
-    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_13__.Store },
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_14__.HttpClient },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_15__.Router },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_15__.Store },
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_16__.HttpClient },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_17__.Router },
     { type: _modal_service__WEBPACK_IMPORTED_MODULE_8__.ModalService },
-    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_16__.Inject, args: [_config_jwt_config__WEBPACK_IMPORTED_MODULE_7__.JWT_DECODE,] }] }
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_18__.Inject, args: [_config_jwt_config__WEBPACK_IMPORTED_MODULE_7__.JWT_DECODE,] }] }
 ];
-SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_12__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_16__.Injectable)({
+SharedService = (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_18__.Injectable)({
         providedIn: 'root',
     })
 ], SharedService);
@@ -3287,18 +3305,22 @@ if (_environments_environment__WEBPACK_IMPORTED_MODULE_1__.environment.productio
 var map = {
 	"./ion-accordion_2.entry.js": [
 		83477,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-accordion_2_entry_js"
 	],
 	"./ion-action-sheet.entry.js": [
 		67196,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-action-sheet_entry_js"
 	],
 	"./ion-alert.entry.js": [
 		38081,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-alert_entry_js"
 	],
 	"./ion-app_8.entry.js": [
 		75017,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-app_8_entry_js"
 	],
 	"./ion-avatar_3.entry.js": [
@@ -3307,6 +3329,7 @@ var map = {
 	],
 	"./ion-back-button.entry.js": [
 		99216,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-back-button_entry_js"
 	],
 	"./ion-backdrop.entry.js": [
@@ -3338,13 +3361,20 @@ var map = {
 		97479,
 		"node_modules_ionic_core_dist_esm_ion-col_3_entry_js"
 	],
+	"./ion-datetime-button.entry.js": [
+		70171,
+		"default-node_modules_ionic_core_dist_esm_data-caf38df0_js-node_modules_ionic_core_dist_esm_th-d3ab8e",
+		"node_modules_ionic_core_dist_esm_ion-datetime-button_entry_js"
+	],
 	"./ion-datetime_3.entry.js": [
 		64134,
+		"default-node_modules_ionic_core_dist_esm_data-caf38df0_js-node_modules_ionic_core_dist_esm_th-d3ab8e",
 		"common",
 		"node_modules_ionic_core_dist_esm_ion-datetime_3_entry_js"
 	],
 	"./ion-fab_3.entry.js": [
 		71439,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-fab_3_entry_js"
 	],
 	"./ion-img.entry.js": [
@@ -3353,18 +3383,22 @@ var map = {
 	],
 	"./ion-infinite-scroll_2.entry.js": [
 		33296,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-infinite-scroll_2_entry_js"
 	],
 	"./ion-input.entry.js": [
 		12413,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-input_entry_js"
 	],
 	"./ion-item-option_3.entry.js": [
 		39411,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-item-option_3_entry_js"
 	],
 	"./ion-item_8.entry.js": [
 		99133,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-item_8_entry_js"
 	],
 	"./ion-loading.entry.js": [
@@ -3373,18 +3407,22 @@ var map = {
 	],
 	"./ion-menu_3.entry.js": [
 		96065,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-menu_3_entry_js"
 	],
 	"./ion-modal.entry.js": [
 		86991,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-modal_entry_js"
 	],
 	"./ion-nav_2.entry.js": [
 		82947,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-nav_2_entry_js"
 	],
 	"./ion-picker-column-internal.entry.js": [
 		25919,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-picker-column-internal_entry_js"
 	],
 	"./ion-picker-internal.entry.js": [
@@ -3393,6 +3431,7 @@ var map = {
 	],
 	"./ion-popover.entry.js": [
 		99459,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-popover_entry_js"
 	],
 	"./ion-progress-bar.entry.js": [
@@ -3405,6 +3444,7 @@ var map = {
 	],
 	"./ion-range.entry.js": [
 		12140,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-range_entry_js"
 	],
 	"./ion-refresher_2.entry.js": [
@@ -3414,6 +3454,7 @@ var map = {
 	],
 	"./ion-reorder_2.entry.js": [
 		41975,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-reorder_2_entry_js"
 	],
 	"./ion-ripple-effect.entry.js": [
@@ -3426,10 +3467,12 @@ var map = {
 	],
 	"./ion-searchbar.entry.js": [
 		26404,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-searchbar_entry_js"
 	],
 	"./ion-segment_2.entry.js": [
 		85253,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-segment_2_entry_js"
 	],
 	"./ion-select_3.entry.js": [
@@ -3442,6 +3485,7 @@ var map = {
 	],
 	"./ion-spinner.entry.js": [
 		17668,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-spinner_entry_js"
 	],
 	"./ion-split-pane.entry.js": [
@@ -3450,10 +3494,12 @@ var map = {
 	],
 	"./ion-tab-bar_2.entry.js": [
 		174,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-tab-bar_2_entry_js"
 	],
 	"./ion-tab_2.entry.js": [
 		86185,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-tab_2_entry_js"
 	],
 	"./ion-text.entry.js": [
@@ -3470,6 +3516,7 @@ var map = {
 	],
 	"./ion-toggle.entry.js": [
 		25705,
+		"common",
 		"node_modules_ionic_core_dist_esm_ion-toggle_entry_js"
 	],
 	"./ion-virtual-scroll.entry.js": [
@@ -3556,7 +3603,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 /***/ ((module) => {
 
 "use strict";
-module.exports = JSON.parse('{"name":"points","version":"0.0.4","scripts":{"ng":"ng","start":"ng serve","build":"ng build","test":"ng test","lint":"ng lint","e2e":"ng e2e","format":"prettier --write \\"src/**/*.ts\\" \\"test/**/*.ts\\""},"private":true,"dependencies":{"@angular/common":"~13.0.0","@angular/core":"~13.0.0","@angular/forms":"~13.0.0","@angular/platform-browser":"~13.0.0","@angular/platform-browser-dynamic":"~13.0.0","@angular/router":"~13.0.0","@angular/service-worker":"~13.0.0","@capacitor/app":"1.0.7","@capacitor/core":"3.3.4","@capacitor/haptics":"1.1.3","@capacitor/keyboard":"1.2.0","@capacitor/status-bar":"1.0.6","@capacitor/storage":"^1.2.3","@ionic/angular":"^6.0.0","@ngrx/data":"^13.0.2","@ngrx/effects":"^13.0.2","@ngrx/entity":"^13.0.2","@ngrx/router-store":"^13.0.2","@ngrx/store":"^13.0.2","@ngrx/store-devtools":"^13.0.2","@ngx-translate/core":"^14.0.0","@ngx-translate/http-loader":"^7.0.0","eslint-plugin-ngrx":"^2.0.0","jwt-decode":"^3.1.2","normalizr":"^3.6.1","rxjs":"~6.6.0","tslib":"^2.2.0","uuid":"^8.3.2","zone.js":"~0.11.4"},"devDependencies":{"@angular-devkit/build-angular":"~13.0.1","@angular-eslint/builder":"~13.0.1","@angular-eslint/eslint-plugin":"~13.0.1","@angular-eslint/eslint-plugin-template":"~13.0.1","@angular-eslint/template-parser":"~13.0.1","@angular/cli":"~13.0.1","@angular/compiler":"~13.0.0","@angular/compiler-cli":"~13.0.0","@angular/language-service":"~13.0.0","@capacitor/cli":"3.3.4","@ionic/angular-toolkit":"^5.0.0","@ngrx/schematics":"^13.0.2","@types/jasmine":"~3.6.0","@types/jasminewd2":"~2.0.3","@types/node":"^12.20.41","@typescript-eslint/eslint-plugin":"5.3.0","@typescript-eslint/parser":"5.3.0","eslint":"^7.6.0","eslint-plugin-import":"2.22.1","eslint-plugin-jsdoc":"30.7.6","eslint-plugin-prefer-arrow":"1.2.2","jasmine-core":"~3.8.0","jasmine-spec-reporter":"~5.0.0","karma":"~6.3.2","karma-chrome-launcher":"~3.1.0","karma-coverage":"~2.0.3","karma-coverage-istanbul-reporter":"~3.0.2","karma-jasmine":"~4.0.0","karma-jasmine-html-reporter":"^1.5.0","protractor":"~7.0.0","ts-node":"~8.3.0","typescript":"~4.4.4"},"description":"An Ionic project"}');
+module.exports = JSON.parse('{"name":"points","version":"0.0.4","scripts":{"ng":"ng","start":"ng serve","build":"ng build","test":"ng test","lint":"ng lint","e2e":"ng e2e","format":"prettier --write \\"src/**/*.ts\\" \\"test/**/*.ts\\""},"private":true,"dependencies":{"@angular/common":"~13.0.0","@angular/core":"~13.0.0","@angular/forms":"~13.0.0","@angular/platform-browser":"~13.0.0","@angular/platform-browser-dynamic":"~13.0.0","@angular/router":"~13.0.0","@angular/service-worker":"~13.0.0","@capacitor/app":"1.0.7","@capacitor/core":"3.3.4","@capacitor/haptics":"1.1.3","@capacitor/keyboard":"1.2.0","@capacitor/status-bar":"1.0.6","@capacitor/storage":"^1.2.3","@ionic/angular":"^6.7.5","@ngrx/data":"^13.0.2","@ngrx/effects":"^13.0.2","@ngrx/entity":"^13.0.2","@ngrx/router-store":"^13.0.2","@ngrx/store":"^13.0.2","@ngrx/store-devtools":"^13.0.2","@ngx-translate/core":"^14.0.0","@ngx-translate/http-loader":"^7.0.0","date-fns":"^2.30.0","eslint-plugin-ngrx":"^2.0.0","jwt-decode":"^3.1.2","normalizr":"^3.6.1","rxjs":"~6.6.0","tslib":"^2.2.0","uuid":"^8.3.2","zone.js":"~0.11.4"},"devDependencies":{"@angular-devkit/build-angular":"~13.0.1","@angular-eslint/builder":"~13.0.1","@angular-eslint/eslint-plugin":"~13.0.1","@angular-eslint/eslint-plugin-template":"~13.0.1","@angular-eslint/template-parser":"~13.0.1","@angular/cli":"~13.0.1","@angular/compiler":"~13.0.0","@angular/compiler-cli":"~13.0.0","@angular/language-service":"~13.0.0","@capacitor/cli":"3.3.4","@ionic/angular-toolkit":"^5.0.0","@ngrx/schematics":"^13.0.2","@types/jasmine":"~3.6.0","@types/jasminewd2":"~2.0.3","@types/node":"^12.20.41","@typescript-eslint/eslint-plugin":"5.3.0","@typescript-eslint/parser":"5.3.0","eslint":"^7.6.0","eslint-plugin-import":"2.22.1","eslint-plugin-jsdoc":"30.7.6","eslint-plugin-prefer-arrow":"1.2.2","jasmine-core":"~3.8.0","jasmine-spec-reporter":"~5.0.0","karma":"~6.3.2","karma-chrome-launcher":"~3.1.0","karma-coverage":"~2.0.3","karma-coverage-istanbul-reporter":"~3.0.2","karma-jasmine":"~4.0.0","karma-jasmine-html-reporter":"^1.5.0","protractor":"~7.0.0","ts-node":"~8.3.0","typescript":"~4.4.4"},"description":"An Ionic project"}');
 
 /***/ })
 

@@ -35,6 +35,7 @@ import { JwtDecodeOptions } from 'jwt-decode';
 import { JWT_DECODE, JwtDecode } from '../config/jwt.config';
 import { ModalService } from './modal.service';
 import { GameResultComponent } from '../modules/games/game/game-result/game-result.component';
+import * as fns from 'date-fns';
 
 @Injectable({
   providedIn: 'root',
@@ -92,6 +93,25 @@ export class SharedService {
     });
   }
 
+  // '2020-12-01T00:00:00.000Z' => 2020-12-01
+  convertISOToShort(ISO: string): string {
+    return ISO.substring(0, 10);
+  }
+
+  convertISOToDate(ISO: string): Date {
+    return fns.parseISO(ISO);
+  }
+
+  // Tue Dec 01 2020 00:00:00 GMT-1000 => '2020-12-01'
+  convertDateToShort(date: Date): string {
+    return fns.formatISO(date, { representation: 'date' });
+  }
+
+  // Tue Dec 01 2020 00:00:00 GMT-1000 => '2020-12-01T00:00:00.000Z'
+  convertDateToISO(date: Date): string {
+    return fns.formatISO(date);
+  }
+
   setToStorage(key: string, value: any): Observable<void> {
     return from(Storage.set({ key, value }));
   }
@@ -137,7 +157,9 @@ export class SharedService {
   createClientRoundsWithTotal(): RoundWithTotal[] {
     return this.rounds.map((round) => {
       const players = round.roundMembers.map((memberId) => {
-        const member = this.roundMembers.find((roundMember) => roundMember._id === memberId);
+        const member = this.roundMembers.find(
+          (roundMember) => roundMember._id === memberId,
+        );
         return {
           _id: member.player,
           score: member.scoresLine.reduce((prev, cur) => prev + cur, 0),
@@ -156,7 +178,10 @@ export class SharedService {
             _id: player._id,
             score: this.getPlayerTotalScores(player._id),
           }))
-          .sort((a, b) => (a.score - b.score) * this.environment.games[this.gameType].resultsOrder),
+          .sort(
+            (a, b) =>
+              (a.score - b.score) * this.environment.games[this.gameType].resultsOrder,
+          ),
       };
     }
     let acc = 0;
@@ -171,7 +196,10 @@ export class SharedService {
             score,
           };
         })
-        .sort((a, b) => (a.score - b.score) * this.environment.games[this.gameType].resultsOrder)
+        .sort(
+          (a, b) =>
+            (a.score - b.score) * this.environment.games[this.gameType].resultsOrder,
+        )
         .map((player) => ({ ...player, score: player.score || acc * -1 })),
     };
   }

@@ -25,6 +25,8 @@ import { SelectWithSearchComponent } from '../../common/select-with-search/selec
 import { SelectWithSearchItem } from '../../common/select-with-search/select-with-search.interface';
 import { ErrorDetailsComponent } from './error-details/error-details.component';
 import { ErrorLogService } from './error-log.service';
+import { SharedService } from 'src/app/services/shared.service';
+import { sub, isAfter, parseISO, add } from 'date-fns';
 
 @Component({
   selector: 'app-error-log',
@@ -44,14 +46,28 @@ export class ErrorLogComponent implements OnInit {
   getOwnersWithQuery$: ReplaySubject<OwnerQueryDto>;
   newOwnersSearch = true;
   newErrorsSearch = true;
+  minDate: string;
+  maxDate: string;
+  maxDateRange: {
+    min: string;
+    max: string;
+  };
+  minDateRange: {
+    max: string;
+  };
 
   constructor(
     private store: Store,
     private errorLogService: ErrorLogService,
     private modalService: ModalService,
+    private sharedService: SharedService,
   ) {}
 
   ngOnInit() {
+    this.minDate = this.sharedService.convertDateToISO(sub(new Date(), { days: 7 }));
+    this.maxDate = this.sharedService.convertDateToISO(new Date());
+    this.createDateRanges();
+
     this.errorsQuery = { skip: 0, limit: 20 };
     this.ownersQuery = { name: '', skip: 0, limit: 20 };
     this.allOwners = { data: [], totalDocuments: 0 };
@@ -87,6 +103,42 @@ export class ErrorLogComponent implements OnInit {
       this.errorsQuery = { ...this.errorsQuery, owner: user._id };
       this.getErrorsWithQuery();
     });
+  }
+
+  createDateRanges(): void {
+    this.maxDateRange = {
+      min: this.sharedService.convertDateToISO(
+        add(this.sharedService.convertISOToDate(this.minDate), { days: 1 }),
+      ),
+      max: this.sharedService.convertDateToISO(new Date()),
+    };
+    this.minDateRange = {
+      max: this.sharedService.convertDateToISO(
+        sub(this.sharedService.convertISOToDate(this.maxDate), { days: 1 }),
+      ),
+    };
+  }
+
+  onMinDateChange() {
+    this.createDateRanges();
+    // if (
+    //   isAfter(
+    //     this.sharedService.convertISOToDate(this.minDate),
+    //     this.sharedService.convertISOToDate(this.maxDate),
+    //   )
+    // ) {
+    //   this.minDate = this.sharedService.convertDateToISO(sub(new Date(), { days: 1 }));
+    // }
+  }
+
+  onMaxDateChange() {
+    this.createDateRanges();
+
+    // if (isAfter(this.sharedService.convertISOToDate(this.maxDate), new Date())) {
+    //   this.maxDate = this.sharedService.convertDateToISO(new Date());
+    // }
+
+    console.log('maxDate', parseISO(this.maxDate));
   }
 
   errorDetails(error: ErrorLoggerDocumentDto) {

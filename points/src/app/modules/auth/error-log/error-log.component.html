@@ -28,7 +28,75 @@
           </ion-card-header>
           <ion-card-content>
             <ion-list>
-              <ion-item>
+              <ion-row class="ion-justify-content-around">
+                <ion-col size="5" class="ion-justify-content-center">
+                  <ion-datetime-button datetime="minDateTime"></ion-datetime-button>
+                  <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                      <ion-datetime
+                        #minDateTimeModal
+                        id="minDateTime"
+                        presentation="date"
+                        [max]="minDateRange.max"
+                        [(ngModel)]="minDate"
+                        (ionChange)="onMinDateChange(); minDateTimeModal.confirm(true)"
+                      ></ion-datetime>
+                    </ng-template>
+                  </ion-modal>
+                </ion-col>
+                <ion-col size="2" class="ion-justify-content-center">
+                  <!-- <span>1 of 2</span> -->
+                </ion-col>
+                <ion-col size="5" class="ion-justify-content-center">
+                  <ion-datetime-button datetime="maxDateTime"></ion-datetime-button>
+                  <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                      <ion-datetime
+                        id="maxDateTime"
+                        #maxDateTimeModal
+                        presentation="date"
+                        [(ngModel)]="maxDate"
+                        [min]="maxDateRange.min"
+                        [max]="maxDateRange.max"
+                        (ionChange)="onMaxDateChange(); maxDateTimeModal.confirm(true)"
+                      ></ion-datetime>
+                    </ng-template>
+                  </ion-modal>
+                </ion-col>
+              </ion-row>
+
+              <!-- <ion-item>
+                <ion-datetime-button
+                  datetime="minDateTime"
+                ></ion-datetime-button>
+                <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                    <ion-datetime
+                      #minDateTimeModal
+                      id="minDateTime"
+                      presentation="date"
+                      [max]="minDateRange.max"
+                      [(ngModel)]="minDate"
+                      (ionChange)="onMinDateChange(); minDateTimeModal.confirm(true)"
+                    ></ion-datetime>
+                  </ng-template>
+                </ion-modal>
+                <ion-datetime-button datetime="maxDateTime"></ion-datetime-button>
+                <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                    <ion-datetime
+                      id="maxDateTime"
+                      #maxDateTimeModal
+                      presentation="date"
+                      [(ngModel)]="maxDate"
+                      [min]="maxDateRange.min"
+                      [max]="maxDateRange.max"
+                      (ionChange)="onMaxDateChange(); maxDateTimeModal.confirm(true)"
+                    ></ion-datetime>
+                  </ng-template>
+                </ion-modal>
+              </ion-item> -->
+              <ion-item slot="start">
                 <ion-label>Select error type</ion-label>
                 <ion-select
                   interface="popover"
@@ -44,9 +112,11 @@
                   >
                 </ion-select>
               </ion-item>
-              <ion-item button="true" detail="true" id="select-owners">
+              <ion-item button="true" detail="true" id="select-owners" slot="end">
                 <ion-label>Select user</ion-label>
-                <div slot="end">{{ selectedOwner?.name || (user$ | async).name || 'all' }}</div>
+                <div slot="end">
+                  {{ selectedOwner?.name || (user$ | async).name || 'all' }}
+                </div>
               </ion-item>
             </ion-list>
 

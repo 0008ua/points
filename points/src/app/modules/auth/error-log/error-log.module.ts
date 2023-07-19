@@ -6,12 +6,14 @@ import { TranslateModule } from '@ngx-translate/core';
 import { ErrorLogComponent } from './error-log.component';
 import { SharedModule } from '../../common/shared.module';
 import { ErrorDetailsComponent } from './error-details/error-details.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [ErrorLogComponent, ErrorDetailsComponent],
   imports: [
     CommonModule,
     IonicModule,
+    FormsModule,
     ErrorLogRoutingModule,
     TranslateModule.forChild({
       extend: true,
