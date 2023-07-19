@@ -68,7 +68,15 @@ export class ErrorLogComponent implements OnInit {
     this.maxDate = this.sharedService.convertDateToISO(new Date());
     this.createDateRanges();
 
-    this.errorsQuery = { skip: 0, limit: 20 };
+    this.errorsQuery = {
+      skip: 0,
+      limit: 20,
+      minDate: this.sharedService.convertISOToShort(this.minDate),
+      // query all docs that 'lt' than upper limit+1day
+      maxDate: this.sharedService.convertDateToShort(
+        add(this.sharedService.convertISOToDate(this.maxDate), { days: 1 }),
+      ),
+    };
     this.ownersQuery = { name: '', skip: 0, limit: 20 };
     this.allOwners = { data: [], totalDocuments: 0 };
 
@@ -121,24 +129,25 @@ export class ErrorLogComponent implements OnInit {
 
   onMinDateChange() {
     this.createDateRanges();
-    // if (
-    //   isAfter(
-    //     this.sharedService.convertISOToDate(this.minDate),
-    //     this.sharedService.convertISOToDate(this.maxDate),
-    //   )
-    // ) {
-    //   this.minDate = this.sharedService.convertDateToISO(sub(new Date(), { days: 1 }));
-    // }
+    this.errorsQuery = {
+      ...this.errorsQuery,
+      minDate: this.sharedService.convertISOToShort(this.minDate),
+    };
+    this.newErrorsSearch = true;
+    this.getErrorsWithQuery();
   }
 
   onMaxDateChange() {
     this.createDateRanges();
-
-    // if (isAfter(this.sharedService.convertISOToDate(this.maxDate), new Date())) {
-    //   this.maxDate = this.sharedService.convertDateToISO(new Date());
-    // }
-
-    console.log('maxDate', parseISO(this.maxDate));
+    this.errorsQuery = {
+      ...this.errorsQuery,
+      // query all docs that 'lt' than upper limit+1day
+      maxDate: this.sharedService.convertDateToShort(
+        add(this.sharedService.convertISOToDate(this.maxDate), { days: 1 }),
+      ),
+    };
+    this.newErrorsSearch = true;
+    this.getErrorsWithQuery();
   }
 
   errorDetails(error: ErrorLoggerDocumentDto) {

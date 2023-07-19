@@ -513,13 +513,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ErrorLogComponent": () => (/* binding */ ErrorLogComponent)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! tslib */ 98806);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! tslib */ 98806);
 /* harmony import */ var _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_error_log_component_html__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !./node_modules/@ngtools/webpack/src/loaders/direct-resource.js!./error-log.component.html */ 88463);
 /* harmony import */ var _error_log_component_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./error-log.component.scss */ 8716);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @angular/core */ 14001);
-/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @ngrx/store */ 89407);
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! rxjs */ 40563);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs/operators */ 29026);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! @angular/core */ 14001);
+/* harmony import */ var _ngrx_store__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @ngrx/store */ 89407);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! rxjs */ 40563);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs/operators */ 29026);
 /* harmony import */ var src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/store/reducers/auth.reducer */ 24433);
 /* harmony import */ var src_app_interfaces__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/interfaces */ 55566);
 /* harmony import */ var src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/modal.service */ 39853);
@@ -529,8 +529,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _error_log_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./error-log.service */ 49750);
 /* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/shared.service */ 44718);
 /* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! date-fns */ 41605);
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! date-fns */ 34340);
-/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! date-fns */ 52498);
+/* harmony import */ var date_fns__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! date-fns */ 34340);
 
 
 
@@ -562,7 +561,13 @@ let ErrorLogComponent = class ErrorLogComponent {
         this.minDate = this.sharedService.convertDateToISO((0,date_fns__WEBPACK_IMPORTED_MODULE_10__["default"])(new Date(), { days: 7 }));
         this.maxDate = this.sharedService.convertDateToISO(new Date());
         this.createDateRanges();
-        this.errorsQuery = { skip: 0, limit: 20 };
+        this.errorsQuery = {
+            skip: 0,
+            limit: 20,
+            minDate: this.sharedService.convertISOToShort(this.minDate),
+            // query all docs that 'lt' than upper limit+1day
+            maxDate: this.sharedService.convertDateToShort((0,date_fns__WEBPACK_IMPORTED_MODULE_11__["default"])(this.sharedService.convertISOToDate(this.maxDate), { days: 1 })),
+        };
         this.ownersQuery = { name: '', skip: 0, limit: 20 };
         this.allOwners = { data: [], totalDocuments: 0 };
         this.loadedErrorsWithQuery$ = this.store.select(src_app_store_reducers_error_log_reducer__WEBPACK_IMPORTED_MODULE_5__.selectAllErrorLogs);
@@ -573,10 +578,10 @@ let ErrorLogComponent = class ErrorLogComponent {
             return this.allErrors.push(...loadedErrorsWithQuery);
         });
         this.user$ = this.store.select(src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_2__.selectUser);
-        this.getOwnersWithQuery$ = new rxjs__WEBPACK_IMPORTED_MODULE_11__.ReplaySubject(1);
+        this.getOwnersWithQuery$ = new rxjs__WEBPACK_IMPORTED_MODULE_12__.ReplaySubject(1);
         // this.getOwnersWithQuery$ = new ReplaySubject(this.ownersQuery);
         this.getOwnersWithQuery$
-            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_12__.switchMap)((ownersQuery) => this.errorLogService.getOwnersWithQuery(ownersQuery)))
+            .pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_13__.switchMap)((ownersQuery) => this.errorLogService.getOwnersWithQuery(ownersQuery)))
             .subscribe((loadedOwners) => {
             if (this.newOwnersSearch) {
                 return (this.allOwners = loadedOwners);
@@ -593,7 +598,7 @@ let ErrorLogComponent = class ErrorLogComponent {
     }
     createDateRanges() {
         this.maxDateRange = {
-            min: this.sharedService.convertDateToISO((0,date_fns__WEBPACK_IMPORTED_MODULE_13__["default"])(this.sharedService.convertISOToDate(this.minDate), { days: 1 })),
+            min: this.sharedService.convertDateToISO((0,date_fns__WEBPACK_IMPORTED_MODULE_11__["default"])(this.sharedService.convertISOToDate(this.minDate), { days: 1 })),
             max: this.sharedService.convertDateToISO(new Date()),
         };
         this.minDateRange = {
@@ -602,28 +607,24 @@ let ErrorLogComponent = class ErrorLogComponent {
     }
     onMinDateChange() {
         this.createDateRanges();
-        // if (
-        //   isAfter(
-        //     this.sharedService.convertISOToDate(this.minDate),
-        //     this.sharedService.convertISOToDate(this.maxDate),
-        //   )
-        // ) {
-        //   this.minDate = this.sharedService.convertDateToISO(sub(new Date(), { days: 1 }));
-        // }
+        this.errorsQuery = Object.assign(Object.assign({}, this.errorsQuery), { minDate: this.sharedService.convertISOToShort(this.minDate) });
+        this.newErrorsSearch = true;
+        this.getErrorsWithQuery();
     }
     onMaxDateChange() {
         this.createDateRanges();
-        // if (isAfter(this.sharedService.convertISOToDate(this.maxDate), new Date())) {
-        //   this.maxDate = this.sharedService.convertDateToISO(new Date());
-        // }
-        console.log('maxDate', (0,date_fns__WEBPACK_IMPORTED_MODULE_14__["default"])(this.maxDate));
+        this.errorsQuery = Object.assign(Object.assign({}, this.errorsQuery), { 
+            // query all docs that 'lt' than upper limit+1day
+            maxDate: this.sharedService.convertDateToShort((0,date_fns__WEBPACK_IMPORTED_MODULE_11__["default"])(this.sharedService.convertISOToDate(this.maxDate), { days: 1 })) });
+        this.newErrorsSearch = true;
+        this.getErrorsWithQuery();
     }
     errorDetails(error) {
         this.modalService.presentModal(_error_details_error_details_component__WEBPACK_IMPORTED_MODULE_7__.ErrorDetailsComponent, { error });
     }
     onSelectErrorType(event) {
         if (event.target.value === 'all') {
-            const _a = this.errorsQuery, { errorType } = _a, rest = (0,tslib__WEBPACK_IMPORTED_MODULE_15__.__rest)(_a, ["errorType"]);
+            const _a = this.errorsQuery, { errorType } = _a, rest = (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__rest)(_a, ["errorType"]);
             this.errorsQuery = rest;
         }
         else {
@@ -670,16 +671,16 @@ let ErrorLogComponent = class ErrorLogComponent {
     }
 };
 ErrorLogComponent.ctorParameters = () => [
-    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_16__.Store },
+    { type: _ngrx_store__WEBPACK_IMPORTED_MODULE_15__.Store },
     { type: _error_log_service__WEBPACK_IMPORTED_MODULE_8__.ErrorLogService },
     { type: src_app_services_modal_service__WEBPACK_IMPORTED_MODULE_4__.ModalService },
     { type: src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_9__.SharedService }
 ];
 ErrorLogComponent.propDecorators = {
-    modal: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_17__.ViewChild, args: ['modal', { static: true },] }]
+    modal: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_16__.ViewChild, args: ['modal', { static: true },] }]
 };
-ErrorLogComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_15__.__decorate)([
-    (0,_angular_core__WEBPACK_IMPORTED_MODULE_17__.Component)({
+ErrorLogComponent = (0,tslib__WEBPACK_IMPORTED_MODULE_14__.__decorate)([
+    (0,_angular_core__WEBPACK_IMPORTED_MODULE_16__.Component)({
         selector: 'app-error-log',
         template: _C_it_points_points_node_modules_ngtools_webpack_src_loaders_direct_resource_js_error_log_component_html__WEBPACK_IMPORTED_MODULE_0__["default"],
         styles: [_error_log_component_scss__WEBPACK_IMPORTED_MODULE_1__]

@@ -116,13 +116,15 @@ export class LoggerService {
     query: ErrorLogQueryDto,
     userId: string,
   ): Promise<ErrorLoggerDocumentDto[]> {
-    const { owner, errorType, skip = 0, limit = 5 } = query;
+    const { owner, errorType, skip = 0, limit = 5, minDate, maxDate } = query;
     let errorLoggerDocuments: ErrorLoggerDocument[];
     console.log('query', query);
 
     try {
       const normalizedQuery = Object.assign(
-        { skip, limit },
+        !(minDate && maxDate)
+          ? null
+          : { createdAt: { $gte: new Date(minDate), $lt: new Date(maxDate) } },
         !owner ? null : { owner },
         !errorType ? null : { errorType },
       );
