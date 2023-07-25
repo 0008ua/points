@@ -31,15 +31,14 @@
               <ion-row class="ion-justify-content-around">
                 <ion-col size="5" class="ion-justify-content-center">
                   <ion-datetime-button datetime="minDateTime"></ion-datetime-button>
-                  <ion-modal [keepContentsMounted]="true">
+                  <ion-modal [keepContentsMounted]="true" #minDateTimeModal>
                     <ng-template>
                       <ion-datetime
-                        #minDateTimeModal
                         id="minDateTime"
                         presentation="date"
                         [max]="minDateRange.max"
                         [(ngModel)]="minDate"
-                        (ionChange)="onMinDateChange(); minDateTimeModal.confirm(true)"
+                        (ionChange)="onMinDateChange(); minDateTimeModal.dismiss()"
                       ></ion-datetime>
                     </ng-template>
                   </ion-modal>
@@ -49,16 +48,15 @@
                 </ion-col>
                 <ion-col size="5" class="ion-justify-content-center">
                   <ion-datetime-button datetime="maxDateTime"></ion-datetime-button>
-                  <ion-modal [keepContentsMounted]="true">
+                  <ion-modal [keepContentsMounted]="true" #maxDateTimeModal>
                     <ng-template>
                       <ion-datetime
                         id="maxDateTime"
-                        #maxDateTimeModal
                         presentation="date"
                         [(ngModel)]="maxDate"
                         [min]="maxDateRange.min"
                         [max]="maxDateRange.max"
-                        (ionChange)="onMaxDateChange(); maxDateTimeModal.confirm(true)"
+                        (ionChange)="onMaxDateChange(); maxDateTimeModal.dismiss()"
                       ></ion-datetime>
                     </ng-template>
                   </ion-modal>
@@ -97,12 +95,13 @@
                 </ion-modal>
               </ion-item> -->
               <ion-item slot="start">
-                <ion-label>Select error type</ion-label>
+                <!-- <ion-label>Select error type</ion-label> -->
                 <ion-select
                   interface="popover"
                   placeholder="Select error type"
                   (ionChange)="onSelectErrorType($event)"
                   [value]="errorTypes[0]"
+                  label="Select error type"
                 >
                   <ion-select-option
                     *ngFor="let error of errorTypes"

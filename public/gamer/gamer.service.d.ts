@@ -37,26 +37,26 @@ export declare class GamerService {
     findOneAllData(_id: string, owner?: string): Promise<GamerDocument>;
     update(_id: string, dto: UpdateGamerDto, owner?: string): Promise<GamerDataDto>;
     remove(_id: string, owner: string): string;
-    findByQuery(query: Partial<Gamer>): import("mongoose").Query<(import("mongoose").Document<unknown, any, Gamer> & Gamer & {
+    findByQuery(query: Partial<Gamer>): import("mongoose").Query<(import("mongoose").Document<unknown, any, Gamer> & Omit<Gamer & {
         _id: import("mongoose").Types.ObjectId;
-    } & Required<{
+    }, never> & Required<{
         _id: import("mongoose").Types.ObjectId;
-    }>)[], import("mongoose").Document<unknown, any, Gamer> & Gamer & {
+    }>)[], import("mongoose").Document<unknown, any, Gamer> & Omit<Gamer & {
         _id: import("mongoose").Types.ObjectId;
-    } & Required<{
+    }, never> & Required<{
         _id: import("mongoose").Types.ObjectId;
-    }>, {}, import("mongoose").Document<unknown, any, Gamer> & Gamer & {
+    }>, {}, import("mongoose").Document<unknown, any, Gamer> & Omit<Gamer & {
         _id: import("mongoose").Types.ObjectId;
-    }>;
-    findOneByQuery(query: Partial<Gamer>): import("mongoose").Query<import("mongoose").Document<unknown, any, Gamer> & Gamer & {
+    }, never>>;
+    findOneByQuery(query: Partial<Gamer>): import("mongoose").Query<import("mongoose").Document<unknown, any, Gamer> & Omit<Gamer & {
         _id: import("mongoose").Types.ObjectId;
-    } & Required<{
+    }, never> & Required<{
         _id: import("mongoose").Types.ObjectId;
-    }>, import("mongoose").Document<unknown, any, Gamer> & Gamer & {
+    }>, import("mongoose").Document<unknown, any, Gamer> & Omit<Gamer & {
         _id: import("mongoose").Types.ObjectId;
-    } & Required<{
+    }, never> & Required<{
         _id: import("mongoose").Types.ObjectId;
-    }>, {}, import("mongoose").Document<unknown, any, Gamer> & Gamer & {
+    }>, {}, import("mongoose").Document<unknown, any, Gamer> & Omit<Gamer & {
         _id: import("mongoose").Types.ObjectId;
-    }>;
+    }, never>>;
 }

@@ -33,15 +33,15 @@ export declare class GameController {
     private readonly gameService;
     private readonly telegramService;
     constructor(gameService: GameService, telegramService: TelegramService);
-    create(dto: CreateGameDto, { user }: Request): Promise<import("mongoose").Document<unknown, any, Game> & Game & {
+    create(dto: CreateGameDto, { user }: Request): Promise<import("mongoose").Document<unknown, any, Game> & Omit<Game & {
         _id: import("mongoose").Types.ObjectId;
-    }>;
+    }, never>>;
     getWithQuery(query: any, { user }: Request): Promise<any>;
-    findOne(_id: string, { user }: Request): Promise<import("mongoose").Document<unknown, any, Game> & Game & {
+    findOne(_id: string, { user }: Request): Promise<import("mongoose").Document<unknown, any, Game> & Omit<Game & {
         _id: import("mongoose").Types.ObjectId;
-    }>;
-    update(_id: string, dto: UpdateGameDto, { user }: Request): Promise<import("mongoose").Document<unknown, any, Game> & Game & {
+    }, never>>;
+    update(_id: string, dto: UpdateGameDto, { user }: Request): Promise<import("mongoose").Document<unknown, any, Game> & Omit<Game & {
         _id: import("mongoose").Types.ObjectId;
-    }>;
+    }, never>>;
     remove(_id: string, { user }: Request): string;
 }

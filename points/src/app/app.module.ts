@@ -1,4 +1,4 @@
-import { ErrorHandler, NgModule } from '@angular/core';
+import { ErrorHandler, NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
@@ -18,6 +18,10 @@ export function createTranslateLoader(http: HttpClient) {
 }
 import { JwtDecodeFactory, JWT_DECODE } from './config/jwt.config';
 import { ErrorHandlerService } from './services/error-handler.service';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 @NgModule({
     declarations: [AppComponent],
@@ -34,6 +38,10 @@ import { ErrorHandlerService } from './services/error-handler.service';
             },
         }),
         AppStoreModule,
+        // StoreModule.forRoot({}, {}),
+        // StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+        // EffectsModule.forRoot([]),
+        // StoreRouterConnectingModule.forRoot(),
     ],
     providers: [
         { provide: JWT_DECODE, useFactory: JwtDecodeFactory, deps: [] },

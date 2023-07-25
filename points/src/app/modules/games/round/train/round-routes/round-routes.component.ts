@@ -16,9 +16,12 @@ import { ROUND_COMPONENT } from '../../round-interfaces';
     },
   ],
 })
-export class RoundRoutesComponent extends RoundScoresLineDirective implements OnInit, RoundRoutes {
-  @Input() playerId: UID;
-  @Input() roundId: string;
+export class RoundRoutesComponent
+  extends RoundScoresLineDirective
+  implements OnInit, RoundRoutes
+{
+  // @Input() playerId: UID;
+  // @Input() roundId: string;
 
   routesScoresEnv = environment.games.train.routesScores;
   inverse: Inverse = 1;

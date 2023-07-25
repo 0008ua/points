@@ -18,7 +18,7 @@ import * as fromApp from './app.reducer';
 import * as fromPersistStore from './persist-store.reducer';
 import * as fromErrorLog from './error-log.reducer';
 import { routerReducer } from '@ngrx/router-store';
-import { getSelectors, RouterReducerState, RouterState } from '@ngrx/router-store';
+import { getRouterSelectors, RouterReducerState, RouterState } from '@ngrx/router-store';
 
 export interface State {
   auth: fromAuth.State;
@@ -57,7 +57,7 @@ export const {
   selectRouteParam, // factory function to select a route param
   selectRouteData, // select the current route data
   selectUrl, // select the current url
-} = getSelectors();
+} = getRouterSelectors();
 
 export const selectFeature = createFeatureSelector<RouterReducerState<any>>('router');
 export const selectUrlRouter = createSelector(

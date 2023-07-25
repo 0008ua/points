@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { from, Observable, of, throwError } from 'rxjs';
-import { Storage } from '@capacitor/storage';
+import { Preferences } from '@capacitor/preferences';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import {
   GameResultModalData,
@@ -113,7 +113,7 @@ export class SharedService {
   }
 
   setToStorage(key: string, value: any): Observable<void> {
-    return from(Storage.set({ key, value }));
+    return from(Preferences.set({ key, value }));
   }
 
   setToken(token: string): Observable<void> {
@@ -121,7 +121,7 @@ export class SharedService {
   }
 
   getFromStorage(key: string): Observable<string | null> {
-    return from(Storage.get({ key })).pipe(map((getResult) => getResult.value));
+    return from(Preferences.get({ key })).pipe(map((getResult) => getResult.value));
   }
 
   getToken(): Observable<string | null> {
@@ -137,7 +137,7 @@ export class SharedService {
   }
 
   removeFromStorage(key: string): Observable<void> {
-    return from(Storage.remove({ key }));
+    return from(Preferences.remove({ key }));
   }
 
   removeToken(): Observable<void> {

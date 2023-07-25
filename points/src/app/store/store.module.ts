@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { DefaultDataServiceConfig, EntityDataModule, EntityDataService } from '@ngrx/data';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import {
@@ -58,8 +58,9 @@ export const defaultDataServiceConfig: DefaultDataServiceConfig = {
         strictActionImmutability: true,
       },
     }),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
 
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    // StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
     EffectsModule.forRoot([
       AuthEffects,
       HydrationEffects,

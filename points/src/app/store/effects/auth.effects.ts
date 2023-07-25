@@ -37,12 +37,12 @@ import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Injectable()
 export class AuthEffects implements OnInitEffects {
-  setLoading = createEffect(() => {
-    return this.actions$.pipe(
+  setLoading = createEffect(() =>
+     this.actions$.pipe(
       ofType(fromAuthActions.signin, fromAuthActions.signup, fromAuthActions.logout),
       map((_) => fromAuthActions.loading({ loading: true })),
-    );
-  });
+    )
+  );
 
   cancelLoading = createEffect(() => {
     return this.actions$.pipe(
