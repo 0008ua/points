@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -17,7 +17,7 @@ import { AuthService } from '../auth.service';
 export class SigninPage implements OnInit {
   @ViewChild('signinFormDirective', { static: false }) signinFormDirective: FormGroupDirective;
   lang: string;
-  signinForm: FormGroup;
+  signinForm: UntypedFormGroup;
   inputType: 'password' | 'text' = 'password';
 
   constructor(
@@ -30,8 +30,8 @@ export class SigninPage implements OnInit {
   ngOnInit() {
     this.lang = this.translate.currentLang;
 
-    this.signinForm = new FormGroup({
-      name: new FormControl('', {
+    this.signinForm = new UntypedFormGroup({
+      name: new UntypedFormControl('', {
         updateOn: 'change',
         validators: [
           // Validators.pattern('^[a-zA-Z0-9_-]+$'),
@@ -40,7 +40,7 @@ export class SigninPage implements OnInit {
           Validators.required,
         ],
       }),
-      password: new FormControl('', {
+      password: new UntypedFormControl('', {
         updateOn: 'change',
         validators: [Validators.required],
       }),

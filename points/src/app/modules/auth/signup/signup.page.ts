@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,7 +18,7 @@ export class SignupPage implements OnInit {
   @ViewChild('signupFormDirective', { static: false }) signupFormDirective: FormGroupDirective;
 
   lang: string;
-  signupForm: FormGroup;
+  signupForm: UntypedFormGroup;
   inputType: 'password' | 'text' = 'password';
   formSubmitSubject$ = new Subject();
 
@@ -32,9 +32,9 @@ export class SignupPage implements OnInit {
   ngOnInit() {
     this.lang = this.translate.currentLang;
 
-    this.signupForm = new FormGroup(
+    this.signupForm = new UntypedFormGroup(
       {
-        name: new FormControl('', {
+        name: new UntypedFormControl('', {
           updateOn: 'change',
           validators: [
             Validators.pattern('^[a-zA-Z0-9_\\-]+$'),
@@ -46,7 +46,7 @@ export class SignupPage implements OnInit {
           //   this.userService.checkLoginUnique(),
           // ],
         }),
-        password: new FormControl('', {
+        password: new UntypedFormControl('', {
           updateOn: 'change',
           validators: [
             Validators.pattern('^[a-zA-Z0-9_\\-]+$'),
@@ -55,7 +55,7 @@ export class SignupPage implements OnInit {
             Validators.required,
           ],
         }),
-        passwordConfirm: new FormControl('', {
+        passwordConfirm: new UntypedFormControl('', {
           updateOn: 'change',
           validators: [
             Validators.pattern('^[a-zA-Z0-9_\\-]+$'),

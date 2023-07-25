@@ -20,32 +20,31 @@ import { JwtDecodeFactory, JWT_DECODE } from './config/jwt.config';
 import { ErrorHandlerService } from './services/error-handler.service';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(),
-    AppRoutingModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: createTranslateLoader,
-        deps: [HttpClient],
-      },
-    }),
-    AppStoreModule,
-  ],
-  providers: [
-    { provide: JWT_DECODE, useFactory: JwtDecodeFactory, deps: [] },
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpInterceptorService,
-      multi: true,
-    },
-    { provide: ErrorHandler, useExisting: ErrorHandlerService },
-  ],
-  bootstrap: [AppComponent],
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(),
+        AppRoutingModule,
+        HttpClientModule,
+        TranslateModule.forRoot({
+            loader: {
+                provide: TranslateLoader,
+                useFactory: createTranslateLoader,
+                deps: [HttpClient],
+            },
+        }),
+        AppStoreModule,
+    ],
+    providers: [
+        { provide: JWT_DECODE, useFactory: JwtDecodeFactory, deps: [] },
+        { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: HttpInterceptorService,
+            multi: true,
+        },
+        { provide: ErrorHandler, useExisting: ErrorHandlerService },
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule {}
