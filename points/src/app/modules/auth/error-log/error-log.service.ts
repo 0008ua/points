@@ -1,7 +1,18 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {
+  EnvironmentInjector,
+  Injectable,
+  Injector,
+  OnInit,
+  Signal,
+  WritableSignal,
+  computed,
+  inject,
+  runInInjectionContext,
+} from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { toSignal } from '@angular/core/rxjs-interop';
 import {
   ErrorLogQueryDto,
   ErrorLoggerDocumentDto,
@@ -14,9 +25,17 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class ErrorLogService {
+export class ErrorLogService implements OnInit {
   host = environment.host;
-  constructor(private http: HttpClient) {}
+
+  // injector = inject(EnvironmentInjector);
+  // ownersWithQueryS: WritableSignal<OwnerDataDto>;
+
+  constructor(private injector: Injector, private http: HttpClient) {}
+
+  ngOnInit() {
+    // this.ownersWithQueryS = computed(() => this.getOwnersWithQueryS);
+  }
 
   // addAll -> getWithQuery (GET /api/heroes/?name=bombasto)
   getWithQuery(query: ErrorLogQueryDto): Observable<ErrorLoggerDocumentDto[]> {
@@ -39,7 +58,6 @@ export class ErrorLogService {
 
   // null -> add (POST /api/hero/)
   logErrorToDB(error: ErrorLogCreateDto): Observable<string> {
-    // return of(error);
     const httpOptions = {
       headers: new HttpHeaders({
         // eslint-disable-next-line  @typescript-eslint/naming-convention
@@ -51,7 +69,7 @@ export class ErrorLogService {
       .pipe(tap((x) => console.log('error log result', x)));
   }
 
-  getOwnersWithQuery(query: OwnerQueryDto): Observable<OwnerDataDto> {
+  getOwnersWithQuery$(query: OwnerQueryDto): Observable<OwnerDataDto> {
     let params = new HttpParams();
     Object.entries(query).forEach(([key, value]) => {
       params = params.append(key, value);

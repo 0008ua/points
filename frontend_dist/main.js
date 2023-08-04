@@ -428,9 +428,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ErrorLogService: () => (/* binding */ ErrorLogService)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 2321);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! tslib */ 2321);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ 4860);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 1699);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 1699);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ 3738);
 /* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! src/environments/environment */ 553);
 var _class;
@@ -440,9 +440,15 @@ var _class;
 
 
 let ErrorLogService = (_class = class ErrorLogService {
-  constructor(http) {
+  // injector = inject(EnvironmentInjector);
+  // ownersWithQueryS: WritableSignal<OwnerDataDto>;
+  constructor(injector, http) {
+    this.injector = injector;
     this.http = http;
     this.host = src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.host;
+  }
+  ngOnInit() {
+    // this.ownersWithQueryS = computed(() => this.getOwnersWithQueryS);
   }
   // addAll -> getWithQuery (GET /api/heroes/?name=bombasto)
   getWithQuery(query) {
@@ -461,7 +467,6 @@ let ErrorLogService = (_class = class ErrorLogService {
   }
   // null -> add (POST /api/hero/)
   logErrorToDB(error) {
-    // return of(error);
     const httpOptions = {
       headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
         // eslint-disable-next-line  @typescript-eslint/naming-convention
@@ -470,7 +475,7 @@ let ErrorLogService = (_class = class ErrorLogService {
     };
     return this.http.post(this.host + '/api/logger/log-error-to-db', error, httpOptions).pipe((0,rxjs_operators__WEBPACK_IMPORTED_MODULE_2__.tap)(x => console.log('error log result', x)));
   }
-  getOwnersWithQuery(query) {
+  getOwnersWithQuery$(query) {
     let params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpParams();
     Object.entries(query).forEach(([key, value]) => {
       params = params.append(key, value);
@@ -485,9 +490,11 @@ let ErrorLogService = (_class = class ErrorLogService {
     return this.http.get(this.host + '/api/logger/get-owners-with-query', httpOptions);
   }
 }, _class.ctorParameters = () => [{
+  type: _angular_core__WEBPACK_IMPORTED_MODULE_3__.Injector
+}, {
   type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient
 }], _class);
-ErrorLogService = (0,tslib__WEBPACK_IMPORTED_MODULE_3__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Injectable)({
+ErrorLogService = (0,tslib__WEBPACK_IMPORTED_MODULE_4__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_3__.Injectable)({
   providedIn: 'root'
 })], ErrorLogService);
 

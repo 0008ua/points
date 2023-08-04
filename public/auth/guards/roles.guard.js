@@ -24,12 +24,10 @@ let RolesGuard = class RolesGuard {
             context.getHandler(),
             context.getClass(),
         ]);
-        console.log('requiredRoles', requiredRoles);
         if (!requiredRoles) {
             return true;
         }
         const { user } = context.switchToHttp().getRequest();
-        console.log('user', user);
         return requiredRoles.some((role) => { var _a; return (_a = user === null || user === void 0 ? void 0 : user.role) === null || _a === void 0 ? void 0 : _a.includes(role); });
     }
 };

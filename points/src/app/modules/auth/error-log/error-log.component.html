@@ -62,40 +62,7 @@
                   </ion-modal>
                 </ion-col>
               </ion-row>
-
-              <!-- <ion-item>
-                <ion-datetime-button
-                  datetime="minDateTime"
-                ></ion-datetime-button>
-                <ion-modal [keepContentsMounted]="true">
-                  <ng-template>
-                    <ion-datetime
-                      #minDateTimeModal
-                      id="minDateTime"
-                      presentation="date"
-                      [max]="minDateRange.max"
-                      [(ngModel)]="minDate"
-                      (ionChange)="onMinDateChange(); minDateTimeModal.confirm(true)"
-                    ></ion-datetime>
-                  </ng-template>
-                </ion-modal>
-                <ion-datetime-button datetime="maxDateTime"></ion-datetime-button>
-                <ion-modal [keepContentsMounted]="true">
-                  <ng-template>
-                    <ion-datetime
-                      id="maxDateTime"
-                      #maxDateTimeModal
-                      presentation="date"
-                      [(ngModel)]="maxDate"
-                      [min]="maxDateRange.min"
-                      [max]="maxDateRange.max"
-                      (ionChange)="onMaxDateChange(); maxDateTimeModal.confirm(true)"
-                    ></ion-datetime>
-                  </ng-template>
-                </ion-modal>
-              </ion-item> -->
               <ion-item slot="start">
-                <!-- <ion-label>Select error type</ion-label> -->
                 <ion-select
                   interface="popover"
                   placeholder="Select error type"
@@ -121,7 +88,7 @@
 
             <ion-list>
               <ion-item
-                *ngFor="let item of allErrors; let i = index"
+                *ngFor="let item of allErrorsSignal(); let i = index"
                 button
                 detail="true"
                 (click)="errorDetails(item)"
@@ -145,8 +112,8 @@
     <app-select-with-search
       class="ion-page"
       title="Select user"
-      [items]="convertOwnersToItems(allOwners)"
-      [totalItems]="allOwners.totalDocuments"
+      [items]="convertOwnersToItems(allOwnersSignal())"
+      [totalItems]="allOwnersSignal().totalDocuments"
       (searchQuery)="searchOwnersWithQuery($event)"
       (selectionChange)="onSelectOwner($event)"
       (selectionCancel)="modal.dismiss()"

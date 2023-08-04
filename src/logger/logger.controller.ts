@@ -18,7 +18,6 @@ export class LoggerController {
   @UseGuards(AuthGuard('jwt'))
   @Post('log-error-to-db')
   logErrorToDB(@Req() { user }: Request, @Body() dto: ErrorLogCreateDto) {
-    // console.log('user', user)
     const errorLogger: ErrorLogger = { ...dto, owner: user._id };
     return this.loggerService.logErrorToDB(errorLogger);
   }

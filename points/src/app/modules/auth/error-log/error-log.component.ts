@@ -1,4 +1,21 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  DoCheck,
+  EnvironmentInjector,
+  OnChanges,
+  OnInit,
+  Signal,
+  SimpleChanges,
+  ViewChild,
+  WritableSignal,
+  computed,
+  effect,
+  inject,
+  runInInjectionContext,
+  signal,
+} from '@angular/core';
 import { InfiniteScrollCustomEvent, IonModal } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import {
@@ -27,23 +44,39 @@ import { ErrorDetailsComponent } from './error-details/error-details.component';
 import { ErrorLogService } from './error-log.service';
 import { SharedService } from 'src/app/services/shared.service';
 import { sub, isAfter, parseISO, add } from 'date-fns';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-error-log',
   templateUrl: './error-log.component.html',
   styleUrls: ['./error-log.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ErrorLogComponent implements OnInit {
+  injector = inject(EnvironmentInjector);
+  store = inject(Store);
+  errorLogService = inject(ErrorLogService);
+  sharedService = inject(SharedService);
+  modalService = inject(ModalService);
+
   @ViewChild('modal', { static: true }) modal!: IonModal;
   loadedErrorsWithQuery$: Observable<ErrorLoggerDocumentDto[]>;
+  loadedErrorsWithQuerySignal: Signal<ErrorLoggerDocumentDto[]>;
   user$: Observable<IUser>;
   allErrors: ErrorLoggerDocumentDto[] = [];
+  allErrorsSignal: Signal<ErrorLoggerDocumentDto[]>;
   errorTypes = ['all', ...errors];
   allOwners: OwnerDataDto;
-  ownersQuery: OwnerQueryDto;
+
+  ownersQuerySignal: WritableSignal<OwnerQueryDto>;
+  allOwnersSignal: Signal<OwnerDataDto>;
+  loadedOwnersSignal: Signal<OwnerDataDto>;
+  getOwnersWithQuerySignal: Signal<OwnerDataDto>;
+  getOwnersWithQuery$: ReplaySubject<OwnerQueryDto> = new ReplaySubject(1);
+
   selectedOwner: OwnerData;
   errorsQuery: ErrorLogQueryDto;
-  getOwnersWithQuery$: ReplaySubject<OwnerQueryDto>;
+
   newOwnersSearch = true;
   newErrorsSearch = true;
   minDate: string;
@@ -56,12 +89,7 @@ export class ErrorLogComponent implements OnInit {
     max: string;
   };
 
-  constructor(
-    private store: Store,
-    private errorLogService: ErrorLogService,
-    private modalService: ModalService,
-    private sharedService: SharedService,
-  ) {}
+  constructor() {} // private sharedService: SharedService, // private modalService: ModalService, // private errorLogService: ErrorLogService, // private store: Store,
 
   ngOnInit() {
     this.minDate = this.sharedService.convertDateToISO(sub(new Date(), { days: 7 }));
@@ -72,40 +100,54 @@ export class ErrorLogComponent implements OnInit {
       skip: 0,
       limit: 20,
       minDate: this.sharedService.convertISOToShort(this.minDate),
-      // query all docs that 'lt' than upper limit+1day
+      // query all docs that 'lt' than upper limit + 1day
       maxDate: this.sharedService.convertDateToShort(
         add(this.sharedService.convertISOToDate(this.maxDate), { days: 1 }),
       ),
     };
-    this.ownersQuery = { name: '', skip: 0, limit: 20 };
-    this.allOwners = { data: [], totalDocuments: 0 };
 
+    this.ownersQuerySignal = signal({ name: '', skip: 0, limit: 20 });
     this.loadedErrorsWithQuery$ = this.store.select(selectAllErrorLogs);
 
-    this.loadedErrorsWithQuery$.subscribe((loadedErrorsWithQuery) => {
-      if (this.newErrorsSearch) {
-        return (this.allErrors = loadedErrorsWithQuery);
-      }
-      return this.allErrors.push(...loadedErrorsWithQuery);
-    });
+    this.allErrorsSignal = toSignal(
+      this.loadedErrorsWithQuery$.pipe(
+        map((loadedErrors) => {
+          if (this.newErrorsSearch) {
+            return loadedErrors;
+          } else {
+            return [...this.allErrorsSignal(), ...loadedErrors];
+          }
+        }),
+      ),
+      { initialValue: [], injector: this.injector },
+    );
+
     this.user$ = this.store.select(selectUser);
 
-    this.getOwnersWithQuery$ = new ReplaySubject(1);
-    // this.getOwnersWithQuery$ = new ReplaySubject(this.ownersQuery);
+    // listen ownersQuerySignal change and run request with new query
+    effect(
+      () => {
+        this.getOwnersWithQuery$.next(this.ownersQuerySignal());
+      },
+      { injector: this.injector },
+    );
 
-    this.getOwnersWithQuery$
-      .pipe(
-        switchMap((ownersQuery) => this.errorLogService.getOwnersWithQuery(ownersQuery)),
-      )
-      .subscribe((loadedOwners) => {
-        if (this.newOwnersSearch) {
-          return (this.allOwners = loadedOwners);
-        }
-        return (this.allOwners = {
-          totalDocuments: loadedOwners.totalDocuments,
-          data: [...this.allOwners.data, ...loadedOwners.data],
-        });
-      });
+    // convert request result from observable to signal
+    this.allOwnersSignal = toSignal(
+      this.getOwnersWithQuery$.pipe(
+        switchMap((query) => this.errorLogService.getOwnersWithQuery$(query)),
+        map((loadedOwners) => {
+          if (this.newOwnersSearch) {
+            return loadedOwners;
+          }
+          return {
+            totalDocuments: loadedOwners.totalDocuments,
+            data: [...this.allOwnersSignal().data, ...loadedOwners.data],
+          };
+        }),
+      ),
+      { initialValue: { data: [], totalDocuments: 0 }, injector: this.injector },
+    );
 
     this.user$.subscribe((user) => {
       this.errorsQuery = { ...this.errorsQuery, owner: user._id };
@@ -187,24 +229,21 @@ export class ErrorLogComponent implements OnInit {
 
   onIonInfinite(event: any) {
     this.newErrorsSearch = false;
-    this.getErrorsWithQuery(this.allErrors.length);
+    this.getErrorsWithQuery(this.allErrorsSignal().length);
     (event as InfiniteScrollCustomEvent).target.complete();
   }
 
   onIonInfiniteSelectwithSearch(event: any) {
     this.newOwnersSearch = false;
-    this.getOwnersWithQuery(this.allOwners.data.length);
+    this.ownersQuerySignal.update((ownersQuery) => ({
+      ...ownersQuery,
+      skip: this.allOwnersSignal().data?.length || 0,
+    }));
   }
 
   searchOwnersWithQuery(name: string) {
-    this.ownersQuery = { ...this.ownersQuery, name };
+    this.ownersQuerySignal.update((ownersQuery) => ({ ...ownersQuery, name }));
     this.newOwnersSearch = true;
-    this.getOwnersWithQuery();
-  }
-
-  private getOwnersWithQuery(skip = 0): void {
-    this.ownersQuery = { ...this.ownersQuery, skip };
-    this.getOwnersWithQuery$.next(this.ownersQuery);
   }
 
   private getErrorsWithQuery(skip = 0): void {

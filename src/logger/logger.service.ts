@@ -15,101 +15,99 @@ export class LoggerService {
     @InjectModel(ErrorLogger.name) readonly errorLoggerModel: ErrorLoggerModel,
   ) {}
   async logErrorToDB(errorLogger: ErrorLogger): Promise<ErrorLoggerDocumentDto> {
-    console.log('errorLogger', errorLogger);
     return this.normalizeErrorDocument(
       await this.errorLoggerModel.createErrorLogger(errorLogger),
     );
   }
 
   async getOwnersWithQuery(query: OwnerQueryDto): Promise<OwnerDataDto> {
-    return (
-      await this.errorLoggerModel.aggregate([
-        {
-          $group: {
-            _id: null,
-            owner: {
-              $addToSet: '$owner',
+    const res = await this.errorLoggerModel.aggregate([
+      {
+        $group: {
+          _id: null,
+          owner: {
+            $addToSet: '$owner',
+          },
+        },
+      },
+      {
+        $unwind: {
+          path: '$owner',
+        },
+      },
+      {
+        $addFields: {
+          owner: {
+            $toObjectId: '$owner',
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'owner',
+          foreignField: '_id',
+          as: 'result',
+        },
+      },
+      {
+        $project: {
+          owner: '$owner',
+          _id: 0,
+          name: {
+            $arrayElemAt: ['$result', 0],
+          },
+        },
+      },
+      {
+        $project: {
+          owner: 1,
+          name: '$name.name',
+        },
+      },
+      {
+        $sort: {
+          name: 1,
+        },
+      },
+      {
+        $match: {
+          name: { $regex: query.name ? '^(?i)' + query.name : '^' },
+        },
+      },
+      {
+        $facet: {
+          data: [
+            {
+              $skip: Number(query.skip) || 0,
             },
-          },
-        },
-        {
-          $unwind: {
-            path: '$owner',
-          },
-        },
-        {
-          $addFields: {
-            owner: {
-              $toObjectId: '$owner',
+            {
+              $limit: Number(query.limit) || 10,
             },
-          },
-        },
-        {
-          $lookup: {
-            from: 'users',
-            localField: 'owner',
-            foreignField: '_id',
-            as: 'result',
-          },
-        },
-        {
-          $project: {
-            owner: '$owner',
-            _id: 0,
-            name: {
-              $arrayElemAt: ['$result', 0],
+          ],
+          total: [
+            {
+              $count: 'total',
             },
+          ],
+        },
+      },
+      {
+        $project: {
+          data: 1,
+          totalDocuments: {
+            $arrayElemAt: ['$total', 0],
           },
         },
-        {
-          $project: {
-            owner: 1,
-            name: '$name.name',
-          },
+      },
+      {
+        $project: {
+          data: 1,
+          totalDocuments: '$totalDocuments.total',
         },
-        {
-          $sort: {
-            name: 1,
-          },
-        },
-        {
-          $match: {
-            name: { $regex: query.name ? '^(?i)' + query.name : '^' },
-          },
-        },
-        {
-          $facet: {
-            data: [
-              {
-                $skip: Number(query.skip) || 0,
-              },
-              {
-                $limit: Number(query.limit) || 10,
-              },
-            ],
-            total: [
-              {
-                $count: 'total',
-              },
-            ],
-          },
-        },
-        {
-          $project: {
-            data: 1,
-            totalDocuments: {
-              $arrayElemAt: ['$total', 0],
-            },
-          },
-        },
-        {
-          $project: {
-            data: 1,
-            totalDocuments: '$totalDocuments.total',
-          },
-        },
-      ])
-    )[0];
+      },
+    ]);
+    return res[0];
   }
 
   async getWithQuery(

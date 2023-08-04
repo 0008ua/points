@@ -21,11 +21,10 @@ let LoggerService = class LoggerService {
         this.errorLoggerModel = errorLoggerModel;
     }
     async logErrorToDB(errorLogger) {
-        console.log('errorLogger', errorLogger);
         return this.normalizeErrorDocument(await this.errorLoggerModel.createErrorLogger(errorLogger));
     }
     async getOwnersWithQuery(query) {
-        return (await this.errorLoggerModel.aggregate([
+        const res = await this.errorLoggerModel.aggregate([
             {
                 $group: {
                     _id: null,
@@ -110,7 +109,8 @@ let LoggerService = class LoggerService {
                     totalDocuments: '$totalDocuments.total',
                 },
             },
-        ]))[0];
+        ]);
+        return res[0];
     }
     async getWithQuery(query, userId) {
         const { owner, errorType, skip = 0, limit = 5, minDate, maxDate } = query;
