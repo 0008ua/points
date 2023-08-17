@@ -23,13 +23,7 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { HydratedDocument, Model } from 'mongoose';
-export declare enum Colors {
-    Red = "red",
-    Green = "green",
-    Blue = "blue",
-    Black = "black",
-    Yellow = "yellow"
-}
+import { Colors } from 'src/app.interfaces';
 export declare class Gamer {
     owner: string;
     name: string;

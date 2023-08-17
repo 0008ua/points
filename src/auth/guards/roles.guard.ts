@@ -1,9 +1,14 @@
-import { CanActivate, ExecutionContext, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  CanActivate,
+  ExecutionContext,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { AuthGuard } from '@nestjs/passport';
 
 import { SetMetadata } from '@nestjs/common';
-import { UserRoles } from '../entities/user.entity';
+import { UserRoles } from 'src/app.interfaces';
 
 export const HasRoles = (...roles: UserRoles[]) => SetMetadata('userRoles', roles);
 

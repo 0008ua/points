@@ -1,9 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { GameType, UID } from '../app.interfaces';
+import { GameType, UID, gameTypes } from '../app.interfaces';
 import { Game, GameModel } from '../game/entities/game.entity';
 
-import { RatingRequest } from './dto/raitingRequest.dto';
+import { RequestByGameType } from './dto/raitingRequest.dto';
+import { PlayedGamesCountDto } from './dto/playedGamesCount.dto';
 
 @Injectable()
 export class AnalyticsService {
@@ -258,7 +259,7 @@ export class AnalyticsService {
       .catch((error: any) => new HttpException(error.message, HttpStatus.BAD_REQUEST));
   }
 
-  async getRating({ userId, gameType }: RatingRequest) {
+  async getRating({ userId, gameType }: RequestByGameType) {
     return this.gameModel
       .aggregate([
         {
@@ -342,5 +343,31 @@ export class AnalyticsService {
       ])
       .then((game: any) => game)
       .catch((error: any) => new HttpException(error.message, HttpStatus.BAD_REQUEST));
+  }
+
+  async getPlayedGamesCount({ userId }): Promise<PlayedGamesCountDto[]> {
+    const aggregation = await this.gameModel.aggregate([
+      {
+        $match: {
+          owner: userId,
+        },
+      },
+      {
+        $group: {
+          _id: '$type',
+          count: {
+            $count: {},
+          },
+        },
+      },
+      {
+        $project: {
+          gameType: '$_id',
+          count: 1,
+          _id: 0,
+        },
+      },
+    ]);
+    return aggregation.filter((res) => gameTypes.includes(res.gameType));
   }
 }

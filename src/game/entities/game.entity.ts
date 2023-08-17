@@ -1,13 +1,14 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Model } from 'mongoose';
+import { GameType } from 'src/app.interfaces';
 
-export enum GameType {
-  Rummy = 'rummy',
-  Uno = 'uno',
-  Thousand = 'thousand',
-  Train = 'train',
-}
+// export enum GameType {
+//   Rummy = 'rummy',
+//   Uno = 'uno',
+//   Thousand = 'thousand',
+//   Train = 'train',
+// }
 
 @Schema({
   timestamps: true,
@@ -26,7 +27,7 @@ export class Game {
   @Prop({ required: true })
   owner: string;
 
-  @Prop({ required: true, enum: GameType })
+  @Prop({ required: true }) // , enum: GameType })
   type: GameType;
 
   @Prop({ type: () => [Round] })

@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AnalyticsService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
+const app_interfaces_1 = require("../app.interfaces");
 const game_entity_1 = require("../game/entities/game.entity");
 let AnalyticsService = class AnalyticsService {
     constructor(gameModel) {
@@ -352,6 +353,31 @@ let AnalyticsService = class AnalyticsService {
         ])
             .then((game) => game)
             .catch((error) => new common_1.HttpException(error.message, common_1.HttpStatus.BAD_REQUEST));
+    }
+    async getPlayedGamesCount({ userId }) {
+        const aggregation = await this.gameModel.aggregate([
+            {
+                $match: {
+                    owner: userId,
+                },
+            },
+            {
+                $group: {
+                    _id: '$type',
+                    count: {
+                        $count: {},
+                    },
+                },
+            },
+            {
+                $project: {
+                    gameType: '$_id',
+                    count: 1,
+                    _id: 0,
+                },
+            },
+        ]);
+        return aggregation.filter((res) => app_interfaces_1.gameTypes.includes(res.gameType));
     }
 };
 AnalyticsService = __decorate([

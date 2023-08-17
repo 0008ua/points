@@ -1,14 +1,15 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Model, SchemaTypes, Types } from 'mongoose';
+import { Colors } from 'src/app.interfaces';
 
-export enum Colors {
-  Red = 'red',
-  Green = 'green',
-  Blue = 'blue',
-  Black = 'black',
-  Yellow = 'yellow',
-}
+// export enum Colors {
+//   Red = 'red',
+//   Green = 'green',
+//   Blue = 'blue',
+//   Black = 'black',
+//   Yellow = 'yellow',
+// }
 
 @Schema({
   timestamps: true,
@@ -45,9 +46,10 @@ export class Gamer {
   @Prop()
   telegramLanguage: string;
 
-  @Prop({ enum: Colors })
+  @Prop() //({ enum: Colors })
   color: Colors;
 }
+
 
 export type GamerDocument = HydratedDocument<Gamer>;
 export interface GamerModel extends Model<GamerDocument> {

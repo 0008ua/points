@@ -1,11 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, combineLatest, Observable, of, ReplaySubject, Subject } from 'rxjs';
+import { combineLatest, Observable, ReplaySubject } from 'rxjs';
 import {
   CanDeactivateComponent,
   GameActionConfirmModalData,
   GameType,
-  IGame,
   IGamer,
   IGamerTotal,
   Round,
@@ -18,16 +17,12 @@ import * as fromAppReducer from '../../../store/reducers/app.reducer';
 import * as fromRoundsReducer from '../../../store/reducers/round.reducer';
 import * as fromPlayersReducer from '../../../store/reducers/player.reducer';
 import * as fromRoundMembersReducer from '../../../store/reducers/round-member.reducer';
-import { map, switchMap, take, tap, withLatestFrom } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { SharedService } from 'src/app/services/shared.service';
-import * as fromRoundActions from 'src/app/store/actions/round.actions';
-import * as fromRoundMemberActions from 'src/app/store/actions/round-member.actions';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import * as fromAppActions from 'src/app/store/actions/app.actions';
-import { GameService } from 'src/app/store/game-data.service';
 import { ModalService } from 'src/app/services/modal.service';
-import { GameResultComponent } from './game-result/game-result.component';
-import { IonModal, ModalController } from '@ionic/angular';
+import { IonModal } from '@ionic/angular';
 import { ActionConfirmComponent } from '../../common/action-confirm/action-confirm.component';
 
 @Component({
@@ -74,14 +69,15 @@ export class GamePage implements OnInit, CanDeactivateComponent {
     this.rounds$ = this.store.select(fromRoundsReducer.selectAllRounds);
 
     combineLatest([this.gameType$, this.rounds$]).subscribe(([gameType, rounds]) => {
-      if (!gameType) {
+      console.log(gameType);
+      if (!gameType ) {
         return;
       }
       this.gameType = gameType;
 
-      this.showToolbarMenu = environment.games[gameType].showToolbarMenu;
+      this.showToolbarMenu = environment.games[gameType]?.showToolbarMenu;
 
-      this.roundsCfg = environment.games[gameType].rounds;
+      this.roundsCfg = environment.games[gameType]?.rounds;
       if (gameType === 'uno') {
         this.nextRound = this.roundsCfg[1];
       }

@@ -1,5 +1,5 @@
-import { UID } from 'src/app.interfaces';
-import { GameType } from '../entities/game.entity';
+import { GameType, UID } from 'src/app.interfaces';
+// import { GameType } from '../entities/game.entity';
 
 export class CreateGameDto {
   type: GameType;

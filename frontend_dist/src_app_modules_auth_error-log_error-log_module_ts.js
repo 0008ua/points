@@ -1,21 +1,5 @@
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["src_app_modules_auth_error-log_error-log_module_ts"],{
 
-/***/ 3038:
-/*!*******************************!*\
-  !*** ./src/app/interfaces.ts ***!
-  \*******************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   errors: () => (/* binding */ errors)
-/* harmony export */ });
-// global
-const errors = ['unknownError', 'analytics/error', 'auth/error', 'app/error', 'ngrxDataError'];
-
-/***/ }),
-
 /***/ 1036:
 /*!*********************************************************************************!*\
   !*** ./src/app/modules/auth/error-log/error-details/error-details.component.ts ***!

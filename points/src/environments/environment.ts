@@ -222,7 +222,6 @@ export const environment = {
       ],
     },
   },
-
 };
 
 /*

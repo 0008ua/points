@@ -5,18 +5,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import {
-  UserModel,
-  UserDocument,
-  UserRoles,
-  User,
-} from './entities/user.entity';
+import { UserModel, UserDocument, User } from './entities/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { genSaltSync, hash, compare } from 'bcryptjs';
 import { SignupDto } from './dto/signup.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { DB_ERROR, INTERNAL_SERVER_ERROR } from '../common/error.constants';
 import { UserDataDto } from './dto/userData.dto';
+import { UserRoles } from 'src/app.interfaces';
 
 @Injectable()
 export class AuthService {

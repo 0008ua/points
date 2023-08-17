@@ -17,12 +17,12 @@ const common_1 = require("@nestjs/common");
 const request_mapping_decorator_1 = require("@nestjs/common/decorators/http/request-mapping.decorator");
 const route_params_decorator_1 = require("@nestjs/common/decorators/http/route-params.decorator");
 const passport_1 = require("@nestjs/passport");
-const user_entity_1 = require("../auth/entities/user.entity");
 const roles_guard_1 = require("../auth/guards/roles.guard");
 const error_log_query_dto_1 = require("./dto/error-log-query.dto");
 const error_log__createdto_1 = require("./dto/error-log.-createdto");
 const owner_dto_1 = require("./dto/owner.dto");
 const logger_service_1 = require("./logger.service");
+const app_interfaces_1 = require("../app.interfaces");
 let LoggerController = class LoggerController {
     constructor(loggerService) {
         this.loggerService = loggerService;
@@ -49,7 +49,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], LoggerController.prototype, "logErrorToDB", null);
 __decorate([
-    (0, roles_guard_1.HasRoles)(user_entity_1.UserRoles.Admin),
+    (0, roles_guard_1.HasRoles)(app_interfaces_1.UserRoles.Admin),
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt'), roles_guard_1.RolesGuard),
     (0, request_mapping_decorator_1.Get)('get-owners-with-query'),
     __param(0, (0, route_params_decorator_1.Query)()),

@@ -3,6 +3,7 @@
   "games": {
     "train": {
       "name": "Ticket to ride",
+      "description": "Ticket to Ride is a cross-country train adventure in which players collect and play matching train cards to claim railway routes connecting cities through North America! The original Ticket to Ride is perfect for an experienced tabletop enthusiast, families, and those new to the hobby",
       "routes": "Completed routes",
       "length": "Longest route",
       "cars": "Trains",
@@ -12,13 +13,17 @@
     },
     "uno": {
       "name": "Uno",
+      "description": "UNO is a multi-player card game in which the objective is to be the first player to get rid of all the cards in their hand",
       "round": "Round"
     },
     "thousand": {
-      "name": "Thousand - 1000"
+      "name": "Thousand - 1000",
+      "description": "The goal is go get in the end more than 1000 points, first player to achieve overall (sum-up) of 1000 points wins the game"
     },
     "rummy": {
-      "name": "Rummy"
+      "name": "Rummy",
+      "description": "Rummy is the popular family game of strategy and luck! Players try to be the first to play all of the tiles in their rack by placing them in runs and groups, rummy style. Reinforces STEM skills like sequencing and pattern recognition"
+
     }
   },
   "modules": {
@@ -31,8 +36,10 @@
       "byWins": "Raiting by total wins",
       "byWinsToGames": "Raiting by wins to played games",
       "gamesCount": "Games",
+      "times": "times",
       "winsToGames": "%",
-      "wins": "Wins"
+      "wins": "Wins",
+      "played": "Played"
     },
     "games": {
       "name": "Games",

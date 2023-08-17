@@ -5,12 +5,7 @@ import { compare } from 'bcryptjs';
 import { HydratedDocument, Model } from 'mongoose';
 import { NAME_EXIST, USER_NOT_FOUND, WRONG_PASSWORD } from '../../common/error.constants';
 import { UserDataDto } from '../dto/userData.dto';
-
-export enum UserRoles {
-  Member = 'member',
-  Guest = 'guest',
-  Admin = 'admin',
-}
+import { UserRoles } from 'src/app.interfaces';
 
 @Schema({
   timestamps: true,
@@ -40,7 +35,10 @@ export enum UserRoles {
           .catch((err) => reject(err));
       });
     },
-    isPasswordMatched(candidatePassword: string, userFromDb: UserDocument): Promise<UserDocument> {
+    isPasswordMatched(
+      candidatePassword: string,
+      userFromDb: UserDocument,
+    ): Promise<UserDocument> {
       return new Promise((resolve, reject) => {
         compare(candidatePassword, userFromDb.password)
           .then((passwordMatched) => {
@@ -86,7 +84,9 @@ export enum UserRoles {
             }
             return reject(new HttpException(...USER_NOT_FOUND));
           })
-          .catch((error) => reject(new HttpException(error.message, HttpStatus.BAD_REQUEST)));
+          .catch((error) =>
+            reject(new HttpException(error.message, HttpStatus.BAD_REQUEST)),
+          );
       });
     },
 
@@ -117,7 +117,10 @@ export interface UserModel extends Model<UserDocument> {
   findUserByIdAndUpdateTimestamp(_id: string): Promise<UserDocument>;
   isNameUnique(name: string): Promise<true>;
   isNameExist(name: string): Promise<UserDocument>;
-  isPasswordMatched(candidatePassword: string, userFromDb: UserDocument): Promise<UserDocument>;
+  isPasswordMatched(
+    candidatePassword: string,
+    userFromDb: UserDocument,
+  ): Promise<UserDocument>;
   createUser(user: User): Promise<UserDocument>;
 }
 

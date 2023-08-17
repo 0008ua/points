@@ -9,16 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GameSchema = exports.Game = exports.GameType = void 0;
+exports.GameSchema = exports.Game = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-var GameType;
-(function (GameType) {
-    GameType["Rummy"] = "rummy";
-    GameType["Uno"] = "uno";
-    GameType["Thousand"] = "thousand";
-    GameType["Train"] = "train";
-})(GameType = exports.GameType || (exports.GameType = {}));
 let Game = class Game {
 };
 __decorate([
@@ -26,7 +19,7 @@ __decorate([
     __metadata("design:type", String)
 ], Game.prototype, "owner", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ required: true, enum: GameType }),
+    (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Game.prototype, "type", void 0);
 __decorate([

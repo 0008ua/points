@@ -298,6 +298,16 @@ let AnalyticsService = (_class = class AnalyticsService {
     return this.http.get(src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.host + 'api/analytics/get-wins-to-games/' + gameType, httpOptions);
     // .pipe(catchError((err) => throwError(err)));
   }
+
+  getPlayedGamesCount() {
+    const httpOptions = {
+      headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpHeaders({
+        // eslint-disable-next-line  @typescript-eslint/naming-convention
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.get(src_environments_environment__WEBPACK_IMPORTED_MODULE_0__.environment.host + 'api/analytics/get-played-games-count', httpOptions);
+  }
 }, _class.ctorParameters = () => [{
   type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__.HttpClient
 }], _class);

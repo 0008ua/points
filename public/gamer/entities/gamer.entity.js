@@ -9,17 +9,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GamerSchema = exports.Gamer = exports.Colors = void 0;
+exports.GamerSchema = exports.Gamer = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
-var Colors;
-(function (Colors) {
-    Colors["Red"] = "red";
-    Colors["Green"] = "green";
-    Colors["Blue"] = "blue";
-    Colors["Black"] = "black";
-    Colors["Yellow"] = "yellow";
-})(Colors = exports.Colors || (exports.Colors = {}));
 let Gamer = class Gamer {
 };
 __decorate([
@@ -51,7 +43,7 @@ __decorate([
     __metadata("design:type", String)
 ], Gamer.prototype, "telegramLanguage", void 0);
 __decorate([
-    (0, mongoose_1.Prop)({ enum: Colors }),
+    (0, mongoose_1.Prop)(),
     __metadata("design:type", String)
 ], Gamer.prototype, "color", void 0);
 Gamer = __decorate([

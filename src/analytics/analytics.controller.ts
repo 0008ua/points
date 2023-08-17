@@ -1,8 +1,19 @@
-import { Controller, Get, HttpException, HttpStatus, Param, Post, Query, Req, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+  Query,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { AnalyticsService } from './analytics.service';
 import { GameType } from '../app.interfaces';
+import { PlayedGamesCountDto } from './dto/playedGamesCount.dto';
 
 @Controller('analytics')
 export class AnalyticsController {
@@ -22,7 +33,16 @@ export class AnalyticsController {
   @UseGuards(AuthGuard('jwt'))
   @Get('get-rating/:gameType')
   async getRating(@Req() req: Request, @Param('gameType') gameType: GameType) {
-    const rating = await this.analyticsService.getRating({ userId: req.user._id, gameType });
+    const rating = await this.analyticsService.getRating({
+      userId: req.user._id,
+      gameType,
+    });
     return rating;
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('get-played-games-count')
+  getPlayedGamesCount(@Req() req: Request): Promise<PlayedGamesCountDto[]> {
+    return this.analyticsService.getPlayedGamesCount({ userId: req.user._id });
   }
 }

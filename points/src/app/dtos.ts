@@ -5,6 +5,7 @@ import {
   ErrorBody,
   ErrorMessage,
   OwnerData,
+  GameType,
 } from './interfaces';
 
 export class ErrorLogQueryDto implements Partial<ErrorType>, Partial<Owner> {
@@ -40,4 +41,9 @@ export class OwnerQueryDto {
   name?: string;
   skip?: number;
   limit?: number;
+}
+
+export class PlayedGamesCountDto {
+  gameType: GameType;
+  count: number;
 }

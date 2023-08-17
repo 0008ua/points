@@ -19,33 +19,50 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const routes = [{
+const routes = [
+// {
+//   path: '',
+//   component: GamesPage,
+//   children: [
+//     {
+//       path: ':id',
+//       loadChildren: () => import('./game/game.module').then((m) => m.GamePageModule),
+//     },
+//     // {
+//     //   path: 'train',
+//     //   loadChildren: () => import('./train/train.module').then(m => m.TrainPageModule)
+//     // },
+//     // {
+//     //   path: 'uno',
+//     //   loadChildren: () => import('./uno/uno.module').then(m => m.UnoPageModule)
+//     // },
+//     // {
+//     //   path: 'cards',
+//     //   loadChildren: () => import('./cards/cards.module').then(m => m.CardsPageModule)
+//     // },
+//     // {
+//     //   path: '',
+//     //   redirectTo: 'uno',
+//     //   pathMatch: 'full',
+//     // },
+//     {
+//       path: '**',
+//       redirectTo: 'list',
+//     },
+//   ],
+// },
+{
   path: '',
   component: _games_page__WEBPACK_IMPORTED_MODULE_0__.GamesPage,
   children: [{
+    path: 'list',
+    loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_modules_games_games-list_games-list_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./games-list/games-list.module */ 1264)).then(m => m.GamesListPageModule)
+  }, {
     path: ':id',
     loadChildren: () => Promise.all(/*! import() */[__webpack_require__.e("common"), __webpack_require__.e("src_app_modules_games_game_game_module_ts")]).then(__webpack_require__.bind(__webpack_require__, /*! ./game/game.module */ 1124)).then(m => m.GamePageModule)
-  },
-  // {
-  //   path: 'train',
-  //   loadChildren: () => import('./train/train.module').then(m => m.TrainPageModule)
-  // },
-  // {
-  //   path: 'uno',
-  //   loadChildren: () => import('./uno/uno.module').then(m => m.UnoPageModule)
-  // },
-  // {
-  //   path: 'cards',
-  //   loadChildren: () => import('./cards/cards.module').then(m => m.CardsPageModule)
-  // },
-  // {
-  //   path: '',
-  //   redirectTo: 'uno',
-  //   pathMatch: 'full',
-  // },
-  {
+  }, {
     path: '**',
-    redirectTo: 'rummy'
+    redirectTo: 'list'
   }]
 }];
 let GamesPageRoutingModule = class GamesPageRoutingModule {};
@@ -187,7 +204,7 @@ module.exports = ___CSS_LOADER_EXPORT___.toString();
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-menu menuId=\"games-menu\" side=\"end\" contentId=\"games-content\">\r\n  <ion-header>\r\n    <ion-toolbar color=\"secondary\">\r\n      <ion-title>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'member' || (userRole$ | async) === 'admin'\">{{(user$ | async).name }}</h2>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'guest'\">Guest</h2>\r\n      </ion-title>\r\n    </ion-toolbar>\r\n  </ion-header>\r\n  <ion-content>\r\n    <ion-list lines=\"none\">\r\n      <ion-menu-toggle auto-hide=\"false\" menu=\"games-menu\">\r\n        <ion-item routerLink=\"/games/train\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"train-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'games.train.name' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item routerLink=\"/games/rummy\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"journal-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'games.rummy.name' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item routerLink=\"/games/uno\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"invert-mode-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'games.uno.name' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item routerLink=\"/games/thousand\" routerLinkActive=\"active-link\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"layers-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'games.thousand.name' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item-divider></ion-item-divider>\r\n        <ion-item button (click)=\"switchLanguage()\">\r\n          <ion-icon name=\"earth-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'language' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item *ngIf=\"(userRole$ | async) === 'member' || (userRole$ | async) === 'admin'\" button (click)=\"onLogout()\">\r\n          <ion-icon name=\"exit\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.logout' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item *ngIf=\"(userRole$ | async) === 'guest'\" routerLink=\"/auth/signin\" routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <ion-icon name=\"log-in\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.signin' | translate}}</ion-label>\r\n        </ion-item>\r\n      </ion-menu-toggle>\r\n    </ion-list>\r\n  </ion-content>\r\n</ion-menu>\r\n\r\n<ion-router-outlet id=\"games-content\"></ion-router-outlet>";
+module.exports = "<ion-menu menuId=\"games-menu\" side=\"end\" contentId=\"games-content\">\r\n  <ion-header>\r\n    <ion-toolbar color=\"secondary\">\r\n      <ion-title>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'member' || (userRole$ | async) === 'admin'\">\r\n          {{(user$ | async).name }}\r\n        </h2>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'guest'\">Guest</h2>\r\n      </ion-title>\r\n    </ion-toolbar>\r\n  </ion-header>\r\n  <ion-content>\r\n    <ion-list lines=\"none\">\r\n      <ion-menu-toggle auto-hide=\"false\" menu=\"games-menu\">\r\n        <ion-item\r\n          routerLink=\"/games/train\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"train-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'games.train.name' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item\r\n          routerLink=\"/games/rummy\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"journal-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'games.rummy.name' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item\r\n          routerLink=\"/games/uno\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"invert-mode-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'games.uno.name' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item\r\n          routerLink=\"/games/thousand\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"layers-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'games.thousand.name' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item-divider></ion-item-divider>\r\n        <ion-item button (click)=\"switchLanguage()\">\r\n          <ion-icon name=\"earth-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'language' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item\r\n          *ngIf=\"(userRole$ | async) === 'member' || (userRole$ | async) === 'admin'\"\r\n          button\r\n          (click)=\"onLogout()\"\r\n        >\r\n          <ion-icon name=\"exit\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.logout' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item\r\n          *ngIf=\"(userRole$ | async) === 'guest'\"\r\n          routerLink=\"/auth/signin\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"log-in\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.signin' | translate}}</ion-label>\r\n        </ion-item>\r\n      </ion-menu-toggle>\r\n    </ion-list>\r\n  </ion-content>\r\n</ion-menu>\r\n\r\n<ion-router-outlet id=\"games-content\"></ion-router-outlet>\r\n";
 
 /***/ })
 

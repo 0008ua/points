@@ -1,5 +1,30 @@
 (self["webpackChunkapp"] = self["webpackChunkapp"] || []).push([["common"],{
 
+/***/ 3038:
+/*!*******************************!*\
+  !*** ./src/app/interfaces.ts ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   UserRoles: () => (/* binding */ UserRoles),
+/* harmony export */   errors: () => (/* binding */ errors),
+/* harmony export */   gameTypes: () => (/* binding */ gameTypes)
+/* harmony export */ });
+// global
+const errors = ['unknownError', 'analytics/error', 'auth/error', 'app/error', 'ngrxDataError'];
+var UserRoles;
+(function (UserRoles) {
+  UserRoles["Member"] = "member";
+  UserRoles["Guest"] = "guest";
+  UserRoles["Admin"] = "admin";
+})(UserRoles || (UserRoles = {}));
+const gameTypes = ['rummy', 'uno', 'thousand', 'train'];
+
+/***/ }),
+
 /***/ 8686:
 /*!***********************************************************!*\
   !*** ./src/app/modules/auth/telegram/telegram.service.ts ***!

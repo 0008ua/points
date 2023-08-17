@@ -1,5 +1,6 @@
 import { GameModel } from '../game/entities/game.entity';
-import { RatingRequest } from './dto/raitingRequest.dto';
+import { RequestByGameType } from './dto/raitingRequest.dto';
+import { PlayedGamesCountDto } from './dto/playedGamesCount.dto';
 export declare class AnalyticsService {
     readonly gameModel: GameModel;
     constructor(gameModel: GameModel);
@@ -11,5 +12,8 @@ export declare class AnalyticsService {
         userId: any;
         gameType: any;
     }): Promise<any>;
-    getRating({ userId, gameType }: RatingRequest): Promise<any>;
+    getRating({ userId, gameType }: RequestByGameType): Promise<any>;
+    getPlayedGamesCount({ userId }: {
+        userId: any;
+    }): Promise<PlayedGamesCountDto[]>;
 }

@@ -20,6 +20,7 @@ const jwt_1 = require("@nestjs/jwt");
 const bcryptjs_1 = require("bcryptjs");
 const uuid_1 = require("uuid");
 const error_constants_1 = require("../common/error.constants");
+const app_interfaces_1 = require("../app.interfaces");
 let AuthService = class AuthService {
     constructor(userModel, jwtService) {
         this.userModel = userModel;
@@ -35,11 +36,11 @@ let AuthService = class AuthService {
     async createUser(dto) {
         let user;
         if (dto && dto.name && dto.password) {
-            user = Object.assign(Object.assign({}, dto), { role: user_entity_1.UserRoles.Member });
+            user = Object.assign(Object.assign({}, dto), { role: app_interfaces_1.UserRoles.Member });
         }
         else {
             user = {
-                role: user_entity_1.UserRoles.Guest,
+                role: app_interfaces_1.UserRoles.Guest,
                 name: (0, uuid_1.v4)(),
                 password: (0, uuid_1.v4)(),
             };

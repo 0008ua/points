@@ -1,6 +1,6 @@
 import { GameType, UID } from '../../app.interfaces';
 
-export interface RatingRequest {
+export interface RequestByGameType {
   userId: UID;
   gameType: GameType;
 }

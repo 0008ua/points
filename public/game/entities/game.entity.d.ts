@@ -23,12 +23,7 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { HydratedDocument, Model } from 'mongoose';
-export declare enum GameType {
-    Rummy = "rummy",
-    Uno = "uno",
-    Thousand = "thousand",
-    Train = "train"
-}
+import { GameType } from 'src/app.interfaces';
 export declare class Game {
     owner: string;
     type: GameType;

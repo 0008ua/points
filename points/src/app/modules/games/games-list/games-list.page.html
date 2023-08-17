@@ -1,0 +1,52 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title size="large">{{'modules.games.name' | translate}}</ion-title>
+
+    <ion-buttons slot="end">
+      <ion-menu-button menu="games-menu"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-grid class="ion-no-margin ion-no-padding">
+    <ion-row>
+      <ion-col
+        size-lg="4"
+        size-md="6"
+        size-sm="8"
+        size-xs="10"
+        offset-lg="4"
+        offset-md="3"
+        offset-sm="2"
+        offset-xs="1"
+      >
+        <ion-card *ngFor="let game of gameTypes; let i = index">
+          <img [alt]="'Game ' + game" [src]="'https://picsum.photos/id/' + (i + 20 )+ '/1024/512'" />
+          <ion-card-header>
+            <ion-card-title>{{'games.' + game + '.name' | translate}}</ion-card-title>
+            <ion-card-subtitle>
+              {{'modules.analytics.played' | translate}}
+              <ion-text color="tertiary">
+                {{playedGamesCount && playedGamesCount[game]}}
+              </ion-text>
+              {{'modules.analytics.times' | translate}}
+            </ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content>
+            {{'games.' + game + '.description' | translate}}
+          </ion-card-content>
+          <ion-button
+            expand="full"
+            fill="clear"
+            color="primary"
+            [routerLink]="'/games/' + game"
+            routerLinkActive="active-link"
+            [routerLinkActiveOptions]="{exact: true}"
+            >{{'elements.button.startGame' | translate}}</ion-button
+          >
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

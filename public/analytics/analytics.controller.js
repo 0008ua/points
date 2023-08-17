@@ -27,8 +27,14 @@ let AnalyticsController = class AnalyticsController {
         return this.analyticsService.getWinsToGames({ userId: req.user._id, gameType });
     }
     async getRating(req, gameType) {
-        const rating = await this.analyticsService.getRating({ userId: req.user._id, gameType });
+        const rating = await this.analyticsService.getRating({
+            userId: req.user._id,
+            gameType,
+        });
         return rating;
+    }
+    getPlayedGamesCount(req) {
+        return this.analyticsService.getPlayedGamesCount({ userId: req.user._id });
     }
 };
 __decorate([
@@ -58,6 +64,14 @@ __decorate([
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], AnalyticsController.prototype, "getRating", null);
+__decorate([
+    (0, common_1.UseGuards)((0, passport_1.AuthGuard)('jwt')),
+    (0, common_1.Get)('get-played-games-count'),
+    __param(0, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", Promise)
+], AnalyticsController.prototype, "getPlayedGamesCount", null);
 AnalyticsController = __decorate([
     (0, common_1.Controller)('analytics'),
     __metadata("design:paramtypes", [analytics_service_1.AnalyticsService])

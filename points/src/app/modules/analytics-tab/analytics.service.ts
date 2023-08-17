@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PlayedGamesCountDto } from 'src/app/dtos';
 import { GameType, IGamer } from 'src/app/interfaces';
 import { environment } from 'src/environments/environment';
 
@@ -59,5 +60,18 @@ export class AnalyticsService {
       httpOptions,
     );
     // .pipe(catchError((err) => throwError(err)));
+  }
+
+  getPlayedGamesCount(): Observable<PlayedGamesCountDto[]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        // eslint-disable-next-line  @typescript-eslint/naming-convention
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.get<PlayedGamesCountDto[]>(
+      environment.host + 'api/analytics/get-played-games-count',
+      httpOptions,
+    );
   }
 }

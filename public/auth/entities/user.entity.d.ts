@@ -23,11 +23,7 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
 import { HydratedDocument, Model } from 'mongoose';
-export declare enum UserRoles {
-    Member = "member",
-    Guest = "guest",
-    Admin = "admin"
-}
+import { UserRoles } from 'src/app.interfaces';
 export declare class User {
     name: string;
     password: string;

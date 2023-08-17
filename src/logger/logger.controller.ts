@@ -3,13 +3,13 @@ import { Get, Post } from '@nestjs/common/decorators/http/request-mapping.decora
 import { Body, Query, Req } from '@nestjs/common/decorators/http/route-params.decorator';
 import { AuthGuard } from '@nestjs/passport';
 import { Request } from 'express';
-import { UserRoles } from 'src/auth/entities/user.entity';
 import { HasRoles, RolesGuard } from 'src/auth/guards/roles.guard';
 import { ErrorLogQueryDto } from './dto/error-log-query.dto';
 import { ErrorLogCreateDto } from './dto/error-log.-createdto';
 import { OwnerQueryDto } from './dto/owner.dto';
 import { ErrorLogger } from './entities/error-logger.entity';
 import { LoggerService } from './logger.service';
+import { UserRoles } from 'src/app.interfaces';
 
 @Controller('logger')
 export class LoggerController {

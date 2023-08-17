@@ -1,4 +1,4 @@
-import { Colors } from '../entities/gamer.entity';
+import { Colors } from 'src/app.interfaces';
 
 export class CreateGamerDto {
   name: string;
