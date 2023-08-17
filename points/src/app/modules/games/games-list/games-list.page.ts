@@ -13,7 +13,7 @@ export class GamesListPage implements OnInit {
   gameTypes = gameTypes;
   analyticsService = inject(AnalyticsService);
   playedGamesCount: any;
-
+  rand: number = 0;
   constructor() {}
 
   ngOnInit() {
@@ -24,5 +24,10 @@ export class GamesListPage implements OnInit {
       );
     });
 
+    this.rand = this.generateRandomNumber();
+  }
+
+  generateRandomNumber() {
+    return Math.round(Math.random()*100)
   }
 }
