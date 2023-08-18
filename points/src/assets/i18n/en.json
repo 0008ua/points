@@ -28,7 +28,9 @@
   },
   "modules": {
     "settings": {
-      "name": "Settings"
+      "name": "Settings",
+      "switchToDark": "Switch to dark mode",
+      "switchToLight": "Switch to light mode"
     },
     "analytics": {
       "name": "Analytics",

@@ -27,7 +27,9 @@
   },
   "modules": {
     "settings": {
-      "name": "Налаштування"
+      "name": "Налаштування",
+      "switchToDark": "Темний режим",
+      "switchToLight": "Світлий режим"
     },
     "analytics": {
       "name": "Аналітика",

@@ -194,10 +194,19 @@ let ProfilePage = (_class = class ProfilePage {
     this.store = store;
     this.translate = translate;
     this.menuController = menuController;
+    this.themeToggle = false;
+    this.isDark = false;
   }
   ngOnInit() {
     this.userRole$ = this.store.select(src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_3__.selectUserRole);
     this.user$ = this.store.select(src_app_store_reducers_auth_reducer__WEBPACK_IMPORTED_MODULE_3__.selectUser);
+    // Use matchMedia to check the user preference
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    // Initialize the dark theme based on the initial
+    // value of the prefers-color-scheme media query
+    this.initializeDarkTheme(prefersDark.matches);
+    // Listen for changes to the prefers-color-scheme media query
+    prefersDark.addEventListener('change', mediaQuery => this.initializeDarkTheme(mediaQuery.matches));
   }
   ionViewWillEnter() {
     this.menuController.enable(true, 'profile-menu');
@@ -208,6 +217,14 @@ let ProfilePage = (_class = class ProfilePage {
   switchLanguage() {
     this.lang = this.lang === 'en' ? 'uk' : 'en';
     this.translate.use(this.lang);
+  }
+  initializeDarkTheme(isDark) {
+    this.isDark = !isDark;
+    this.toggleDarkTheme();
+  }
+  toggleDarkTheme() {
+    this.isDark = !this.isDark;
+    document.body.classList.toggle('dark', this.isDark);
   }
 }, _class.ctorParameters = () => [{
   type: _ngrx_store__WEBPACK_IMPORTED_MODULE_4__.Store
@@ -250,7 +267,7 @@ module.exports = ___CSS_LOADER_EXPORT___.toString();
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-menu menuId=\"profile-menu\" side=\"end\" contentId=\"profile-content\">\r\n  <ion-header>\r\n    <ion-toolbar color=\"secondary\">\r\n      <ion-title>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'member' || (userRole$ | async) === 'admin'\">{{(user$ | async).name }}</h2>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'guest'\">Guest</h2>\r\n      </ion-title>\r\n    </ion-toolbar>\r\n  </ion-header>\r\n  <ion-content>\r\n    <ion-list lines=\"none\">\r\n      <ion-menu-toggle auto-hide=\"false\" menu=\"profile-menu\">\r\n        <ion-item\r\n          routerLink=\"/auth/profile/telegram\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"send-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.profile.telegramSetup' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item *ngIf=\"(userRole$ | async) === 'admin'\"\r\n          routerLink=\"/auth/profile/error-log\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"bug-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.profile.errorLog' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item-divider></ion-item-divider>\r\n\r\n        <ion-item button (click)=\"switchLanguage()\">\r\n          <ion-icon name=\"earth-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'language' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item *ngIf=\"(userRole$ | async) === 'member' || (userRole$ | async) === 'admin'\" button (click)=\"onLogout()\">\r\n          <ion-icon name=\"exit\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.logout' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item\r\n          *ngIf=\"(userRole$ | async) === 'guest'\"\r\n          routerLink=\"/auth/signin\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"log-in\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.signin' | translate}}</ion-label>\r\n        </ion-item>\r\n      </ion-menu-toggle>\r\n    </ion-list>\r\n  </ion-content>\r\n</ion-menu>\r\n\r\n<ion-router-outlet id=\"profile-content\"></ion-router-outlet>\r\n\r\n<!-- <ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>profile</ion-title>\r\n        <ion-buttons slot=\"end\">\r\n          <ion-item (click)=\"onLogout()\" button lines=\"none\">\r\n            <ion-icon name=\"earth-outline\" slot=\"start\"></ion-icon>\r\n            <ion-label>{{'logout' | translate}}</ion-label>\r\n          </ion-item>\r\n        </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n</ion-content> -->\r\n";
+module.exports = "<ion-menu menuId=\"profile-menu\" side=\"end\" contentId=\"profile-content\">\r\n  <ion-header>\r\n    <ion-toolbar color=\"secondary\">\r\n      <ion-title>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'member' || (userRole$ | async) === 'admin'\">\r\n          {{(user$ | async).name }}\r\n        </h2>\r\n        <h2 *ngIf=\"(userRole$ | async) === 'guest'\">Guest</h2>\r\n      </ion-title>\r\n    </ion-toolbar>\r\n  </ion-header>\r\n  <ion-content>\r\n    <ion-list lines=\"none\">\r\n      <ion-menu-toggle auto-hide=\"false\" menu=\"profile-menu\">\r\n        <!-- <ion-item>\r\n          <ion-toggle\r\n            [(ngModel)]=\"themeToggle\"\r\n            (ionChange)=\"$event.stopPropagation();$event.preventDefault();toggleChange($event)\"\r\n            justify=\"space-between\"\r\n            >Dark Mode</ion-toggle\r\n          >\r\n        </ion-item> -->\r\n        <ion-item\r\n          routerLink=\"/auth/profile/telegram\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"send-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.profile.telegramSetup' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item\r\n          *ngIf=\"(userRole$ | async) === 'admin'\"\r\n          routerLink=\"/auth/profile/error-log\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"bug-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.profile.errorLog' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item-divider></ion-item-divider>\r\n\r\n        <ion-item button (click)=\"toggleDarkTheme()\">\r\n          <ion-icon name=\"color-palette-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{(isDark ? 'modules.settings.switchToLight' : 'modules.settings.switchToDark') | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item button (click)=\"switchLanguage()\">\r\n          <ion-icon name=\"earth-outline\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'language' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item\r\n          *ngIf=\"(userRole$ | async) === 'member' || (userRole$ | async) === 'admin'\"\r\n          button\r\n          (click)=\"onLogout()\"\r\n        >\r\n          <ion-icon name=\"exit\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.logout' | translate}}</ion-label>\r\n        </ion-item>\r\n        <ion-item\r\n          *ngIf=\"(userRole$ | async) === 'guest'\"\r\n          routerLink=\"/auth/signin\"\r\n          routerLinkActive=\"active-link\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\"\r\n        >\r\n          <ion-icon name=\"log-in\" slot=\"start\"></ion-icon>\r\n          <ion-label>{{'modules.user.signin' | translate}}</ion-label>\r\n        </ion-item>\r\n      </ion-menu-toggle>\r\n    </ion-list>\r\n  </ion-content>\r\n</ion-menu>\r\n\r\n<ion-router-outlet id=\"profile-content\"></ion-router-outlet>\r\n\r\n<!-- <ion-header>\r\n  <ion-toolbar>\r\n    <ion-title>profile</ion-title>\r\n        <ion-buttons slot=\"end\">\r\n          <ion-item (click)=\"onLogout()\" button lines=\"none\">\r\n            <ion-icon name=\"earth-outline\" slot=\"start\"></ion-icon>\r\n            <ion-label>{{'logout' | translate}}</ion-label>\r\n          </ion-item>\r\n        </ion-buttons>\r\n  </ion-toolbar>\r\n</ion-header>\r\n\r\n<ion-content>\r\n</ion-content> -->\r\n";
 
 /***/ })
 
