@@ -10,22 +10,22 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import "~@ionic/angular/css/core.css";
+@import '~@ionic/angular/css/core.css';
 
 /* Basic CSS for apps built with Ionic */
-@import "~@ionic/angular/css/normalize.css";
-@import "~@ionic/angular/css/structure.css";
-@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/normalize.css';
+@import '~@ionic/angular/css/structure.css';
+@import '~@ionic/angular/css/typography.css';
 @import '~@ionic/angular/css/display.css';
 
 /* Optional CSS utils that can be commented out */
-@import "~@ionic/angular/css/padding.css";
-@import "~@ionic/angular/css/float-elements.css";
-@import "~@ionic/angular/css/text-alignment.css";
-@import "~@ionic/angular/css/text-transformation.css";
-@import "~@ionic/angular/css/flex-utils.css";
+@import '~@ionic/angular/css/padding.css';
+@import '~@ionic/angular/css/float-elements.css';
+@import '~@ionic/angular/css/text-alignment.css';
+@import '~@ionic/angular/css/text-transformation.css';
+@import '~@ionic/angular/css/flex-utils.css';
 
-@import "./styles.scss";
+@import './styles.scss';
 
 // // fix select popover bug (after chrome update)
 // [popover].popover-viewport {
@@ -45,4 +45,68 @@
 /* This is added for the flashing that happens when toggling between themes */
 ion-item {
   --transition: none;
+}
+
+:root {
+  --ion-color-primary: #8b9d83;
+  --ion-color-primary-rgb: 139, 157, 131;
+  --ion-color-primary-contrast: #000000;
+  --ion-color-primary-contrast-rgb: 0, 0, 0;
+  --ion-color-primary-shade: #7a8a73;
+  --ion-color-primary-tint: #97a78f;
+
+  --ion-color-secondary: #6a7b76;
+  --ion-color-secondary-rgb: 106, 123, 118;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #5d6c68;
+  --ion-color-secondary-tint: #798884;
+
+  --ion-color-darkblue: #3e517a;
+  --ion-color-darkblue-rgb: 62, 81, 122;
+  --ion-color-darkblue-contrast: #ffffff;
+  --ion-color-darkblue-contrast-rgb: 255, 255, 255;
+  --ion-color-darkblue-shade: #37476b;
+  --ion-color-darkblue-tint: #516287;
+
+  --ion-color-midblue: #526ca3;
+  --ion-color-midblue-rgb: 82, 108, 163;
+  --ion-color-midblue-contrast: #ffffff;
+  --ion-color-midblue-contrast-rgb: 255, 255, 255;
+  --ion-color-midblue-shade: #485f8f;
+  --ion-color-midblue-tint: #637bac;
+
+  --ion-color-lightblue: #778ebb;
+  --ion-color-lightblue-rgb: 119, 142, 187;
+  --ion-color-lightblue-contrast: #000000;
+  --ion-color-lightblue-contrast-rgb: 0, 0, 0;
+  --ion-color-lightblue-shade: #697da5;
+  --ion-color-lightblue-tint: #8599c2;
+}
+
+.ion-color-darkblue {
+  --ion-color-base: var(--ion-color-darkblue);
+  --ion-color-base-rgb: var(--ion-color-darkblue-rgb);
+  --ion-color-contrast: var(--ion-color-darkblue-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-darkblue-contrast-rgb);
+  --ion-color-shade: var(--ion-color-darkblue-shade);
+  --ion-color-tint: var(--ion-color-darkblue-tint);
+}
+
+.ion-color-midblue {
+  --ion-color-base: var(--ion-color-midblue);
+  --ion-color-base-rgb: var(--ion-color-midblue-rgb);
+  --ion-color-contrast: var(--ion-color-midblue-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-midblue-contrast-rgb);
+  --ion-color-shade: var(--ion-color-midblue-shade);
+  --ion-color-tint: var(--ion-color-midblue-tint);
+}
+
+.ion-color-lightblue {
+  --ion-color-base: var(--ion-color-lightblue);
+  --ion-color-base-rgb: var(--ion-color-lightblue-rgb);
+  --ion-color-contrast: var(--ion-color-lightblue-contrast);
+  --ion-color-contrast-rgb: var(--ion-color-lightblue-contrast-rgb);
+  --ion-color-shade: var(--ion-color-lightblue-shade);
+  --ion-color-tint: var(--ion-color-lightblue-tint);
 }

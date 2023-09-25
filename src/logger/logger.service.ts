@@ -116,7 +116,6 @@ export class LoggerService {
   ): Promise<ErrorLoggerDocumentDto[]> {
     const { owner, errorType, skip = 0, limit = 5, minDate, maxDate } = query;
     let errorLoggerDocuments: ErrorLoggerDocument[];
-    console.log('query', query);
 
     try {
       const normalizedQuery = Object.assign(
@@ -126,7 +125,6 @@ export class LoggerService {
         !owner ? null : { owner },
         !errorType ? null : { errorType },
       );
-      console.log('normalizedQuery', normalizedQuery);
       errorLoggerDocuments = await this.errorLoggerModel
         .find(normalizedQuery)
         .skip(skip)

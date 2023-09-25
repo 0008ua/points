@@ -27,12 +27,6 @@ let ErrorDetailsComponent = (_class = class ErrorDetailsComponent {
   constructor(modalController) {
     this.modalController = modalController;
   }
-  ngAfterViewInit() {
-    console.log('ngAfterViewInit', this.error);
-  }
-  ngOnInit() {
-    console.log('ngOnInit', this.error);
-  }
   cancel() {
     this.modalController.dismiss(null, 'cancel');
   }

@@ -7,17 +7,9 @@ import { ErrorLoggerDocumentDto } from 'src/app/dtos';
   templateUrl: './error-details.component.html',
   styleUrls: ['./error-details.component.scss'],
 })
-export class ErrorDetailsComponent implements OnInit, AfterViewInit {
+export class ErrorDetailsComponent {
   @Input() error: ErrorLoggerDocumentDto;
   constructor(private modalController: ModalController) {}
-
-  ngAfterViewInit(): void {
-    console.log('ngAfterViewInit', this.error);
-  }
-
-  ngOnInit() {
-    console.log('ngOnInit', this.error);
-  }
 
   cancel() {
     this.modalController.dismiss(null, 'cancel');

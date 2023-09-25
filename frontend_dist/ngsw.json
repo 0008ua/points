@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1692361808480,
+  "timestamp": 1695655723020,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -223,16 +223,16 @@
     "/src_app_modules_analytics-tab_analytics-tab_module_ts.js": "63476c9be8fa4d4ece5218af9afb0842606aea05",
     "/src_app_modules_analytics-tab_stat_stat_module_ts.js": "640eb780f65f9a2a5d8ee87b6b5ce2b6a8b1f08a",
     "/src_app_modules_auth_auth_module_ts.js": "463945e94bd029c0ad675a431a1d710e78658dde",
-    "/src_app_modules_auth_error-log_error-log_module_ts.js": "50d6a489d668df6376b3540e45c2c2ba19b7d1c0",
+    "/src_app_modules_auth_error-log_error-log_module_ts.js": "01e6efe54593b1303ff0d1f85191d90d6bcdcb9a",
     "/src_app_modules_auth_profile_profile_module_ts.js": "90319cfece1ff4c925c157b4e487b4a0c6da1d1d",
     "/src_app_modules_auth_signin_signin_module_ts.js": "15f8190886ba7af38b4cd0d778603664aff060b3",
     "/src_app_modules_auth_signup_signup_module_ts.js": "042100790f9fc0da8d7caa3fba9309d1ded81137",
     "/src_app_modules_auth_telegram_telegram_module_ts.js": "d6258f33f625490558e66491e2ebd7d03af57837",
-    "/src_app_modules_games_game_game_module_ts.js": "6d1ab94927933e06018f052f8f7354e3e2f4a4ea",
+    "/src_app_modules_games_game_game_module_ts.js": "825705311a98f575681faa8dc5a819bcc1372f2d",
     "/src_app_modules_games_games-list_games-list_module_ts.js": "85597c6ee3eeec672c25f7b82b6ed6b076836f5d",
     "/src_app_modules_games_games_module_ts.js": "a5592c9c8d808b275a7807030eb1d6b3951577d3",
     "/src_app_tabs_tabs_module_ts.js": "04b99a7346b852ad7decce8c93bd11428c7e341e",
-    "/styles.css": "2ca1753c9afa04246bccf4f3934ad74c7d6daed3",
+    "/styles.css": "683c3641d84bf505b9daed55a48d3b2630973e8c",
     "/vendor.js": "2192b8496c0b87264593181619fd7d8bb6b4c251"
   },
   "navigationUrls": [

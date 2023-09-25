@@ -1,8 +1,12 @@
 <ion-card-content>
   <ion-row class="round round_tools">
     <ion-col *ngFor="let namedScore of namedScoresEnv" size="2.4">
-      <img class="uno-round-img" [src]="namedScore.picture" [alt]="namedScore.name"
-      (click)="addToNamedScoresLine(namedScore)">
+      <img
+        class="uno-img"
+        [src]="namedScore.picture"
+        [alt]="namedScore.name"
+        (click)="addToNamedScoresLine(namedScore)"
+      />
 
       <!-- <ion-chip  (click)="addToNamedScoresLine(namedScore)">
         <ion-label>{{namedScore.name}}</ion-label>
@@ -16,15 +20,29 @@
     </ion-col> -->
   </ion-row>
   <ion-row class="round round_result">
-    <ion-col *ngFor="let namedScore of getMemberByPlayerId()?.namedScoresLine" size="1">
-      <img [src]="namedScore.picture" [alt]="namedScore.name" (click)="removeFromNamedScoresLine(namedScore)">
+    <ion-col
+      *ngFor="let namedScore of getMemberByPlayerId()?.namedScoresLine"
+      size="3"
+      size-sm="2"
+    >
 
+
+      <img class="uno-img"
+        [src]="namedScore.picture"
+        [alt]="namedScore.name"
+        (click)="removeFromNamedScoresLine(namedScore)"
+      />
+
+      <ion-icon
+
+        class="close-icon-popup"
+        name="close-circle"
+      ></ion-icon>
       <!-- <ion-chip outline [color]="routeScore > 19 ? 'secondary' : 'warning'" (click)="removeFromScoresLine(routeScore)">
         <ion-label>{{routeScore }}</ion-label>
         <ion-icon name="close-circle"></ion-icon>
 
       </ion-chip> -->
-
     </ion-col>
   </ion-row>
 </ion-card-content>

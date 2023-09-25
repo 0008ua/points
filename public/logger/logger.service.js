@@ -115,12 +115,10 @@ let LoggerService = class LoggerService {
     async getWithQuery(query, userId) {
         const { owner, errorType, skip = 0, limit = 5, minDate, maxDate } = query;
         let errorLoggerDocuments;
-        console.log('query', query);
         try {
             const normalizedQuery = Object.assign(!(minDate && maxDate)
                 ? null
                 : { createdAt: { $gte: new Date(minDate), $lt: new Date(maxDate) } }, !owner ? null : { owner }, !errorType ? null : { errorType });
-            console.log('normalizedQuery', normalizedQuery);
             errorLoggerDocuments = await this.errorLoggerModel
                 .find(normalizedQuery)
                 .skip(skip)
