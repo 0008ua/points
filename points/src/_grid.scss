@@ -1,0 +1,106 @@
+// xs          0 -  575 / p: 8|0 / 1col     - 599 / 1col     - 599
+// sm        576 -  767 / p: 8   / 3col 184 - 303 / 2col 276 - 455
+// md        767 - 991 / p: 12  / 4col 216 - 295 / 3col 296 - 402 / img 225*400
+// lg        992 - 1199 / p: 12  / 6col 189 - 295 / 5col 232 - 360
+// xl=gt-xl  1200 -
+// lt-sm         -  575
+// lt-md         -  767
+// lt-lg         - 991
+// lt-xl         - 1199
+// gt-xs     576 -
+// gt-sm     768 -
+// gt-md    992 -
+// gt-xl    1200 -
+
+$screen-xs-min: 0px;
+$screen-sm-min: 576px;
+$screen-md-min: 768px;
+$screen-lg-min: 992px;
+$screen-xl-min: 1200px;
+
+@mixin xs {
+  // 0-575
+  @media screen and (max-width: ($screen-sm-min - 1px)) {
+    @content;
+  }
+}
+@mixin sm {
+  // 576-767
+  @media screen and (min-width: $screen-sm-min) and (max-width: ($screen-md-min - 1px)) {
+    @content;
+  }
+}
+@mixin md {
+  // 768-991
+  @media screen and (min-width: $screen-md-min) and (max-width: ($screen-lg-min - 1px)) {
+    @content;
+  }
+}
+@mixin lg {
+  // 992-1199
+  @media screen and (min-width: $screen-lg-min) and (max-width: ($screen-xl-min - 1px)) {
+    @content;
+  }
+}
+@mixin xl {
+  // 1200-
+  @media screen and (min-width: $screen-xl-min) {
+    @content;
+  }
+}
+
+@mixin lt-sm {
+  // - 575
+  @media screen and (max-width: ($screen-sm-min - 1px)) {
+    @content;
+  }
+}
+@mixin lt-md {
+  // - 767
+  @media screen and (max-width: ($screen-md-min - 1px)) {
+    @content;
+  }
+}
+@mixin lt-lg {
+  // - 991
+  @media screen and (max-width: ($screen-lg-min - 1px)) {
+    @content;
+  }
+}
+@mixin lt-xl {
+  // -1199
+  @media screen and (max-width: ($screen-xl-min - 1px)) {
+    @content;
+  }
+}
+
+@mixin gt-xs {
+  // (ionic xs) 0 -
+  @media screen and (min-width: $screen-xs-min) {
+    @content;
+  }
+}
+@mixin gt-sm {
+  // (ionic sm) 576 -
+  @media screen and (min-width: $screen-sm-min) {
+    @content;
+  }
+}
+@mixin gt-md {
+  // (ionic md) 768 -
+  @media screen and (min-width: $screen-md-min) {
+    @content;
+  }
+}
+@mixin gt-lg {
+  // (ionic lg) 992 -
+  @media screen and (min-width: $screen-lg-min) {
+    @content;
+  }
+}
+@mixin gt-xl {
+  // (ionic xl) 1200 -
+  @media screen and (min-width: $screen-xl-min) {
+    @content;
+  }
+}

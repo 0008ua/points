@@ -156,7 +156,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   GamePage: () => (/* binding */ GamePage)
 /* harmony export */ });
-/* harmony import */ var C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! tslib */ 2321);
 /* harmony import */ var _game_page_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./game.page.html?ngResource */ 4539);
 /* harmony import */ var _game_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./game.page.scss?ngResource */ 7277);
@@ -284,7 +284,7 @@ let GamePage = (_class = class GamePage {
   }
   onFinishGameHandler() {
     var _this = this;
-    return (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const data = {
         title: 'elements.button.finishGame',
         text: 'common.finishGameQuestion',
@@ -303,7 +303,7 @@ let GamePage = (_class = class GamePage {
   }
   onCancelGameHandler() {
     var _this2 = this;
-    return (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const data = {
         title: 'elements.button.cancelGame',
         text: 'common.cancelGameQuestion',
@@ -365,7 +365,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ChoosePlayersComponent: () => (/* binding */ ChoosePlayersComponent)
 /* harmony export */ });
-/* harmony import */ var C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! tslib */ 2321);
 /* harmony import */ var _choose_players_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./choose-players.component.html?ngResource */ 2685);
 /* harmony import */ var _choose_players_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./choose-players.component.scss?ngResource */ 1947);
@@ -442,7 +442,7 @@ let ChoosePlayersComponent = (_class = class ChoosePlayersComponent {
 
   presentPopover(event, component, data) {
     var _this = this;
-    return (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const popover = yield _this.popoverController.create({
         component,
         cssClass: 'select-color-popover',
@@ -456,7 +456,7 @@ let ChoosePlayersComponent = (_class = class ChoosePlayersComponent {
   }
   showSelectColorPopup(event, index) {
     var _this2 = this;
-    return (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const {
         data
       } = yield _this2.presentPopover(event, _select_color_select_color_component__WEBPACK_IMPORTED_MODULE_4__.SelectColorComponent, {
@@ -472,7 +472,7 @@ let ChoosePlayersComponent = (_class = class ChoosePlayersComponent {
   }
   showCreateGamerPopup(event) {
     var _this3 = this;
-    return (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const {
         data
       } = yield _this3.presentPopover(event, _create_gamer_create_gamer_component__WEBPACK_IMPORTED_MODULE_5__.CreateGamerComponent, null);
@@ -607,7 +607,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   CreateGamerComponent: () => (/* binding */ CreateGamerComponent)
 /* harmony export */ });
-/* harmony import */ var C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 2321);
 /* harmony import */ var _create_gamer_component_html_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./create-gamer.component.html?ngResource */ 4541);
 /* harmony import */ var _create_gamer_component_scss_ngResource__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./create-gamer.component.scss?ngResource */ 5382);
@@ -634,7 +634,7 @@ let CreateGamerComponent = (_class = class CreateGamerComponent {
   ngOnInit() {}
   presentPopover(event, component, data) {
     var _this = this;
-    return (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const popover = yield _this.popoverController.create({
         component,
         cssClass: 'select-color-popover',
@@ -648,7 +648,7 @@ let CreateGamerComponent = (_class = class CreateGamerComponent {
   }
   showSelectColorPopup(event) {
     var _this2 = this;
-    return (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const {
         data
       } = yield _this2.presentPopover(event, _select_color_select_color_component__WEBPACK_IMPORTED_MODULE_4__.SelectColorComponent, {

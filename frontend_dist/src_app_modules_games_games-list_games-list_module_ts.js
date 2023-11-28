@@ -81,14 +81,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   GamesListPage: () => (/* binding */ GamesListPage)
 /* harmony export */ });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! tslib */ 2321);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! tslib */ 2321);
 /* harmony import */ var _games_list_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./games-list.page.html?ngResource */ 9393);
 /* harmony import */ var _games_list_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./games-list.page.scss?ngResource */ 1656);
 /* harmony import */ var _games_list_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_games_list_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 1699);
-/* harmony import */ var _analytics_tab_analytics_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../analytics-tab/analytics.service */ 7552);
-/* harmony import */ var src_app_interfaces__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/interfaces */ 3038);
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ 1699);
+/* harmony import */ var src_environments_environment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/environments/environment */ 553);
+/* harmony import */ var _analytics_tab_analytics_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../analytics-tab/analytics.service */ 7552);
+/* harmony import */ var src_app_interfaces__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/interfaces */ 3038);
 var _class;
+
 
 
 
@@ -97,9 +99,10 @@ var _class;
 
 let GamesListPage = (_class = class GamesListPage {
   constructor() {
-    this.gameTypes = src_app_interfaces__WEBPACK_IMPORTED_MODULE_3__.gameTypes;
-    this.analyticsService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.inject)(_analytics_tab_analytics_service__WEBPACK_IMPORTED_MODULE_2__.AnalyticsService);
+    this.gameTypes = src_app_interfaces__WEBPACK_IMPORTED_MODULE_4__.gameTypes;
+    this.analyticsService = (0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.inject)(_analytics_tab_analytics_service__WEBPACK_IMPORTED_MODULE_3__.AnalyticsService);
     this.rand = 0;
+    this.environment = src_environments_environment__WEBPACK_IMPORTED_MODULE_2__.environment;
   }
   ngOnInit() {
     this.analyticsService.getPlayedGamesCount().subscribe(playedGamesCountArr => {
@@ -114,7 +117,7 @@ let GamesListPage = (_class = class GamesListPage {
     return Math.round(Math.random() * 100);
   }
 }, _class.ctorParameters = () => [], _class);
-GamesListPage = (0,tslib__WEBPACK_IMPORTED_MODULE_5__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_4__.Component)({
+GamesListPage = (0,tslib__WEBPACK_IMPORTED_MODULE_6__.__decorate)([(0,_angular_core__WEBPACK_IMPORTED_MODULE_5__.Component)({
   selector: 'app-games-list',
   template: _games_list_page_html_ngResource__WEBPACK_IMPORTED_MODULE_0__,
   styles: [(_games_list_page_scss_ngResource__WEBPACK_IMPORTED_MODULE_1___default())]
@@ -148,7 +151,7 @@ module.exports = ___CSS_LOADER_EXPORT___.toString();
 /***/ ((module) => {
 
 "use strict";
-module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title size=\"large\">{{'modules.games.name' | translate}}</ion-title>\n\n    <ion-buttons slot=\"end\">\n      <ion-menu-button menu=\"games-menu\"></ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content [fullscreen]=\"true\">\n  <ion-grid class=\"ion-no-margin ion-no-padding\">\n    <ion-row>\n      <ion-col\n        size-lg=\"4\"\n        size-md=\"6\"\n        size-sm=\"10\"\n        offset-lg=\"4\"\n        offset-md=\"3\"\n        offset-sm=\"1\"\n      >\n        <ion-card *ngFor=\"let game of gameTypes; let i = index\">\n          <img [alt]=\"'Game ' + game\" [src]=\"'https://picsum.photos/id/' + (i + rand )+ '/512/256'\" />\n          <ion-card-header>\n            <ion-card-title>{{'games.' + game + '.name' | translate}}</ion-card-title>\n            <ion-card-subtitle>\n              {{'modules.analytics.played' | translate}}\n              <ion-text color=\"tertiary\">\n                {{playedGamesCount && playedGamesCount[game]}}\n              </ion-text>\n              {{'modules.analytics.times' | translate}}\n            </ion-card-subtitle>\n          </ion-card-header>\n\n          <ion-card-content>\n            {{'games.' + game + '.description' | translate}}\n          </ion-card-content>\n          <ion-button\n            expand=\"full\"\n            fill=\"clear\"\n            color=\"primary\"\n            [routerLink]=\"'/games/' + game\"\n            routerLinkActive=\"active-link\"\n            [routerLinkActiveOptions]=\"{exact: true}\"\n            >{{'elements.button.startGame' | translate}}</ion-button\n          >\n        </ion-card>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n";
+module.exports = "<ion-header [translucent]=\"true\">\n  <ion-toolbar>\n    <ion-title size=\"large\">{{'modules.games.name' | translate}}</ion-title>\n\n    <ion-buttons slot=\"end\">\n      <ion-menu-button menu=\"games-menu\"></ion-menu-button>\n    </ion-buttons>\n  </ion-toolbar>\n</ion-header>\n<ion-content [fullscreen]=\"true\">\n  <ion-grid>\n    <ion-row>\n      <ion-col\n        class=\"game-list ion-no-padding\"\n        size-xs=\"12\"\n        size-sm=\"8\"\n        offset-sm=\"2\"\n        size-md=\"12\"\n        offset-md=\"0\"\n        size-xl=\"8\"\n        offset-xl=\"2\"\n      >\n        <ion-row>\n          <ion-col size-xs=\"12\" size-md=\"6\" *ngFor=\"let game of gameTypes; let i = index\">\n            <div class=\"card\">\n              <img [alt]=\"'Game ' + game\" [src]=\"environment.games[game]['cover']\" />\n              <!-- <img\n                [alt]=\"'Game ' + game\"\n                [src]=\"'https://picsum.photos/id/' + (i + rand )+ '/590/340'\"\n              /> -->\n              <div class=\"card__content\">\n                <h2 class=\"card__title\">{{'games.' + game + '.name' | translate}}</h2>\n\n                <div class=\"flex-rest-space\"></div>\n                <p class=\"card__description\">\n                  {{'games.' + game + '.description' | translate}}\n                </p>\n\n                <div class=\"card__footer\">\n                  <p class=\"card__accent\">\n                    {{'modules.analytics.played' | translate}}\n                    <ion-text> {{playedGamesCount && playedGamesCount[game]}} </ion-text>\n                    {{'modules.analytics.times' | translate}}\n                  </p>\n\n                  <button\n                    class=\"card__btn\"\n                    [routerLink]=\"'/games/' + game\"\n                    routerLinkActive=\"active-link\"\n                    [routerLinkActiveOptions]=\"{exact: true}\"\n                  >\n                    {{'elements.button.startGame' | translate}}\n                  </button>\n                </div>\n              </div>\n            </div>\n          </ion-col>\n        </ion-row>\n      </ion-col>\n    </ion-row>\n  </ion-grid>\n</ion-content>\n";
 
 /***/ })
 

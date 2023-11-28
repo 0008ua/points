@@ -14,6 +14,8 @@ export class GamesListPage implements OnInit {
   analyticsService = inject(AnalyticsService);
   playedGamesCount: any;
   rand: number = 0;
+  environment = environment;
+
   constructor() {}
 
   ngOnInit() {

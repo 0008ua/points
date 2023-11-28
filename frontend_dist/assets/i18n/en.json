@@ -3,7 +3,7 @@
   "games": {
     "train": {
       "name": "Ticket to ride",
-      "description": "Ticket to Ride is a cross-country train adventure in which players collect and play matching train cards to claim railway routes connecting cities through North America! The original Ticket to Ride is perfect for an experienced tabletop enthusiast, families, and those new to the hobby",
+      "description": "Ticket to Ride is a cross-country train adventure in which players collect and play matching train cards to claim railway routes connecting cities through continent",
       "routes": "Completed routes",
       "length": "Longest route",
       "cars": "Trains",

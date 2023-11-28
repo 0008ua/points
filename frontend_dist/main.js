@@ -757,7 +757,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ModalService: () => (/* binding */ ModalService)
 /* harmony export */ });
-/* harmony import */ var C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! tslib */ 2321);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/core */ 1699);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @ionic/angular */ 4210);
@@ -773,7 +773,7 @@ let ModalService = (_class = class ModalService {
   }
   presentModal(component, data) {
     var _this = this;
-    return (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const modal = yield _this.modalController.create({
         component,
         componentProps: data
@@ -803,7 +803,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   SharedService: () => (/* binding */ SharedService)
 /* harmony export */ });
-/* harmony import */ var C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! tslib */ 2321);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! @angular/core */ 1699);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! rxjs */ 6231);
@@ -986,7 +986,7 @@ let SharedService = (_class = class SharedService {
   }
   presentModalFinishGame(game) {
     var _this = this;
-    return (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const order = _this.environment.games[game.type].resultsOrder;
       const results = game.rounds.find(round => round._id === 'result').players;
       const data = {
@@ -1059,7 +1059,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   ToastService: () => (/* binding */ ToastService)
 /* harmony export */ });
-/* harmony import */ var C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! tslib */ 2321);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/core */ 1699);
 /* harmony import */ var _ionic_angular__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @ionic/angular */ 4210);
@@ -1078,7 +1078,7 @@ let ToastService = (_class = class ToastService {
   }
   presentErrorToast(header = 'Error occurred', message = '') {
     var _this = this;
-    return (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
+    return (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* () {
       const toast = yield _this.toastController.create({
         header,
         message,
@@ -3268,6 +3268,7 @@ const environment = {
   games: {
     rummy: {
       name: 'Rummy',
+      cover: './assets/covers/rummy.png',
       resultsOrder: 1,
       showToolbarMenu: false,
       maxPlayersQty: 4,
@@ -3351,6 +3352,7 @@ const environment = {
     },
     uno: {
       name: 'Uno',
+      cover: './assets/covers/uno.png',
       resultsOrder: 1,
       showToolbarMenu: false,
       maxPlayersQty: 10,
@@ -3434,6 +3436,7 @@ const environment = {
     },
     thousand: {
       name: 'Thousand - 1000',
+      cover: './assets/covers/thousand.png',
       resultsOrder: -1,
       showToolbarMenu: false,
       maxPlayersQty: 4,
@@ -3464,6 +3467,7 @@ const environment = {
     },
     train: {
       name: 'Ticket to ride',
+      cover: './assets/covers/ticket_to_ride.png',
       resultsOrder: -1,
       showToolbarMenu: true,
       maxPlayersQty: 5,

@@ -8,42 +8,54 @@
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
-  <ion-grid class="ion-no-margin ion-no-padding">
+  <ion-grid>
     <ion-row>
       <ion-col
-        size-lg="4"
-        size-md="6"
-        size-sm="10"
-        offset-lg="4"
-        offset-md="3"
-        offset-sm="1"
+        class="game-list ion-no-padding"
+        size-xs="12"
+        size-sm="8"
+        offset-sm="2"
+        size-md="12"
+        offset-md="0"
+        size-xl="8"
+        offset-xl="2"
       >
-        <ion-card *ngFor="let game of gameTypes; let i = index">
-          <img [alt]="'Game ' + game" [src]="'https://picsum.photos/id/' + (i + rand )+ '/512/256'" />
-          <ion-card-header>
-            <ion-card-title>{{'games.' + game + '.name' | translate}}</ion-card-title>
-            <ion-card-subtitle>
-              {{'modules.analytics.played' | translate}}
-              <ion-text color="tertiary">
-                {{playedGamesCount && playedGamesCount[game]}}
-              </ion-text>
-              {{'modules.analytics.times' | translate}}
-            </ion-card-subtitle>
-          </ion-card-header>
+        <ion-row>
+          <ion-col size-xs="12" size-md="6" *ngFor="let game of gameTypes; let i = index">
+            <div class="card">
+              <img [alt]="'Game ' + game" [src]="environment.games[game]['cover']" />
+              <!-- <img
+                [alt]="'Game ' + game"
+                [src]="'https://picsum.photos/id/' + (i + rand )+ '/590/340'"
+              /> -->
+              <div class="card__content">
+                <h2 class="card__title">{{'games.' + game + '.name' | translate}}</h2>
 
-          <ion-card-content>
-            {{'games.' + game + '.description' | translate}}
-          </ion-card-content>
-          <ion-button
-            expand="full"
-            fill="clear"
-            color="primary"
-            [routerLink]="'/games/' + game"
-            routerLinkActive="active-link"
-            [routerLinkActiveOptions]="{exact: true}"
-            >{{'elements.button.startGame' | translate}}</ion-button
-          >
-        </ion-card>
+                <div class="flex-rest-space"></div>
+                <p class="card__description">
+                  {{'games.' + game + '.description' | translate}}
+                </p>
+
+                <div class="card__footer">
+                  <p class="card__accent">
+                    {{'modules.analytics.played' | translate}}
+                    <ion-text> {{playedGamesCount && playedGamesCount[game]}} </ion-text>
+                    {{'modules.analytics.times' | translate}}
+                  </p>
+
+                  <button
+                    class="card__btn"
+                    [routerLink]="'/games/' + game"
+                    routerLinkActive="active-link"
+                    [routerLinkActiveOptions]="{exact: true}"
+                  >
+                    {{'elements.button.startGame' | translate}}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
       </ion-col>
     </ion-row>
   </ion-grid>

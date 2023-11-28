@@ -10,6 +10,7 @@ export const environment = {
   games: {
     rummy: {
       name: 'Rummy',
+      cover: './assets/covers/rummy.png',
       resultsOrder: 1,
       showToolbarMenu: false,
       maxPlayersQty: 4,
@@ -62,6 +63,8 @@ export const environment = {
     },
     uno: {
       name: 'Uno',
+      cover: './assets/covers/uno.png',
+
       resultsOrder: 1,
       showToolbarMenu: false,
       maxPlayersQty: 10,
@@ -108,6 +111,8 @@ export const environment = {
     },
     thousand: {
       name: 'Thousand - 1000',
+      cover: './assets/covers/thousand.png',
+
       resultsOrder: -1,
       showToolbarMenu: false,
       maxPlayersQty: 4,
@@ -144,6 +149,8 @@ export const environment = {
     },
     train: {
       name: 'Ticket to ride',
+      cover: './assets/covers/ticket_to_ride.png',
+
       resultsOrder: -1,
       showToolbarMenu: true,
       maxPlayersQty: 5,

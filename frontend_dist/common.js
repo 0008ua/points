@@ -834,7 +834,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   r: () => (/* binding */ resetContentScrollY),
 /* harmony export */   s: () => (/* binding */ scrollToTop)
 /* harmony export */ });
-/* harmony import */ var C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
+/* harmony import */ var D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./node_modules/@babel/runtime/helpers/esm/asyncToGenerator.js */ 1670);
 /* harmony import */ var _helpers_f586db1c_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers-f586db1c.js */ 5272);
 /* harmony import */ var _index_e86f0117_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./index-e86f0117.js */ 123);
 
@@ -866,7 +866,7 @@ const isIonContent = el => el.tagName === ION_CONTENT_TAG_NAME;
  * or a selector within the host, if supplied through `scrollTarget`.
  */
 const getScrollElement = /*#__PURE__*/function () {
-  var _ref = (0,C_it_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (el) {
+  var _ref = (0,D_points_points_node_modules_babel_runtime_helpers_esm_asyncToGenerator_js__WEBPACK_IMPORTED_MODULE_0__["default"])(function* (el) {
     if (isIonContent(el)) {
       yield new Promise(resolve => (0,_helpers_f586db1c_js__WEBPACK_IMPORTED_MODULE_1__.c)(el, resolve));
       return el.getScrollElement();
