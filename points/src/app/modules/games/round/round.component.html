@@ -1,7 +1,15 @@
-<app-choose-players
-  *ngIf="(activeRoundId$ | async) === 'start' && (rounds$ | async).length === 0; else restRounds"
->
-</app-choose-players>
+<ion-row>
+  <ion-col size-xs="12" size-sm="10" offset-sm="1" size-md="8" offset-md="2" size-lg="6" offset-lg="3">
+    <app-choose-players
+      *ngIf="
+        (activeRoundId$ | async) === 'start' && (rounds$ | async).length === 0;
+        else restRounds
+      "
+    >
+    </app-choose-players>
+  </ion-col>
+</ion-row>
+
 <ng-template #restRounds>
   <!-- Ticket to ride -->
   <app-round-wrapper
@@ -38,7 +46,10 @@
     [roundId]="activeRoundId$ | async"
     [playerId]="activePlayerId$ | async"
   >
-    <app-round-uno [roundId]="activeRoundId$ | async" [playerId]="activePlayerId$ | async">
+    <app-round-uno
+      [roundId]="activeRoundId$ | async"
+      [playerId]="activePlayerId$ | async"
+    >
     </app-round-uno>
   </app-round-wrapper>
   <!-- Rummy -->
@@ -47,7 +58,10 @@
     [roundId]="activeRoundId$ | async"
     [playerId]="activePlayerId$ | async"
   >
-    <app-round-rummy [roundId]="activeRoundId$ | async" [playerId]="activePlayerId$ | async">
+    <app-round-rummy
+      [roundId]="activeRoundId$ | async"
+      [playerId]="activePlayerId$ | async"
+    >
     </app-round-rummy>
   </app-round-wrapper>
   <!-- Thousand -->

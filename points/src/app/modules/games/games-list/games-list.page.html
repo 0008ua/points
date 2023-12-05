@@ -32,9 +32,10 @@
                 <h2 class="card__title">{{'games.' + game + '.name' | translate}}</h2>
 
                 <div class="flex-rest-space"></div>
-                <p class="card__description">
+
+                <!-- <p class="card__description">
                   {{'games.' + game + '.description' | translate}}
-                </p>
+                </p> -->
 
                 <div class="card__footer">
                   <p class="card__accent">
@@ -42,7 +43,6 @@
                     <ion-text> {{playedGamesCount && playedGamesCount[game]}} </ion-text>
                     {{'modules.analytics.times' | translate}}
                   </p>
-
                   <button
                     class="card__btn"
                     [routerLink]="'/games/' + game"

@@ -1,19 +1,31 @@
 <ion-card>
   <ion-card-header>
     <ion-card-title class="ion-text-center">{{
-      'modules.games.addPlayers' | translate
+      'games.' + gameType + '.name' | translate
     }}</ion-card-title>
-    <ion-card-subtitle class="ion-text-center">{{'games.' + gameType + '.name' | translate}}</ion-card-subtitle>
+    <ion-card-subtitle class="ion-text-center">{{
+      'modules.games.addPlayers' | translate
+    }}</ion-card-subtitle>
+
+        <p class="ion-text-justify">
+          {{ 'games.' + gameType + '.description' | translate }}
+        </p>
+
   </ion-card-header>
   <ion-card-content class="choose-players">
     <ion-list class="choose-players__list">
-      <ion-item-sliding *ngFor="let player of players$ | async; let index = index" lines="none">
+      <ion-item-sliding
+        *ngFor="let player of players$ | async; let index = index"
+        lines="none"
+      >
         <ion-item lines="none">
           <div class="players-list">
             <div class="players-list__color">
               <div
                 class="select-color"
-                (click)="filtredColors.length > 1 ? showSelectColorPopup($event, index) : null"
+                (click)="
+                  filtredColors.length > 1 ? showSelectColorPopup($event, index) : null
+                "
                 [ngStyle]="{ 'background-color': player?.color }"
               ></div>
             </div>
@@ -94,7 +106,8 @@
           expand="block"
           (click)="startGameHandler()"
           [disabled]="
-            players.length < 2 || players.length > environment.games[gameType]?.maxPlayersQty
+            players.length < 2 ||
+            players.length > environment.games[gameType]?.maxPlayersQty
           "
         >
           {{ 'elements.button.startGame' | translate }}
